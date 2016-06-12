@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/nav_group_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="홈" />
+        <item
+            android:id="@+id/nav_browse"
+            android:title="탐색" />
+        <item
+            android:id="@+id/nav_search"
+            android:title="검색" />
+        <item
+            android:id="@+id/nav_wishlist"
+            android:title="위시리스트" />
+        <item
+            android:id="@+id/nav_purchased"
+            android:title="구입 내역" />
+<!--
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Import" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Slideshow" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Tools" />
+-->
+    </group>
+
+    <group
+        android:id="@+id/nav_group_bottom">
+        <item
+            android:id="@+id/nav_downloading"
+            android:title="다운로드" />
+        <item
+            android:id="@+id/nav_setting"
+            android:title="설정" />
+        <item
+            android:id="@+id/nav_about"
+            android:title="앱 정보" />
+
+        <!--<item-->
+            <!--android:id="@+id/nav_share"-->
+            <!--android:icon="@drawable/ic_menu_share"-->
+            <!--android:title="Share" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_send"-->
+            <!--android:icon="@drawable/ic_menu_send"-->
+            <!--android:title="Send" />-->
+    </group>
+
+</menu>
