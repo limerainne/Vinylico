@@ -1,4 +1,4 @@
-package space.limerainne.ibainilu
+package space.limerainne.i_bainil_u
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton

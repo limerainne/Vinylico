@@ -1,4 +1,4 @@
-package space.limerainne.ibainilu
+package space.limerainne.i_bainil_u
 
 import org.junit.Test
 
