@@ -3,20 +3,31 @@
     package="space.limerainne.i_bainil_u">
 
     <application
+        android:name=".I_Bainil_UApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="space.limerainne.i_bainil_u.MainActivity"
+            android:name=".view.MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
+            <!-- launchMode = singleTop for supporting back button in actionbar -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.SettingsActivity"
+            android:label="@string/title_activity_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="space.limerainne.i_bainil_u.view.MainActivity" />
+            <!-- without fully qualified name, system cannot find valid activity.. -->
         </activity>
     </application>
 
