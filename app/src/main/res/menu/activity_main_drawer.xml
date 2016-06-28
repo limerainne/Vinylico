@@ -11,9 +11,6 @@
             android:id="@+id/nav_browse"
             android:title="탐색" />
         <item
-            android:id="@+id/nav_search"
-            android:title="검색" />
-        <item
             android:id="@+id/nav_wishlist"
             android:title="위시리스트" />
         <item

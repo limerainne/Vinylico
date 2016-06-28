@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -18,6 +19,9 @@ import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener {
+
+    private lateinit var fragments: MutableMap<Int, Fragment>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,8 +41,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView!!.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().add(R.id.content_main, HomeFragment.newInstance("1", "1"), HomeFragment.TAG).commit()
+            val homeFragment = HomeFragment.newInstance("1", "1")
+            supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
+            navigationView.setCheckedItem(R.id.nav_home)
+
+            fragments = mutableMapOf(R.id.nav_home to homeFragment) // TODO not correct way
         }
+
     }
 
     override fun onBackPressed() {
@@ -73,24 +82,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var hasToChangeFragment = false
+        var isNewFragment = false
+        var fragmentTAG = ""
 
         // Handle navigation view item clicks here.
         when (item.itemId)   {
             // change page fragment
             R.id.nav_home -> {
-
+                hasToChangeFragment = true
+                if (fragments.containsKey(R.id.nav_home))   {
+                    isNewFragment = true
+                    fragments[R.id.nav_home] = HomeFragment.newInstance("1", "1")
+                }
+                fragmentTAG = HomeFragment.TAG
             }
             R.id.nav_browse ->  {
-
-            }
-            R.id.nav_search -> {
-
+                hasToChangeFragment = false
             }
             R.id.nav_wishlist -> {
-
+                hasToChangeFragment = false
             }
             R.id.nav_purchased -> {
-
+                hasToChangeFragment = false
             }
             // new activity
             R.id.nav_downloading -> {
@@ -99,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_setting -> {
                 // NOTE have to put a Java class, not Kotlin class!
                 // not SettingsActivity.class or SettingsActivity.javaClass
-                startActivity(Intent(this, SettingsActivity::class.java))
+                startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
             }
             R.id.nav_about -> {
 
@@ -107,7 +120,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         if (hasToChangeFragment)    {
+            var targetFragment = fragments[item.itemId]
 
+            val transaction = supportFragmentManager.beginTransaction()
+            if (isNewFragment)
+                transaction.add(R.id.content_main, targetFragment, fragmentTAG)
+            else
+                transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
+            transaction.commit()
         }
 
         // close drawer
