@@ -13,13 +13,15 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import space.limerainne.i_bainil_u.view.WishlistFragment.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.view.dummy.DummyContent
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener {
-
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
     private lateinit var fragments: MutableMap<Int, Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +43,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView!!.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
-            val homeFragment = HomeFragment.newInstance("1", "1")
-            supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
-            navigationView.setCheckedItem(R.id.nav_home)
+//            val homeFragment = HomeFragment.newInstance("1", "1")
+//            supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
+//            navigationView.setCheckedItem(R.id.nav_home)
 
-            fragments = mutableMapOf(R.id.nav_home to homeFragment) // TODO not correct way
+            val wishlistFragment = WishlistFragment.newInstance(1)
+            supportFragmentManager.beginTransaction().add(R.id.content_main, wishlistFragment, WishlistFragment.TAG).commit()
+            navigationView.setCheckedItem(R.id.nav_wishlist)
+
+            fragments = mutableMapOf(R.id.nav_wishlist to wishlistFragment) // TODO not correct way
         }
 
     }
@@ -85,12 +91,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var isNewFragment = false
         var fragmentTAG = ""
 
+        Log.d("Test", item.itemId.toString())
+
         // Handle navigation view item clicks here.
         when (item.itemId)   {
             // change page fragment
             R.id.nav_home -> {
                 hasToChangeFragment = true
-                if (fragments.containsKey(R.id.nav_home))   {
+                if (!fragments.containsKey(R.id.nav_home))   {
                     isNewFragment = true
                     fragments[R.id.nav_home] = HomeFragment.newInstance("1", "1")
                 }
@@ -100,7 +108,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 hasToChangeFragment = false
             }
             R.id.nav_wishlist -> {
-                hasToChangeFragment = false
+                hasToChangeFragment = true
+                if (!fragments.containsKey(R.id.nav_wishlist))   {
+                    isNewFragment = true
+                    fragments[R.id.nav_wishlist] = HomeFragment.newInstance("1", "1")
+                }
+                fragmentTAG = WishlistFragment.TAG
             }
             R.id.nav_purchased -> {
                 hasToChangeFragment = false
@@ -122,6 +135,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (hasToChangeFragment)    {
             var targetFragment = fragments[item.itemId]
 
+            Log.d("Test", targetFragment.toString())
+
             val transaction = supportFragmentManager.beginTransaction()
             if (isNewFragment)
                 transaction.add(R.id.content_main, targetFragment, fragmentTAG)
@@ -137,6 +152,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onFragmentInteraction(uri: Uri) {
+        // throw UnsupportedOperationException()
+    }
+
+    override fun onListFragmentInteraction(item: DummyContent.DummyItem) {
         // throw UnsupportedOperationException()
     }
 }
