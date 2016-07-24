@@ -15,6 +15,8 @@ class I_Bainil_UApp : Application() {
     }
 
     companion object {
+        val USER_ID: Long = 2543
+
         operator fun get(context: Context): I_Bainil_UApp {
             return context.applicationContext as I_Bainil_UApp
         }

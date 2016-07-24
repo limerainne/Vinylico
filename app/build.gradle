@@ -38,9 +38,11 @@ dependencies {
     compile dependencies.appCompat
     compile dependencies.cardView
     compile dependencies.recyclerView
+
     compile dependencies.retrofit
     compile dependencies.retrofitConverterGson
     compile dependencies.retrofitAdapterRxJava
+
     compile dependencies.picasso
     compile dependencies.rxAndroid
     compile dependencies.circleImageView
@@ -48,6 +50,8 @@ dependencies {
     compile dependencies.jsoup
     compile dependencies.gson
     compile dependencies.kotson
+
+    compile dependencies.anko_common
 
     compile dependencies.typeKit
 

@@ -9,10 +9,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import org.jetbrains.anko.async
+import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.viewmodel.WishlistRecyclerViewAdapter
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.data.api.WishlistServer
+import space.limerainne.i_bainil_u.domain.model.WishAlbum
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
 
@@ -40,6 +45,16 @@ class WishlistFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_wishlist_list, container, false)
 
+        // TODO get data
+        async() {
+            val w: WishlistServer = WishlistServer()
+            val wList = w.requestWishlist(I_Bainil_UApp.USER_ID)
+            uiThread { if (view is RecyclerView) {
+                view.adapter = WishlistRecyclerViewAdapter(wList, mListener)
+                }
+            }
+        }
+
         // Set the adapter
         if (view is RecyclerView) {
             val context = view.getContext()
@@ -48,7 +63,6 @@ class WishlistFragment : Fragment() {
             } else {
                 view.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            view.adapter = WishlistRecyclerViewAdapter(DummyContent.ITEMS, mListener)
         }
         return view
     }
@@ -81,7 +95,7 @@ class WishlistFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem)
+        fun onListFragmentInteraction(item: WishAlbum)
     }
 
     companion object {

@@ -18,6 +18,8 @@ import android.view.Menu
 import android.view.MenuItem
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import space.limerainne.i_bainil_u.domain.model.WishAlbum
+import space.limerainne.i_bainil_u.domain.model.Wishlist
 import space.limerainne.i_bainil_u.view.WishlistFragment.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 
@@ -138,10 +140,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Log.d("Test", targetFragment.toString())
 
             val transaction = supportFragmentManager.beginTransaction()
-            if (isNewFragment)
-                transaction.add(R.id.content_main, targetFragment, fragmentTAG)
-            else
-                transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
+//            if (isNewFragment)
+//                transaction.add(R.id.content_main, targetFragment, fragmentTAG)
+//            else
+            transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
             transaction.commit()
         }
 
@@ -155,7 +157,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // throw UnsupportedOperationException()
     }
 
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem) {
+    override fun onListFragmentInteraction(item: WishAlbum) {
         // throw UnsupportedOperationException()
     }
 }
