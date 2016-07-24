@@ -90,7 +90,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var hasToChangeFragment = false
-        var isNewFragment = false
         var fragmentTAG = ""
 
         Log.d("Test", item.itemId.toString())
@@ -101,7 +100,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> {
                 hasToChangeFragment = true
                 if (!fragments.containsKey(R.id.nav_home))   {
-                    isNewFragment = true
                     fragments[R.id.nav_home] = HomeFragment.newInstance("1", "1")
                 }
                 fragmentTAG = HomeFragment.TAG
@@ -112,7 +110,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_wishlist -> {
                 hasToChangeFragment = true
                 if (!fragments.containsKey(R.id.nav_wishlist))   {
-                    isNewFragment = true
                     fragments[R.id.nav_wishlist] = HomeFragment.newInstance("1", "1")
                 }
                 fragmentTAG = WishlistFragment.TAG
@@ -140,9 +137,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Log.d("Test", targetFragment.toString())
 
             val transaction = supportFragmentManager.beginTransaction()
-//            if (isNewFragment)
-//                transaction.add(R.id.content_main, targetFragment, fragmentTAG)
-//            else
             transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
             transaction.commit()
         }
