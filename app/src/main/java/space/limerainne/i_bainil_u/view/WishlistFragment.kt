@@ -43,7 +43,7 @@ class WishlistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_wishlist_list, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_wishlist, container, false)
 
         // TODO get data
         async() {

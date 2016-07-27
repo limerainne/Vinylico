@@ -45,15 +45,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView!!.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
-//            val homeFragment = HomeFragment.newInstance("1", "1")
-//            supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
-//            navigationView.setCheckedItem(R.id.nav_home)
+            fragments = mutableMapOf()
 
-            val wishlistFragment = WishlistFragment.newInstance(1)
-            supportFragmentManager.beginTransaction().add(R.id.content_main, wishlistFragment, WishlistFragment.TAG).commit()
-            navigationView.setCheckedItem(R.id.nav_wishlist)
+            val homeFragment = HomeFragment.newInstance("1", "1")
+            supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
+            navigationView.setCheckedItem(R.id.nav_home)
+            fragments.put(R.id.nav_home, homeFragment)
 
-            fragments = mutableMapOf(R.id.nav_wishlist to wishlistFragment) // TODO not correct way
+//            val wishlistFragment = WishlistFragment.newInstance(1)
+//            supportFragmentManager.beginTransaction().add(R.id.content_main, wishlistFragment, WishlistFragment.TAG).commit()
+//            navigationView.setCheckedItem(R.id.nav_wishlist)
+//            fragments.put(R.id.nav_wishlist, wishlistFragment)
+
+//            fragments = mutableMapOf(R.id.nav_wishlist to wishlistFragment) // TODO not correct way
         }
 
     }
@@ -110,7 +114,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_wishlist -> {
                 hasToChangeFragment = true
                 if (!fragments.containsKey(R.id.nav_wishlist))   {
-                    fragments[R.id.nav_wishlist] = HomeFragment.newInstance("1", "1")
+                    fragments[R.id.nav_wishlist] = WishlistFragment.newInstance(1)
                 }
                 fragmentTAG = WishlistFragment.TAG
             }

@@ -11,8 +11,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
 
-import kotlinx.android.synthetic.main.fragment_wishlist.*
-import kotlinx.android.synthetic.main.fragment_wishlist.view.*
+import kotlinx.android.synthetic.main.fragment_wishlist_item.*
+import kotlinx.android.synthetic.main.fragment_wishlist_item.view.*
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.domain.model.WishAlbum
@@ -28,7 +28,7 @@ import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
 class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<WishlistRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_wishlist, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_wishlist_item, parent, false)
         return ViewHolder(view)
     }
 
