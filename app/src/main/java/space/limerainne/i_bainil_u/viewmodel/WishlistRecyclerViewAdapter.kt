@@ -1,10 +1,18 @@
 package space.limerainne.i_bainil_u.viewmodel
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.squareup.picasso.Picasso
+
+import kotlinx.android.synthetic.main.fragment_wishlist.*
+import kotlinx.android.synthetic.main.fragment_wishlist.view.*
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.domain.model.WishAlbum
@@ -37,23 +45,29 @@ class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mLi
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView
-        val mContentView: TextView
+        @BindView(R.id.album_id)
+        lateinit var mIdView: TextView
+        @BindView(R.id.content)
+        lateinit var mContentView: TextView
+        @BindView(R.id.album_cover)
+        lateinit var mCoverView: ImageView
+
         var mItem: WishAlbum? = null
 
         init {
-            mIdView = mView.findViewById(R.id.id) as TextView
-            mContentView = mView.findViewById(R.id.content) as TextView
+            ButterKnife.bind(this, mView)
         }
 
         fun bind(item: WishAlbum)  {
             mItem = item
-            mIdView.text = item.albumId.toString()
-            mContentView.text = item.albumName
+            Log.d("Picasso", item.jacketImage)
+            Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)
+            itemView.album_id.text = item.albumId.toString()
+            itemView.content.text = item.albumName
         }
 
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + itemView.content.text + "'"
         }
     }
 }
