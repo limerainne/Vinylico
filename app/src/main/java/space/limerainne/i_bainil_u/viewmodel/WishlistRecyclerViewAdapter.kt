@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
@@ -27,6 +28,8 @@ import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
  */
 class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<WishlistRecyclerViewAdapter.ViewHolder>() {
 
+    private var lastPosition = -1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_wishlist_item, parent, false)
         return ViewHolder(view)
@@ -38,10 +41,31 @@ class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mLi
         holder.mView.setOnClickListener {
             mListener?.onListFragmentInteraction(holder.mItem!!)
         }
+
+        startAnimation(holder.mView, position)
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+
+        holder.mView.animation?.cancel()
     }
 
     override fun getItemCount(): Int {
         return mValues.albums.size
+    }
+
+    fun startAnimation(view: View, position: Int)   {
+        // use below library!
+        // https://github.com/wasabeef/recyclerview-animators
+
+        // animation code C/Ped from...
+        // http://stackoverflow.com/questions/32815155/recyclerview-add-item-animation
+        if (position > lastPosition) {
+            val animation = AnimationUtils.loadAnimation(view.context, R.anim.up_from_bottom)
+            view.startAnimation(animation)
+            lastPosition = position
+        }
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {

@@ -24,7 +24,7 @@ import space.limerainne.i_bainil_u.view.WishlistFragment.OnListFragmentInteracti
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
-    private lateinit var fragments: MutableMap<Int, Fragment>
+    private val fragments: MutableMap<Int, Fragment> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView!!.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
-            fragments = mutableMapOf()
-
             val homeFragment = HomeFragment.newInstance("1", "1")
             supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
             navigationView.setCheckedItem(R.id.nav_home)
