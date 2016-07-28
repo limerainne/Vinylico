@@ -18,7 +18,7 @@ import android.view.Menu
 import android.view.MenuItem
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
-import space.limerainne.i_bainil_u.domain.model.WishAlbum
+import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Wishlist
 import space.limerainne.i_bainil_u.view.WishlistFragment.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // throw UnsupportedOperationException()
     }
 
-    override fun onListFragmentInteraction(item: WishAlbum) {
+    override fun onListFragmentInteraction(item: AlbumEntry) {
         // throw UnsupportedOperationException()
     }
 }

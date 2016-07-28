@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_wishlist_item.*
 import kotlinx.android.synthetic.main.fragment_wishlist_item.view.*
 
 import space.limerainne.i_bainil_u.R
-import space.limerainne.i_bainil_u.domain.model.WishAlbum
+import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Wishlist
 import space.limerainne.i_bainil_u.view.WishlistFragment.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
@@ -36,7 +36,7 @@ class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mLi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(mValues.albums[position])
+        holder.bind(mValues.albumEntries[position])
 
         holder.mView.setOnClickListener {
             mListener?.onListFragmentInteraction(holder.mItem!!)
@@ -52,7 +52,7 @@ class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mLi
     }
 
     override fun getItemCount(): Int {
-        return mValues.albums.size
+        return mValues.albumEntries.size
     }
 
     fun startAnimation(view: View, position: Int)   {
@@ -76,13 +76,13 @@ class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mLi
         @BindView(R.id.album_cover)
         lateinit var mCoverView: ImageView
 
-        var mItem: WishAlbum? = null
+        var mItem: AlbumEntry? = null
 
         init {
             ButterKnife.bind(this, mView)
         }
 
-        fun bind(item: WishAlbum)  {
+        fun bind(item: AlbumEntry)  {
             mItem = item
             Log.d("Picasso", item.jacketImage)
             Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)

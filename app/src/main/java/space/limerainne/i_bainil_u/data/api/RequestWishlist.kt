@@ -14,6 +14,7 @@ class RequestWishlist(val userId: Long,
     }
 
     private fun composeURL() = "$URL?userId=$userId&wish=$wish"
+    // &offset=0&limit=20&lang=en // not working?
 
     override fun execute(): Wishlist {
         val wishlistJsonStr = java.net.URL(composeURL()).readText()

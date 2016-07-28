@@ -16,8 +16,8 @@ import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.viewmodel.WishlistRecyclerViewAdapter
 import space.limerainne.i_bainil_u.R
-import space.limerainne.i_bainil_u.data.api.WishlistServer
-import space.limerainne.i_bainil_u.domain.model.WishAlbum
+import space.limerainne.i_bainil_u.data.api.Server
+import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
 
@@ -47,7 +47,7 @@ class WishlistFragment : Fragment() {
 
         // TODO get data
         async() {
-            val w: WishlistServer = WishlistServer()
+            val w: Server = Server()
             val wList = w.requestWishlist(I_Bainil_UApp.USER_ID)
             uiThread { if (view is RecyclerView) {
                 view.adapter = WishlistRecyclerViewAdapter(wList, mListener)
@@ -95,7 +95,7 @@ class WishlistFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: WishAlbum)
+        fun onListFragmentInteraction(item: AlbumEntry)
     }
 
     companion object {
