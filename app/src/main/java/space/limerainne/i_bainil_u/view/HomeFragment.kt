@@ -57,6 +57,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (activity is MainActivity) {
+            (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
+        }
+    }
+
     override fun onDetach() {
         super.onDetach()
         mListener = null
@@ -64,6 +72,7 @@ class HomeFragment : Fragment() {
 
     companion object {
         val TAG = HomeFragment::class.java.simpleName
+        val NavMenuId = R.id.nav_home
 
         // TODO: Rename parameter arguments, choose names that match
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

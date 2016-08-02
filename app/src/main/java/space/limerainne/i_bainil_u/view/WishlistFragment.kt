@@ -79,6 +79,14 @@ class WishlistFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (activity is MainActivity) {
+            (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
+        }
+    }
+
     override fun onDetach() {
         super.onDetach()
         mListener = null
@@ -99,7 +107,8 @@ class WishlistFragment : Fragment() {
     }
 
     companion object {
-         val TAG = WishlistFragment::class.java.simpleName
+        val TAG = WishlistFragment::class.java.simpleName
+        val NavMenuId = R.id.nav_wishlist
 
         // TODO: Customize parameter argument names
         private val ARG_COLUMN_COUNT = "column-count"

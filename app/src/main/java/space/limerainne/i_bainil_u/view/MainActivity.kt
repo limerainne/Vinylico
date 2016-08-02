@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import kotlinx.android.synthetic.main.activity_main.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (savedInstanceState == null) {
             val homeFragment = HomeFragment.newInstance("1", "1")
             supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
-            navigationView.setCheckedItem(R.id.nav_home)
+//            navigationView.setCheckedItem(R.id.nav_home)
             fragments.put(R.id.nav_home, homeFragment)
 
 //            val wishlistFragment = WishlistFragment.newInstance(1)
@@ -64,9 +65,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
         if (drawer!!.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
-        } else {
+        } else if (supportFragmentManager.backStackEntryCount > 1) {
+            supportFragmentManager.popBackStack()
+        }   else
             super.onBackPressed()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -134,19 +136,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         if (hasToChangeFragment)    {
-            var targetFragment = fragments[item.itemId]
+            val targetFragment = fragments[item.itemId]
 
-            Log.d("Test", targetFragment.toString())
+            Log.d("Test", getActiveFragment()?.tag.toString() ?: "null")
 
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
-            transaction.commit()
+            if ((getActiveFragment()?.tag.equals(targetFragment?.tag)) ?: false) {
+
+            }   else    {
+                Log.d("Test", targetFragment.toString())
+
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.content_main, targetFragment, fragmentTAG).addToBackStack(fragmentTAG)
+                transaction.commit()
+            }
         }
 
         // close drawer
         (findViewById(R.id.drawer_layout) as DrawerLayout).closeDrawer(GravityCompat.START)
 
         return true
+    }
+
+    fun getActiveFragment(): Fragment? {
+        if (supportFragmentManager.backStackEntryCount === 0) {
+            return supportFragmentManager?.findFragmentByTag(HomeFragment.TAG)
+        }
+        val tag = supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
+        return supportFragmentManager.findFragmentByTag(tag)
+    }
+
+    fun setNavigationViewCheckedItem(itemId: Int)   {
+        val navigationView = nav_view
+
+        Log.d("NavView", itemId.toString())
+
+        navigationView?.setCheckedItem(itemId)
     }
 
     override fun onFragmentInteraction(uri: Uri) {
