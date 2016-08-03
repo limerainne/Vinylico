@@ -15,7 +15,7 @@
             android:title="위시리스트" />
         <item
             android:id="@+id/nav_purchased"
-            android:title="구입 내역" />
+            android:title="구입한 앨범" />
 <!--
         <item
             android:id="@+id/nav_camera"
