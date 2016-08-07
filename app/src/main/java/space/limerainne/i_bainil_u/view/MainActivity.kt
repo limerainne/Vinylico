@@ -25,27 +25,19 @@ import space.limerainne.i_bainil_u.view.WishlistFragment.OnListFragmentInteracti
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
-    private val fragments: MutableMap<Int, Fragment> = mutableMapOf()
+    val fragments: MutableMap<Int, Fragment> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar?
-        setSupportActionBar(toolbar)
-
-        val fab = findViewById(R.id.fab) as FloatingActionButton?
-        fab!!.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
-
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
-        val toggle = ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer!!.setDrawerListener(toggle)
-        toggle.syncState()
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView?
         navigationView!!.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
+            val mainFragment = MainFragment.newInstance()
+            supportFragmentManager.beginTransaction().add(R.id.placeholder_top, mainFragment, MainFragment.TAG).commit()
+
             val homeFragment = HomeFragment.newInstance("1", "1")
             supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
 //            navigationView.setCheckedItem(R.id.nav_home)
@@ -163,6 +155,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val tag = supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
         return supportFragmentManager.findFragmentByTag(tag)
+    }
+
+    fun linkDrawerToToolbar(toolbar: Toolbar)   {
+        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
+        val toggle = ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer!!.setDrawerListener(toggle)
+        toggle.syncState()
     }
 
     fun setNavigationViewCheckedItem(itemId: Int)   {
