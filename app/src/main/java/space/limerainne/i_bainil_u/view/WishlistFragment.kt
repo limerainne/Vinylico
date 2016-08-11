@@ -84,12 +84,25 @@ class WishlistFragment : Fragment() {
 
         if (activity is MainActivity) {
             (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
+            (activity as MainActivity).setToolbarColor(R.color.babyPink, R.color.babyPinkDark)
+        }
+    }
+
+    override fun onPause()  {
+        super.onPause()
+
+        if (activity is MainActivity) {
+            // unset color
+            (activity as MainActivity).setToolbarColor()
         }
     }
 
     override fun onDetach() {
         super.onDetach()
         mListener = null
+
+        if (activity is MainActivity)
+            (activity as MainActivity).setToolbarColor()
     }
 
     /**

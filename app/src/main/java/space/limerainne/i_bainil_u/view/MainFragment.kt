@@ -1,11 +1,13 @@
 package space.limerainne.i_bainil_u.view
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -42,6 +44,38 @@ class MainFragment : Fragment() {
         }
 
         return view
+    }
+
+    fun onBackPressed(): Boolean    {
+        if (childFragmentManager.backStackEntryCount > 1) {
+            childFragmentManager.popBackStack()
+            return true
+        }
+        return false
+    }
+
+    fun changeChildFragment(targetFragment: Fragment, fragmentTAG: String)   {
+        Log.d("Test", getActiveChildFragment()?.tag.toString())
+
+        val currentChildFragmentTag = getActiveChildFragment()?.tag
+        if (currentChildFragmentTag != null && currentChildFragmentTag.equals(targetFragment.tag)) {
+
+        }   else    {
+            Log.d("Test", targetFragment.toString())
+
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.content_main, targetFragment, fragmentTAG).addToBackStack(fragmentTAG)
+            transaction.commit()
+        }
+    }
+
+    fun getActiveChildFragment(): Fragment? {
+        if (childFragmentManager.backStackEntryCount === 0) {
+            return childFragmentManager?.findFragmentByTag(HomeFragment.TAG)
+        }
+
+        val tag = childFragmentManager.getBackStackEntryAt(childFragmentManager.backStackEntryCount - 1).name
+        return childFragmentManager.findFragmentByTag(tag)
     }
 
     companion object {

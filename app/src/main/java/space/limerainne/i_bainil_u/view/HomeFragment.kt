@@ -62,6 +62,7 @@ class HomeFragment : Fragment() {
 
         if (activity is MainActivity) {
             (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
+            (activity as MainActivity).setToolbarColor()
         }
     }
 

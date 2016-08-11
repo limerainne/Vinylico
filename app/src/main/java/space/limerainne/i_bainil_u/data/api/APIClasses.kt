@@ -7,29 +7,35 @@ package space.limerainne.i_bainil_u.data.api
 // wishlist
 // ref: /api/v2/user/wishes?userId=()&offset=0&limit=20&lang=ko[/en]
 data class Wishlist(val success: Boolean,
-                    val result: List<WishAlbum>)
+                    val result: List<AlbumEntry>)
 
 // entry for each list (featured, new, ..., wishlist)
-data class WishAlbum(val albumEnglish: String,
-                     val albumId: Long,
-                     val albumName: String,
-                     val albumType: Int,
-                     val artistEnglish: String,
-                     val artistId: Long,
-                     val artistName: String,
-                     val event: Boolean,
-                     val feature_aac: Boolean,
-                     val feature_adult: Boolean,
-                     val feature_booklet: Boolean,
-                     val feature_hd: Boolean,
-                     val feature_lyrics: Boolean,
-                     val feature_rec: Boolean,
-                     val free: Boolean,
-                     val jacketImage: String,
-                     val price: String,
-                     val purchased: Int,
-                     val releaseDate: String,
-                     val tracks: Int)
+// - song** are not in wishlist
+data class AlbumEntry(val albumEnglish: String,
+                      val albumId: Long,
+                      val albumName: String,
+                      val albumType: Int,
+                      val artistEnglish: String,
+                      val artistId: Long,
+                      val artistName: String,
+                      val event: Boolean,
+                      val eventUrl: String,
+                      val feature_aac: Boolean,
+                      val feature_adult: Boolean,
+                      val feature_booklet: Boolean,
+                      val feature_hd: Boolean,
+                      val feature_lyrics: Boolean,
+                      val feature_rec: Boolean,
+                      val free: Boolean,
+                      val jacketImage: String,
+                      val price: String,
+                      val purchased: Int,
+                      val releaseDate: String,
+                      val songEnglish: String,
+                      val songId: Long,
+                      val songName: String,
+                      val songPath: String,
+                      val tracks: Int)
 
 // respond from album detail page request
 // ref: /api/v2/store/album?albumId=()&userId()&store=1&lang=ko

@@ -1,7 +1,10 @@
 package space.limerainne.i_bainil_u.view
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -16,6 +19,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_main.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
@@ -36,11 +40,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (savedInstanceState == null) {
             val mainFragment = MainFragment.newInstance()
-            supportFragmentManager.beginTransaction().add(R.id.placeholder_top, mainFragment, MainFragment.TAG).commit()
+            supportFragmentManager.beginTransaction().add(R.id.placeholder_top, mainFragment, MainFragment.TAG)
+                    .addToBackStack(MainFragment.TAG)
+                    .commit()
 
             val homeFragment = HomeFragment.newInstance("1", "1")
-            supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
-//            navigationView.setCheckedItem(R.id.nav_home)
+            val parentFrag = getActiveFragment()
+            if (parentFrag is MainFragment)
+                parentFrag.changeChildFragment(homeFragment, HomeFragment.TAG)
+                //supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
             fragments.put(R.id.nav_home, homeFragment)
 
 //            val wishlistFragment = WishlistFragment.newInstance(1)
@@ -54,12 +62,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+        var eventProcessed = false
+
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
+        val activeFragment = getActiveFragment()
+
         if (drawer!!.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
+            eventProcessed = true
         } else if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
-        }   else
+            eventProcessed = true
+        } else if (activeFragment is MainFragment)   {
+            eventProcessed = activeFragment.onBackPressed()
+        }
+
+        if (!eventProcessed)
             super.onBackPressed()
     }
 
@@ -85,7 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        var hasToChangeFragment = false
+        var hasToChangeMainFragmentsChild = false
         var fragmentTAG = ""
 
         Log.d("Test", item.itemId.toString())
@@ -94,24 +112,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId)   {
             // change page fragment
             R.id.nav_home -> {
-                hasToChangeFragment = true
+                hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_home))   {
                     fragments[R.id.nav_home] = HomeFragment.newInstance("1", "1")
                 }
                 fragmentTAG = HomeFragment.TAG
             }
             R.id.nav_browse ->  {
-                hasToChangeFragment = false
+                hasToChangeMainFragmentsChild = false
             }
             R.id.nav_wishlist -> {
-                hasToChangeFragment = true
+                hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_wishlist))   {
                     fragments[R.id.nav_wishlist] = WishlistFragment.newInstance(1)
                 }
                 fragmentTAG = WishlistFragment.TAG
             }
             R.id.nav_purchased -> {
-                hasToChangeFragment = false
+                hasToChangeMainFragmentsChild = false
             }
             // new activity
             R.id.nav_downloading -> {
@@ -127,20 +145,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        if (hasToChangeFragment)    {
+        if (hasToChangeMainFragmentsChild)    {
             val targetFragment = fragments[item.itemId]
 
-            Log.d("Test", getActiveFragment()?.tag.toString() ?: "null")
-
-            if ((getActiveFragment()?.tag.equals(targetFragment?.tag)) ?: false) {
-
-            }   else    {
-                Log.d("Test", targetFragment.toString())
-
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.content_main, targetFragment, fragmentTAG).addToBackStack(fragmentTAG)
-                transaction.commit()
-            }
+            val frag = getActiveFragment()
+            if (frag is MainFragment && targetFragment != null)
+                frag.changeChildFragment(targetFragment, fragmentTAG)
         }
 
         // close drawer
@@ -151,8 +161,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun getActiveFragment(): Fragment? {
         if (supportFragmentManager.backStackEntryCount === 0) {
-            return supportFragmentManager?.findFragmentByTag(HomeFragment.TAG)
+            return supportFragmentManager?.findFragmentByTag(MainFragment.TAG)
         }
+
         val tag = supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
         return supportFragmentManager.findFragmentByTag(tag)
     }
@@ -173,11 +184,39 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView?.setCheckedItem(itemId)
     }
 
+    fun setToolbarColor(colorId: Int = 0, darkColorId: Int = 0)   {
+        var targetColorId = R.color.colorPrimary
+        if (colorId != 0)
+            targetColorId = colorId
+
+        var targetDarkColorId = R.color.colorPrimaryDark
+        if (darkColorId != 0)
+            targetDarkColorId = darkColorId
+
+        // toolbar color
+        val bar = supportActionBar
+        bar?.setBackgroundDrawable(ColorDrawable(resources.getColor(targetColorId)))
+
+        // statusbar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = resources.getColor(targetDarkColorId)
+        }
+    }
+
     override fun onFragmentInteraction(uri: Uri) {
         // throw UnsupportedOperationException()
     }
 
     override fun onListFragmentInteraction(item: AlbumEntry) {
         // throw UnsupportedOperationException()
+
+        val albumInfoFragment = AlbumInfoFragment.newInstance(item)
+        supportFragmentManager.beginTransaction()
+                .add(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+                .addToBackStack(AlbumInfoFragment.TAG)
+                .commit()
+
     }
 }

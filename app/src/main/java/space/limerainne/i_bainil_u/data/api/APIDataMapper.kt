@@ -17,11 +17,11 @@ class APIDataMapper {
         DomainWishlist(userId, convertWishAlbumListToDomain(result))
     }
 
-    private fun convertWishAlbumListToDomain(list: List<WishAlbum>): List<DomainWishAlbum> {
+    private fun convertWishAlbumListToDomain(list: List<AlbumEntry>): List<DomainWishAlbum> {
         return list.map { convertWishAlbumToDomain(it) }
     }
 
-    private fun convertWishAlbumToDomain(wishAlbum: WishAlbum): DomainWishAlbum = with(wishAlbum) {
+    private fun convertWishAlbumToDomain(albumEntry: AlbumEntry): DomainWishAlbum = with(albumEntry) {
         DomainWishAlbum(albumEnglish,
                 albumId,
                 albumName,
