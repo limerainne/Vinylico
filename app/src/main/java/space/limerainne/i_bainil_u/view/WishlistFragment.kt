@@ -116,7 +116,7 @@ class WishlistFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: AlbumEntry)
+        fun onListFragmentInteraction(item: Any)
     }
 
     companion object {

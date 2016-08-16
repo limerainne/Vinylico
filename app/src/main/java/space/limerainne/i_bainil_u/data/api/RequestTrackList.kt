@@ -15,7 +15,7 @@ class RequestTrackList(val albumId: Long,
 
     private fun composeURL(): String {
         var url = "$URL?albumId=$albumId"
-        url += "lang=$lang"
+        url += "&lang=$lang"
         return url
     }
 

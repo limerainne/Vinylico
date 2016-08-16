@@ -40,13 +40,15 @@ data class AlbumEntry(val albumEnglish: String,
 // respond from album detail page request
 // ref: /api/v2/store/album?albumId=()&userId()&store=1&lang=ko
 data class AlbumDetail(val success: Boolean,
-                       val result: List<Album>)
+                       val result: Album)
 
 // album information in album detail page
 data class Album(val albumCredit: String,
                  val albumDesc: String,
                  val albumDescEnglish: String,
                  val albumId: Long,
+                 val albumName: String,
+                 val albumEnglish: String,
                  val albumType: Int,
                  val artistId: Long,
                  val artistName: String,
@@ -73,7 +75,7 @@ data class Album(val albumCredit: String,
                  val price: String,
                  val publishId: Long,
                  val publishName: String,
-                 val releaseData: String,
+                 val releaseDate: String,
                  val tracks: Int,
                  val wish: Int,
                  val wishCount: Int)

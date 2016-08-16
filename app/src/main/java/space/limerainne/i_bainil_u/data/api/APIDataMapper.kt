@@ -47,11 +47,13 @@ class APIDataMapper {
     fun convertAlbumDetailRespondToDomain(albumDetail: AlbumDetail): DomainAlbumDetail {
         if (!albumDetail.success)
             throw RuntimeException("Incorrect ID or fetch failed!")
-        with(albumDetail.result[0]) {
+        with(albumDetail.result) {
             return DomainAlbumDetail(albumCredit,
                     albumDesc,
                     albumDescEnglish,
                     albumId,
+                    albumName,
+                    albumEnglish,
                     albumType,
                     artistId,
                     artistName,
@@ -78,7 +80,7 @@ class APIDataMapper {
                     price,
                     publishId,
                     publishName,
-                    releaseData,
+                    releaseDate,
                     tracks,
                     wish,
                     wishCount)
@@ -96,7 +98,7 @@ class APIDataMapper {
     private fun convertTrackToDomain(track: Track): DomainTrack = with(track) {
         DomainTrack(artistId,
                 artistName,
-                bitrate,
+                "-",    // TODO bitrate field removed (16.08.17)
                 connected_msg,
                 duration,
                 feature_aac,

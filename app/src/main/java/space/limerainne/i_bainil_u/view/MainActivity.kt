@@ -209,14 +209,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // throw UnsupportedOperationException()
     }
 
-    override fun onListFragmentInteraction(item: AlbumEntry) {
+    override fun onListFragmentInteraction(item: Any) {
         // throw UnsupportedOperationException()
 
-        val albumInfoFragment = AlbumInfoFragment.newInstance(item)
-        supportFragmentManager.beginTransaction()
-                .add(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
-                .addToBackStack(AlbumInfoFragment.TAG)
-                .commit()
-
+        if (item is AlbumEntry) {
+            val albumInfoFragment = AlbumInfoFragment.newInstance(item)
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+                    .addToBackStack(AlbumInfoFragment.TAG)
+                    .commit()
+        }
     }
 }

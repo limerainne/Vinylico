@@ -18,7 +18,7 @@ class RequestAlbumDetail(val albumId: Long,
     private fun composeURL(): String {
         var url = "$URL?albumId=$albumId"
         url += "&userId=$userId"
-        url += "store=$store&lang=$lang"
+        url += "&store=$store&lang=$lang"
         return url
     }
 

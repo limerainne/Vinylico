@@ -32,22 +32,14 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/info_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="space.limerainne.app.i_bainil_u.view.AlbumInfoFragment">
-        <!--tools:showIn="@layout/activity_scrolling"-->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="Loading list..." />
-
-    </android.support.v4.widget.NestedScrollView>
+        app:layoutManager="LinearLayoutManager"
+        tools:context="space.limerainne.app.i_bainil_u.view.AlbumInfoFragment" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
