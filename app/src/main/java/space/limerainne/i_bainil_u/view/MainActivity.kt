@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar
 import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -40,7 +41,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (savedInstanceState == null) {
             val mainFragment = MainFragment.newInstance()
-            supportFragmentManager.beginTransaction().add(R.id.placeholder_top, mainFragment, MainFragment.TAG)
+            supportFragmentManager.beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .add(R.id.placeholder_top, mainFragment, MainFragment.TAG)
                     .addToBackStack(MainFragment.TAG)
                     .commit()
 
@@ -215,6 +218,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (item is AlbumEntry) {
             val albumInfoFragment = AlbumInfoFragment.newInstance(item)
             supportFragmentManager.beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .add(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
                     .addToBackStack(AlbumInfoFragment.TAG)
                     .commit()

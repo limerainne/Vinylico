@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
@@ -64,6 +65,7 @@ class MainFragment : Fragment() {
             Log.d("Test", targetFragment.toString())
 
             val transaction = childFragmentManager.beginTransaction()
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.replace(R.id.content_main, targetFragment, fragmentTAG).addToBackStack(fragmentTAG)
             transaction.commit()
         }
