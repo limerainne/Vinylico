@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import org.jetbrains.anko.async
@@ -46,8 +47,8 @@ class AlbumInfoFragment : Fragment() {
         fab!!.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
 
         // link toolbar with drawer in activity
-        if (activity is MainActivity && toolbar != null)
-            (activity as MainActivity).linkDrawerToToolbar(toolbar)
+        //if (activity is MainActivity && toolbar != null)
+        //    (activity as MainActivity).linkDrawerToToolbar(toolbar)
 
         val rec_view = view.findViewById(R.id.info_recycler_view) as RecyclerView?
         rec_view?.layoutManager = LinearLayoutManager(context)
@@ -83,6 +84,17 @@ class AlbumInfoFragment : Fragment() {
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // DEPRECATED this method is never called...
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                activity.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

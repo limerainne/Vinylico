@@ -44,22 +44,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             supportFragmentManager.beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .add(R.id.placeholder_top, mainFragment, MainFragment.TAG)
-                    .addToBackStack(MainFragment.TAG)
+                    //.addToBackStack(MainFragment.TAG)
                     .commit()
 
             val homeFragment = HomeFragment.newInstance("1", "1")
             val parentFrag = getActiveFragment()
             if (parentFrag is MainFragment)
                 parentFrag.changeChildFragment(homeFragment, HomeFragment.TAG)
-                //supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
             fragments.put(R.id.nav_home, homeFragment)
-
-//            val wishlistFragment = WishlistFragment.newInstance(1)
-//            supportFragmentManager.beginTransaction().add(R.id.content_main, wishlistFragment, WishlistFragment.TAG).commit()
-//            navigationView.setCheckedItem(R.id.nav_wishlist)
-//            fragments.put(R.id.nav_wishlist, wishlistFragment)
-
-//            fragments = mutableMapOf(R.id.nav_wishlist to wishlistFragment) // TODO not correct way
         }
 
     }
@@ -98,6 +90,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true
+        }
+        if (id == android.R.id.home)    {
+            onBackPressed()
             return true
         }
 
