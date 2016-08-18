@@ -53,13 +53,11 @@ class AlbumInfoFragment : Fragment() {
         rec_view?.layoutManager = LinearLayoutManager(context)
 
         async() {
-            val albumId: Long = 2423
+            val albumId: Long = albumEntry?.albumId ?: 2423
+
             val w: Server = Server()
             val wAlbumDetail = w.requestAlbumDetail(albumId, I_Bainil_UApp.USER_ID)
             val wTracks = w.requestTrackList(albumId, I_Bainil_UApp.USER_ID)
-            Log.d("Found", wAlbumDetail.labelName)
-            Log.d("Found", wTracks.albumId.toString())
-            Log.d("Found", wTracks.tracks[0].songName)
 
             uiThread {
                 rec_view?.adapter = AlbumInfoRecyclerViewAdapter(wAlbumDetail, wTracks, mListener)
