@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.jetbrains.anko.async
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 
@@ -46,7 +46,7 @@ class WishlistFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_wishlist, container, false)
 
         // TODO get data
-        async() {
+        doAsync() {
             val w: Server = Server()
             val wList = w.requestWishlist(I_Bainil_UApp.USER_ID)
             uiThread { if (view is RecyclerView) {

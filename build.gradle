@@ -2,18 +2,20 @@
 
 ext {
     androidCompileSdkVersion = 23
-    androidBuildToolsVersion = '23.0.2'
+    androidBuildToolsVersion = '24.0.1'
     androidMinSdkVersion = 15
     androidTargetSdkVersion = 23
 
-    supportLibraryVersion = '23.3.0'
-    retrofitVersion = '2.0.0'
-    anko_version = '0.8.2'
+    supportLibraryVersion = '24.2.0'
+    retrofitVersion = '2.1.0'
+    anko_version = '0.9'
 
     dependencies = [
             appCompat: "com.android.support:appcompat-v7:$supportLibraryVersion",
             cardView: "com.android.support:cardview-v7:$supportLibraryVersion",
             recyclerView: "com.android.support:recyclerview-v7:$supportLibraryVersion",
+            design: "com.android.support:design:$supportLibraryVersion",
+            support: "com.android.support:support-v4:$supportLibraryVersion",
 
             retrofit: "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofitConverterGson: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
@@ -24,20 +26,22 @@ ext {
 
             picasso: 'com.squareup.picasso:picasso:2.5.2',
 
-            rxAndroid: 'io.reactivex:rxandroid:1.1.0',
-            circleImageView: 'de.hdodenhof:circleimageview:1.3.0',
+            rxAndroid: 'io.reactivex:rxandroid:1.2.1',
+            circleImageView: 'de.hdodenhof:circleimageview:2.1.0',
 
             jUnit: 'junit:junit:4.12',
-            mockito: 'org.mockito:mockito-core:1.10.19',
-            robolectric: 'org.robolectric:robolectric:3.0',
+            mockito: 'org.mockito:mockito-core:2.0.106-beta',
+            robolectric: 'org.robolectric:robolectric:3.1.2',
 
-            jsoup: 'org.jsoup:jsoup:1.8.3',
-            gson: 'com.google.code.gson:gson:2.4',
-            kotson: 'com.github.salomonbrys.kotson:kotson:2.1.0',
+            jsoup: 'org.jsoup:jsoup:1.9.2',
+            gson: 'com.google.code.gson:gson:2.7',
+            kotson: 'com.github.salomonbrys.kotson:kotson:2.4.0',
 
             typeKit: 'com.tsengvn:Typekit:1.0.0',
     ]
 }
+
+apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     ext.kotlin_version = '1.0.3'
@@ -46,12 +50,17 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.1.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
 
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+        // run gradle command:
+        // gradle dependencyUpdates -Drevision=release -DoutputFormatter=json,xml
+        // latter report option doesn't have to be inserted..
     }
 }
 

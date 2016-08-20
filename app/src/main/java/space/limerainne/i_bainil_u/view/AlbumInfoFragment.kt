@@ -14,7 +14,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import org.jetbrains.anko.async
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
@@ -53,7 +53,7 @@ class AlbumInfoFragment : Fragment() {
         val rec_view = view.findViewById(R.id.info_recycler_view) as RecyclerView?
         rec_view?.layoutManager = LinearLayoutManager(context)
 
-        async() {
+        doAsync() {
             val albumId: Long = albumEntry?.albumId ?: 2423
 
             val w: Server = Server()

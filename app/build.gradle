@@ -51,6 +51,8 @@ dependencies {
     compile dependencies.appCompat
     compile dependencies.cardView
     compile dependencies.recyclerView
+    compile dependencies.design
+    compile dependencies.support
 
     compile dependencies.retrofit
     compile dependencies.retrofitConverterGson
@@ -73,11 +75,7 @@ dependencies {
     testCompile dependencies.mockito
     testCompile dependencies.robolectric
 
-    kapt 'com.android.databinding:compiler:2.1.0-rc1'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
+    kapt 'com.android.databinding:compiler:2.2.0-beta2'
 
     compile 'com.jakewharton:butterknife:8.2.1'
     kapt 'com.jakewharton:butterknife-compiler:8.2.1'
