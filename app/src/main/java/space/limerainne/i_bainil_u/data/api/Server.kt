@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.data.api
 
 import space.limerainne.i_bainil_u.domain.model.Wishlist
+import space.limerainne.i_bainil_u.domain.model.Connected
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.TrackList
 
@@ -12,6 +13,12 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
     fun requestWishlist(userId: Long) : Wishlist  {
         val result = RequestWishlist(userId).execute()
         val converted = dataMapper.convertWishlistRespondToDomain(userId, result)
+        return converted
+    }
+
+    fun requestConnected(userId: Long) : Connected  {
+        val result = RequestConnected(userId).execute()
+        val converted = dataMapper.convertConnectedRespondToDomain(userId, result)
         return converted
     }
 

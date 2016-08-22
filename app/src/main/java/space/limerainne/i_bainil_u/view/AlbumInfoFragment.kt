@@ -14,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import butterknife.BindView
+import butterknife.ButterKnife
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
@@ -36,15 +38,20 @@ class AlbumInfoFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    @BindView(R.id.toolbar)
+    lateinit var toolbar: Toolbar
+    @BindView(R.id.fab)
+    lateinit var fab: FloatingActionButton
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_album_info, container, false)
+        ButterKnife.bind(this, view)
 
-        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.title = albumEntry?.albumName
 
-        val fab = view.findViewById(R.id.fab) as FloatingActionButton?
-        fab!!.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
+        fab.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
 
         // link toolbar with drawer in activity
         //if (activity is MainActivity && toolbar != null)

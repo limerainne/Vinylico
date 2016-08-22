@@ -11,6 +11,7 @@ data class Wishlist(val success: Boolean,
 
 // entry for each list (featured, new, ..., wishlist)
 // - song** are not in wishlist
+// - below items are only for connected album info
 data class AlbumEntry(val albumEnglish: String,
                       val albumId: Long,
                       val albumName: String,
@@ -35,7 +36,33 @@ data class AlbumEntry(val albumEnglish: String,
                       val songId: Long,
                       val songName: String,
                       val songPath: String,
-                      val tracks: Int)
+                      val tracks: Int,
+
+                      val commentCount: Int,
+                      val connected_evt: Int,
+                      val connected_img: Int,
+                      val connected_mp3: Int,
+                      val connected_msg: Int,
+                      val connectedMessage: String,
+                      val connectedSeq: Long,
+                      val connectedType: String,
+                      val likeCount: Int,
+                      val playingCount: Int,
+
+                      val purchaseDate: Long,
+                      val purchasesSeq: Long,
+                      val rank: Long,
+
+                      val userId: Long,
+                      val userName: String,
+                      val userPic: String,
+                      val userRole: String
+                      )
+
+// connected
+// ref: /api/v2/user/connected/albums?userId=()&lang=ko
+data class Connected(val success: Boolean,
+                     val result: List<AlbumEntry>)
 
 // respond from album detail page request
 // ref: /api/v2/store/album?albumId=()&userId()&store=1&lang=ko

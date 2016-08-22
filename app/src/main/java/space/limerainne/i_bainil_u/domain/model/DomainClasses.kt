@@ -10,11 +10,9 @@ data class Wishlist(val userId: Long,
 }
 
 // entry for each list (featured, new, ..., wishlist)
-data class AlbumEntry(val albumEnglish: String,
-                      val albumId: Long,
+data class AlbumEntry(val albumId: Long,
                       val albumName: String,
                       val albumType: Int,
-                      val artistEnglish: String,
                       val artistId: Long,
                       val artistName: String,
                       val event: Boolean,
@@ -31,13 +29,16 @@ data class AlbumEntry(val albumEnglish: String,
                       val releaseDate: String,
                       val tracks: Int)
 
+// Connected
+data class Connected(val userId: Long,
+                    val albumEntries: List<AlbumEntry>) {
+}
+
 // album information in album detail page
 data class AlbumDetail(val albumCredit: String,
                        val albumDesc: String,
-                       val albumDescEnglish: String,
                        val albumId: Long,
                        val albumName: String,
-                       val albumEnglish: String,
                        val albumType: Int,
                        val artistId: Long,
                        val artistName: String,

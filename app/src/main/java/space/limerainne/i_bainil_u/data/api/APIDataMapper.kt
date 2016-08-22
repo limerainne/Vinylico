@@ -3,6 +3,9 @@ package space.limerainne.i_bainil_u.data.api
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum
 
+import space.limerainne.i_bainil_u.domain.model.Connected as DomainConnected
+import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainConnectedAlbum
+
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail as DomainAlbumDetail
 
 import space.limerainne.i_bainil_u.domain.model.TrackList as DomainTrackList
@@ -22,11 +25,10 @@ class APIDataMapper {
     }
 
     private fun convertWishAlbumToDomain(albumEntry: AlbumEntry): DomainWishAlbum = with(albumEntry) {
-        DomainWishAlbum(albumEnglish,
+        DomainWishAlbum(
                 albumId,
                 albumName,
                 albumType,
-                artistEnglish,
                 artistId,
                 artistName,
                 event,
@@ -44,16 +46,44 @@ class APIDataMapper {
                 tracks)
     }
 
+    fun convertConnectedRespondToDomain(userId: Long, connected: Connected) = with(connected) {
+        DomainConnected(userId, convertConnectedAlbumListToDomain(result))
+    }
+
+    private fun convertConnectedAlbumListToDomain(list: List<AlbumEntry>): List<DomainConnectedAlbum> {
+        return list.map { convertConnectedAlbumToDomain(it) }
+    }
+
+    private fun convertConnectedAlbumToDomain(albumEntry: AlbumEntry): DomainConnectedAlbum = with(albumEntry) {
+        DomainConnectedAlbum(
+                albumId,
+                albumName,
+                albumType,
+                artistId,
+                artistName,
+                event,
+                feature_aac,
+                feature_adult,
+                feature_booklet,
+                feature_hd,
+                feature_lyrics,
+                feature_rec,
+                free,
+                jacketImage,
+                "-",
+                purchased,
+                releaseDate,
+                tracks)
+    }
+
     fun convertAlbumDetailRespondToDomain(albumDetail: AlbumDetail): DomainAlbumDetail {
         if (!albumDetail.success)
             throw RuntimeException("Incorrect ID or fetch failed!")
         with(albumDetail.result) {
             return DomainAlbumDetail(albumCredit,
                     albumDesc,
-                    albumDescEnglish,
                     albumId,
                     albumName,
-                    albumEnglish,
                     albumType,
                     artistId,
                     artistName,
