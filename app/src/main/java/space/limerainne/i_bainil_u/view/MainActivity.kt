@@ -24,9 +24,9 @@ import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_main.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Wishlist
-import space.limerainne.i_bainil_u.view.WishlistFragment.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
@@ -128,7 +128,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragmentTAG = WishlistFragment.TAG
             }
             R.id.nav_purchased -> {
-                hasToChangeMainFragmentsChild = false
+                hasToChangeMainFragmentsChild = true
+                if (!fragments.containsKey(R.id.nav_purchased))   {
+                    fragments[R.id.nav_purchased] = PurchasedFragment.newInstance(1)
+                }
+                fragmentTAG = PurchasedFragment.TAG
             }
             // new activity
             R.id.nav_downloading -> {

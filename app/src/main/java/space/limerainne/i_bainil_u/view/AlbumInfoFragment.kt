@@ -20,6 +20,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.viewmodel.AlbumInfoRecyclerViewAdapter
@@ -32,7 +33,7 @@ class AlbumInfoFragment : Fragment() {
     // albumEntry from clicked entry; might not exist..
     var albumEntry: AlbumEntry? = null
 
-    private var mListener: WishlistFragment.OnListFragmentInteractionListener? = null
+    private var mListener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
@@ -86,8 +87,8 @@ class AlbumInfoFragment : Fragment() {
         super.onAttach(context)
         //        if (context instanceof OnListFragmentInteractionListener) {
         //            mListener = (OnListFragmentInteractionListener) context;
-        if (context is WishlistFragment.OnListFragmentInteractionListener) {
-            mListener = context as WishlistFragment.OnListFragmentInteractionListener?
+        if (context is OnListFragmentInteractionListener) {
+            mListener = context as OnListFragmentInteractionListener?
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
         }

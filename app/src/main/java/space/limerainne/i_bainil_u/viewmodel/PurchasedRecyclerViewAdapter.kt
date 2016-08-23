@@ -12,26 +12,25 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
 
-import kotlinx.android.synthetic.main.fragment_wishlist_item.*
-import kotlinx.android.synthetic.main.fragment_wishlist_item.view.*
+import kotlinx.android.synthetic.main.fragment_purchased_item.*
+import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
-import space.limerainne.i_bainil_u.domain.model.Wishlist
-import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
+import space.limerainne.i_bainil_u.domain.model.Connected
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class WishlistRecyclerViewAdapter(private val mValues: Wishlist, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<WishlistRecyclerViewAdapter.ViewHolder>() {
+class PurchasedRecyclerViewAdapter(private val mValues: Connected, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<PurchasedRecyclerViewAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_wishlist_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_purchased_item, parent, false)
         return ViewHolder(view)
     }
 

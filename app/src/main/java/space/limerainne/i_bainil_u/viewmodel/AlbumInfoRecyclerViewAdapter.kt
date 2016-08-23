@@ -8,6 +8,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
@@ -18,7 +19,7 @@ import kotlin.reflect.KClass
 /**
  * Created by Limerainne on 2016-08-16.
  */
-class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val mTracks: TrackList, private val mListener: WishlistFragment.OnListFragmentInteractionListener?) : RecyclerView.Adapter<AlbumInfoRecyclerViewAdapter.ViewHolder>() {
+class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val mTracks: TrackList, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<AlbumInfoRecyclerViewAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
         return mTracks.tracks.size + 1  // TODO +1: album description
     }

@@ -13,14 +13,13 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 
-import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
-import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import space.limerainne.i_bainil_u.viewmodel.WishlistRecyclerViewAdapter
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
+import space.limerainne.i_bainil_u.viewmodel.PurchasedRecyclerViewAdapter
 
 /**
  * A fragment representing a list of Items.
@@ -29,7 +28,7 @@ import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
  * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
  * interface.
  */
-class WishlistFragment : Fragment() {
+class PurchasedFragment : Fragment() {
     // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
@@ -44,14 +43,14 @@ class WishlistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_wishlist, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_purchased, container, false)
 
         // TODO get data
         doAsync() {
-            val w: Server = Server()
-            val wList = w.requestWishlist(I_Bainil_UApp.USER_ID)
+            val s: Server = Server()
+            val pList = s.requestConnected(I_Bainil_UApp.USER_ID)
             uiThread { if (view is RecyclerView) {
-                view.adapter = WishlistRecyclerViewAdapter(wList, mListener)
+                view.adapter = PurchasedRecyclerViewAdapter(pList, mListener)
                 }
             }
         }
@@ -85,7 +84,8 @@ class WishlistFragment : Fragment() {
 
         if (activity is MainActivity) {
             (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
-            (activity as MainActivity).setToolbarColor(R.color.babyPink, R.color.babyPinkDark)
+            (activity as MainActivity).setToolbarColor()
+            //(activity as MainActivity).setToolbarColor(R.color.babyPink, R.color.babyPinkDark)
         }
     }
 
@@ -107,16 +107,16 @@ class WishlistFragment : Fragment() {
     }
 
     companion object {
-        val TAG = WishlistFragment::class.java.simpleName
-        val NavMenuId = R.id.nav_wishlist
+        val TAG = PurchasedFragment::class.java.simpleName
+        val NavMenuId = R.id.nav_purchased
 
         // TODO: Customize parameter argument names
         private val ARG_COLUMN_COUNT = "column-count"
 
         // TODO: Customize parameter initialization
         @SuppressWarnings("unused")
-        fun newInstance(columnCount: Int): WishlistFragment {
-            val fragment = WishlistFragment()
+        fun newInstance(columnCount: Int): PurchasedFragment {
+            val fragment = PurchasedFragment()
             val args = Bundle()
             args.putInt(ARG_COLUMN_COUNT, columnCount)
             fragment.arguments = args
