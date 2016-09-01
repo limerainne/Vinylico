@@ -13,7 +13,7 @@ data class Wishlist(val success: Boolean,
 // - song** are not in wishlist
 // - below items are only for connected album info
 data class AlbumEntry(val albumEnglish: String,
-                      val albumId: Long,
+                      val albumId: Long?,
                       val albumName: String,
                       val albumType: Int,
                       val artistEnglish: String,
@@ -70,7 +70,7 @@ data class AlbumDetail(val success: Boolean,
                        val result: Album)
 
 // album information in album detail page
-data class Album(val albumCredit: String,
+data class Album(val albumCredit: String = "",
                  val albumDesc: String,
                  val albumDescEnglish: String,
                  val albumId: Long,
@@ -115,7 +115,7 @@ data class TrackList(val success: Boolean,
 // track information
 data class Track(val artistId: Long,
                  val artistName: String,
-                 val bitrate: String,
+                 val bitrate: String = "-",
                  val connected_msg: Int,    // TODO #msg? or msg itself?
                  val duration: Int,
                  val feature_aac: Boolean,

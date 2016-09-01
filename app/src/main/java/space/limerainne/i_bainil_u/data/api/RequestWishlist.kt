@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.data.api
 
 import com.google.gson.Gson
+import com.github.salomonbrys.kotson.*
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -18,6 +19,6 @@ class RequestWishlist(val userId: Long,
 
     override fun execute(): Wishlist {
         val wishlistJsonStr = java.net.URL(composeURL()).readText()
-        return gson.fromJson(wishlistJsonStr, Wishlist::class.java)
+        return gson.fromJson<Wishlist>(wishlistJsonStr)
     }
 }

@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.data.api
 
 import com.google.gson.Gson
+import com.github.salomonbrys.kotson.*
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -17,6 +18,6 @@ class RequestConnected(val userId: Long,
 
     override fun execute(): Connected {
         val JsonStr = java.net.URL(composeURL()).readText()
-        return gson.fromJson(JsonStr, Connected::class.java)
+        return gson.fromJson<Connected>(JsonStr)
     }
 }

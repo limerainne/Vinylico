@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.data.api
 
 import com.google.gson.Gson
+import com.github.salomonbrys.kotson.*
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -24,6 +25,6 @@ class RequestAlbumDetail(val albumId: Long,
 
     override fun execute(): AlbumDetail {
         val albumDetailJsonStr = java.net.URL(composeURL()).readText()
-        return gson.fromJson(albumDetailJsonStr, AlbumDetail::class.java)
+        return gson.fromJson<AlbumDetail>(albumDetailJsonStr)
     }
 }

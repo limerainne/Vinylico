@@ -14,7 +14,7 @@ class AlbumDetailTest  {
 
     companion object    {
         val USER_ID: Long = 2543
-        val ALBUM_ID: Long = 549
+        val ALBUM_ID: Long = 548
         // AlbumID NOTE
         // 2423: A New Trilogy by Lovelyz
         // 1003: Love, Curse, Suicide by UMC/UW
@@ -54,7 +54,7 @@ class AlbumDetailTest  {
 
         // print album name
         result.tracks.map { with(it)    {
-            println("- $songOrder. $songName [$songId] by $artistName [$artistId]")
+            println("- $songOrder. $songName [$songId; $bitrate] by $artistName [$artistId]")
         }}
     }
 }

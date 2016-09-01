@@ -26,7 +26,7 @@ class APIDataMapper {
 
     private fun convertWishAlbumToDomain(albumEntry: AlbumEntry): DomainWishAlbum = with(albumEntry) {
         DomainWishAlbum(
-                albumId,
+                albumId ?: 0,
                 albumName,
                 albumType,
                 artistId,
@@ -56,7 +56,7 @@ class APIDataMapper {
 
     private fun convertConnectedAlbumToDomain(albumEntry: AlbumEntry): DomainConnectedAlbum = with(albumEntry) {
         DomainConnectedAlbum(
-                albumId,
+                albumId ?: 0,
                 albumName,
                 albumType,
                 artistId,
@@ -128,7 +128,7 @@ class APIDataMapper {
     private fun convertTrackToDomain(track: Track): DomainTrack = with(track) {
         DomainTrack(artistId,
                 artistName,
-                "-",    // TODO bitrate field removed (16.08.17)
+                bitrate,    // TODO bitrate field removed (16.08.17)
                 connected_msg,
                 duration,
                 feature_aac,
