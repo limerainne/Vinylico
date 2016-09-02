@@ -9,6 +9,13 @@ data class Wishlist(val userId: Long,
                     val albumEntries: List<AlbumEntry>) {
 }
 
+// Store albums list
+data class StoreAlbums(val userId: Long,
+                       val category: String,
+                       val offset: Long,
+                       val limit: Long,
+                       val albumEntries: List<AlbumEntry>)
+
 // entry for each list (featured, new, ..., wishlist)
 data class AlbumEntry(val albumId: Long,
                       val albumName: String,
@@ -27,7 +34,12 @@ data class AlbumEntry(val albumId: Long,
                       val price: String,
                       val purchased: Int,
                       val releaseDate: String,
-                      val tracks: Int)
+                      val tracks: Int,
+
+                      val songId: Int = -1,
+                      val songName: String = "",
+                      val songPath: String = ""
+                      )
 
 // Connected
 data class Connected(val userId: Long,

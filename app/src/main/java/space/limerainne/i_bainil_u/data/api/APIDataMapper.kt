@@ -3,6 +3,9 @@ package space.limerainne.i_bainil_u.data.api
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum
 
+import space.limerainne.i_bainil_u.domain.model.StoreAlbums as DomainStoreAlbums
+import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainStoreAlbum
+
 import space.limerainne.i_bainil_u.domain.model.Connected as DomainConnected
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainConnectedAlbum
 
@@ -26,6 +29,36 @@ class APIDataMapper {
 
     private fun convertWishAlbumToDomain(albumEntry: AlbumEntry): DomainWishAlbum = with(albumEntry) {
         DomainWishAlbum(
+                albumId ?: -1,
+                albumName ?: "",
+                albumType ?: -1,
+                artistId ?: -1,
+                artistName ?: "",
+                event ?: false,
+                feature_aac ?: false,
+                feature_adult ?: false,
+                feature_booklet ?: false,
+                feature_hd ?: false,
+                feature_lyrics ?: false,
+                feature_rec ?: false,
+                free ?: false,
+                jacketImage ?: "",
+                price ?: "",
+                purchased ?: -1,
+                releaseDate ?: "",
+                tracks ?: -1)
+    }
+
+    fun convertStoreAlbumsToDomain(userId: Long, category: String, storeAlbums: StoreAlbums) = with(storeAlbums) {
+        DomainStoreAlbums(userId, category, storeAlbums.offset, storeAlbums.limit, convertStoreAlbumListToDomain(result))
+    }
+
+    private fun convertStoreAlbumListToDomain(list: List<AlbumEntry>): List<DomainStoreAlbum> {
+        return list.map { convertStoreAlbumToDomain(it) }
+    }
+
+    private fun convertStoreAlbumToDomain(albumEntry: AlbumEntry): DomainStoreAlbum = with(albumEntry) {
+        DomainStoreAlbum(
                 albumId ?: -1,
                 albumName ?: "",
                 albumType ?: -1,

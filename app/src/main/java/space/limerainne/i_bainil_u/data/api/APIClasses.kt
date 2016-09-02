@@ -4,6 +4,13 @@ package space.limerainne.i_bainil_u.data.api
  * Created by Limerainne on 2016-07-19.
  */
 
+// store albums list
+// ref: /api/v2/store/albums/(featured|new|top|...)?userId=()&offset=0&limit=20&lang=ko[/en]
+data class StoreAlbums(val success: Boolean,
+                    val result: List<AlbumEntry>,
+                       var offset: Long = 0,
+                       var limit: Long = 20)
+
 // wishlist
 // ref: /api/v2/user/wishes?userId=()&offset=0&limit=20&lang=ko[/en]
 data class Wishlist(val success: Boolean,

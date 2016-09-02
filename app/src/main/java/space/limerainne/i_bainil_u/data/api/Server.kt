@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.data.api
 
 import space.limerainne.i_bainil_u.domain.model.Wishlist
+import space.limerainne.i_bainil_u.domain.model.StoreAlbums
 import space.limerainne.i_bainil_u.domain.model.Connected
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.TrackList
@@ -31,6 +32,12 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
     fun requestTrackList(albumId: Long, userId: Long) : TrackList  {
         val result = RequestTrackList(albumId).execute()
         val converted = dataMapper.convertTrackListRespondToDomain(albumId, result)
+        return converted
+    }
+
+    fun requestStoreAlbums(category: String, userId: Long, offset: Long, limit: Long) : StoreAlbums  {
+        val result = RequestStoreAlbums(userId, category, offset, limit).execute()
+        val converted = dataMapper.convertStoreAlbumsToDomain(userId, category, result)
         return converted
     }
 }
