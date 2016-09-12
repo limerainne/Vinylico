@@ -14,15 +14,15 @@ class StoreAlbumsTest  {
 
     companion object    {
         val USER_ID: Long = 2543
-        val category: String = RequestStoreAlbums.CATEGORY_FEATURED
-        val offset = 0
-        val limit = 20
+        val category: String = RequestStoreAlbums.CATEGORY_NEW
+        val offset = 0L
+        val limit = 20L
     }
 
     @Test
     fun testCanGetStoreAlbums()  {
         val server = Server()
-        val result: DomainStoreAlbums = server.requestStoreAlbums(category, USER_ID, 0, 20)
+        val result: DomainStoreAlbums = server.requestStoreAlbums(category, USER_ID, offset, limit)
 
         // check type of result data
         assertTrue(result is DomainStoreAlbums)

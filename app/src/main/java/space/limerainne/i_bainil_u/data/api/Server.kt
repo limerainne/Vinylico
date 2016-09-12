@@ -35,7 +35,7 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
         return converted
     }
 
-    fun requestStoreAlbums(category: String, userId: Long, offset: Long, limit: Long) : StoreAlbums  {
+    fun requestStoreAlbums(category: String, userId: Long, offset: Long = 0, limit: Long = 20) : StoreAlbums  {
         val result = RequestStoreAlbums(userId, category, offset, limit).execute()
         val converted = dataMapper.convertStoreAlbumsToDomain(userId, category, result)
         return converted
