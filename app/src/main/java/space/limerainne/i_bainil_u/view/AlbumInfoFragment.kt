@@ -55,7 +55,7 @@ class AlbumInfoFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.title = albumEntry?.albumName
 
-        fab.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
+        fab.setOnClickListener { view -> Snackbar.make(view, "Loading album information... please wait...", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
 
         // link toolbar with drawer in activity
         //if (activity is MainActivity && toolbar != null)

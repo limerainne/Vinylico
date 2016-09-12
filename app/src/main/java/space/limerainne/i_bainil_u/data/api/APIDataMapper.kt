@@ -53,8 +53,8 @@ class APIDataMapper {
         DomainStoreAlbums(userId, category, storeAlbums.offset, storeAlbums.limit, convertStoreAlbumListToDomain(result))
     }
 
-    private fun convertStoreAlbumListToDomain(list: List<AlbumEntry>): List<DomainStoreAlbum> {
-        return list.map { convertStoreAlbumToDomain(it) }
+    private fun convertStoreAlbumListToDomain(list: List<AlbumEntry>): MutableList<DomainStoreAlbum> {
+        return list.map { convertStoreAlbumToDomain(it) }.toMutableList()
     }
 
     private fun convertStoreAlbumToDomain(albumEntry: AlbumEntry): DomainStoreAlbum = with(albumEntry) {

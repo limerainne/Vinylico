@@ -12,9 +12,9 @@ data class Wishlist(val userId: Long,
 // Store albums list
 data class StoreAlbums(val userId: Long,
                        val category: String,
-                       val offset: Long,
-                       val limit: Long,
-                       val albumEntries: List<AlbumEntry>)
+                       var offset: Long,
+                       var limit: Long,
+                       val albumEntries: MutableList<AlbumEntry>)
 
 // entry for each list (featured, new, ..., wishlist)
 data class AlbumEntry(val albumId: Long,

@@ -31,10 +31,18 @@ import space.limerainne.i_bainil_u.viewmodel.PurchasedRecyclerViewAdapter
  * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
  * interface.
  */
-class BrowseListFragment : Fragment() {
+class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScrollListener {
+
     // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
+
+    private lateinit var viewAdapter: BrowseListRecyclerViewAdapter
+
+    private var category = RequestStoreAlbums.CATEGORY_NEW
+    private var offset = 0L;
+    private var length = 20L;
+    private var nextOffset = 0L;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +59,15 @@ class BrowseListFragment : Fragment() {
         // TODO get data
         doAsync() {
             val s: Server = Server()
-            val sList = s.requestStoreAlbums(RequestStoreAlbums.CATEGORY_NEW, I_Bainil_UApp.USER_ID, 0, 20)
+            val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)
+
             uiThread { if (view is RecyclerView) {
-                view.adapter = BrowseListRecyclerViewAdapter(sList, mListener)
+                viewAdapter = BrowseListRecyclerViewAdapter(sList, mListener)
+                viewAdapter.setEndlessScrollListener(this@BrowseListFragment)
+                view.adapter = viewAdapter
+
+                offset = nextOffset
+                nextOffset += length + 1
                 }
             }
         }
@@ -126,6 +140,21 @@ class BrowseListFragment : Fragment() {
             return fragment
         }
     }
+
+    override fun onLoadMore(position: Int): Boolean {
+        doAsync {
+            val s: Server = Server()
+            val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)
+            uiThread {
+                viewAdapter.addItems(sList)
+
+                offset = nextOffset
+                nextOffset += length + 1
+            }
+        }
+        return true
+    }
+
 }
 /**
  * Mandatory empty constructor for the fragment manager to instantiate the

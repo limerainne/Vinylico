@@ -28,7 +28,15 @@ import space.limerainne.i_bainil_u.domain.model.StoreAlbums
  */
 class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<BrowseListRecyclerViewAdapter.ViewHolder>() {
 
+    private var endlessScrollListener: EndlessScrollListener? = null
+
     private var lastPosition = -1
+
+    fun setEndlessScrollListener(endlessScrollListener: EndlessScrollListener)  {
+        this.endlessScrollListener = endlessScrollListener
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_browse_list_item, parent, false)
@@ -37,6 +45,10 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(mValues.albumEntries[position])
+
+        if (position == getItemCount() - 1) {
+            endlessScrollListener?.onLoadMore(position);
+        }
 
         holder.mView.setOnClickListener {
             mListener?.onListFragmentInteraction(holder.mItem!!)
@@ -93,5 +105,15 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
         override fun toString(): String {
             return super.toString() + " '" + itemView.content.text + "'"
         }
+    }
+
+    interface EndlessScrollListener {
+        // http://jayjaylab.tistory.com/m/31
+        fun onLoadMore(position: Int): Boolean
+
+    }
+
+    fun  addItems(sList: StoreAlbums) {
+        mValues.albumEntries.addAll(sList.albumEntries)
     }
 }
