@@ -16,6 +16,9 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_album_info.*
+import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
@@ -69,6 +72,9 @@ class AlbumInfoFragment : Fragment() {
             val wTracks = w.requestTrackList(albumId, I_Bainil_UApp.USER_ID)
 
             uiThread {
+                Log.d("Picasso", wAlbumDetail.jacketImage)
+                Picasso.with(activity).load(wAlbumDetail.jacketImage).into(toolbar_background)
+
                 rec_view?.adapter = AlbumInfoRecyclerViewAdapter(wAlbumDetail, wTracks, mListener)
                 Log.d("Found", wAlbumDetail.labelName)
                 Log.d("Found", wTracks.albumId.toString())
