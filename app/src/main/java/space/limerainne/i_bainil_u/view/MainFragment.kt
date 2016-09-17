@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
 
             val transaction = childFragmentManager.beginTransaction()
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            transaction.replace(R.id.content_main, targetFragment, fragmentTAG).addToBackStack(fragmentTAG)
+            transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
             transaction.commit()
         }
     }
