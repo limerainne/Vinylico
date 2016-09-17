@@ -91,19 +91,11 @@ class PurchasedFragment : Fragment() {
 
     override fun onPause()  {
         super.onPause()
-
-        if (activity is MainActivity) {
-            // unset color
-            (activity as MainActivity).setToolbarColor()
-        }
     }
 
     override fun onDetach() {
         super.onDetach()
         mListener = null
-
-        if (activity is MainActivity)
-            (activity as MainActivity).setToolbarColor()
     }
 
     companion object {

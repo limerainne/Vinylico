@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return true
         }
         if (id == android.R.id.home)    {
+            // up/back button in toolbar
             onBackPressed()
             return true
         }
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (!fragments.containsKey(R.id.nav_browse))   {
                     fragments[R.id.nav_browse] = BrowseFragment.newInstance()
                 }
-                fragmentTAG = WishlistFragment.TAG                                }
+                fragmentTAG = BrowseFragment.TAG                                }
             R.id.nav_wishlist -> {
                 hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_wishlist))   {
@@ -154,9 +155,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (hasToChangeMainFragmentsChild)    {
             val targetFragment = fragments[item.itemId]
 
-            val frag = getActiveFragment()
-            if (frag is MainFragment && targetFragment != null)
-                frag.changeChildFragment(targetFragment, fragmentTAG)
+            if (targetFragment != null) {
+                val frag = getActiveFragment()
+                if (frag is MainFragment)
+                    frag.changeChildFragment(targetFragment, fragmentTAG)
+            }
         }
 
         // close drawer
@@ -191,6 +194,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun setToolbarColor(colorId: Int = 0, darkColorId: Int = 0)   {
+        Log.v("MainActivity", "setToolbarColor")
+
         var targetColorId = R.color.colorPrimary
         if (colorId != 0)
             targetColorId = colorId

@@ -104,6 +104,10 @@ class AlbumInfoFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // DEPRECATED this method is never called...
         when (item.getItemId()) {

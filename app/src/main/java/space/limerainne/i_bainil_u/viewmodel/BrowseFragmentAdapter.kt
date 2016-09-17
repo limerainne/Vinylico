@@ -10,7 +10,7 @@ import space.limerainne.i_bainil_u.view.BrowseListFragment
 /**
  * Created by CottonCandy on 2016-09-17.
  */
-class BrowseFragmentAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
+class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return 3
     }

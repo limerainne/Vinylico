@@ -30,7 +30,6 @@ class BrowseFragment : Fragment() {
 
         pageAdapter = BrowseFragmentAdapter(fragmentManager)
         val pagerYay = view.pager
-        Log.d("BrowseFragment", pagerYay.toString())
         pagerYay.adapter = pageAdapter
 
         return view
