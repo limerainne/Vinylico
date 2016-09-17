@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 ext {
-    androidCompileSdkVersion = 23
+    androidCompileSdkVersion = 24
     androidBuildToolsVersion = '24.0.2'
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 23
+    androidTargetSdkVersion = 24
 
     supportLibraryVersion = '24.2.0'
     retrofitVersion = '2.1.0'
