@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_album_info.*
 import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
@@ -73,7 +74,10 @@ class AlbumInfoFragment : Fragment() {
 
             uiThread {
                 Log.d("Picasso", wAlbumDetail.jacketImage)
-                Picasso.with(activity).load(wAlbumDetail.jacketImage).into(toolbar_background)
+                Picasso.with(activity)
+                        .load(wAlbumDetail.jacketImage)
+                        .noFade()
+                        .into(toolbar_background)
 
                 rec_view?.adapter = AlbumInfoRecyclerViewAdapter(wAlbumDetail, wTracks, mListener)
                 Log.d("Found", wAlbumDetail.labelName)
