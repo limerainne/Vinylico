@@ -120,9 +120,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_browse ->  {
                 hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_browse))   {
-                    fragments[R.id.nav_browse] = BrowseListFragment.newInstance(1)
+                    fragments[R.id.nav_browse] = BrowseFragment.newInstance()
                 }
-                fragmentTAG = WishlistFragment.TAG            }
+                fragmentTAG = WishlistFragment.TAG                                }
             R.id.nav_wishlist -> {
                 hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_wishlist))   {

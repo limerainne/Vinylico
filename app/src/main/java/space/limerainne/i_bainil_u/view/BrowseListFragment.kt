@@ -134,11 +134,14 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
 
         // TODO: Customize parameter initialization
         @SuppressWarnings("unused")
-        fun newInstance(columnCount: Int): BrowseListFragment {
+        fun newInstance(columnCount: Int, category: String = RequestStoreAlbums.CATEGORY_NEW): BrowseListFragment {
             val fragment = BrowseListFragment()
             val args = Bundle()
             args.putInt(ARG_COLUMN_COUNT, columnCount)
             fragment.arguments = args
+
+            fragment.category = category
+
             return fragment
         }
     }
