@@ -58,6 +58,8 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
 
         // TODO get data
         doAsync() {
+            nextOffset = 0
+
             val s: Server = Server()
             val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)
 
