@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             if (targetFragment != null) {
                 if (getActiveFragment() !is MainFragment)   {
-                    supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                    supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 }
                 val frag = getActiveFragment()
                 if (frag is MainFragment)

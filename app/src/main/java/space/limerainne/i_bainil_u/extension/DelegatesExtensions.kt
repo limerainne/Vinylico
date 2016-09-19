@@ -59,7 +59,7 @@ class Preference<T>(val context: Context, val name: String, val default: T) : Re
             is Int -> getInt(name, default)
             is Boolean -> getBoolean(name, default)
             is Float -> getFloat(name, default)
-            else -> throw IllegalArgumentException("This type can be saved into Preferences")
+            else -> throw IllegalArgumentException("This type cannot be saved into Preferences")
         }
 
         res as U
@@ -72,7 +72,7 @@ class Preference<T>(val context: Context, val name: String, val default: T) : Re
             is Int -> putInt(name, value)
             is Boolean -> putBoolean(name, value)
             is Float -> putFloat(name, value)
-            else -> throw IllegalArgumentException("This type can be saved into Preferences")
+            else -> throw IllegalArgumentException("This type cannot be saved into Preferences")
         }.apply()
     }
 }
