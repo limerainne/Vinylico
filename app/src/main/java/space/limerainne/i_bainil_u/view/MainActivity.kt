@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar
 import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -156,6 +157,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val targetFragment = fragments[item.itemId]
 
             if (targetFragment != null) {
+                if (getActiveFragment() !is MainFragment)   {
+                    supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                }
                 val frag = getActiveFragment()
                 if (frag is MainFragment)
                     frag.changeChildFragment(targetFragment, fragmentTAG)
