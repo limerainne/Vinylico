@@ -149,7 +149,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
             }
             R.id.nav_about -> {
+                // for test, open login page
+                // TODO if user already signed in, URL redirects to top page...
 
+                val webviewFragment = WebviewFragment.newInstance("https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile", "Login")
+                supportFragmentManager.beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .add(R.id.placeholder_top, webviewFragment, WebviewFragment.TAG)
+                        .addToBackStack(WebviewFragment.TAG)
+                        .commit()
             }
         }
 
