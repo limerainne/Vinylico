@@ -18,7 +18,7 @@ import space.limerainne.i_bainil_u.R
 /**
  * Created by Limerainne on 2016-09-22.
  */
-class WebviewFragment: Fragment() {
+open class WebviewFragment: Fragment() {
 
     var init_url = "http://www.bainil.com/bainil"
     var toolbar_title = "Bainil"
@@ -36,9 +36,18 @@ class WebviewFragment: Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_webview, container, false)
         ButterKnife.bind(this, view)
 
+        onInitToolbar()
+        onInitWebview()
+
+        return view
+    }
+
+    open protected fun onInitToolbar() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.title = toolbar_title
+    }
 
+    open protected fun onInitWebview()    {
         mWebView.loadUrl(init_url)
 
         // Enable Javascript
@@ -47,8 +56,6 @@ class WebviewFragment: Fragment() {
 
         // Force links and redirects to open in the WebView instead of in a browser
         mWebView.setWebViewClient(WebViewClient())
-
-        return view
     }
 
     companion object {

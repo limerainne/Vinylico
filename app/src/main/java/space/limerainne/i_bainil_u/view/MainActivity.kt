@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // for test, open login page
                 // TODO if user already signed in, URL redirects to top page...
 
-                val webviewFragment = WebviewFragment.newInstance("https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile", "Login")
+                val webviewFragment = LoginWebviewFragment.newInstance()
                 supportFragmentManager.beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .add(R.id.placeholder_top, webviewFragment, WebviewFragment.TAG)
