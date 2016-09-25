@@ -58,23 +58,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
-        var eventProcessed = false
+        try {
+            var eventProcessed = false
 
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
-        val activeFragment = getActiveFragment()
+            val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
+            val activeFragment = getActiveFragment()
 
-        if (drawer!!.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-            eventProcessed = true
-        } else if (supportFragmentManager.backStackEntryCount > 1) {
-            supportFragmentManager.popBackStack()
-            eventProcessed = true
-        } else if (activeFragment is MainFragment)   {
-            eventProcessed = activeFragment.onBackPressed()
-        }
+            Log.v("Activity", "BackStack: " + supportFragmentManager.backStackEntryCount.toString())
+            if (drawer!!.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START)
+                eventProcessed = true
+            } else if (supportFragmentManager.backStackEntryCount >= 1) {
+                supportFragmentManager.popBackStack()
+                eventProcessed = true
+            } else if (activeFragment is MainFragment) {
+                eventProcessed = activeFragment.onBackPressed()
+            }
 
-        if (!eventProcessed)
+            Log.v("Activity", eventProcessed.toString())
+            if (!eventProcessed)
+                super.onBackPressed()
+        }   catch (e: Exception) {
+            e.printStackTrace()
+
             super.onBackPressed()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -155,8 +163,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val webviewFragment = LoginWebviewFragment.newInstance()
                 supportFragmentManager.beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .add(R.id.placeholder_top, webviewFragment, WebviewFragment.TAG)
-                        .addToBackStack(WebviewFragment.TAG)
+                        .add(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
+                        .addToBackStack(LoginWebviewFragment.TAG)
                         .commit()
             }
         }

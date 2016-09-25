@@ -1,5 +1,6 @@
 package space.limerainne.i_bainil_u.view
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -23,8 +24,12 @@ open class WebviewFragment: Fragment() {
     var init_url = "http://www.bainil.com/bainil"
     var toolbar_title = "Bainil"
 
+    lateinit var this_activity: Activity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        this.this_activity = activity
     }
 
     @BindView(R.id.toolbar)
