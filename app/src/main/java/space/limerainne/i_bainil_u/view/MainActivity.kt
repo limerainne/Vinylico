@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 drawer.closeDrawer(GravityCompat.START)
                 eventProcessed = true
             } else if (supportFragmentManager.backStackEntryCount >= 1) {
-                supportFragmentManager.popBackStack()
+                popBackStack()
                 eventProcessed = true
             } else if (activeFragment is MainFragment) {
                 eventProcessed = activeFragment.onBackPressed()
@@ -83,6 +83,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             super.onBackPressed()
         }
+    }
+
+    fun popBackStack()  {
+        supportFragmentManager.popBackStack()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

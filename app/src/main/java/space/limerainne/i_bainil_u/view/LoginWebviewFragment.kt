@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.*
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.Cookie
 import java.net.CookieHandler
 import java.net.CookiePolicy
 import java.net.HttpURLConnection
@@ -19,10 +20,17 @@ class LoginWebviewFragment: WebviewFragment() {
     val url_fan_profile = "http://www.bainil.com/fan/profile"
     val url_top = "http://www.bainil.com/browse"
 
+    val url_signout = "https://www.bainil.com/signout"
+
+    val url_signin_wo_redir = "bailil.com/signin"
+
+    val loginInfo: MutableMap<String, String> = mutableMapOf()
+
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
 
-        init_url = getString(R.string.URL_Login)
+//        init_url = getString(R.string.URL_Login)
+        init_url = url_signout
         toolbar_title = "Login"
     }
 
@@ -38,7 +46,19 @@ class LoginWebviewFragment: WebviewFragment() {
                 Log.d(TAG, "onPageFinished: " + cookies)
 
                 if (url.equals(url_fan_profile))    {
-                    this_activity.onBackPressed()
+                    // get cookie & other informations
+                    // in HTML: user code, user URL, ...
+                    // http://jabstorage.tistory.com/5
+                    // http://stackoverflow.com/questions/2376471/how-do-i-get-the-web-page-contents-from-a-webview
+                    // TODO how to?
+
+                    // in Cookie: login token, auto-login enabled?
+                    parseLoginCookie(CookieManager.getInstance().getCookie(url))
+
+                    // return to previous screen
+                    val activity = this_activity
+                    if (activity is MainActivity)
+                        activity.popBackStack()
                 }
             }
 
@@ -46,11 +66,16 @@ class LoginWebviewFragment: WebviewFragment() {
                 super.onPageStarted(view, url, favicon)
                 Log.v(TAG, "onPageStarted: " + url)
 
-                if (url.equals(url_top)) {
-                    val cookies = CookieManager.getInstance().getCookie(url)
-                    Log.d(TAG, "onPageStarted: " + cookies)
+                val cookies = CookieManager.getInstance().getCookie(url)
+                Log.d(TAG, "onPageStarted: " + cookies)
 
-                    view?.loadUrl(url_fan_profile)
+                when  {
+                    url.equals(url_top) ->  {
+                        view?.loadUrl(url_fan_profile)
+                    }
+                    url?.endsWith(url_signin_wo_redir) ?: false -> {
+                        view?.loadUrl(init_url)
+                    }
                 }
             }
 
@@ -68,6 +93,17 @@ class LoginWebviewFragment: WebviewFragment() {
                 return true;
             }
         })
+    }
+
+    fun parseLoginCookie(cookie: String) {
+        Log.v(TAG, "parseLoginCookie: " + cookie)
+        // TODO differentiate auto login/one-time login
+
+        val cookieParser = Cookie()
+
+        cookieParser.parseLoginCookie(cookie)
+
+        Log.v(TAG, "parseLoginCookie: " + cookieParser.loginInfo)
     }
 
     companion object {
