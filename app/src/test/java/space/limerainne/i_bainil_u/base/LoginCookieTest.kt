@@ -2,7 +2,7 @@ package space.limerainne.i_bainil_u.data.api
 
 import org.junit.Test
 import org.junit.Assert.*
-import space.limerainne.i_bainil_u.base.Cookie
+import space.limerainne.i_bainil_u.base.LoginCookie
 
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum
@@ -11,7 +11,7 @@ import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum
  * Created by Limerainne on 2016-07-21.
  */
 
-class CookieTest  {
+class LoginCookieTest {
 
     companion object    {
         val COOKIE: String = """
@@ -24,17 +24,17 @@ class CookieTest  {
 
     @Test
     fun testCanParseCookie()    {
-        val c: Cookie = Cookie()
+        val c: LoginCookie = LoginCookie()
         c.parseLoginCookie(COOKIE)
 
-        println(c.loginInfo)
+        println(c)
     }
 
     @Test
     fun testCanParseCookieAutoLogin()    {
-        val c: Cookie = Cookie()
+        val c: LoginCookie = LoginCookie()
         c.parseLoginCookie(COOKIE_AUTO)
 
-        println(c.loginInfo)
+        println(c)
     }
 }

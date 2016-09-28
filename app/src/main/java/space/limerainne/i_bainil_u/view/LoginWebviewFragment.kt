@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.*
 import space.limerainne.i_bainil_u.R
-import space.limerainne.i_bainil_u.base.Cookie
+import space.limerainne.i_bainil_u.base.LoginCookie
+import space.limerainne.i_bainil_u.base.UserInfo
 import java.net.CookieHandler
 import java.net.CookiePolicy
 import java.net.HttpURLConnection
@@ -29,13 +30,27 @@ class LoginWebviewFragment: WebviewFragment() {
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
 
-//        init_url = getString(R.string.URL_Login)
-        init_url = url_signout
+        init_url = getString(R.string.URL_Login)
+//        init_url = url_signout
         toolbar_title = "Login"
     }
 
+    val javascriptInterfaceName = "HTMLRetriever"
+
     override fun onInitWebview()    {
         super.onInitWebview()
+
+        mWebView.addJavascriptInterface(object : Any() {
+
+            @JavascriptInterface
+            fun getHtml(html: String)   {
+                val u = UserInfo(this_activity)
+
+                u.parseInfo(html)
+
+                println(u)
+            }
+        }, javascriptInterfaceName)
 
         mWebView.setWebViewClient(object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -48,17 +63,21 @@ class LoginWebviewFragment: WebviewFragment() {
                 if (url.equals(url_fan_profile))    {
                     // get cookie & other informations
                     // in HTML: user code, user URL, ...
-                    // http://jabstorage.tistory.com/5
+                    // *http://jabstorage.tistory.com/5
                     // http://stackoverflow.com/questions/2376471/how-do-i-get-the-web-page-contents-from-a-webview
-                    // TODO how to?
+                    if (view != null) {
+                        view.loadUrl("javascript:" + javascriptInterfaceName + ".getHtml(document.getElementsByTagName('html')[0].innerHTML);")
+                    }
 
-                    // in Cookie: login token, auto-login enabled?
+                    // in LoginCookie: login token, auto-login enabled?
                     parseLoginCookie(CookieManager.getInstance().getCookie(url))
 
                     // return to previous screen
-                    val activity = this_activity
-                    if (activity is MainActivity)
+                    val activity = this_activity    // TODO why we have to save initial activity reference?
+                    if (activity is MainActivity) {
                         activity.popBackStack()
+                        activity.updateNavigationViewUserInfoArea()
+                    }
                 }
             }
 
@@ -99,11 +118,11 @@ class LoginWebviewFragment: WebviewFragment() {
         Log.v(TAG, "parseLoginCookie: " + cookie)
         // TODO differentiate auto login/one-time login
 
-        val cookieParser = Cookie()
+        val cookieParser = LoginCookie(this_activity)
 
         cookieParser.parseLoginCookie(cookie)
 
-        Log.v(TAG, "parseLoginCookie: " + cookieParser.loginInfo)
+        Log.v(TAG, "parseLoginCookie: " + cookieParser)
     }
 
     companion object {

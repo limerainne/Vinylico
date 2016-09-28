@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.weatherapp.extensions
+package space.limerainne.i_bainil_u.extension
 
 import java.text.DateFormat
 import java.util.*
@@ -22,4 +22,12 @@ import java.util.*
 fun Long.toDateString(dateFormat: Int = DateFormat.MEDIUM): String {
     val df = DateFormat.getDateInstance(dateFormat, Locale.getDefault())
     return df.format(this)
+}
+
+fun String.toLongOrElse(default: Long): Long  {
+    try {
+        return this.toLong()
+    }   catch (e: NumberFormatException)    {
+        return default
+    }
 }

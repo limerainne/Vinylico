@@ -22,10 +22,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Wishlist
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
@@ -207,6 +211,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer!!.setDrawerListener(toggle)
         toggle.syncState()
+    }
+
+    fun updateNavigationViewUserInfoArea()  {
+        val userInfo = UserInfo(this)
+
+        if (userInfo.userId > 0) {
+            Picasso.with(this).load("http://cloud.bainil.com/upload/user" + userInfo.userImageURL).into(account_photo)
+            account_name.text = userInfo.userName
+            account_email.text = userInfo.userEmail
+        }
+        else    {
+            account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
+            account_name.text = "Bainil"
+            account_email.text = "please.login@bainil.com"
+        }
     }
 
     fun setNavigationViewCheckedItem(itemId: Int)   {

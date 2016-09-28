@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.weatherapp.extensions
+package space.limerainne.i_bainil_u.extension
 
 import android.content.Context
 import kotlin.properties.ReadWriteProperty
@@ -22,7 +22,7 @@ import kotlin.reflect.KProperty
 
 object DelegatesExt {
     fun <T> notNullSingleValue(): ReadWriteProperty<Any?, T> = NotNullSingleValueVar()
-    fun preference(context: Context, name: String, default: Long) = Preference(context, name, default)
+    fun <T: Any> preference(context: Context, name: String, default: T) = Preference(context, name, default)
 }
 
 private class NotNullSingleValueVar<T>() : ReadWriteProperty<Any?, T> {
