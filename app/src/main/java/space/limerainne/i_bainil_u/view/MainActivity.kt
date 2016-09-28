@@ -51,11 +51,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .add(R.id.placeholder_top, mainFragment, MainFragment.TAG)
                     //.addToBackStack(MainFragment.TAG)
                     .commit()
+            supportFragmentManager.executePendingTransactions()
 
             val homeFragment = HomeFragment.newInstance("1", "1")
             val parentFrag = getActiveFragment()
             if (parentFrag is MainFragment)
                 parentFrag.changeChildFragment(homeFragment, HomeFragment.TAG)
+            else
+                mainFragment.changeChildFragment(homeFragment, HomeFragment.TAG)
             fragments.put(R.id.nav_home, homeFragment)
         }
 
@@ -228,6 +231,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    fun unsetNavigationViewCheckedItem()   {
+        val navigationView = nav_view
+        navigationView?.setCheckedItem(R.id.nav_none)
+    }
+
     fun setNavigationViewCheckedItem(itemId: Int)   {
         val navigationView = nav_view
 
@@ -248,7 +256,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             targetDarkColorId = darkColorId
 
         // toolbar color
-        val bar = supportActionBar
+        val bar: Toolbar = findViewById(R.id.toolbar) as Toolbar
         bar?.setBackgroundDrawable(ColorDrawable(resources.getColor(targetColorId)))
 
         // statusbar color

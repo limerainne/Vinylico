@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_main.*
 import space.limerainne.i_bainil_u.R
 
 /**
@@ -39,12 +40,15 @@ class MainFragment : Fragment() {
             (activity as MainActivity).linkDrawerToToolbar(toolbar)
 
         if (savedInstanceState == null) {
-            val homeFragment = HomeFragment.newInstance("1", "1")
-            (activity as AppCompatActivity).supportFragmentManager.beginTransaction().add(R.id.content_main, homeFragment, HomeFragment.TAG).commit()
-            (activity as MainActivity).fragments.put(R.id.nav_home, homeFragment)
+
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     fun onBackPressed(): Boolean    {

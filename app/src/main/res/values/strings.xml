@@ -68,5 +68,16 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
 
+    <!-- URLs -->
     <string name="URL_Login">https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile</string>
+
+    <!-- Menu items -->
+    <string name="nav_home">홈</string>
+    <string name="nav_browse">탐색</string>
+    <string name="nav_wishlist">위시리스트</string>
+    <string name="nav_purchased">구입한 앨범</string>
+    <string name="nav_downloading">다운로드</string>
+    <string name="nav_setting">설정</string>
+    <string name="nav_about">앱 정보</string>
+
 </resources>

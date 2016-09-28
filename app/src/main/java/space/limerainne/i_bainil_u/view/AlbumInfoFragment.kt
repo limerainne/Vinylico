@@ -106,6 +106,11 @@ class AlbumInfoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        if (activity is MainActivity) {
+            (activity as MainActivity).unsetNavigationViewCheckedItem()
+            (activity as MainActivity).setToolbarColor()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

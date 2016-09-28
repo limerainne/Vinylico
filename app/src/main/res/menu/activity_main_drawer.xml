@@ -6,16 +6,16 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="홈" />
+            android:title="@string/nav_home" />
         <item
             android:id="@+id/nav_browse"
-            android:title="탐색" />
+            android:title="@string/nav_browse" />
         <item
             android:id="@+id/nav_wishlist"
-            android:title="위시리스트" />
+            android:title="@string/nav_wishlist" />
         <item
             android:id="@+id/nav_purchased"
-            android:title="구입한 앨범" />
+            android:title="@string/nav_purchased" />
 <!--
         <item
             android:id="@+id/nav_camera"
@@ -40,13 +40,13 @@
         android:id="@+id/nav_group_bottom">
         <item
             android:id="@+id/nav_downloading"
-            android:title="다운로드" />
+            android:title="@string/nav_downloading" />
         <item
             android:id="@+id/nav_setting"
-            android:title="설정" />
+            android:title="@string/nav_setting" />
         <item
             android:id="@+id/nav_about"
-            android:title="앱 정보" />
+            android:title="@string/nav_about" />
 
         <!--<item-->
             <!--android:id="@+id/nav_share"-->
@@ -57,5 +57,10 @@
             <!--android:icon="@drawable/ic_menu_send"-->
             <!--android:title="Send" />-->
     </group>
+
+    <item
+        android:id="@+id/nav_none"
+        android:title=""
+        android:visible="false"/>
 
 </menu>

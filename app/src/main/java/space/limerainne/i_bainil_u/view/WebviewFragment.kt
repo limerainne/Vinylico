@@ -13,6 +13,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import butterknife.BindView
 import butterknife.ButterKnife
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_webview.view.*
 import space.limerainne.i_bainil_u.R
 
@@ -61,6 +62,11 @@ open class WebviewFragment: Fragment() {
 
         // Force links and redirects to open in the WebView instead of in a browser
         mWebView.setWebViewClient(WebViewClient())
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     companion object {
