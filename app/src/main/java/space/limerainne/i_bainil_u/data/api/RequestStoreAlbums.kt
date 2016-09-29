@@ -13,6 +13,8 @@ class RequestStoreAlbums(val userId: Long,
                          val lang: String = "ko",
                          val gson: Gson = Gson()) : Request {
 
+    // NOTE page number (=offset) is calculated by server regarding "limit" (item/page)!
+
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/store/albums"
 

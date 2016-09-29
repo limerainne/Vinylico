@@ -28,7 +28,7 @@ class BrowseFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_browse, container, false)
 
-        pageAdapter = BrowseFragmentAdapter(fragmentManager)
+        pageAdapter = BrowseFragmentAdapter(childFragmentManager)
         val pagerYay = view.pager
         pagerYay.adapter = pageAdapter
 

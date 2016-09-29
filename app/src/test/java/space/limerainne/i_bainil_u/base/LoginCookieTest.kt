@@ -22,19 +22,19 @@ class LoginCookieTest {
         """
     }
 
-    @Test
-    fun testCanParseCookie()    {
-        val c: LoginCookie = LoginCookie()
-        c.parseLoginCookie(COOKIE)
-
-        println(c)
-    }
-
-    @Test
-    fun testCanParseCookieAutoLogin()    {
-        val c: LoginCookie = LoginCookie()
-        c.parseLoginCookie(COOKIE_AUTO)
-
-        println(c)
-    }
+//    @Test
+//    fun testCanParseCookie()    {
+//        val c: LoginCookie = LoginCookie()
+//        c.parseLoginCookie(COOKIE)
+//
+//        println(c)
+//    }
+//
+//    @Test
+//    fun testCanParseCookieAutoLogin()    {
+//        val c: LoginCookie = LoginCookie()
+//        c.parseLoginCookie(COOKIE_AUTO)
+//
+//        println(c)
+//    }
 }

@@ -28,8 +28,9 @@ import space.limerainne.i_bainil_u.domain.model.StoreAlbums
  */
 class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<BrowseListRecyclerViewAdapter.ViewHolder>() {
 
-    private var endlessScrollListener: EndlessScrollListener? = null
+    private val loadMoreWhenRemainingLessThan = 5
 
+    private var endlessScrollListener: EndlessScrollListener? = null
     private var lastPosition = -1
 
     fun setEndlessScrollListener(endlessScrollListener: EndlessScrollListener)  {
@@ -46,7 +47,7 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(mValues.albumEntries[position])
 
-        if (position == getItemCount() - 1) {
+        if (position == getItemCount() - loadMoreWhenRemainingLessThan) {
             endlessScrollListener?.onLoadMore(position);
         }
 

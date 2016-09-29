@@ -69,7 +69,8 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
                 view.adapter = viewAdapter
 
                 offset = nextOffset
-                nextOffset += length + 1
+                nextOffset += 1
+                println("offset: ${offset}, nextOffset: ${nextOffset}")
                 }
             }
         }
@@ -147,14 +148,21 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
     }
 
     override fun onLoadMore(position: Int): Boolean {
+        println("onLoadMore:" + position)
         doAsync {
             val s: Server = Server()
             val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)
-            uiThread {
-                viewAdapter.addItems(sList)
 
-                offset = nextOffset
-                nextOffset += length + 1
+            println(sList)
+
+            if (sList.albumEntries.size > 0) {
+                uiThread {
+                    viewAdapter.addItems(sList)
+
+                    offset = nextOffset
+                    nextOffset += 1
+                    println("offset: ${offset}, nextOffset: ${nextOffset}")
+                }
             }
         }
         return true
