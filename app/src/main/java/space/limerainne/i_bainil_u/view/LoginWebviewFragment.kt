@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.*
+import kotlinx.android.synthetic.main.fragment_webview.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.LoginCookie
 import space.limerainne.i_bainil_u.base.UserInfo
@@ -36,6 +40,8 @@ class LoginWebviewFragment: WebviewFragment() {
     }
 
     val javascriptInterfaceName = "HTMLRetriever"
+    val myLock = Any()
+    var myLockVar: Boolean = false
 
     override fun onInitWebview()    {
         super.onInitWebview()
@@ -49,6 +55,15 @@ class LoginWebviewFragment: WebviewFragment() {
                 u.parseInfo(html)
 
                 println(u)
+
+                synchronized(myLock) {
+                    myLockVar = true
+                    try {
+                        (myLock as java.lang.Object).notifyAll()
+                    } catch (e: IllegalMonitorStateException)   {
+                        e.printStackTrace()
+                    }
+                }
             }
         }, javascriptInterfaceName)
 
@@ -61,16 +76,26 @@ class LoginWebviewFragment: WebviewFragment() {
                 Log.d(TAG, "onPageFinished: " + cookies)
 
                 if (url.equals(url_fan_profile))    {
-                    // get cookie & other informations
+                    mWebView.visibility = View.INVISIBLE
+
+                        // get cookie & other informations
                     // in HTML: user code, user URL, ...
                     // *http://jabstorage.tistory.com/5
                     // http://stackoverflow.com/questions/2376471/how-do-i-get-the-web-page-contents-from-a-webview
-                    if (view != null) {
-                        view.loadUrl("javascript:" + javascriptInterfaceName + ".getHtml(document.getElementsByTagName('html')[0].innerHTML);")
-                    }
 
                     // in LoginCookie: login token, auto-login enabled?
                     parseLoginCookie(CookieManager.getInstance().getCookie(url))
+
+                    if (view != null) {
+                        myLockVar = false
+
+                        view.loadUrl("javascript:" + javascriptInterfaceName + ".getHtml(document.getElementsByTagName('html')[0].innerHTML);")
+
+                        synchronized(myLock)    {   // wait till javascript method called
+                            if (!myLockVar)
+                                (myLock as java.lang.Object).wait(5000)
+                        }
+                    }
 
                     // return to previous screen
                     val activity = this_activity    // TODO why we have to save initial activity reference?
@@ -78,6 +103,8 @@ class LoginWebviewFragment: WebviewFragment() {
                         activity.popBackStack()
                         activity.updateNavigationViewUserInfoArea()
                     }
+                }   else    {
+                    mWebView.visibility = View.VISIBLE
                 }
             }
 
@@ -88,11 +115,23 @@ class LoginWebviewFragment: WebviewFragment() {
                 val cookies = CookieManager.getInstance().getCookie(url)
                 Log.d(TAG, "onPageStarted: " + cookies)
 
+                mWebView.visibility = View.VISIBLE
+
                 when  {
-                    url.equals(url_top) ->  {
+                    url?.contains(url_top) ?: false ->  {
+                        mWebView.visibility = View.INVISIBLE
                         view?.loadUrl(url_fan_profile)
                     }
                     url?.endsWith(url_signin_wo_redir) ?: false -> {
+                        mWebView.visibility = View.INVISIBLE
+                        view?.loadUrl(init_url)
+                    }
+                    url?.contains("facebook") ?: false -> {}    // TODO
+                    url?.equals(url_fan_profile) ?: false -> {}
+                    url?.equals(init_url) ?: false ->   {}
+                    url?.equals(url_signout) ?: false -> {}
+                    else -> {
+                        mWebView.visibility = View.INVISIBLE
                         view?.loadUrl(init_url)
                     }
                 }
