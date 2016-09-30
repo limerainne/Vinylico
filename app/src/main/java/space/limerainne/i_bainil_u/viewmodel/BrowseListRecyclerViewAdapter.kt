@@ -132,6 +132,10 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
     }
 
     fun  addItems(sList: StoreAlbums) {
-        mValues.albumEntries.addAll(sList.albumEntries)
+        val prevEnd = getItemCount()
+        if (sList.albumEntries.size > 0) {
+            mValues.albumEntries.addAll(sList.albumEntries)
+            notifyItemInserted(prevEnd)
+        }
     }
 }

@@ -82,21 +82,40 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/sep_date"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignBaseline="@+id/album_date"
+                    android:layout_centerInParent="true"
+                    android:layout_toLeftOf="@+id/album_date"
+                    android:src="@drawable/ic_today"/>
                 <TextView
                     android:id="@+id/album_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/album_artist"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="@dimen/text_margin"
+                    android:layout_marginRight="@dimen/text_margin"
+                    android:textSize="12dp"
                     android:textAppearance="?attr/textAppearanceListItem" />
+
+                <ImageView
+                    android:id="@+id/sep_note"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignBaseline="@+id/album_num_tracks"
+                    android:layout_toLeftOf="@+id/album_num_tracks"
+                    android:src="@drawable/ic_music_note"/>
                 <TextView
                     android:id="@+id/album_num_tracks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@id/album_date"
-                    android:layout_margin="@dimen/text_margin"
+                    android:layout_alignBaseline="@+id/album_artist"
+                    android:layout_toLeftOf="@id/sep_date"
+                    android:layout_marginRight="@dimen/text_margin"
+                    android:textSize="12dp"
                     android:textAppearance="?attr/textAppearanceListItem" />
 
                 <TextView
@@ -105,16 +124,21 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@id/album_num_tracks"
-                    android:layout_margin="@dimen/text_margin"
-                    android:ellipsize="marquee"
+                    android:layout_toLeftOf="@id/sep_note"
+                    android:layout_marginTop="@dimen/text_margin"
+                    android:layout_marginLeft="@dimen/text_margin"
+                    android:layout_marginRight="@dimen/text_margin"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textAppearance="?attr/textAppearanceListItem" />
             </RelativeLayout>
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
+                android:layout_marginBottom="@dimen/text_margin"
                 android:textAppearance="?attr/textAppearanceListItem" />
             <RelativeLayout
                 android:layout_width="match_parent"
