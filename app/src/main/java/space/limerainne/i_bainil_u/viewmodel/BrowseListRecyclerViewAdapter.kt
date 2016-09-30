@@ -11,9 +11,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
-
-import kotlinx.android.synthetic.main.fragment_purchased_item.*
-import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
+import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -82,12 +80,26 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        @BindView(R.id.album_id)
-        lateinit var mIdView: TextView
-        @BindView(R.id.content)
-        lateinit var mContentView: TextView
+//        @BindView(R.id.album_id)
+//        lateinit var mIdView: TextView
+//        @BindView(R.id.content)
+//        lateinit var mContentView: TextView
+//        @BindView(R.id.album_cover)
+//        lateinit var mCoverView: ImageView
+
         @BindView(R.id.album_cover)
         lateinit var mCoverView: ImageView
+
+        @BindView(R.id.album_artist)
+        lateinit var mArtistView: TextView
+        @BindView(R.id.album_num_tracks)
+        lateinit var mNumTracksView: TextView
+        @BindView(R.id.album_date)
+        lateinit var mDateView: TextView
+
+        @BindView(R.id.content)
+        lateinit var mContentView: TextView
+
 
         var mItem: AlbumEntry? = null
 
@@ -97,9 +109,14 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
 
         fun bind(item: AlbumEntry)  {
             mItem = item
+
             Log.d("Picasso", item.jacketImage)
             Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)
-            itemView.album_id.text = item.albumId.toString()
+
+            itemView.album_artist.text = item.artistName
+            itemView.album_num_tracks.text = item.tracks.toString()
+            itemView.album_date.text = item.releaseDate
+
             itemView.content.text = item.albumName
         }
 

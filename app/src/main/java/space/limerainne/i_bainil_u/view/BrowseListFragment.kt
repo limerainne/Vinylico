@@ -148,7 +148,7 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
     }
 
     override fun onLoadMore(position: Int): Boolean {
-        println("onLoadMore:" + position)
+        println("onLoadMore:" + position + ", to:o:" + nextOffset + ",l:" + length)
         doAsync {
             val s: Server = Server()
             val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)

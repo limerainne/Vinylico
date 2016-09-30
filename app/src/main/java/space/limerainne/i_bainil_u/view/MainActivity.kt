@@ -244,8 +244,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             targetDarkColorId = darkColorId
 
         // toolbar color
-        val bar: Toolbar = findViewById(R.id.toolbar) as Toolbar
-        bar?.setBackgroundDrawable(ColorDrawable(resources.getColor(targetColorId)))
+        val bar: Toolbar? = findViewById(R.id.toolbar) as Toolbar?
+        if (bar != null)
+            bar?.setBackgroundDrawable(ColorDrawable(resources.getColor(targetColorId)))
 
         // statusbar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
