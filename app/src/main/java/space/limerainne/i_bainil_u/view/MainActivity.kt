@@ -46,19 +46,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (savedInstanceState == null) {
             val mainFragment = MainFragment.newInstance()
-            supportFragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .add(R.id.placeholder_top, mainFragment, MainFragment.TAG)
-                    //.addToBackStack(MainFragment.TAG)
-                    .commit()
+            transitToFragment(R.id.placeholder_top, mainFragment, MainFragment.TAG, false)
             supportFragmentManager.executePendingTransactions()
 
             val homeFragment = HomeFragment.newInstance("1", "1")
-            val parentFrag = getActiveFragment()
-            if (parentFrag is MainFragment)
-                parentFrag.changeChildFragment(homeFragment, HomeFragment.TAG)
-            else
-                mainFragment.changeChildFragment(homeFragment, HomeFragment.TAG)
+            mainFragment.changeChildFragment(homeFragment, HomeFragment.TAG)
             fragments.put(R.id.nav_home, homeFragment)
         }
 
@@ -172,11 +164,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // TODO if user already signed in, URL redirects to top page...
 
                 val webviewFragment = LoginWebviewFragment.newInstance()
-                supportFragmentManager.beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .add(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
-                        .addToBackStack(LoginWebviewFragment.TAG)
-                        .commit()
+                transitToFragment(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
             }
         }
 
@@ -276,11 +264,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (item is AlbumEntry) {
             val albumInfoFragment = AlbumInfoFragment.newInstance(item)
-            supportFragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .add(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
-                    .addToBackStack(AlbumInfoFragment.TAG)
-                    .commit()
+            transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
         }
+    }
+
+    private fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String)  {
+        transitToFragment(targetPlaceHolder, targetFragment, targetTag, true)
+    }
+
+    private fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String, addToBackStack: Boolean)  {
+        val transaction = supportFragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .add(targetPlaceHolder, targetFragment, targetTag)
+        if (addToBackStack)
+            transaction.addToBackStack(targetTag)
+        transaction.commit()
     }
 }
