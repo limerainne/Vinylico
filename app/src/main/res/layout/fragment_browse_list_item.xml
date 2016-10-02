@@ -192,6 +192,7 @@
                     android:drawableTint="@color/colorAccent"
                     style="?android:attr/borderlessButtonStyle"
                     android:minWidth = "0dip"
+                    android:clickable="true"
                     android:textSize="12sp"
                     android:textColor="?attr/colorAccent"
                     android:contentDescription="Wish"

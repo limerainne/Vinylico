@@ -1,10 +1,15 @@
 package space.limerainne.i_bainil_u.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
@@ -21,12 +26,19 @@ import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
 import org.jetbrains.anko.custom.style
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.data.api.RequestToggleWish
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Connected
 import space.limerainne.i_bainil_u.domain.model.StoreAlbums
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
@@ -42,10 +54,9 @@ class BrowseListRecyclerViewAdapter(private val mContext: Context,
     private var endlessScrollListener: EndlessScrollListener? = null
     private var lastPosition = -1
 
-    fun setEndlessScrollListener(endlessScrollListener: EndlessScrollListener)  {
+    fun setEndlessScrollListener(endlessScrollListener: EndlessScrollListener) {
         this.endlessScrollListener = endlessScrollListener
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -77,7 +88,7 @@ class BrowseListRecyclerViewAdapter(private val mContext: Context,
         return mValues.albumEntries.size
     }
 
-    fun startAnimation(view: View, position: Int)   {
+    fun startAnimation(view: View, position: Int) {
         // use below library!
         // https://github.com/wasabeef/recyclerview-animators
 
@@ -111,6 +122,9 @@ class BrowseListRecyclerViewAdapter(private val mContext: Context,
         @BindView(R.id.content)
         lateinit var mContentView: TextView
 
+        @BindView(R.id.btn_album_wish)
+        lateinit var mButtonAlbumWish: AppCompatButton
+
         var mItem: AlbumEntry? = null
         val tintColor: Int
 
@@ -123,7 +137,7 @@ class BrowseListRecyclerViewAdapter(private val mContext: Context,
                 tintColor = mContext.getColor(R.color.colorAccent)
         }
 
-        fun bind(item: AlbumEntry)  {
+        fun bind(item: AlbumEntry) {
             mItem = item
 
             Log.d("Picasso", item.jacketImage)
@@ -143,9 +157,66 @@ class BrowseListRecyclerViewAdapter(private val mContext: Context,
             setVisibility(itemView.feature_record, item.feature_rec)
 
             setPriceButton(itemView.album_price, item.price, item.purchased)
+
+            mButtonAlbumWish.setOnClickListener {
+                println("Hey")
+                val connMgr = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val networkInfo = connMgr.activeNetworkInfo
+                println("Hey")
+                if (networkInfo != null && networkInfo!!.isConnected) {
+                    println("Hey")
+                    doAsync {
+                        println("Hey")
+                        val success: Boolean
+                        try {
+                            success = RequestToggleWish(item.albumId, I_Bainil_UApp.USER_ID, true).execute()
+                        } catch (e: Exception) {
+                            success = false
+                            e.printStackTrace()
+                            throw e
+                        }
+                        println("Hey")
+
+                        uiThread {
+                            if (success)
+                                mContext.toast("Adding album to wishlist succeed!")
+                            else
+                                mContext.toast("Failed to add album to wishlist...")
+                        }
+                    }
+                } else {
+                    mContext.toast("Check network connection!")
+                }
+            }
+
+            itemView.btn_album_share.setOnClickListener {
+                mContext.toast("TODO")
+                val mDrawable = itemView.album_cover.getDrawable()
+                val mBitmap = (mDrawable as BitmapDrawable).getBitmap()
+
+                // TODO request permission to WRITE_EXTERNAL_STORAGE, grantUriPermission()
+                val path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(),
+                        mBitmap, "Image Description", null)
+
+                val uri = Uri.parse(path)
+
+                // Construct a ShareIntent with link to image
+                val shareIntent = Intent()
+                shareIntent.setAction(Intent.ACTION_SEND)
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Listen \"${item.albumName}\" by ${item.artistName} with Bainil!\nhttp://bainil.com/a/${item.albumId}")
+                shareIntent.setType("image/*")
+
+                // Launch sharing dialog for image
+                mContext.startActivity(Intent.createChooser(shareIntent, "Share Image"))
+            }
+
+            itemView.album_price.setOnClickListener {
+                mContext.toast("TODO")
+            }
         }
 
-        fun setVisibility(view: View, isVisible: Boolean)   {
+        fun setVisibility(view: View, isVisible: Boolean) {
             if (isVisible)
                 view.visibility = View.VISIBLE
             else
@@ -203,7 +274,7 @@ class BrowseListRecyclerViewAdapter(private val mContext: Context,
 
     }
 
-    fun  addItems(sList: StoreAlbums) {
+    fun addItems(sList: StoreAlbums) {
         val prevEnd = getItemCount()
         if (sList.albumEntries.size > 0) {
             mValues.albumEntries.addAll(sList.albumEntries)

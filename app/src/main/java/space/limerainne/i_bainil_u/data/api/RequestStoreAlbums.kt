@@ -6,7 +6,7 @@ import com.github.salomonbrys.kotson.*
 /**
  * Created by Limerainne on 2016-07-21.
  */
-class RequestStoreAlbums(val userId: Long,
+class RequestStoreAlbums(val userId: Long,  // MANDATORY
                          val category: String = CATEGORY_FEATURED,
                          val offset: Long = 0,
                          val limit: Long = 20,
