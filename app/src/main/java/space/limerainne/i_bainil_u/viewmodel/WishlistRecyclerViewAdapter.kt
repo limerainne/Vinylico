@@ -1,10 +1,15 @@
 package space.limerainne.i_bainil_u.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,11 +23,20 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.data.api.RequestAlbumPurchased
+import space.limerainne.i_bainil_u.data.api.RequestToggleWish
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Wishlist
+import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.PurchaseWebviewFragment
 import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
 
 /**
@@ -154,6 +168,110 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         setVisibility(itemView.feature_record, item.feature_rec)
 
         setPriceButton(itemView.album_price, item.price, item.purchased)
+
+        itemView.btn_album_wish.setOnClickListener {
+            val connMgr = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connMgr.activeNetworkInfo
+            if (networkInfo != null && networkInfo!!.isConnected) {
+                doAsync {
+                    val success: Boolean
+                    try {
+                        success = RequestToggleWish(item.albumId, I_Bainil_UApp.USER_ID, true).execute()
+                    } catch (e: Exception) {
+                        success = false
+                        e.printStackTrace()
+                    }
+
+                    uiThread {
+                        if (success)
+                            mContext.toast("Adding album to wishlist succeed!")
+                        else
+                            mContext.toast("Failed to add album to wishlist...")
+                    }
+                }
+            } else {
+                mContext.toast("Check network connection!")
+            }
+        }
+
+        itemView.btn_album_share.setOnClickListener {
+            mContext.toast("Preparing to share with...")
+            val mDrawable = itemView.album_cover.getDrawable()
+            val mBitmap = (mDrawable as BitmapDrawable).getBitmap()
+            // TODO get better quality album cover!
+
+            // TODO request permission to WRITE_EXTERNAL_STORAGE, grantUriPermission()
+            val path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(),
+                    mBitmap, "Image Description", null)
+
+            val uri = Uri.parse(path)
+
+            // Construct a ShareIntent with link to image
+            val shareIntent = Intent()
+            shareIntent.setAction(Intent.ACTION_SEND)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Listen \"${item.albumName}\" by ${item.artistName} with Bainil!\nhttp://bainil.com/a/${item.albumId}")
+            shareIntent.setType("image/*")
+
+            // Launch sharing dialog for image
+            mContext.startActivity(Intent.createChooser(shareIntent, "Invite Bainil with Album to"))
+        }
+
+        itemView.album_price.setOnClickListener {
+            /*
+            http://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
+
+            http://www.bainil.com/api/v2/kakaopay/request?albumId=3276&userId=2543
+             */
+            val connMgr = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connMgr.activeNetworkInfo
+            if (networkInfo != null && networkInfo!!.isConnected) {
+                // check login first
+                val userInfo = UserInfo(mContext)
+
+                if (userInfo.userId < 1)    {
+                    mContext.toast("Please login first!")
+                    if (mContext is MainActivity)
+                        mContext.openLoginPage()
+
+                    return@setOnClickListener
+                }
+
+                doAsync {
+                    // 1. check if previously purchased
+                    val success: Boolean
+                    try {
+                        val userInfo = UserInfo(mContext)
+
+                        success = RequestAlbumPurchased(item.albumId, userInfo.userId, true).execute()
+                    } catch (e: Exception) {
+                        success = false
+                        e.printStackTrace()
+                    }
+
+                    // 2. redirect to purchase page
+                    if (success)    {
+                        if (mContext is MainActivity)   {
+                            uiThread {
+                                // TODO display purchase info & cautions
+                                val userInfo = UserInfo(mContext)
+
+                                val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, item.albumId, mContext)
+                                mContext.transitToFragment(R.id.placeholder_top, webviewFragment, PurchaseWebviewFragment.TAG)
+                            }
+                        }
+                    }   else    {
+                        uiThread {
+                            mContext.toast("Already purchased this album: ${item.albumName}")
+                        }
+                    }
+
+                    // 3. TODO check if purhcase succeed (when? where?)
+                }
+            } else {
+                mContext.toast("Check network connection!")
+            }
+        }
     }
 
     fun setVisibility(view: View, isVisible: Boolean)   {

@@ -1,6 +1,10 @@
 package space.limerainne.i_bainil_u.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -9,6 +13,7 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import butterknife.BindView
@@ -16,6 +21,7 @@ import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_webview.view.*
 import space.limerainne.i_bainil_u.R
+import java.net.URISyntaxException
 
 /**
  * Created by Limerainne on 2016-09-22.
@@ -24,6 +30,7 @@ open class WebviewFragment: Fragment() {
 
     var init_url = "http://www.bainil.com/bainil"
     var toolbar_title = "Bainil"
+    var toolbar_subtitle = ""
 
     lateinit var this_activity: Activity
 
@@ -51,6 +58,8 @@ open class WebviewFragment: Fragment() {
     open protected fun onInitToolbar() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.title = toolbar_title
+        if (toolbar_subtitle.length > 0)
+            toolbar.subtitle = toolbar_subtitle
     }
 
     open protected fun onInitWebview()    {
@@ -61,12 +70,54 @@ open class WebviewFragment: Fragment() {
         webSettings.setJavaScriptEnabled(true)
 
         // Force links and redirects to open in the WebView instead of in a browser
-        mWebView.setWebViewClient(WebViewClient())
+        mWebView.setWebViewClient(MyWebViewClient(context))
     }
 
     override fun onResume() {
         super.onResume()
 
+    }
+
+    open inner class MyWebViewClient(context: Context): WebViewClient()   {
+        // http://apogenes.tistory.com/4
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            if (url != null && url.startsWith("intent://")) {
+                try {
+                    val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                    val existPackage = context.getPackageManager().getLaunchIntentForPackage(intent.getPackage())
+                    if (existPackage != null) {
+                        startActivity(intent)
+                    } else {
+                        val marketIntent = Intent(Intent.ACTION_VIEW)
+                        marketIntent.setData(Uri.parse("market://details?id=" + intent.getPackage()))
+                        startActivity(marketIntent)
+                    }
+                    return true
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            } else if (url != null && url.startsWith("market://")) {
+                try {
+                    val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                    if (intent != null) {
+                        startActivity(intent)
+                    }
+                    return true
+                } catch (e: URISyntaxException) {
+                    e.printStackTrace()
+                }
+
+            }
+            view?.loadUrl(url)
+            return false
+        }
+
+        @SuppressLint("NewApi")
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            val url: String = request?.url.toString()
+            return this.shouldOverrideUrlLoading(view, url)
+        }
     }
 
     companion object {

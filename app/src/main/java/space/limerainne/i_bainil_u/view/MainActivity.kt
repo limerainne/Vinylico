@@ -1,5 +1,6 @@
 package space.limerainne.i_bainil_u.view
 
+import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -100,6 +101,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.action_bainil_app)   {
+            val topFrag = getActiveFragment()
+            when    {
+                topFrag is AlbumInfoFragment -> {
+                    val albumEntry = topFrag.albumEntry
+                    if (albumEntry != null)
+                        executeBainilAppAlbumScreen(albumEntry.albumId)
+                    else
+                        executeBainilApp()
+                }
+                else -> {
+                    // just open Bainil App.
+                    executeBainilApp()
+                }
+            }
+
+            return true;
+        }
         if (id == R.id.action_settings) {
             return true
         }
@@ -110,6 +129,50 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun executeBainilApp()  {
+        val pkgName = "com.bainil.app"
+
+        try {
+            val existPackage = packageManager.getLaunchIntentForPackage(pkgName)
+            if (existPackage != null) {
+                with (existPackage) {
+                    addCategory(Intent.CATEGORY_LAUNCHER)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(existPackage)
+            } else {
+                val marketIntent = Intent(Intent.ACTION_VIEW)
+                marketIntent.data = Uri.parse("market://details?id=" + pkgName)
+                startActivity(marketIntent)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun executeBainilAppAlbumScreen(albumId: Long) {
+        // http://apogenes.tistory.com/4
+        // { act=android.intent.action.VIEW dat=bainilapp://?type=A&code=2423 pkg=com.bainil.app }
+
+        val url = """intent://?type=A&code=${albumId}#Intent;scheme=bainilapp;package=com.bainil.app;end;"""
+
+        try {
+            val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+
+            val existPackage = packageManager.getLaunchIntentForPackage(intent.`package`)
+            if (existPackage != null) {
+                startActivity(intent)
+            } else {
+                val marketIntent = Intent(Intent.ACTION_VIEW)
+                marketIntent.data = Uri.parse("market://details?id=" + intent.`package`)
+                startActivity(marketIntent)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -160,10 +223,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_about -> {
                 // for test, open login page
-                // TODO if user already signed in, URL redirects to top page...
 
-                val webviewFragment = LoginWebviewFragment.newInstance()
-                transitToFragment(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
+                openLoginPage()
             }
         }
 
@@ -184,6 +245,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         (findViewById(R.id.drawer_layout) as DrawerLayout).closeDrawer(GravityCompat.START)
 
         return true
+    }
+
+    fun openLoginPage() {
+        val webviewFragment = LoginWebviewFragment.newInstance()
+        transitToFragment(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
     }
 
     fun getActiveFragment(): Fragment? {
@@ -268,11 +334,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String)  {
+    fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String)  {
         transitToFragment(targetPlaceHolder, targetFragment, targetTag, true)
     }
 
-    private fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String, addToBackStack: Boolean)  {
+    fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String, addToBackStack: Boolean)  {
         val transaction = supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .add(targetPlaceHolder, targetFragment, targetTag)

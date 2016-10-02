@@ -11,47 +11,18 @@ import java.net.HttpURLConnection
  */
 class RequestToggleWish(val albumId: Long,
                         val userId: Long,
-                        val wish: Boolean) : Request {
+                        val wish: Boolean) : RequestHTTPConnection() {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/album/wish"
         // e.g. "http://www.bainil.com/api/v2/album/wish?albumId=3276&userId=2543&wish=true"
     }
 
-    private fun composeURL() = "$URL?albumId=$albumId&userId=$userId&wish=" +
+    override fun composeURL() = "$URL?albumId=$albumId&userId=$userId&wish=" +
                                     if (wish) "true" else "false"
 
     override fun execute(): Boolean {
-        val len = 500
-
-        println(composeURL())
-
-        val url = java.net.URL(composeURL())
-        val conn = url.openConnection() as HttpURLConnection
-        conn.setReadTimeout(10000 /* milliseconds */)
-        conn.setConnectTimeout(15000 /* milliseconds */)
-        conn.setRequestMethod("GET")
-        conn.setDoInput(true)
-        // Starts the query
-        conn.connect()
-        val response = conn.getResponseCode()
-        val i_s = conn.getInputStream()
-
-        // Convert the InputStream into a string
-        val contentAsString = readIt(i_s, len)
-
-        println(contentAsString)
-
-        return contentAsString.contains("true")
+        return getHTTPResponseString().contains("true")
     }
 
-    // Reads an InputStream and converts it to a String.
-    @Throws(IOException::class, UnsupportedEncodingException::class)
-    fun readIt(stream: InputStream, len: Int): String {
-        var reader: Reader? = null
-        reader = InputStreamReader(stream, "UTF-8")
-        val buffer = CharArray(len)
-        reader!!.read(buffer)
-        return String(buffer)
-    }
 }
