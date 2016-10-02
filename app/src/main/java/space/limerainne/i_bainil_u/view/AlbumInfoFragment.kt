@@ -60,7 +60,7 @@ class AlbumInfoFragment : Fragment() {
         toolbar.title = albumEntry?.albumName
 
         if (albumEntry?.purchased == 1) {
-            fab.setImageResource(R.drawable.ic_file_download)
+            fab.setImageResource(R.drawable.ic_download_white)
         }
 
         fab.setOnClickListener {

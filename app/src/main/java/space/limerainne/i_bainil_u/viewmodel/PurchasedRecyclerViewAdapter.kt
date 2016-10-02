@@ -296,7 +296,7 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 
         // if purchased, change icon to...
         val btnResId: Int
-        btnResId = R.drawable.ic_file_download
+        btnResId = R.drawable.ic_download
 
         val btnDrawable: Drawable?
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
