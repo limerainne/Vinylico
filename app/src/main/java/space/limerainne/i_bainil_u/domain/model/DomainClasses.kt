@@ -86,27 +86,56 @@ data class AlbumDetail(val albumCredit: String,
                        val wish: Int,
                        val wishCount: Int)
 
-// track list
-data class TrackList(val albumId: Long,
-                     val tracks: List<Track>)
+    fun convertToAlbumEntry(albumDetail: AlbumDetail, purchased: Int = 0): AlbumEntry = with (albumDetail) {
+        AlbumEntry(
+            albumId,
+            albumName,
+            albumType,
+            artistId,
+            artistName,
+            event,
+            feature_aac,
+            feature_adult,
+            feature_booklet,
+            feature_hd,
+            feature_lyrics,
+            feature_rec,
+            free,
+            jacketImage,
+            price,
+            purchased,  // no purchase info -_-
+            releaseDate,
+            tracks,
 
-// track information
-data class Track(val artistId: Long,
-                 val artistName: String,
-                 val bitrate: String,
-                 val connected_msg: Int,    // TODO #msg? or msg itself?
-                 val duration: Int,
-                 val feature_aac: Boolean,
-                 val feature_adult: Boolean,
-                 val feature_hd: Boolean,
-                 val feature_lyrics: Boolean,
-                 val feature_rec: Boolean,
-                 val iap: String,
-                 val lyricsPath: String,
-                 val price: String,
-                 val saleType: String,
-                 val songId: Long,
-                 val songName: String,
-                 val songOrder: Int,
-                 val songPath: String,
-                 val songSize: Long)
+            songId = -1,
+            songName = "",
+            songPath = "",
+
+            purchasedDate = ""
+        )
+    }
+
+    // track list
+    data class TrackList(val albumId: Long,
+                         val tracks: List<Track>)
+
+    // track information
+    data class Track(val artistId: Long,
+                     val artistName: String,
+                     val bitrate: String,
+                     val connected_msg: Int,    // TODO #msg? or msg itself?
+                     val duration: Int,
+                     val feature_aac: Boolean,
+                     val feature_adult: Boolean,
+                     val feature_hd: Boolean,
+                     val feature_lyrics: Boolean,
+                     val feature_rec: Boolean,
+                     val iap: String,
+                     val lyricsPath: String,
+                     val price: String,
+                     val saleType: String,
+                     val songId: Long,
+                     val songName: String,
+                     val songOrder: Int,
+                     val songPath: String,
+                     val songSize: Long)

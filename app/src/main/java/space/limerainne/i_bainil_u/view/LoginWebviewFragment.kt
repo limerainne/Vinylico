@@ -138,7 +138,6 @@ class LoginWebviewFragment: WebviewFragment() {
             when  {
                 url?.contains(url_top) ?: false ->  {
                     // if login token is alive...
-
                     view?.stopLoading()
 
                     mWebView.visibility = View.INVISIBLE

@@ -90,9 +90,7 @@ class APIDataMapper {
         return list.map { convertConnectedAlbumToDomain(it) }
     }
 
-    private fun convertConnectedAlbumToDomain(albumEntry: AlbumEntry): DomainConnectedAlbum = with(albumEntry) {
-        println("API: for each item")
-
+    fun convertConnectedAlbumToDomain(albumEntry: AlbumEntry): DomainConnectedAlbum = with(albumEntry) {
         val purchasedDateStringify: String
         try {
             purchasedDateStringify = SimpleDateFormat("yyyy-MM-dd").format(purchaseDate)

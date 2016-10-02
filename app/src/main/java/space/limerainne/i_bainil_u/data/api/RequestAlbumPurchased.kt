@@ -21,6 +21,7 @@ class RequestAlbumPurchased(val albumId: Long,
     override fun composeURL() = "$URL?userId=$userId&albumId=$albumId&store=1&type=pay"
 
     override fun execute(): Boolean {
+        // NOTE true means "purchasable"
         val responseString = getHTTPResponseString()
         return (responseString.contains("false") and responseString.contains("PURCHASE_NOT_BUY"))
     }

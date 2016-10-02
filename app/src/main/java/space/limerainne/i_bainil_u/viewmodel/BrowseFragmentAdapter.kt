@@ -12,7 +12,7 @@ import space.limerainne.i_bainil_u.view.BrowseListFragment
  */
 class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
-        return 3
+        return 4
     }
 
     override fun getItem(position: Int): Fragment? {
@@ -21,6 +21,7 @@ class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
             0 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_FEATURED)
             1 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_NEW)
             2 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_TOP)
+            3 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_XSFM)
             else -> return null
         }
     }
@@ -30,6 +31,7 @@ class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
             0 -> return "Featured"
             1 -> return "New"
             2 -> return "Top"
+            3 -> return "XSFM"
         }
 
         return super.getPageTitle(position)

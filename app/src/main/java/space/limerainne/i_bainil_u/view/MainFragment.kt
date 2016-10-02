@@ -14,7 +14,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.data.api.*
+import space.limerainne.i_bainil_u.domain.model.AlbumDetail
+import space.limerainne.i_bainil_u.domain.model.convertToAlbumEntry
 
 /**
  * Created by Limerainne on 2016-08-07.
@@ -33,7 +40,57 @@ class MainFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
         val fab = view.findViewById(R.id.fab) as FloatingActionButton?
-        fab!!.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() }
+        fab!!.setOnClickListener {
+            view ->
+            val snackbar_instance = Snackbar.make(view, "Finding random album...", Snackbar.LENGTH_LONG).setAction("Action", null)
+            snackbar_instance.show()
+
+            doAsync {
+                // 1. get new list --> get latest album ID
+                val list_new = RequestStoreAlbums(I_Bainil_UApp.USER_ID, RequestStoreAlbums.CATEGORY_NEW, 0, 10).execute()
+                val latest_album_id: Long = run<Long> {
+                    var result = 3000L
+                    if (list_new.result.size > 0) {
+                        result = list_new.result.maxBy { it.albumId ?: result }?.albumId ?: result
+                    }
+                    result
+                }
+
+                // 2. try to retrieve album information until succeed
+                var target_id: Long = 0
+                var trialCount = 10
+                var album_info: AlbumDetail? = null
+
+                while (--trialCount > 0)    {
+                    val cand_id: Long = Math.floor(Math.random() * latest_album_id).toLong()
+
+                    album_info = Server().requestAlbumDetail(cand_id, I_Bainil_UApp.USER_ID)
+                    if (album_info.albumId > 0)  {
+                        target_id = cand_id
+                        break
+                    }
+                }
+
+                val userInfo = UserInfo(context)
+                val purchased = RequestAlbumPurchased(target_id, if (userInfo.userId > 0) userInfo.userId else I_Bainil_UApp.USER_ID, true).execute()
+
+                // 3. open album info activity
+                uiThread {
+                    snackbar_instance.dismiss()
+                    if (target_id < 1)  {
+                        Snackbar.make(view, "Failed to open random album...try again later!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                    }   else    {
+                        val activity = activity
+                        val album_info = album_info
+                        if (activity is MainActivity && album_info != null) {
+                            val entry = convertToAlbumEntry(album_info, if (purchased) 0 else 1)
+                            val albumInfoFragment = AlbumInfoFragment.newInstance(entry)
+                            activity.transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+                        }
+                    }
+                }
+            }
+        }
 
         // link toolbar with drawer in activity
         if (activity is MainActivity && toolbar != null)
