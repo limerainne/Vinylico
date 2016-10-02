@@ -11,4 +11,4 @@
     android:background="@android:color/white"
     app:layoutManager="LinearLayoutManager"
     tools:context="space.limerainne.i_bainil_u.view.WishlistFragment"
-    tools:listitem="@layout/fragment_wishlist_item" />
+    tools:listitem="@layout/fragment_browse_list_item" />

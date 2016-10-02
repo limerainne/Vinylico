@@ -20,6 +20,7 @@
 <!--</LinearLayout>-->
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview"
@@ -67,56 +68,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp" >
         <ImageView
             android:id="@+id/album_cover"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="top"
             tools:src="@mipmap/ic_launcher"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text_margin"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/sep_date"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_alignBaseline="@+id/album_date"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@+id/album_date"
-                    android:src="@drawable/ic_today"/>
-                <TextView
-                    android:id="@+id/album_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/album_artist"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/text_margin"
-                    android:textSize="12dp"
-                    android:textAppearance="?attr/textAppearanceListItem" />
-
-                <ImageView
-                    android:id="@+id/sep_note"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_alignBaseline="@+id/album_num_tracks"
-                    android:layout_toLeftOf="@+id/album_num_tracks"
-                    android:src="@drawable/ic_music_note"/>
-                <TextView
-                    android:id="@+id/album_num_tracks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/album_artist"
-                    android:layout_toLeftOf="@id/sep_date"
-                    android:layout_marginRight="@dimen/text_margin"
-                    android:textSize="12dp"
-                    android:textAppearance="?attr/textAppearanceListItem" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/text_margin"
+                >
 
                 <TextView
                     android:id="@+id/album_artist"
@@ -124,33 +95,138 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@id/sep_note"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:layout_marginLeft="@dimen/text_margin"
+                    android:layout_toLeftOf="@+id/line_1st_info"
                     android:layout_marginRight="@dimen/text_margin"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textAppearance="?attr/textAppearanceListItem" />
+                    android:text="Artist" />
+
+                <LinearLayout
+                    android:id="@+id/line_1st_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/album_artist"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_music_note"/>
+                    <TextView
+                        android:id="@+id/album_num_tracks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:textSize="10sp"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:text="10"/>
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_today"/>
+                    <TextView
+                        android:id="@+id/album_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="10sp"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:text="2014.00.00"/>
+                </LinearLayout>
             </RelativeLayout>
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/text_margin"
                 android:layout_marginRight="@dimen/text_margin"
-                android:layout_marginBottom="@dimen/text_margin"
-                android:textAppearance="?attr/textAppearanceListItem" />
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:text="Title"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <!-- feature icons -->
+                <ImageView
+                    android:id="@+id/feature_lyrics"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:visibility="visible"
+                    android:tint="?android:attr/textColorHint"
+                    android:contentDescription="Feature: Lyrics"
+                    android:src="@drawable/ic_feature_lyrics"/>
+                <ImageView
+                    android:id="@+id/feature_booklet"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/feature_lyrics"
+                    android:visibility="visible"
+                    android:tint="?android:attr/textColorHint"
+                    android:contentDescription="Feature: Booklet"
+                    android:src="@drawable/ic_feature_booklet"/>
+                <ImageView
+                    android:id="@+id/feature_record"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/feature_booklet"
+                    android:visibility="visible"
+                    android:tint="?android:attr/textColorHint"
+                    android:contentDescription="Feature: Voice Record"
+                    android:src="@drawable/ic_feature_record"/>
 
                 <!-- wish button -->
+                <Button
+                    android:id="@+id/btn_album_wish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_album_share"
+                    android:drawableLeft="@drawable/ic_love_filled"
+                    android:drawableTint="?android:attr/colorAccent"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth = "0dip"
+                    android:textSize="12sp"
+                    android:textColor="?attr/colorAccent"
+                    android:contentDescription="Wish"
+                    android:text="" />
                 <!-- share button -->
+                <Button
+                    android:id="@+id/btn_album_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/album_price"
+                    android:drawableLeft="@drawable/ic_share"
+                    android:drawableTint="?android:attr/colorAccent"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth = "0dip"
+                    android:textSize="12sp"
+                    android:textColor="?attr/colorAccent"
+                    android:contentDescription="Share"
+                    android:text="" />
                 <!-- purchase/downloadAlbum button -->
+                <Button
+                    android:id="@+id/album_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="4dip"
+                    android:drawableLeft="@drawable/ic_buy"
+                    android:drawableTint="?android:attr/colorAccent"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:gravity="right|center_vertical"
+                    android:textSize="12sp"
+                    android:textColor="?attr/colorAccent"
+                    android:contentDescription="Buy/Download"
+                    android:text="$ 9.99" />
 
             </RelativeLayout>
-
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

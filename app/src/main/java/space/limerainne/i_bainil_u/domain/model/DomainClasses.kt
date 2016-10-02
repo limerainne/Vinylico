@@ -1,5 +1,7 @@
 package space.limerainne.i_bainil_u.domain.model
 
+import java.util.*
+
 /**
  * Created by Limerainne on 2016-07-21.
  */
@@ -38,7 +40,9 @@ data class AlbumEntry(val albumId: Long,
 
                       val songId: Int = -1,
                       val songName: String = "",
-                      val songPath: String = ""
+                      val songPath: String = "",
+
+                      val purchasedDate: String = ""
                       )
 
 // Connected

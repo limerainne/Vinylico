@@ -1,17 +1,24 @@
 package space.limerainne.i_bainil_u.viewmodel
 
+import android.content.Context
+import android.graphics.Paint
+import android.graphics.drawable.Drawable
+import android.os.Build
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
+import org.jetbrains.anko.custom.style
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -24,7 +31,9 @@ import space.limerainne.i_bainil_u.domain.model.StoreAlbums
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<BrowseListRecyclerViewAdapter.ViewHolder>() {
+class BrowseListRecyclerViewAdapter(private val mContext: Context,
+                                    private val mValues: StoreAlbums,
+                                    private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<BrowseListRecyclerViewAdapter.ViewHolder>() {
 
     private val loadMoreWhenRemainingLessThan = 5
 
@@ -53,7 +62,7 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
             mListener?.onListFragmentInteraction(holder.mItem!!)
         }
 
-        startAnimation(holder.mView, position)
+        // startAnimation(holder.mView, position)
     }
 
     override fun onViewDetachedFromWindow(holder: ViewHolder) {
@@ -113,11 +122,65 @@ class BrowseListRecyclerViewAdapter(private val mValues: StoreAlbums, private va
             Log.d("Picasso", item.jacketImage)
             Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)
 
+            // 1st line
             itemView.album_artist.text = item.artistName
             itemView.album_num_tracks.text = item.tracks.toString()
             itemView.album_date.text = item.releaseDate
 
+            // 2nd line
             itemView.content.text = item.albumName
+
+            // 3rd line
+            setVisibility(itemView.feature_booklet, item.feature_booklet)
+            setVisibility(itemView.feature_lyrics, item.feature_lyrics)
+            setVisibility(itemView.feature_record, item.feature_rec)
+
+            setPriceButton(itemView.album_price, item.price, item.purchased)
+        }
+
+        fun setVisibility(view: View, isVisible: Boolean)   {
+            if (isVisible)
+                view.visibility = View.VISIBLE
+            else
+                view.visibility = View.GONE
+        }
+
+        fun setPriceButton(view: Button, price: String, purchased: Int) {
+            // set price
+            if (price.contains("."))
+                view.text = "$ " + price
+            else
+                view.text = price
+
+            // if purchased, add strike to text
+            if (purchased == 1)
+                view.paintFlags = view.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            else
+                view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
+
+            // if purchased, change icon to...
+            val btnResId: Int
+            if (purchased == 1)
+                btnResId = R.drawable.ic_file_download
+            else
+                btnResId = R.drawable.ic_buy
+
+            println(btnResId)
+
+            var btnDrawable: Drawable? = null
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                btnDrawable = mContext.resources.getDrawable(btnResId)
+            else
+                btnDrawable = mContext.getDrawable(btnResId)
+
+            println(btnDrawable)
+
+            val drawables = view.compoundDrawables
+            val leftCompoundDrawable = drawables[0]
+            btnDrawable.bounds = leftCompoundDrawable.bounds
+            // NOTE above line MUST be REQUIRED to display properly!
+
+            view.setCompoundDrawables(btnDrawable, null, null, null)
         }
 
         override fun toString(): String {

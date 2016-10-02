@@ -1,19 +1,22 @@
 package space.limerainne.i_bainil_u.viewmodel
 
+import android.content.Context
+import android.graphics.Paint
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
-
-import kotlinx.android.synthetic.main.fragment_purchased_item.*
-import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
+import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -25,12 +28,14 @@ import space.limerainne.i_bainil_u.domain.model.Connected
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class PurchasedRecyclerViewAdapter(private val mValues: Connected, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<PurchasedRecyclerViewAdapter.ViewHolder>() {
+class PurchasedRecyclerViewAdapter(private val mContext: Context,
+                                   private val mValues: Connected,
+                                   private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<PurchasedRecyclerViewAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_purchased_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_browse_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -41,7 +46,7 @@ class PurchasedRecyclerViewAdapter(private val mValues: Connected, private val m
             mListener?.onListFragmentInteraction(holder.mItem!!)
         }
 
-        startAnimation(holder.mView, position)
+        // startAnimation(holder.mView, position)
     }
 
     override fun onViewDetachedFromWindow(holder: ViewHolder) {
@@ -67,30 +72,126 @@ class PurchasedRecyclerViewAdapter(private val mValues: Connected, private val m
         }
     }
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        @BindView(R.id.album_id)
-        lateinit var mIdView: TextView
-        @BindView(R.id.content)
-        lateinit var mContentView: TextView
-        @BindView(R.id.album_cover)
-        lateinit var mCoverView: ImageView
+//    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+//        @BindView(R.id.album_id)
+//        lateinit var mIdView: TextView
+//        @BindView(R.id.content)
+//        lateinit var mContentView: TextView
+//        @BindView(R.id.album_cover)
+//        lateinit var mCoverView: ImageView
+//
+//        var mItem: AlbumEntry? = null
+//
+//        init {
+//            ButterKnife.bind(this, mView)
+//        }
+//
+//        fun bind(item: AlbumEntry)  {
+//            mItem = item
+//            Log.d("Picasso", item.jacketImage)
+//            Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)
+//            itemView.album_id.text = item.albumId.toString()
+//            itemView.content.text = item.albumName
+//        }
+//
+//        override fun toString(): String {
+//            return super.toString() + " '" + itemView.content.text + "'"
+//        }
+//    }
+inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+//        @BindView(R.id.album_id)
+//        lateinit var mIdView: TextView
+//        @BindView(R.id.content)
+//        lateinit var mContentView: TextView
+//        @BindView(R.id.album_cover)
+//        lateinit var mCoverView: ImageView
 
-        var mItem: AlbumEntry? = null
+    @BindView(R.id.album_cover)
+    lateinit var mCoverView: ImageView
 
-        init {
-            ButterKnife.bind(this, mView)
-        }
+    @BindView(R.id.album_artist)
+    lateinit var mArtistView: TextView
+    @BindView(R.id.album_num_tracks)
+    lateinit var mNumTracksView: TextView
+    @BindView(R.id.album_date)
+    lateinit var mDateView: TextView
 
-        fun bind(item: AlbumEntry)  {
-            mItem = item
-            Log.d("Picasso", item.jacketImage)
-            Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)
-            itemView.album_id.text = item.albumId.toString()
-            itemView.content.text = item.albumName
-        }
+    @BindView(R.id.content)
+    lateinit var mContentView: TextView
 
-        override fun toString(): String {
-            return super.toString() + " '" + itemView.content.text + "'"
-        }
+
+    var mItem: AlbumEntry? = null
+
+    init {
+        ButterKnife.bind(this, mView)
     }
+
+    fun bind(item: AlbumEntry)  {
+        mItem = item
+
+        Log.d("Picasso", item.jacketImage)
+        Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)
+
+        // 1st line
+        itemView.album_artist.text = item.artistName
+        itemView.album_num_tracks.text = item.tracks.toString()
+        itemView.album_date.text = item.releaseDate
+
+        // 2nd line
+        itemView.content.text = item.albumName
+
+        // 3rd line
+        setVisibility(itemView.feature_booklet, item.feature_booklet)
+        setVisibility(itemView.feature_lyrics, item.feature_lyrics)
+        setVisibility(itemView.feature_record, item.feature_rec)
+
+        setPriceButton(itemView.album_price, item.price, item.purchased)
+        // TODO because purchased page..
+        itemView.album_price.text = item.purchasedDate
+    }
+
+    fun setVisibility(view: View, isVisible: Boolean)   {
+        if (isVisible)
+            view.visibility = View.VISIBLE
+        else
+            view.visibility = View.GONE
+    }
+
+    fun setPriceButton(view: Button, price: String, purchased: Int) {
+        // set price
+        if (price.contains("."))
+            view.text = "$ " + price
+        else
+            view.text = price
+
+        // if purchased, add strike to text
+        // TODO because this item is in purchased page...
+        view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
+
+        // if purchased, change icon to...
+        val btnResId: Int
+        btnResId = R.drawable.ic_file_download
+
+        println(btnResId)
+
+        var btnDrawable: Drawable? = null
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            btnDrawable = mContext.resources.getDrawable(btnResId)
+        else
+            btnDrawable = mContext.getDrawable(btnResId)
+
+        println(btnDrawable)
+
+        val drawables = view.compoundDrawables
+        val leftCompoundDrawable = drawables[0]
+        btnDrawable.bounds = leftCompoundDrawable.bounds
+        // NOTE above line MUST be REQUIRED to display properly!
+
+        view.setCompoundDrawables(btnDrawable, null, null, null)
+    }
+
+    override fun toString(): String {
+        return super.toString() + " '" + itemView.content.text + "'"
+    }
+}
 }

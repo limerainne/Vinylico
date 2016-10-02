@@ -50,7 +50,7 @@ class PurchasedFragment : Fragment() {
             val s: Server = Server()
             val pList = s.requestConnected(I_Bainil_UApp.USER_ID)
             uiThread { if (view is RecyclerView) {
-                view.adapter = PurchasedRecyclerViewAdapter(pList, mListener)
+                view.adapter = PurchasedRecyclerViewAdapter(context, pList, mListener)
                 }
             }
         }

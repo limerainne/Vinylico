@@ -64,7 +64,7 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
             val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)
 
             uiThread { if (view is RecyclerView) {
-                viewAdapter = BrowseListRecyclerViewAdapter(sList, mListener)
+                viewAdapter = BrowseListRecyclerViewAdapter(context, sList, mListener)
                 viewAdapter.setEndlessScrollListener(this@BrowseListFragment)
                 view.adapter = viewAdapter
 

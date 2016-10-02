@@ -1,5 +1,8 @@
 package space.limerainne.i_bainil_u.data.api
 
+import space.limerainne.i_bainil_u.extension.toDateString
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum
 
@@ -106,7 +109,8 @@ class APIDataMapper {
                 price ?: "",
                 purchased ?: -1,
                 releaseDate ?: "",
-                tracks ?: -1)
+                tracks ?: -1,
+                purchasedDate=SimpleDateFormat("YYYY-MM-dd").format(purchaseDate) ?: "")
     }
 
     fun convertAlbumDetailRespondToDomain(albumDetail: AlbumDetail): DomainAlbumDetail {
