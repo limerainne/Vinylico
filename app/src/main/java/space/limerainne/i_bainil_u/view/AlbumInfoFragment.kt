@@ -19,7 +19,6 @@ import butterknife.ButterKnife
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_album_info.*
-import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp

@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.viewmodel
 
 import android.content.Context
 import android.graphics.Paint
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.v7.widget.RecyclerView
@@ -122,9 +123,15 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 
 
     var mItem: AlbumEntry? = null
+    val tintColor: Int
 
     init {
         ButterKnife.bind(this, mView)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            tintColor = mContext.resources.getColor(R.color.colorAccent)
+        else
+            tintColor = mContext.getColor(R.color.colorAccent)
     }
 
     fun bind(item: AlbumEntry)  {
@@ -176,20 +183,22 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         else
             btnResId = R.drawable.ic_buy
 
-        println(btnResId)
-
-        var btnDrawable: Drawable? = null
+        val btnDrawable: Drawable?
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             btnDrawable = mContext.resources.getDrawable(btnResId)
         else
             btnDrawable = mContext.getDrawable(btnResId)
 
-        println(btnDrawable)
-
         val drawables = view.compoundDrawables
         val leftCompoundDrawable = drawables[0]
         btnDrawable.bounds = leftCompoundDrawable.bounds
         // NOTE above line MUST be REQUIRED to display properly!
+
+        // http://stackoverflow.com/questions/1309629/how-to-change-colors-of-a-drawable-in-android
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            btnDrawable.setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY)
+        else
+            btnDrawable.setTint(tintColor)
 
         view.setCompoundDrawables(btnDrawable, null, null, null)
     }

@@ -91,6 +91,16 @@ class APIDataMapper {
     }
 
     private fun convertConnectedAlbumToDomain(albumEntry: AlbumEntry): DomainConnectedAlbum = with(albumEntry) {
+        println("API: for each item")
+
+        val purchasedDateStringify: String
+        try {
+            purchasedDateStringify = SimpleDateFormat("yyyy-MM-dd").format(purchaseDate)
+        } catch (e: Exception)  {
+            e.printStackTrace()
+            purchasedDateStringify = ""
+        }
+
         DomainConnectedAlbum(
                 albumId ?: -1,
                 albumName ?: "",
@@ -110,7 +120,7 @@ class APIDataMapper {
                 purchased ?: -1,
                 releaseDate ?: "",
                 tracks ?: -1,
-                purchasedDate=SimpleDateFormat("YYYY-MM-dd").format(purchaseDate) ?: "")
+                purchasedDate=purchasedDateStringify)
     }
 
     fun convertAlbumDetailRespondToDomain(albumDetail: AlbumDetail): DomainAlbumDetail {

@@ -24,7 +24,6 @@ import android.view.MenuItem
 import android.view.WindowManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_purchased_item.view.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener

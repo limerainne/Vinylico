@@ -18,8 +18,11 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
     }
 
     fun requestConnected(userId: Long) : Connected  {
+        println("API: get data from server")
         val result = RequestConnected(userId).execute()
+        println("API: converting to domain")
         val converted = dataMapper.convertConnectedRespondToDomain(userId, result)
+        println("API: got data..")
         return converted
     }
 

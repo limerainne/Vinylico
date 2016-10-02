@@ -47,9 +47,13 @@ class PurchasedFragment : Fragment() {
 
         // TODO get data
         doAsync() {
+            println("PurchasedFragment: request data")
             val s: Server = Server()
             val pList = s.requestConnected(I_Bainil_UApp.USER_ID)
+            println("PurchasedFragment: got data")
             uiThread { if (view is RecyclerView) {
+                println("PurchasedFragment: showing data")
+                println(pList)
                 view.adapter = PurchasedRecyclerViewAdapter(context, pList, mListener)
                 }
             }
