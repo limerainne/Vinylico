@@ -53,6 +53,7 @@ class ViewBehavior(private val mContext: Context, attrs: AttributeSet) : Coordin
                 child.visibility = View.GONE
                 isHide = true
             }
+            child.visibility = View.GONE
         }
         return true
     }

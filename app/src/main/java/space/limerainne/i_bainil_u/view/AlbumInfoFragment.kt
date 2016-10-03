@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.view
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
@@ -13,10 +14,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Callback
@@ -203,14 +201,15 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         val maxScroll = appBarLayout.totalScrollRange
         val percentage = Math.abs(offset).toFloat() / maxScroll.toFloat()
 
-        if (percentage == 1f && isHideToolbarView) {
-            toolbarHeaderView.visibility = View.VISIBLE
-            isHideToolbarView = !isHideToolbarView
-
-        } else if (percentage < 1f && !isHideToolbarView) {
-            toolbarHeaderView.visibility = View.GONE
-            isHideToolbarView = !isHideToolbarView
-        }
+//        if (percentage == 1f && isHideToolbarView) {
+//            toolbarHeaderView.visibility = View.VISIBLE
+//            isHideToolbarView = !isHideToolbarView
+//
+//        } else if (percentage < 1f && !isHideToolbarView) {
+//            toolbarHeaderView.visibility = View.GONE
+//            isHideToolbarView = !isHideToolbarView
+//        }
+        toolbarHeaderView.visibility = View.VISIBLE
     }
 
     companion object {

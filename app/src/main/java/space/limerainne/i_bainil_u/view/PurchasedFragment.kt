@@ -46,9 +46,9 @@ class PurchasedFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_purchased, container, false)
 
-        val toolbar = parentFragment.toolbar
-        toolbar.title = getString(R.string.nav_home)
-        toolbar.subtitle = getString(R.string.app_name)
+//        val toolbar = parentFragment.toolbar
+//        toolbar.title = getString(R.string.nav_home)
+//        toolbar.subtitle = getString(R.string.app_name)
 
         // TODO get data
         doAsync() {

@@ -75,10 +75,10 @@ dependencies {
     testCompile dependencies.mockito
     testCompile dependencies.robolectric
 
-    kapt 'com.android.databinding:compiler:2.2.0-beta2'
+    kapt 'com.android.databinding:compiler:2.2.0'
 
-    compile 'com.jakewharton:butterknife:8.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile "com.jakewharton:butterknife:$butterknife_version"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 }
 
 kapt {

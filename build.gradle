@@ -6,9 +6,10 @@ ext {
     androidMinSdkVersion = 15
     androidTargetSdkVersion = 24
 
-    supportLibraryVersion = '24.2.0'
+    supportLibraryVersion = '24.2.1'
     retrofitVersion = '2.1.0'
     anko_version = '0.9'
+    butterknife_version = '8.4.0'
 
     dependencies = [
             appCompat: "com.android.support:appcompat-v7:$supportLibraryVersion",
@@ -30,7 +31,7 @@ ext {
             circleImageView: 'de.hdodenhof:circleimageview:2.1.0',
 
             jUnit: 'junit:junit:4.12',
-            mockito: 'org.mockito:mockito-core:2.0.106-beta',
+            mockito: 'org.mockito:mockito-core:2.1.0-RC.2',
             robolectric: 'org.robolectric:robolectric:3.1.2',
 
             jsoup: 'org.jsoup:jsoup:1.9.2',
@@ -44,7 +45,7 @@ ext {
 apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
-    ext.kotlin_version = '1.0.3'
+    ext.kotlin_version = '1.0.4'
 
     repositories {
         jcenter()

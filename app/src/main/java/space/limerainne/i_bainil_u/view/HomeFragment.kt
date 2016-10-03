@@ -43,9 +43,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_home, container, false)
 
-        val toolbar = parentFragment.toolbar
-        toolbar.title = getString(R.string.nav_home)
-        toolbar.subtitle = getString(R.string.app_name)
+//        val toolbar = parentFragment.toolbar
+//        toolbar.title = getString(R.string.nav_home)
+//        toolbar.subtitle = getString(R.string.app_name)
 
         return view
     }
