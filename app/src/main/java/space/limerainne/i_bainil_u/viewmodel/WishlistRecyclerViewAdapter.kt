@@ -169,6 +169,8 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 
         setPriceButton(itemView.album_price, item.price, item.purchased)
 
+        changeButtonDrawableLeft(R.drawable.ic_love_empty, tintColor, itemView.btn_album_wish)
+
         itemView.btn_album_wish.setOnClickListener {
             val connMgr = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = connMgr.activeNetworkInfo
@@ -176,7 +178,7 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
                 doAsync {
                     val success: Boolean
                     try {
-                        success = RequestToggleWish(item.albumId, I_Bainil_UApp.USER_ID, true).execute()
+                        success = RequestToggleWish(item.albumId, I_Bainil_UApp.USER_ID, false).execute()
                     } catch (e: Exception) {
                         success = false
                         e.printStackTrace()
@@ -184,9 +186,9 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 
                     uiThread {
                         if (success)
-                            mContext.toast("Adding album to wishlist succeed!")
+                            mContext.toast("Removing album from wishlist succeed!")
                         else
-                            mContext.toast("Failed to add album to wishlist...")
+                            mContext.toast("Failed to remove album from wishlist...")
                     }
                 }
             } else {
@@ -301,6 +303,10 @@ inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         else
             btnResId = R.drawable.ic_buy
 
+        changeButtonDrawableLeft(btnResId, tintColor, view)
+    }
+
+    fun changeButtonDrawableLeft(btnResId: Int, tintColor: Int, view: Button) {
         val btnDrawable: Drawable?
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             btnDrawable = mContext.resources.getDrawable(btnResId)

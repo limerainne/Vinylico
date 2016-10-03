@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
@@ -44,6 +45,10 @@ class PurchasedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_purchased, container, false)
+
+        val toolbar = parentFragment.toolbar
+        toolbar.title = getString(R.string.nav_home)
+        toolbar.subtitle = getString(R.string.app_name)
 
         // TODO get data
         doAsync() {

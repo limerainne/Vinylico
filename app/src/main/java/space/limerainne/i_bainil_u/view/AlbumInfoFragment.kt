@@ -57,7 +57,8 @@ class AlbumInfoFragment : Fragment() {
         ButterKnife.bind(this, view)
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar.title = albumEntry?.albumName
+        toolbar.title = albumEntry?.artistName
+        toolbar.subtitle = albumEntry?.albumName
 
         if (albumEntry?.purchased == 1) {
             fab.setImageResource(R.drawable.ic_download_white)
