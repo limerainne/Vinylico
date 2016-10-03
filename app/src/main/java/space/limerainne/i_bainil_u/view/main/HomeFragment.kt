@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
@@ -47,6 +49,32 @@ class HomeFragment : Fragment() {
 //        val toolbar = parentFragment.toolbar
 //        toolbar.title = getString(R.string.nav_home)
 //        toolbar.subtitle = getString(R.string.app_name)
+
+        /*
+        - recommended album
+        http://www.bainil.com/api/v2/user/eml?userId=2543&&lang=ko
+        - event banner
+        http://www.bainil.com/api/v2/connected/events?userId=2&lang=en
+         */
+
+        view.btn_nav_browse.setOnClickListener {
+            if (context is MainActivity) {
+                val menu = (context as MainActivity).nav_view.menu.findItem(R.id.nav_browse)
+                (context as MainActivity).onNavigationItemSelected(menu)
+            }
+        }
+        view.btn_nav_wishlist.setOnClickListener {
+            if (context is MainActivity) {
+                val menu = (context as MainActivity).nav_view.menu.findItem(R.id.nav_wishlist)
+                (context as MainActivity).onNavigationItemSelected(menu)
+            }
+        }
+        view.btn_nav_purchased.setOnClickListener {
+            if (context is MainActivity) {
+                val menu = (context as MainActivity).nav_view.menu.findItem(R.id.nav_purchased)
+                (context as MainActivity).onNavigationItemSelected(menu)
+            }
+        }
 
         return view
     }

@@ -5,10 +5,32 @@
     android:background="@android:color/white"
     tools:context="space.limerainne.i_bainil_u.view.main.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/btn_event_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"/>
+        <Button
+            android:id="@+id/btn_nav_browse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_browse"/>
+        <Button
+            android:id="@+id/btn_nav_wishlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_wishlist"/>
+        <Button
+            android:id="@+id/btn_nav_purchased"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_purchased"/>
+
+    </LinearLayout>
 
 </FrameLayout>

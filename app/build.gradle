@@ -79,6 +79,19 @@ dependencies {
 
     compile "com.jakewharton:butterknife:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+    /*
+    - Used library (16.10.04)
+    Android Support Library
+    Android Design Support
+
+    Kotlin
+    Picasso
+    Jsoup
+    GSON
+    Anko
+    TypeKit
+    ButterKnife
+     */
 }
 
 kapt {

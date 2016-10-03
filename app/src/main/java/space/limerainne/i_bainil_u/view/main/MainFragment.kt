@@ -111,14 +111,14 @@ class MainFragment : Fragment() {
     }
 
     fun onBackPressed(): Boolean    {
-        if (childFragmentManager.backStackEntryCount > 1) {
+        if (childFragmentManager.backStackEntryCount >= 1) {
             childFragmentManager.popBackStack()
             return true
         }
         return false
     }
 
-    fun changeChildFragment(targetFragment: Fragment, fragmentTAG: String)   {
+    fun changeChildFragment(targetFragment: Fragment, fragmentTAG: String, backStack: Boolean = false)   {
         Log.d("Test", getActiveChildFragment()?.tag.toString())
 
         val currentChildFragmentTag = getActiveChildFragment()?.tag
@@ -130,6 +130,8 @@ class MainFragment : Fragment() {
             val transaction = childFragmentManager.beginTransaction()
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
+            if (backStack)
+                transaction.addToBackStack(fragmentTAG)
             transaction.commit()
         }
     }
