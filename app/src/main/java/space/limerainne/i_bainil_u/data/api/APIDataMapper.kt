@@ -115,7 +115,7 @@ class APIDataMapper {
                 free ?: false,
                 jacketImage ?: "",
                 price ?: "",
-                purchased ?: -1,
+                1,  // every album in this list is already purchased
                 releaseDate ?: "",
                 tracks ?: -1,
                 purchasedDate=purchasedDateStringify)

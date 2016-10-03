@@ -300,6 +300,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun setToolbarColor(colorId: Int = 0, darkColorId: Int = 0)   {
         Log.v("MainActivity", "setToolbarColor")
 
+        return  // do nothing!
+
         var targetColorId = R.color.colorPrimary
         if (colorId != 0)
             targetColorId = colorId

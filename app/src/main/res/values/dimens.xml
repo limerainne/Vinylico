@@ -8,4 +8,11 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="album_info_header_height">180dp</dimen>
+
+    <!-- custom coordinatorlayout headerview -->
+    <dimen name="header_view_start_margin_left">16dp</dimen>
+    <dimen name="header_view_end_margin_left">40dp</dimen>
+    <dimen name="header_view_end_margin_right">14dp</dimen>
+
+    <dimen name="header_view_start_margin_bottom">14dp</dimen>
 </resources>

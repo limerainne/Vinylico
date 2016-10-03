@@ -58,7 +58,6 @@ class PurchasedFragment : Fragment() {
             println("PurchasedFragment: got data")
             uiThread { if (view is RecyclerView) {
                 println("PurchasedFragment: showing data")
-                println(pList)
                 view.adapter = PurchasedRecyclerViewAdapter(context, pList, mListener)
                 }
             }
