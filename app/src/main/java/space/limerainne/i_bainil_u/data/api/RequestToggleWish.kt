@@ -55,10 +55,18 @@ class RequestToggleWish(val albumId: Long,
                     }
 
                     uiThread {
+                        val msg: String
                         if (success)
-                            mContext.toast("Adding album to wishlist succeed!")
+                            if (wish)
+                                msg = "Adding album to wishlist succeed!"
+                            else
+                                msg = "Removing album from wishlist succeed!"
                         else
-                            mContext.toast("Failed to add album to wishlist...")
+                            if (wish)
+                                msg = "Failed to add album to wishlist..."
+                            else
+                                msg = "Failed to remove album from wishlist..."
+                        mContext.toast(msg)
                     }
                 }
             } else {
