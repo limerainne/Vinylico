@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_browse.*
 import kotlinx.android.synthetic.main.fragment_browse.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import space.limerainne.i_bainil_u.R
-import space.limerainne.i_bainil_u.viewmodel.BrowseFragmentAdapter
+import space.limerainne.i_bainil_u.viewmodel.main.BrowseFragmentAdapter
 
 /**
  * Created by Limerainne on 2016-08-23.

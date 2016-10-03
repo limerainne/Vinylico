@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="space.limerainne.i_bainil_u.view.HomeFragment">
+    tools:context="space.limerainne.i_bainil_u.view.main.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

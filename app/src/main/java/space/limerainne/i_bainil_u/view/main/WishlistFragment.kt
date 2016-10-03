@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.main
 
 import android.content.Context
 import android.os.Bundle
@@ -17,10 +17,11 @@ import space.limerainne.i_bainil_u.I_Bainil_UApp
 
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import space.limerainne.i_bainil_u.viewmodel.WishlistRecyclerViewAdapter
+import space.limerainne.i_bainil_u.viewmodel.main.WishlistRecyclerViewAdapter
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
+import space.limerainne.i_bainil_u.view.MainActivity
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
 

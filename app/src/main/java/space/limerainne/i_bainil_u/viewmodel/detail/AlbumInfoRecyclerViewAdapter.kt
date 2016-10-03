@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.viewmodel
+package space.limerainne.i_bainil_u.viewmodel.detail
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
-import space.limerainne.i_bainil_u.view.WishlistFragment
+import space.limerainne.i_bainil_u.view.main.WishlistFragment
 import java.util.*
 import kotlin.reflect.KClass
 

@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.main
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -22,6 +22,8 @@ import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.data.api.*
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.convertToAlbumEntry
+import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
+import space.limerainne.i_bainil_u.view.MainActivity
 
 /**
  * Created by Limerainne on 2016-08-07.

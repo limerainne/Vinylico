@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fitsSystemWindows="true"
-    tools:context="space.limerainne.i_bainil_u.view.WebviewFragment">
+    tools:context="space.limerainne.i_bainil_u.view.webview.WebviewFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"

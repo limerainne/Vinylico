@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.detail
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -30,7 +30,9 @@ import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.data.api.RequestAlbumPurchased
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
-import space.limerainne.i_bainil_u.viewmodel.AlbumInfoRecyclerViewAdapter
+import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
+import space.limerainne.i_bainil_u.viewmodel.detail.AlbumInfoRecyclerViewAdapter
 
 /**
  * Created by Limerainne on 2016-08-11.

@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.webview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,6 +13,7 @@ import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.LoginCookie
 import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.view.MainActivity
 import java.net.CookieHandler
 import java.net.CookiePolicy
 import java.net.HttpURLConnection

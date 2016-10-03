@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="space.limerainne.i_bainil_u.view.BrowseListFragment"
+    android:name="space.limerainne.i_bainil_u.view.main.BrowseListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="4dp"
@@ -12,5 +12,5 @@
     android:clipToPadding="false"
     android:background="@android:color/white"
     app:layoutManager="LinearLayoutManager"
-    tools:context="space.limerainne.i_bainil_u.view.BrowseListFragment"
+    tools:context="space.limerainne.i_bainil_u.view.main.BrowseListFragment"
     tools:listitem="@layout/fragment_browse_list_item" />

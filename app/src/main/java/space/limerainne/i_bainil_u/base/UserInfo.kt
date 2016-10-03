@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.base
 
 import android.content.Context
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.toLongOrElse
 
@@ -93,5 +94,28 @@ class UserInfo(context: Context) {
     override fun toString(): String {
         return "UserId: ${this.userId}" + " " +
                 "UserName: ${this.userName}"
+    }
+
+    companion object    {
+        fun checkLogin(context: Context): Boolean   {
+            val userInfo = UserInfo(context)
+            return userInfo.userId > 0
+        }
+
+        fun getUserIdOr(context: Context): Long   {
+            val userInfo = UserInfo(context)
+            if (userInfo.userId > 0)
+                return userInfo.userId
+            else
+                return I_Bainil_UApp.USER_ID
+        }
+
+        fun getUserIdOrExcept(context: Context): Long   {
+            val userInfo = UserInfo(context)
+            if (userInfo.userId > 0)
+                return userInfo.userId
+            else
+                throw RuntimeException()
+        }
     }
 }

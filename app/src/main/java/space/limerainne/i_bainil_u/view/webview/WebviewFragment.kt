@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.webview
 
 import android.annotation.SuppressLint
 import android.app.Activity

@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.main
 
 import android.content.Context
 import android.net.Uri
@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_main.view.*
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import space.limerainne.i_bainil_u.view.MainActivity
 
 /**
  * A simple [Fragment] subclass.

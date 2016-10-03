@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.view
 
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -24,15 +25,20 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import com.squareup.picasso.Picasso
+import com.tsengvn.typekit.TypekitContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.BainilLauncher
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Wishlist
+import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
+import space.limerainne.i_bainil_u.view.main.*
+import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
     val fragments: MutableMap<Int, Fragment> = mutableMapOf()
@@ -53,7 +59,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             mainFragment.changeChildFragment(homeFragment, HomeFragment.TAG)
             fragments.put(R.id.nav_home, homeFragment)
         }
+    }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase))
     }
 
     override fun onBackPressed() {
@@ -107,13 +116,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 topFrag is AlbumInfoFragment -> {
                     val albumEntry = topFrag.albumEntry
                     if (albumEntry != null)
-                        executeBainilAppAlbumScreen(albumEntry.albumId)
+                        BainilLauncher.executeBainilAppAlbumScreen(this, albumEntry.albumId)
                     else
-                        executeBainilApp()
+                        BainilLauncher.executeBainilApp(this)
                 }
                 else -> {
                     // just open Bainil App.
-                    executeBainilApp()
+                    BainilLauncher.executeBainilApp(this)
                 }
             }
 
@@ -129,50 +138,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    fun executeBainilApp()  {
-        val pkgName = "com.bainil.app"
-
-        try {
-            val existPackage = packageManager.getLaunchIntentForPackage(pkgName)
-            if (existPackage != null) {
-                with (existPackage) {
-                    addCategory(Intent.CATEGORY_LAUNCHER)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                startActivity(existPackage)
-            } else {
-                val marketIntent = Intent(Intent.ACTION_VIEW)
-                marketIntent.data = Uri.parse("market://details?id=" + pkgName)
-                startActivity(marketIntent)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    fun executeBainilAppAlbumScreen(albumId: Long) {
-        // http://apogenes.tistory.com/4
-        // { act=android.intent.action.VIEW dat=bainilapp://?type=A&code=2423 pkg=com.bainil.app }
-
-        val url = """intent://?type=A&code=${albumId}#Intent;scheme=bainilapp;package=com.bainil.app;end;"""
-
-        try {
-            val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
-
-            val existPackage = packageManager.getLaunchIntentForPackage(intent.`package`)
-            if (existPackage != null) {
-                startActivity(intent)
-            } else {
-                val marketIntent = Intent(Intent.ACTION_VIEW)
-                marketIntent.data = Uri.parse("market://details?id=" + intent.`package`)
-                startActivity(marketIntent)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -197,7 +162,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (!fragments.containsKey(R.id.nav_browse))   {
                     fragments[R.id.nav_browse] = BrowseFragment.newInstance()
                 }
-                fragmentTAG = BrowseFragment.TAG                                }
+                fragmentTAG = BrowseFragment.TAG
+            }
             R.id.nav_wishlist -> {
                 hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_wishlist))   {
@@ -245,11 +211,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         (findViewById(R.id.drawer_layout) as DrawerLayout).closeDrawer(GravityCompat.START)
 
         return true
-    }
-
-    fun openLoginPage() {
-        val webviewFragment = LoginWebviewFragment.newInstance()
-        transitToFragment(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
     }
 
     fun getActiveFragment(): Fragment? {
@@ -347,5 +308,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (addToBackStack)
             transaction.addToBackStack(targetTag)
         transaction.commit()
+    }
+
+    fun openLoginPage() {
+        val webviewFragment = LoginWebviewFragment.newInstance()
+        transitToFragment(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
     }
 }

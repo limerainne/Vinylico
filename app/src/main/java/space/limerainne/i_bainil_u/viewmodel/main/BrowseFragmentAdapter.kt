@@ -1,11 +1,11 @@
-package space.limerainne.i_bainil_u.viewmodel
+package space.limerainne.i_bainil_u.viewmodel.main
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.FragmentStatePagerAdapter
 import space.limerainne.i_bainil_u.data.api.RequestStoreAlbums
-import space.limerainne.i_bainil_u.view.BrowseListFragment
+import space.limerainne.i_bainil_u.view.main.BrowseListFragment
 
 /**
  * Created by CottonCandy on 2016-09-17.

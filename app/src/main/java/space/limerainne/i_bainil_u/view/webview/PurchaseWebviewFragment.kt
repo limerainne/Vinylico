@@ -1,11 +1,13 @@
-package space.limerainne.i_bainil_u.view
+package space.limerainne.i_bainil_u.view.webview
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.webkit.WebView
 import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.base.BainilLauncher
 import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.view.MainActivity
 
 /**
  * Created by CottonCandy on 2016-10-03.
@@ -60,7 +62,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
                     val activity = this_activity
                     if (activity is MainActivity) {
                         activity.popBackStack()
-                        activity.executeBainilAppAlbumScreen(albumId)
+                        BainilLauncher.executeBainilAppAlbumScreen(context, albumId)
                     }
                 }
             }

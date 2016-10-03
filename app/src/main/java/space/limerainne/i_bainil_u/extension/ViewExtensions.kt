@@ -16,9 +16,16 @@
 
 package space.limerainne.i_bainil_u.extension
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.widget.TextView
+
+val Activity.ctx: Context
+    get() = this
+
+val Activity.context: Context
+    get() = this
 
 val View.ctx: Context
     get() = context
