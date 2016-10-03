@@ -58,9 +58,11 @@ class PurchasedFragment : Fragment() {
             val pList = s.requestConnected(I_Bainil_UApp.USER_ID)
             println("PurchasedFragment: got data")
             uiThread { if (view is RecyclerView) {
-                println("PurchasedFragment: showing data")
-                view.adapter = PurchasedRecyclerViewAdapter(context, pList, mListener)
+                if (context != null) {
+                    println("PurchasedFragment: showing data")
+                    view.adapter = PurchasedRecyclerViewAdapter(context, pList, mListener)
                 }
+            }
             }
         }
 

@@ -29,10 +29,7 @@ import com.tsengvn.typekit.TypekitContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import space.limerainne.i_bainil_u.R
-import space.limerainne.i_bainil_u.base.BainilLauncher
-import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
-import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.base.*
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Wishlist
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
@@ -47,8 +44,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // clear login info if...
+        val loginInfoCleared = clearLoginTokenIf()
+
         val navigationView = findViewById(R.id.nav_view) as NavigationView?
         navigationView!!.setNavigationItemSelectedListener(this)
+
+        if (!loginInfoCleared)
+            updateNavigationViewUserInfoArea()
 
         if (savedInstanceState == null) {
             val mainFragment = MainFragment.newInstance()
@@ -59,6 +62,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             mainFragment.changeChildFragment(homeFragment, HomeFragment.TAG)
             fragments.put(R.id.nav_home, homeFragment)
         }
+    }
+
+    override fun onDestroy()    {
+        super.onDestroy()
+
+        // clear login info if user did not check auto-login
+        clearLoginTokenIf()
+    }
+
+    fun clearLoginTokenIf(): Boolean {
+        // true if info cleared
+        // clear login info if user did not check auto-login
+        val loginToken = LoginCookie(this)
+        if (!loginToken.isAutoLogin)    {
+            loginToken.clearCookie()
+            UserInfo(this).clearInfo()
+            return true
+        }
+        else
+            return false
     }
 
     override fun attachBaseContext(newBase: Context) {

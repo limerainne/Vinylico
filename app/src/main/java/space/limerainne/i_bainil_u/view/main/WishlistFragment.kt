@@ -58,8 +58,10 @@ class WishlistFragment : Fragment() {
             val w: Server = Server()
             val wList = w.requestWishlist(I_Bainil_UApp.USER_ID)
             uiThread { if (view is RecyclerView) {
-                view.adapter = WishlistRecyclerViewAdapter(context, wList, mListener)
+                if (context != null) {
+                    view.adapter = WishlistRecyclerViewAdapter(context, wList, mListener)
                 }
+            }
             }
         }
 
