@@ -9,12 +9,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.data.api.Request
 import space.limerainne.i_bainil_u.data.api.RequestStoreAlbums
 import space.limerainne.i_bainil_u.data.api.Server
@@ -62,30 +64,32 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
             nextOffset = 0L
 
             val s: Server = Server()
-            val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)
+            val sList = s.requestStoreAlbums(category, UserInfo.getUserIdOr(context), nextOffset, length)
 
-            uiThread { if (view is RecyclerView) {
+            uiThread { if (view.list is RecyclerView) {
                 if (context != null) {
 
                     viewAdapter = BrowseListRecyclerViewAdapter(context, sList, mListener)
                     viewAdapter.setEndlessScrollListener(this@BrowseListFragment)
-                    view.adapter = viewAdapter
+                    view.list.adapter = viewAdapter
 
                     offset = nextOffset
                     nextOffset += 1
                     println("offset: ${offset}, nextOffset: ${nextOffset}")
+
+                    view.list.visibility = View.VISIBLE
                 }
             }
             }
         }
 
         // Set the adapter
-        if (view is RecyclerView) {
+        if (view.list is RecyclerView) {
             val context = view.getContext()
             if (mColumnCount <= 1) {
-                view.layoutManager = LinearLayoutManager(context)
+                view.list.layoutManager = LinearLayoutManager(context)
             } else {
-                view.layoutManager = GridLayoutManager(context, mColumnCount)
+                view.list.layoutManager = GridLayoutManager(context, mColumnCount)
             }
         }
         return view
@@ -155,7 +159,7 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
         println("onLoadMore:" + position + ", to:o:" + nextOffset + ",l:" + length)
         doAsync {
             val s: Server = Server()
-            val sList = s.requestStoreAlbums(category, I_Bainil_UApp.USER_ID, nextOffset, length)
+            val sList = s.requestStoreAlbums(category, UserInfo.getUserIdOr(context), nextOffset, length)
 
             println(sList)
 

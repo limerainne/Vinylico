@@ -27,47 +27,39 @@ class PurchaseTool  {
             val networkInfo = connMgr.activeNetworkInfo
             if (networkInfo != null && networkInfo!!.isConnected) {
                 // check login first
-                val userInfo = UserInfo(mContext)
+                UserInfo.checkLoginThenRun(mContext, {
+                    doAsync {
+                        // 1. check if previously purchased
+                        val success: Boolean
+                        try {
+                            val userInfo = UserInfo(mContext)
 
-                if (userInfo.userId < 1) {
-                    mContext.toast("Please login first!")
-                    if (mContext is MainActivity)
-                        mContext.openLoginPage()
+                            success = RequestAlbumPurchased(item.albumId, userInfo.userId, true).execute()
+                        } catch (e: Exception) {
+                            success = false
+                            e.printStackTrace()
+                        }
 
-                    return@purchaseAlbum
-                }
+                        // 2. redirect to purchase page
+                        if (success) {
+                            if (mContext is MainActivity) {
+                                uiThread {
+                                    // TODO display purchase info & cautions
+                                    val userInfo = UserInfo(mContext)
 
-                doAsync {
-                    // 1. check if previously purchased
-                    val success: Boolean
-                    try {
-                        val userInfo = UserInfo(mContext)
-
-                        success = RequestAlbumPurchased(item.albumId, userInfo.userId, true).execute()
-                    } catch (e: Exception) {
-                        success = false
-                        e.printStackTrace()
-                    }
-
-                    // 2. redirect to purchase page
-                    if (success) {
-                        if (mContext is MainActivity) {
+                                    val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, item.albumId, mContext)
+                                    mContext.transitToFragment(R.id.placeholder_top, webviewFragment, PurchaseWebviewFragment.TAG)
+                                }
+                            }
+                        } else {
                             uiThread {
-                                // TODO display purchase info & cautions
-                                val userInfo = UserInfo(mContext)
-
-                                val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, item.albumId, mContext)
-                                mContext.transitToFragment(R.id.placeholder_top, webviewFragment, PurchaseWebviewFragment.TAG)
+                                mContext.toast("Already purchased this album: ${item.albumName}")
                             }
                         }
-                    } else {
-                        uiThread {
-                            mContext.toast("Already purchased this album: ${item.albumName}")
-                        }
-                    }
 
-                    // 3. TODO check if purhcase succeed (when? where?)
-                }
+                        // 3. TODO check if purhcase succeed (when? where?)
+                    }
+                }, {})
             } else {
                 mContext.toast("Check network connection!")
             }

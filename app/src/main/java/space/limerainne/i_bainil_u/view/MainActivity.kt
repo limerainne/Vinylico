@@ -28,6 +28,7 @@ import com.squareup.picasso.Picasso
 import com.tsengvn.typekit.TypekitContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
+import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.*
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
@@ -211,9 +212,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
             }
             R.id.nav_about -> {
-                // for test, open login page
 
-                openLoginPage()
+            }
+            R.id.nav_login_logout ->    {
+                UserInfo.checkLoginThenRun(this, {
+                    // Logout
+                    // TODO
+                    toast("Sorry, logout feature is in development...")
+                }, {
+                    // Login
+                    openLoginPage()
+                })
             }
         }
 

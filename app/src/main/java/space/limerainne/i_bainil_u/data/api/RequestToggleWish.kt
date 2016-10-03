@@ -38,37 +38,32 @@ class RequestToggleWish(val albumId: Long,
             val networkInfo = connMgr.activeNetworkInfo
             if (networkInfo != null && networkInfo!!.isConnected) {
                 // check login
-                if (!UserInfo.checkLogin(mContext)) {
-                    mContext.toast("Please login first!")
-                    if (mContext is MainActivity)
-                        mContext.openLoginPage()
-                    return
-                }
+                UserInfo.checkLoginThenRun(mContext, {
+                    doAsync {
+                        val success: Boolean
+                        try {
+                            success = RequestToggleWish(albumId, UserInfo.getUserIdOrExcept(mContext), wish).execute()
+                        } catch (e: Exception) {
+                            success = false
+                            e.printStackTrace()
+                        }
 
-                doAsync {
-                    val success: Boolean
-                    try {
-                        success = RequestToggleWish(albumId, UserInfo.getUserIdOrExcept(mContext), wish).execute()
-                    } catch (e: Exception) {
-                        success = false
-                        e.printStackTrace()
-                    }
-
-                    uiThread {
-                        val msg: String
-                        if (success)
-                            if (wish)
-                                msg = "Adding album to wishlist succeed!"
+                        uiThread {
+                            val msg: String
+                            if (success)
+                                if (wish)
+                                    msg = "Adding album to wishlist succeed!"
+                                else
+                                    msg = "Removing album from wishlist succeed!"
                             else
-                                msg = "Removing album from wishlist succeed!"
-                        else
-                            if (wish)
-                                msg = "Failed to add album to wishlist..."
-                            else
-                                msg = "Failed to remove album from wishlist..."
-                        mContext.toast(msg)
+                                if (wish)
+                                    msg = "Failed to add album to wishlist..."
+                                else
+                                    msg = "Failed to remove album from wishlist..."
+                            mContext.toast(msg)
+                        }
                     }
-                }
+                }, { })
             } else {
                 mContext.toast("Check network connection!")
             }

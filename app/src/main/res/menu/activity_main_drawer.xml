@@ -58,6 +58,13 @@
             <!--android:title="Send" />-->
     </group>
 
+    <group
+        android:id="@+id/nav_group_login">
+        <item
+            android:id="@+id/nav_login_logout"
+            android:title="로그인/로그아웃" />
+    </group>
+
     <item
         android:id="@+id/nav_none"
         android:title=""

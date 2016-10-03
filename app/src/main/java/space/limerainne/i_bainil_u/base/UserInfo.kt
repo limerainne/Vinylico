@@ -1,9 +1,11 @@
 package space.limerainne.i_bainil_u.base
 
 import android.content.Context
+import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.toLongOrElse
+import space.limerainne.i_bainil_u.view.MainActivity
 
 /**
  * Created by Limerainne on 2016-09-28.
@@ -100,6 +102,18 @@ class UserInfo(context: Context) {
         fun checkLogin(context: Context): Boolean   {
             val userInfo = UserInfo(context)
             return userInfo.userId > 0
+        }
+
+        fun checkLoginThenRun(context: Context, ok: () -> Unit, no: () -> Unit)    {
+            if (!checkLogin(context))   {
+                context.toast("Please login first!")
+                val context = context
+                if (context is MainActivity)
+                    context.openLoginPage()
+                no()
+            }   else    {
+                ok()
+            }
         }
 
         fun getUserIdOr(context: Context): Long   {

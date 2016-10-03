@@ -10,8 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 
@@ -19,6 +21,7 @@ import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.viewmodel.main.WishlistRecyclerViewAdapter
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.view.MainActivity
@@ -47,31 +50,22 @@ class WishlistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_wishlist, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
 
 //        val toolbar = parentFragment.toolbar
 //        toolbar.title = getString(R.string.nav_home)
 //        toolbar.subtitle = getString(R.string.app_name)
 
         // TODO get data
-        doAsync() {
-            val w: Server = Server()
-            val wList = w.requestWishlist(I_Bainil_UApp.USER_ID)
-            uiThread { if (view is RecyclerView) {
-                if (context != null) {
-                    view.adapter = WishlistRecyclerViewAdapter(context, wList, mListener)
-                }
-            }
-            }
-        }
+        loadData(view)
 
         // Set the adapter
-        if (view is RecyclerView) {
+        if (view.list is RecyclerView) {
             val context = view.getContext()
             if (mColumnCount <= 1) {
-                view.layoutManager = LinearLayoutManager(context)
+                view.list.layoutManager = LinearLayoutManager(context)
             } else {
-                view.layoutManager = GridLayoutManager(context, mColumnCount)
+                view.list.layoutManager = GridLayoutManager(context, mColumnCount)
             }
         }
         return view
@@ -100,32 +94,28 @@ class WishlistFragment : Fragment() {
         }
     }
 
-    override fun onPause()  {
-        super.onPause()
+    fun loadData(view: View)    {
+        UserInfo.checkLoginThenRun(context, {
+            view.btn_reload.visibility = View.INVISIBLE
 
-        Log.v("WishlistFragment", "onPause")
+            doAsync() {
+                val w: Server = Server()
+                val wList = w.requestWishlist(UserInfo.getUserIdOr(context))
+                uiThread { if (view.list is RecyclerView) {
+                    if (context != null) {
+                        view.list.adapter = WishlistRecyclerViewAdapter(context, wList, mListener)
 
-        if (activity is MainActivity) {
-            // unset color
-            (activity as MainActivity).setToolbarColor()
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
-
-        if (activity is MainActivity) {
-            (activity as MainActivity).setToolbarColor()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        if (activity is MainActivity) {
-            (activity as MainActivity).setToolbarColor()
-        }
+                        view.list.visibility = View.VISIBLE
+                    }
+                }
+                }
+            }
+        }, {
+            view.btn_reload.visibility = View.VISIBLE
+            view.btn_reload.setOnClickListener {
+                loadData(view)
+            }
+        })
     }
 
     companion object {

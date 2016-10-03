@@ -104,8 +104,8 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
             val albumId: Long = albumEntry?.albumId ?: 2423
 
             val w: Server = Server()
-            val wAlbumDetail = w.requestAlbumDetail(albumId, I_Bainil_UApp.USER_ID)
-            val wTracks = w.requestTrackList(albumId, I_Bainil_UApp.USER_ID)
+            val wAlbumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
+            val wTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))
 
             uiThread {
                 Log.d("Picasso", wAlbumDetail.jacketImage)

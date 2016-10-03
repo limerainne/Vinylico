@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
 
             doAsync {
                 // 1. get new list --> get latest album ID
-                val list_new = RequestStoreAlbums(I_Bainil_UApp.USER_ID, RequestStoreAlbums.CATEGORY_NEW, 0, 10).execute()
+                val list_new = RequestStoreAlbums(UserInfo.getUserIdOr(context), RequestStoreAlbums.CATEGORY_NEW, 0, 10).execute()
                 val latest_album_id: Long = run<Long> {
                     var result = 3000L
                     if (list_new.result.size > 0) {
@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
                 while (--trialCount > 0)    {
                     val cand_id: Long = Math.floor(Math.random() * latest_album_id).toLong()
 
-                    album_info = Server().requestAlbumDetail(cand_id, I_Bainil_UApp.USER_ID)
+                    album_info = Server().requestAlbumDetail(cand_id, UserInfo.getUserIdOr(context))
                     if (album_info.albumId > 0)  {
                         target_id = cand_id
                         break
@@ -74,7 +74,7 @@ class MainFragment : Fragment() {
                 }
 
                 val userInfo = UserInfo(context)
-                val purchased = RequestAlbumPurchased(target_id, if (userInfo.userId > 0) userInfo.userId else I_Bainil_UApp.USER_ID, true).execute()
+                val purchased = RequestAlbumPurchased(target_id, UserInfo.getUserIdOr(context), true).execute()
 
                 // 3. open album info activity
                 uiThread {
