@@ -36,6 +36,7 @@ class BrowseFragment : Fragment() {
         pageAdapter = BrowseFragmentAdapter(childFragmentManager)
         val pagerYay = view.pager
         pagerYay.adapter = pageAdapter
+        pagerYay.setCurrentItem(1)  // "NEW" as default page
 
         return view
     }
