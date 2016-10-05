@@ -31,9 +31,13 @@ class LoginWebviewFragment: WebviewFragment() {
 
     val url_signout = "https://www.bainil.com/signout"
 
-    val url_signin_wo_redir = "bailil.com/signin"
+    val url_signin_wo_redir = "bainil.com/signin"
+
+    private val cookie_url = "www.bainil.com"
 
     val loginInfo: MutableMap<String, String> = mutableMapOf()
+
+    var touched = false
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
@@ -91,7 +95,7 @@ class LoginWebviewFragment: WebviewFragment() {
             super.onPageFinished(view, url)
             Log.v(TAG, "onPageFinished: " + url)
 
-            val cookies = CookieManager.getInstance().getCookie(url)
+            val cookies = CookieManager.getInstance().getCookie(cookie_url)
             Log.d(TAG, "onPageFinished: " + cookies)
 
             if (url.equals(url_fan_profile))    {
@@ -103,7 +107,7 @@ class LoginWebviewFragment: WebviewFragment() {
                 // http://stackoverflow.com/questions/2376471/how-do-i-get-the-web-page-contents-from-a-webview
 
                 // in LoginCookie: login token, auto-login enabled?
-                parseLoginCookie(CookieManager.getInstance().getCookie(url))
+                parseLoginCookie(CookieManager.getInstance().getCookie(cookie_url))
 
                 if (view != null) {
                     myLockVar = false
@@ -131,7 +135,7 @@ class LoginWebviewFragment: WebviewFragment() {
             super.onPageStarted(view, url, favicon)
             Log.v(TAG, "onPageStarted: " + url)
 
-            val cookies = CookieManager.getInstance().getCookie(url)
+            val cookies = CookieManager.getInstance().getCookie(cookie_url)
             Log.d(TAG, "onPageStarted: " + cookies)
 
             mWebView.visibility = View.VISIBLE
@@ -145,15 +149,20 @@ class LoginWebviewFragment: WebviewFragment() {
                     view?.loadUrl(url_fan_profile)
                 }
                 url?.endsWith(url_signin_wo_redir) ?: false -> {
-                    // ???
-                    view?.stopLoading()
+                    // NOTE assume that returnUrl is retained after incorrect login trial
+                    if (!touched) {
+                        // ???
+                        view?.stopLoading()
 
-                    mWebView.visibility = View.INVISIBLE
-                    view?.loadUrl(init_url)
+                        mWebView.visibility = View.INVISIBLE
+                        view?.loadUrl(init_url)
+                    }
                 }
                 url?.contains("facebook") ?: false -> {}    // TODO
                 url?.equals(url_fan_profile) ?: false -> {}
-                url?.equals(init_url) ?: false ->   {}
+                url?.equals(init_url) ?: false ->   {
+                    touched = true
+                }
                 url?.equals(url_signout) ?: false -> {}
                 else -> {
                     view?.stopLoading()
