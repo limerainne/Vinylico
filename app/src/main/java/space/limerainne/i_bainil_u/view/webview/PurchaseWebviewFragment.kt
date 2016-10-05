@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.view.webview
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import android.webkit.WebView
 import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.I_Bainil_UApp
@@ -41,6 +42,8 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     inner class MyPurchaseWebViewClient(context: Context): MyWebViewClient(context)    {
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
+            Log.v(PurchaseWebviewFragment.TAG, "onPageStarted: " + url)
+
             if (url != null)    {
                 // for payment failed -> "Close" button
                 if (url.endsWith(URL_CLOSE))   {

@@ -24,10 +24,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.tsengvn.typekit.TypekitContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.*
@@ -41,6 +44,10 @@ import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
     val fragments: MutableMap<Int, Fragment> = mutableMapOf()
 
+    lateinit var header_account_photo: ImageView
+    lateinit var header_account_name: TextView
+    lateinit var header_account_email: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,11 +55,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // clear login info if...
         val loginInfoCleared = clearLoginTokenIf()
 
-        val navigationView = findViewById(R.id.nav_view) as NavigationView?
-        navigationView!!.setNavigationItemSelectedListener(this)
+        val navigationView = nav_view
+        navigationView.setNavigationItemSelectedListener(this)
+        val navigationViewInit = navigationView.getHeaderView(0)
+        header_account_photo = navigationViewInit.account_photo
+        header_account_name = navigationViewInit.account_name
+        header_account_email = navigationViewInit.account_email
 
-        if (!loginInfoCleared)
+        if (!loginInfoCleared) {
             updateNavigationViewUserInfoArea()
+        }
 
         if (savedInstanceState == null) {
             val mainFragment = MainFragment.newInstance()
@@ -266,9 +278,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val userInfo = UserInfo(this)
 
         if (userInfo.userId > 0) {
-            Picasso.with(this).load("http://cloud.bainil.com/upload/user" + userInfo.userImageURL).into(account_photo)
-            account_name.text = userInfo.userName
-            account_email.text = userInfo.userEmail
+            Picasso.with(this).load("http://cloud.bainil.com/upload/user" + userInfo.userImageURL).into(header_account_photo)
+            header_account_name.text = userInfo.userName
+            header_account_email.text = userInfo.userEmail
         }
         else    {
             account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
