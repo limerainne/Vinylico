@@ -77,6 +77,9 @@ class LoginWebviewFragment: WebviewFragment() {
         }, javascriptInterfaceName)
 
         mWebView.setWebViewClient(MyLoginWebViewClient(context))
+
+        // TODO get auto-login cookie if exists!
+        // "auth-token", "remember", "email" (?)
     }
 
     fun parseLoginCookie(cookie: String) {
