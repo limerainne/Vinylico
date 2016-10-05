@@ -40,6 +40,7 @@ import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.dummy.DummyContent
 import space.limerainne.i_bainil_u.view.main.*
 import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
+import space.limerainne.i_bainil_u.view.webview.LogoutWebviewFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
     val fragments: MutableMap<Int, Fragment> = mutableMapOf()
@@ -231,6 +232,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     // Logout
                     // TODO
                     toast("Sorry, logout feature is in development...")
+                    openLogoutPage()
                 }, {
                     // Login
                     openLoginPage()
@@ -284,6 +286,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         else    {
             account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
+            // TODO move into resource
             account_name.text = "Bainil"
             account_email.text = "please.login@bainil.com"
         }
@@ -357,5 +360,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun openLoginPage() {
         val webviewFragment = LoginWebviewFragment.newInstance()
         transitToFragment(R.id.placeholder_top, webviewFragment, LoginWebviewFragment.TAG)
+    }
+
+    fun openLogoutPage() {
+        val webviewFragment = LogoutWebviewFragment.newInstance()
+        transitToFragment(R.id.placeholder_top, webviewFragment, LogoutWebviewFragment.TAG)
     }
 }

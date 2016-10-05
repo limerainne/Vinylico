@@ -22,9 +22,10 @@ import java.net.URL
 /**
  * Created by Limerainne on 2016-09-23.
  */
-class LoginWebviewFragment: WebviewFragment() {
+class LogoutWebviewFragment: WebviewFragment() {
 
     val url_login = "https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile"
+    val url_logout = "https://www.bainil.com/signout"
 
     val url_fan_profile = "http://www.bainil.com/fan/profile"
     val url_top = "http://www.bainil.com/browse"
@@ -42,10 +43,10 @@ class LoginWebviewFragment: WebviewFragment() {
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
 
-        init_url = url_login
+        init_url = url_logout
 //        init_url = getString(R.string.URL_Login)
 //        init_url = url_signout
-        toolbar_title = "Login"
+        toolbar_title = "Logout"
     }
 
     val javascriptInterfaceName = "HTMLRetriever"
@@ -141,6 +142,17 @@ class LoginWebviewFragment: WebviewFragment() {
             }   else    {
                 mWebView.visibility = View.VISIBLE
             }
+
+            // clear login info
+            LoginCookie(context).clearCookie()
+            UserInfo(context).clearInfo()
+
+            // return to previous screen
+            val activity = this_activity    // TODO why we have to save initial activity reference?
+            if (activity is MainActivity) {
+                activity.popBackStack()
+                activity.updateNavigationViewUserInfoArea()
+            }
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -154,11 +166,7 @@ class LoginWebviewFragment: WebviewFragment() {
 
             when  {
                 url?.contains(url_top) ?: false ->  {
-                    // if login token is alive...
-                    view?.stopLoading()
-
-                    mWebView.visibility = View.INVISIBLE
-                    view?.loadUrl(url_fan_profile)
+                    // do nothing
                 }
                 url?.endsWith(url_signin_wo_redir) ?: false -> {
                     // NOTE assume that returnUrl is retained after incorrect login trial
@@ -187,10 +195,10 @@ class LoginWebviewFragment: WebviewFragment() {
     }
 
     companion object {
-        val TAG = LoginWebviewFragment::class.java.simpleName
+        val TAG = LogoutWebviewFragment::class.java.simpleName
 
-        fun newInstance(): LoginWebviewFragment {
-            val fragment = LoginWebviewFragment()
+        fun newInstance(): LogoutWebviewFragment {
+            val fragment = LogoutWebviewFragment()
 
             return fragment
         }
