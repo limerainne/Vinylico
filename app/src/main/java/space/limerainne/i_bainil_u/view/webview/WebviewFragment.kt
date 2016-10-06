@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -14,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import butterknife.BindView
@@ -71,6 +73,11 @@ open class WebviewFragment: Fragment() {
 
         // Force links and redirects to open in the WebView instead of in a browser
         mWebView.setWebViewClient(MyWebViewClient(context))
+
+        // Allow HTTPS to HTTP request (to load album image; might be a security flaw)
+        // http://eclipse4j.tistory.com/220
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            mWebView.getSettings().mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
     }
 
     override fun onResume() {

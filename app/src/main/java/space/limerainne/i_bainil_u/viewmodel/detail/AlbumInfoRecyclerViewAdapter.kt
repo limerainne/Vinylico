@@ -21,14 +21,20 @@ import kotlin.reflect.KClass
  */
 class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val mTracks: TrackList, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<AlbumInfoRecyclerViewAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
-        return mTracks.tracks.size + 1  // TODO +1: album description
+        // NOTE add 2 more rows for...
+        // first 1: album information (released date, genre, artist, ...)
+        // last 1: album description
+        return 1 + mTracks.tracks.size + 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var viewHolder: ViewHolder
+        val viewHolder: ViewHolder
 
         val viewInflater: (Int) -> View = { LayoutInflater.from(parent.context).inflate(it, parent, false) }
         when (viewType) {
+            ITEM_ALBUM_INFO ->  {
+                viewHolder = AlbumDescViewHolder(viewInflater(R.layout.view_album_info_album_desc))
+            }
             ITEM_TRACK -> {
                 viewHolder = TrackViewHolder(viewInflater(R.layout.view_album_info_track))
             }
@@ -43,16 +49,26 @@ class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val 
 
     override fun getItemViewType(position: Int): Int {
         when (position) {
-            in 0..mTracks.tracks.size-1 -> return ITEM_TRACK
-            mTracks.tracks.size -> return ITEM_ALBUM_DESC
+            0 -> return ITEM_ALBUM_INFO
+            in 1..mTracks.tracks.size -> return ITEM_TRACK
+            mTracks.tracks.size+1 -> return ITEM_ALBUM_DESC
             else -> throw RuntimeException()
         }
-        return super.getItemViewType(position)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // check invalidness & bind
         when (getItemViewType(position))    {
+            ITEM_ALBUM_INFO ->  {
+                if (holder is AlbumDescViewHolder) {
+                    holder.bind(mAlbum)
+                    holder.mView.setOnClickListener {
+                        mListener?.onListFragmentInteraction(holder.mItem)
+                    }
+                }
+                else
+                    throw RuntimeException()
+            }
             ITEM_TRACK ->   {
                 if (holder is TrackViewHolder) {
                     holder.bind(mTracks.tracks.get(position))
@@ -76,7 +92,7 @@ class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val 
         }
     }
 
-    open inner abstract class ViewHolder(open val mView: View): RecyclerView.ViewHolder(mView)
+    inner abstract class ViewHolder(open val mView: View): RecyclerView.ViewHolder(mView)
 
     inner class TrackViewHolder(override val mView: View): ViewHolder(mView) {
         @BindView(R.id.track_id)
@@ -117,11 +133,12 @@ class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val 
         }
 
         override fun toString(): String {
-            return super.toString() + " '" + (mItem?.albumId.toString() ?: "") + "'"
+            return super.toString() + " '" + (mItem.albumId.toString() ?: "") + "'"
         }
     }
 
     companion object    {
+        val ITEM_ALBUM_INFO = 0
         val ITEM_TRACK = 1
         val ITEM_ALBUM_DESC = 2
     }

@@ -26,6 +26,7 @@ class BainilLauncher {
                     context.startActivity(marketIntent)
                 }
             } catch (e: Exception) {
+                // just ignore error
                 e.printStackTrace()
             }
         }
@@ -48,6 +49,7 @@ class BainilLauncher {
                     context.startActivity(marketIntent)
                 }
             } catch (e: Exception) {
+                // just ignore error
                 e.printStackTrace()
             }
         }

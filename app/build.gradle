@@ -54,13 +54,13 @@ dependencies {
     compile dependencies.design
     compile dependencies.support
 
-    compile dependencies.retrofit
-    compile dependencies.retrofitConverterGson
-    compile dependencies.retrofitAdapterRxJava
+//    compile dependencies.retrofit
+//    compile dependencies.retrofitConverterGson
+//    compile dependencies.retrofitAdapterRxJava
 
     compile dependencies.picasso
-    compile dependencies.rxAndroid
-    compile dependencies.circleImageView
+//    compile dependencies.rxAndroid
+//    compile dependencies.circleImageView
 
     compile dependencies.jsoup
     compile dependencies.gson
@@ -75,7 +75,7 @@ dependencies {
     testCompile dependencies.mockito
     testCompile dependencies.robolectric
 
-    kapt 'com.android.databinding:compiler:2.2.0'
+//    kapt 'com.android.databinding:compiler:2.2.0'
 
     compile "com.jakewharton:butterknife:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
