@@ -114,7 +114,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                         .noFade()
                         .into(toolbar_background)
 
-                rec_view?.adapter = AlbumInfoRecyclerViewAdapter(wAlbumDetail, wTracks, mListener)
+                rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, wAlbumDetail, wTracks, mListener)
                 Log.d("Found", wAlbumDetail.labelName)
                 Log.d("Found", wTracks.albumId.toString())
                 Log.d("Found", wTracks.tracks[0].songName)

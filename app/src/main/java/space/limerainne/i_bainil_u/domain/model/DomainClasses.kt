@@ -122,20 +122,21 @@ data class AlbumDetail(val albumCredit: String,
     // track information
     data class Track(val artistId: Long,
                      val artistName: String,
-                     val bitrate: String,
+                     val bitrate: String,   // TODO just for MP3?
                      val connected_msg: Int,    // TODO #msg? or msg itself?
-                     val duration: Int,
-                     val feature_aac: Boolean,
+                     val duration: Int, // in second unit
+                     val feature_aac: Boolean,  // TODO is there any AAC music?
                      val feature_adult: Boolean,
-                     val feature_hd: Boolean,
+                     val feature_hd: Boolean,   // TODO is there any FLAC music?
                      val feature_lyrics: Boolean,
                      val feature_rec: Boolean,
-                     val iap: String,
-                     val lyricsPath: String,
-                     val price: String,
-                     val saleType: String,
-                     val songId: Long,
+                     val iap: String,   // TODO ??
+                     val lyricsPath: String,    // can download lyrics!
+                     val price: String,     // in dollar; flag for per-song buy
+                     val saleType: String,  // TODO ?
+                     val songId: Long,      // could be used to get preview
                      val songName: String,
-                     val songOrder: Int,
-                     val songPath: String,
-                     val songSize: Long)
+                     val songOrder: Int,    // track number
+                     val songPath: String,  // download path
+                     val songSize: Long // in bit unit
+    )

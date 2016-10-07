@@ -16,23 +16,159 @@
     card:contentPadding="3dp"
     >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/track_artist_track"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/track_title"
+            android:textSize="12dp"
+            android:visibility="invisible"
+            android:text="Clazziquai"/>
 
         <TextView
             android:id="@+id/track_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignBaseline="@+id/track_title"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:textSize="12dp"
+            android:text="02"/>
 
         <TextView
             android:id="@+id/track_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/track_id"
+            android:layout_toLeftOf="@+id/track_duration"
+            android:layout_below="@id/track_artist_track"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginRight="@dimen/text_margin"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:text="Mr. Salesman"/>
+
+        <TextView
+            android:id="@+id/track_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/track_title"
+            android:layout_marginRight="4dp"
+            android:textSize="12dp"
+            android:text="03:41"/>
+
+        <LinearLayout
+            android:id="@+id/feature_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/track_title"
+            android:layout_alignLeft="@id/track_title" >
+            <!-- feature icons -->
+            <ImageView
+                android:id="@+id/feature_lyrics"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                android:tint="@android:color/tertiary_text_dark"
+                android:contentDescription="Feature: Lyrics"
+                android:src="@drawable/ic_feature_lyrics"/>
+            <ImageView
+                android:id="@+id/feature_record"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                android:tint="@android:color/tertiary_text_dark"
+                android:contentDescription="Feature: Voice Record"
+                android:src="@drawable/ic_feature_record"/>
+            <TextView
+                android:id="@+id/track_bitrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:textSize="12sp"
+                android:text="320k"
+                android:textColor="?android:attr/textColorTertiary" />
+            <TextView
+                android:id="@+id/track_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:textSize="12sp"
+                android:text="8.3 MiB"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/track_title"
+            android:orientation="horizontal">
+            <!-- show lyric button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_track_lyric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_feature_lyrics"
+                android:drawableTint="@color/colorAccent"
+                style="?android:attr/borderlessButtonStyle"
+                android:minHeight="24dp"
+                android:minWidth="0dp"
+                android:clickable="true"
+                android:textSize="12sp"
+                android:textColor="?attr/colorAccent"
+                android:contentDescription="Show lyric of this track"
+                android:text=""
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp" />
+            <!-- like a song button / although API doesn't have like count for each song -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_track_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_love_filled"
+                android:drawableTint="@color/colorAccent"
+                style="?android:attr/borderlessButtonStyle"
+                android:minHeight="24dp"
+                android:minWidth="0dp"
+                android:clickable="true"
+                android:textSize="12sp"
+                android:textColor="?attr/colorAccent"
+                android:contentDescription="Like this track"
+                android:text=""
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp" />
+            <!-- purchase/downloadSong button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/song_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:layout_marginRight="4dip"
+                android:drawableLeft="@drawable/ic_buy"
+                android:drawableTint="@color/colorAccent"
+                style="?android:attr/borderlessButtonStyle"
+                android:gravity="right|center_vertical"
+                android:textSize="12sp"
+                android:textColor="?attr/colorAccent"
+                android:contentDescription="Buy/Download this track"
+                android:text="$ 9.99"
+                android:minHeight="24dp"
+                android:minWidth="80dp" />
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

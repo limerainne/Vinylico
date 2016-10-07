@@ -195,7 +195,7 @@
                     android:clickable="true"
                     android:textSize="12sp"
                     android:textColor="?attr/colorAccent"
-                    android:contentDescription="Wish"
+                    android:contentDescription="Wish this album"
                     android:text="" />
                 <!-- share button -->
                 <android.support.v7.widget.AppCompatButton
@@ -209,7 +209,7 @@
                     android:minWidth = "0dip"
                     android:textSize="12sp"
                     android:textColor="?attr/colorAccent"
-                    android:contentDescription="Share"
+                    android:contentDescription="Share link to this album"
                     android:text="" />
                 <!-- purchase/downloadAlbum button -->
                 <android.support.v7.widget.AppCompatButton

@@ -1,5 +1,11 @@
 package space.limerainne.i_bainil_u.viewmodel.detail
 
+import android.content.Context
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
+import android.os.Build
+import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +13,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import kotlinx.android.synthetic.main.view_album_info_track.view.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
+import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.view.main.WishlistFragment
@@ -19,7 +27,7 @@ import kotlin.reflect.KClass
 /**
  * Created by Limerainne on 2016-08-16.
  */
-class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val mTracks: TrackList, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<AlbumInfoRecyclerViewAdapter.ViewHolder>() {
+class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mAlbumEntry: AlbumEntry?, private val mAlbum: AlbumDetail, private val mTracks: TrackList, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<AlbumInfoRecyclerViewAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
         // NOTE add 2 more rows for...
         // first 1: album information (released date, genre, artist, ...)
@@ -33,7 +41,7 @@ class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val 
         val viewInflater: (Int) -> View = { LayoutInflater.from(parent.context).inflate(it, parent, false) }
         when (viewType) {
             ITEM_ALBUM_INFO ->  {
-                viewHolder = AlbumDescViewHolder(viewInflater(R.layout.view_album_info_album_desc))
+                viewHolder = AlbumInfoViewHolder(viewInflater(R.layout.view_album_info_album_desc))
             }
             ITEM_TRACK -> {
                 viewHolder = TrackViewHolder(viewInflater(R.layout.view_album_info_track))
@@ -94,6 +102,35 @@ class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val 
 
     inner abstract class ViewHolder(open val mView: View): RecyclerView.ViewHolder(mView)
 
+    inner class AlbumInfoViewHolder(override val mView: View): ViewHolder(mView) {
+        @BindView(R.id.album_desc)
+        lateinit var mAlbumDescView: TextView
+
+        lateinit var mItem: AlbumDetail
+
+        val tintColor: Int
+
+        init {
+            ButterKnife.bind(this, itemView)
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                tintColor = mContext.resources.getColor(R.color.colorAccent)
+            else
+                tintColor = mContext.getColor(R.color.colorAccent)
+        }
+
+        fun bind(item: AlbumDetail)   {
+            mItem = item
+            // TODO currently, do nothing
+            // mAlbumDescView.text = item.albumDesc
+        }
+
+        override fun toString(): String {
+            return super.toString() + " '" + (mItem.albumId.toString() ?: "") + "'"
+        }
+    }
+
+
     inner class TrackViewHolder(override val mView: View): ViewHolder(mView) {
         @BindView(R.id.track_id)
         lateinit var mTrackIdView: TextView
@@ -102,15 +139,135 @@ class AlbumInfoRecyclerViewAdapter(private val mAlbum: AlbumDetail, private val 
 
         lateinit var mItem: Track
 
+        val tintColor: Int
+
         init {
             ButterKnife.bind(this, itemView)
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                tintColor = mContext.resources.getColor(R.color.colorAccent)
+            else
+                tintColor = mContext.getColor(R.color.colorAccent)
         }
 
         fun bind(item: Track)   {
             mItem = item
+
             mTrackIdView.text = item.songOrder.toString()
             mTrackTitleView.text = item.songName
+
+            if (mAlbum.artistName != item.artistName)   {
+                mView.track_artist_track.visibility = View.VISIBLE
+                mView.track_artist_track.text = item.artistName
+            }   else
+                mView.track_artist_track.visibility = View.INVISIBLE
+
+            // create duration text
+            mView.track_duration.text = getDurationText(item.duration)
+
+            // feature icons
+            setVisibility(mView.feature_lyrics, item.feature_lyrics)
+            setVisibility(mView.feature_record, item.feature_rec)
+
+            // bitrate
+            mView.track_bitrate.text = item.bitrate + "k"
+
+            // size
+            mView.track_size.text = getSizeText(item.songSize)
+
+            // TODO button functions
+            mView.btn_track_like.setOnClickListener {
+                // TODO like to track; what if user not bought this track?
+                // RequestToggleLike.doLikeTo(mContext, item.albumId, item.trackId, true)
+            }
+            mView.btn_track_lyric.setOnClickListener {
+                // TODO show lyrics
+            }
+
+            // TODO have to find a way to know if album/individual_song is already purchased
+            setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: 0)
+            mView.song_price.setOnClickListener {
+                // TODO buy/download each track
+                // TODO have to get track purchase URL
+                // TODO have to check if it cannot be purchased individually
+            }
         }
+
+        fun setVisibility(view: View, isVisible: Boolean) {
+            view.visibility = if (isVisible) View.VISIBLE else View.GONE
+        }
+
+        fun getDurationText(duration: Int): String  {
+            var result = ""
+
+            val exactSecond = duration % 60
+            val minute = duration / 60
+            val exactMinute = minute % 60
+            val hour = minute / 60
+            // NOTE ignore if hrs more than 23
+
+            if (hour > 0)
+                result = "${hour}:"
+            result += "${exactMinute}:${exactSecond}"
+
+            return result
+        }
+
+        fun getSizeText(size: Long): String  {
+            // input's unit is in byte
+            val unit = 1024
+
+            // into KiB
+            var sizeInto = size / unit
+            if (sizeInto <= unit)    {
+                return sizeInto.toString() + "KiB"
+            }
+
+            // into MiB
+            sizeInto = size / unit
+            return sizeInto.toString() + "MiB"
+        }
+
+        open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
+            // set price
+            if (price.contains("."))
+                view.text = "$ $price"
+            else
+                view.text = price
+
+            // if purchased, add strike to text
+            if (purchased == 1)
+                view.paintFlags = view.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            else
+                view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
+
+            // if purchased, change icon to...
+            val btnResId: Int
+            if (purchased == 1)
+                btnResId = R.drawable.ic_download
+            else
+                btnResId = R.drawable.ic_buy
+
+            val btnDrawable: Drawable?
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                btnDrawable = mContext.resources.getDrawable(btnResId)
+            else
+                btnDrawable = mContext.getDrawable(btnResId)
+
+            val drawables = view.compoundDrawables
+            val leftCompoundDrawable = drawables[0]
+            btnDrawable.bounds = leftCompoundDrawable.bounds
+            // NOTE above line MUST be REQUIRED to display properly!
+
+            // http://stackoverflow.com/questions/1309629/how-to-change-colors-of-a-drawable-in-android
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                btnDrawable.setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY)
+            else
+                btnDrawable.setTint(tintColor)
+
+            view.setCompoundDrawables(btnDrawable, null, null, null)
+        }
+
 
         override fun toString(): String {
             return super.toString() + " '" + mTrackTitleView.text + "'"

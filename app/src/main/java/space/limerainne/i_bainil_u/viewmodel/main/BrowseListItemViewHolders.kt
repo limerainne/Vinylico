@@ -94,21 +94,19 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         }
 
         itemView.album_price.setOnClickListener {
+            // TODO implement download function
             PurchaseTool.purchaseAlbum(mContext, item)
         }
     }
 
     fun setVisibility(view: View, isVisible: Boolean) {
-        if (isVisible)
-            view.visibility = View.VISIBLE
-        else
-            view.visibility = View.GONE
+        view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
         // set price
         if (price.contains("."))
-            view.text = "$ " + price
+            view.text = "$ $price"
         else
             view.text = price
 
