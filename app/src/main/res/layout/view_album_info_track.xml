@@ -29,7 +29,11 @@
             android:layout_alignLeft="@+id/track_title"
             android:textSize="12dp"
             android:visibility="invisible"
-            android:text="Clazziquai"/>
+            android:includeFontPadding="false"
+            android:text="Clazziquai"
+            android:paddingBottom="0dp"
+            android:layout_marginBottom="0dp" />
+        <!-- NOTE disabling includeFontPadding removes space for accent -->
 
         <TextView
             android:id="@+id/track_id"
@@ -48,10 +52,13 @@
             android:layout_toRightOf="@id/track_id"
             android:layout_toLeftOf="@+id/track_duration"
             android:layout_below="@id/track_artist_track"
-            android:layout_marginLeft="@dimen/text_margin"
-            android:layout_marginRight="@dimen/text_margin"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:text="Mr. Salesman"/>
+            android:includeFontPadding="false"
+            android:text="Mr. Salesman"
+            android:layout_marginTop="0dp"
+            android:paddingTop="0dp" />
 
         <TextView
             android:id="@+id/track_duration"
@@ -73,8 +80,8 @@
             <!-- feature icons -->
             <ImageView
                 android:id="@+id/feature_lyrics"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_gravity="center_vertical"
                 android:layout_centerVertical="true"
                 android:visibility="visible"
@@ -83,8 +90,8 @@
                 android:src="@drawable/ic_feature_lyrics"/>
             <ImageView
                 android:id="@+id/feature_record"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_gravity="center_vertical"
                 android:layout_centerVertical="true"
                 android:visibility="visible"
@@ -97,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:text="320k"
                 android:textColor="?android:attr/textColorTertiary" />
             <TextView
@@ -106,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:text="8.3 MiB"/>
         </LinearLayout>
 

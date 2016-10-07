@@ -31,3 +31,6 @@ fun String.toLongOrElse(default: Long): Long  {
         return default
     }
 }
+
+fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
+fun Int.format(digits: Int, spacer: Char = '0') = java.lang.String.format("%${spacer}${digits}d", this)

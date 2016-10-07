@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import kotlinx.android.synthetic.main.view_album_info_album_desc.view.*
 import kotlinx.android.synthetic.main.view_album_info_track.view.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -20,6 +21,7 @@ import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
+import space.limerainne.i_bainil_u.extension.format
 import space.limerainne.i_bainil_u.view.main.WishlistFragment
 import java.util.*
 import kotlin.reflect.KClass
@@ -32,7 +34,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         // NOTE add 2 more rows for...
         // first 1: album information (released date, genre, artist, ...)
         // last 1: album description
-        return 1 + mTracks.tracks.size + 1
+        // last 1: album credits
+        return 1 + mTracks.tracks.size + 1 + 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,6 +52,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             ITEM_ALBUM_DESC -> {
                 viewHolder = AlbumDescViewHolder(viewInflater(R.layout.view_album_info_album_desc))
             }
+            ITEM_ALBUM_CREDIT -> {
+                viewHolder = AlbumCreditViewHolder(viewInflater(R.layout.view_album_info_album_desc))
+            }
             else -> throw RuntimeException()
         }
 
@@ -60,6 +66,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             0 -> return ITEM_ALBUM_INFO
             in 1..mTracks.tracks.size -> return ITEM_TRACK
             mTracks.tracks.size+1 -> return ITEM_ALBUM_DESC
+            mTracks.tracks.size+2 -> return ITEM_ALBUM_CREDIT
             else -> throw RuntimeException()
         }
     }
@@ -68,7 +75,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         // check invalidness & bind
         when (getItemViewType(position))    {
             ITEM_ALBUM_INFO ->  {
-                if (holder is AlbumDescViewHolder) {
+                if (holder is AlbumInfoViewHolder) {
                     holder.bind(mAlbum)
                     holder.mView.setOnClickListener {
                         mListener?.onListFragmentInteraction(holder.mItem)
@@ -79,7 +86,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             }
             ITEM_TRACK ->   {
                 if (holder is TrackViewHolder) {
-                    holder.bind(mTracks.tracks.get(position))
+                    holder.bind(mTracks.tracks.get(position - 1))   // TODO better way to handle position
                     holder.mView.setOnClickListener {
                         mListener?.onListFragmentInteraction(holder.mItem)
                     }
@@ -97,6 +104,16 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 else
                     throw RuntimeException()
             }
+            ITEM_ALBUM_CREDIT ->  {
+            if (holder is AlbumCreditViewHolder) {
+                holder.bind(mAlbum)
+                holder.mView.setOnClickListener {
+                    mListener?.onListFragmentInteraction(holder.mItem)
+                }
+            }
+            else
+                throw RuntimeException()
+        }
         }
     }
 
@@ -153,7 +170,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         fun bind(item: Track)   {
             mItem = item
 
-            mTrackIdView.text = item.songOrder.toString()
+            mTrackIdView.text = item.songOrder.format(2, ' ')
             mTrackTitleView.text = item.songName
 
             if (mAlbum.artistName != item.artistName)   {
@@ -170,7 +187,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             setVisibility(mView.feature_record, item.feature_rec)
 
             // bitrate
-            mView.track_bitrate.text = item.bitrate + "k"
+            mView.track_bitrate.text = if (item.bitrate.length > 0) (item.bitrate + "k") else ""
 
             // size
             mView.track_size.text = getSizeText(item.songSize)
@@ -200,6 +217,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         fun getDurationText(duration: Int): String  {
             var result = ""
 
+            if (duration < 0)
+                return "--:--"
+
             val exactSecond = duration % 60
             val minute = duration / 60
             val exactMinute = minute % 60
@@ -207,25 +227,25 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             // NOTE ignore if hrs more than 23
 
             if (hour > 0)
-                result = "${hour}:"
-            result += "${exactMinute}:${exactSecond}"
+                result = "${hour.format(2)}:"
+            result += "${exactMinute.format(2)}:${exactSecond.format(2)}"
 
             return result
         }
 
         fun getSizeText(size: Long): String  {
             // input's unit is in byte
-            val unit = 1024
+            val unit: Double = 1024.0
 
             // into KiB
             var sizeInto = size / unit
             if (sizeInto <= unit)    {
-                return sizeInto.toString() + "KiB"
+                return "%.2f KiB".format(sizeInto)
             }
 
             // into MiB
-            sizeInto = size / unit
-            return sizeInto.toString() + "MiB"
+            sizeInto /= unit
+            return "%.2f MiB".format(sizeInto)
         }
 
         open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
@@ -294,9 +314,32 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         }
     }
 
+    inner class AlbumCreditViewHolder(override val mView: View): ViewHolder(mView) {
+        @BindView(R.id.album_desc)
+        lateinit var mAlbumDescView: TextView
+
+        lateinit var mItem: AlbumDetail
+
+        init {
+            ButterKnife.bind(this, itemView)
+        }
+
+        fun bind(item: AlbumDetail)   {
+            mItem = item
+
+            mView.album_desc_title.text = "Album Credits"
+            mAlbumDescView.text = item.albumCredit
+        }
+
+        override fun toString(): String {
+            return super.toString() + " '" + (mItem.albumId.toString() ?: "") + "'"
+        }
+    }
+
     companion object    {
         val ITEM_ALBUM_INFO = 0
         val ITEM_TRACK = 1
         val ITEM_ALBUM_DESC = 2
+        val ITEM_ALBUM_CREDIT = 3
     }
 }
