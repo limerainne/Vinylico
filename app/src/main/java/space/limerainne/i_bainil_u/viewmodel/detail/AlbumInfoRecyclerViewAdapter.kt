@@ -147,12 +147,19 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             mView.album_artist.text = item.artistName
             mView.album_title.text = item.albumName
 
-            mView.feature_album_booklet.setVisibility4(item.feature_booklet)
-            mView.feature_album_lyrics.setVisibility4(item.feature_lyrics)
-            mView.feature_album_record.setVisibility4(item.feature_rec)
+            mView.album_label_publisher.text = "${item.labelName} | ${item.publishName}"
+
+            var iconCount = 0
+            iconCount += mView.feature_album_booklet.setVisibility4(item.feature_booklet)
+            iconCount += mView.feature_album_lyrics.setVisibility4(item.feature_lyrics)
+            iconCount += mView.feature_album_record.setVisibility4(item.feature_rec)
+            mView.feature_album_container.setVisibility4(iconCount > 0)
 
             mView.album_num_tracks.text = item.tracks.toString()
             mView.album_date.text = item.releaseDate
+
+            // get duration
+            mView.album_duration.text = tracks.duration.toDurationText()
 
             // get bitrate
             mView.album_bitrate.text = tracks.bitrate.toBitrateText()
@@ -283,7 +290,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             var iconCount = 0
             iconCount += mView.feature_lyrics.setVisibility4(item.feature_lyrics)
             iconCount += mView.feature_record.setVisibility4(item.feature_rec)
-            // setVisibility(mView.feature_container, iconCount > 0)
+            mView.feature_container.setVisibility4(iconCount > 0)
 
             // bitrate
             mView.track_bitrate.text = item.bitrate.toBitrateText()

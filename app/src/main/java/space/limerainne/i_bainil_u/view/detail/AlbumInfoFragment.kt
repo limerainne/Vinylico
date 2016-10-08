@@ -109,18 +109,20 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
             val wTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))
 
             uiThread {
-                Log.d("Picasso", wAlbumDetail.jacketImage)
-                Picasso.with(activity)
-                        .load(wAlbumDetail.jacketImage)
-                        .noFade()
-                        .into(toolbar_background)
+                if (context != null) {
+                    Log.d("Picasso", wAlbumDetail.jacketImage)
+                    Picasso.with(activity)
+                            .load(wAlbumDetail.jacketImage)
+                            .noFade()
+                            .into(toolbar_background)
 
-                view.loading.visibility = View.INVISIBLE
+                    view.loading.visibility = View.INVISIBLE
 
-                rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, wAlbumDetail, wTracks, mListener)
-                Log.d("Found", wAlbumDetail.labelName)
-                Log.d("Found", wTracks.albumId.toString())
-                Log.d("Found", wTracks.tracks[0].songName)
+                    rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, wAlbumDetail, wTracks, mListener)
+                    Log.d("Found", wAlbumDetail.labelName)
+                    Log.d("Found", wTracks.albumId.toString())
+                    Log.d("Found", wTracks.tracks[0].songName)
+                }
             }
         }
 

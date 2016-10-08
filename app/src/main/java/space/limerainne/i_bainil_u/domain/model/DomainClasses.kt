@@ -118,6 +118,7 @@ data class AlbumDetail(val albumCredit: String,
     // track list
     data class TrackList(val albumId: Long,
                          val tracks: List<Track>,
+                         var duration: Int,
                          var bitrate: String,
                          var albumSize: Long,
                          var priceIfPerSong: String)

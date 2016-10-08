@@ -206,7 +206,19 @@ class APIDataMapper {
     }
 
     fun convertTrackListRespondToDomain(albumId: Long, trackList: TrackList) = with(trackList) {
-        val domTrackList = DomainTrackList(albumId, convertTrackListToDomain(result), "", 0, "")
+        val domTrackList = DomainTrackList(albumId, convertTrackListToDomain(result), -1, "", 0, "")
+
+        // album duration
+        var albumDuration: Int = 0
+        try {
+            for (track in domTrackList.tracks) {
+                albumDuration += track.duration
+            }
+            domTrackList.duration = albumDuration
+        } catch (e: Exception)  {
+            e.printStackTrace()
+            domTrackList.duration = -1
+        }
 
         // album bitrate?
         // TODO just get first track's

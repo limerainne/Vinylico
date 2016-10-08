@@ -68,7 +68,6 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
 
             uiThread { if (view.list is RecyclerView) {
                 if (context != null) {
-
                     viewAdapter = BrowseListRecyclerViewAdapter(context, sList, mListener)
                     viewAdapter.setEndlessScrollListener(this@BrowseListFragment)
                     view.list.adapter = viewAdapter
@@ -77,6 +76,7 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
                     nextOffset += 1
                     println("offset: ${offset}, nextOffset: ${nextOffset}")
 
+                    view.loading.visibility = View.INVISIBLE
                     view.list.visibility = View.VISIBLE
                 }
             }

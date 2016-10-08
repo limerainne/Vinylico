@@ -114,6 +114,7 @@ class PurchasedFragment : Fragment() {
                         println("PurchasedFragment: showing data")
                         view.list.adapter = PurchasedRecyclerViewAdapter(context, pList, mListener)
 
+                        view.loading.visibility = View.INVISIBLE
                         view.list.visibility = View.VISIBLE
                     }
                 }

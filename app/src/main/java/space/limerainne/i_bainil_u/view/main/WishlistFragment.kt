@@ -105,6 +105,7 @@ class WishlistFragment : Fragment() {
                     if (context != null) {
                         view.list.adapter = WishlistRecyclerViewAdapter(context, wList, mListener)
 
+                        view.loading.visibility = View.INVISIBLE
                         view.list.visibility = View.VISIBLE
                     }
                 }

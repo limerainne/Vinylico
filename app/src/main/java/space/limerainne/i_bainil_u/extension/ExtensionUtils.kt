@@ -80,7 +80,7 @@ fun Long.toSizeText(): String  {
     return "%.2f GiB".format(sizeInto)
 }
 
-fun String.toBitrateText(): String = if (this.length > 0) (this + "k") else ""
+fun String.toBitrateText(): String = if (this.length > 0) (this + "k") else "-"
 
 
 fun View.setVisibility4(isVisible: Boolean): Int {
