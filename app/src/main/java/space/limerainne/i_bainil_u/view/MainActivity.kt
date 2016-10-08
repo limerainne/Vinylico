@@ -72,9 +72,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             transitToFragment(R.id.placeholder_top, mainFragment, MainFragment.TAG, false)
             supportFragmentManager.executePendingTransactions()
 
-            val homeFragment = HomeFragment.newInstance("1", "1")
-            mainFragment.changeChildFragment(homeFragment, HomeFragment.TAG)
-            fragments.put(R.id.nav_home, homeFragment)
+//            val homeFragment = HomeFragment.newInstance("1", "1")
+//            mainFragment.changeChildFragment(homeFragment, HomeFragment.TAG)
+//            fragments.put(R.id.nav_home, homeFragment)
+            val browseFragment = BrowseFragment.newInstance()
+            mainFragment.changeChildFragment(browseFragment, BrowseFragment.TAG)
+            fragments.put(R.id.nav_browse, browseFragment)
         }
     }
 
@@ -282,7 +285,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (userInfo.userId > 0) {
             Picasso.with(this).load("http://cloud.bainil.com/upload/user" + userInfo.userImageURL).into(header_account_photo)
             header_account_name.text = userInfo.userName
-            header_account_email.text = userInfo.userEmail
+            header_account_email.text = "${userInfo.userEmail} (#${userInfo.userId})"
         }
         else    {
             account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
