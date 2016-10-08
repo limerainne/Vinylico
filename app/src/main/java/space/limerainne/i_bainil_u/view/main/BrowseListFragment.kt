@@ -42,7 +42,7 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
 
     private lateinit var viewAdapter: BrowseListRecyclerViewAdapter
 
-    private var category = RequestStoreAlbums.CATEGORY_NEW
+    private var category = RequestStoreAlbums.CATEGORY_FEATURED
     private var offset = 0L;
     private var length = 20L;
     private var nextOffset = 0L;

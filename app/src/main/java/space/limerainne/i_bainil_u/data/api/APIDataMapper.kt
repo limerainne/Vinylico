@@ -206,7 +206,7 @@ class APIDataMapper {
     }
 
     fun convertTrackListRespondToDomain(albumId: Long, trackList: TrackList) = with(trackList) {
-        val domTrackList = DomainTrackList(albumId, convertTrackListToDomain(result), "", 0)
+        val domTrackList = DomainTrackList(albumId, convertTrackListToDomain(result), "", 0, "")
 
         // album bitrate?
         // TODO just get first track's
@@ -218,6 +218,18 @@ class APIDataMapper {
             albumSize += track.songSize
         }
         domTrackList.albumSize = albumSize
+
+        // sum of price per song
+        var sumPricePerSong: Double = 0.0
+        try {
+            for (track in domTrackList.tracks) {
+                sumPricePerSong += track.price.toDouble()
+            }
+            domTrackList.priceIfPerSong = sumPricePerSong.toString()
+        } catch (e: Exception)  {
+            e.printStackTrace()
+            domTrackList.priceIfPerSong = ""
+        }
 
         domTrackList
     }

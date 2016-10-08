@@ -16,8 +16,12 @@ import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.view_album_info_album_desc.view.*
 import kotlinx.android.synthetic.main.view_album_info_album_summary.view.*
 import kotlinx.android.synthetic.main.view_album_info_track.view.*
+import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.base.PurchaseTool
+import space.limerainne.i_bainil_u.base.ShareTool
+import space.limerainne.i_bainil_u.data.api.RequestToggleWish
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
@@ -168,7 +172,71 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             // TODO which API?
             mView.album_comment_count.text = "-"
 
+            mView.btn_album_wish.setOnClickListener {
+                RequestToggleWish.doWishTo(mContext, item.albumId, true)
+            }
+
+            mView.btn_album_share.setOnClickListener {
+                ShareTool.shareAlbumWithImageURL(mContext, item.jacketImage, item.albumName, item.artistName, item.albumId)
+            }
+
             // TODO price
+            // get price comparison if required
+            var priceString = item.price
+            try {
+                val pricePerSong = tracks.priceIfPerSong.toDouble()
+                val priceAlbum = item.price.toDouble()
+
+                if (Math.abs(pricePerSong - priceAlbum) > .5)    {
+                    priceString = "${priceAlbum.format(2)} (${pricePerSong.format(2)})"
+                }
+            }   catch (e: Exception)    {}
+
+            setPriceButton(mView.album_price, priceString, mAlbumEntry?.purchased ?: 0)
+            mView.album_price.setOnClickListener {
+                // TODO implement download function
+                PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName)
+            }
+        }
+
+        open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
+            // set price
+            if (price.contains("."))
+                view.text = "$ $price"
+            else
+                view.text = price
+
+            // if purchased, add strike to text
+            if (purchased == 1)
+                view.paintFlags = view.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            else
+                view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
+
+            // if purchased, change icon to...
+            val btnResId: Int
+            if (purchased == 1)
+                btnResId = R.drawable.ic_download
+            else
+                btnResId = R.drawable.ic_buy
+
+            val btnDrawable: Drawable?
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                btnDrawable = mContext.resources.getDrawable(btnResId)
+            else
+                btnDrawable = mContext.getDrawable(btnResId)
+
+            val drawables = view.compoundDrawables
+            val leftCompoundDrawable = drawables[0]
+            btnDrawable.bounds = leftCompoundDrawable.bounds
+            // NOTE above line MUST be REQUIRED to display properly!
+
+            // http://stackoverflow.com/questions/1309629/how-to-change-colors-of-a-drawable-in-android
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                btnDrawable.setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY)
+            else
+                btnDrawable.setTint(tintColor)
+
+            view.setCompoundDrawables(btnDrawable, null, null, null)
         }
 
         override fun toString(): String {
@@ -238,6 +306,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 // TODO buy/download each track
                 // TODO have to get track purchase URL
                 // TODO have to check if it cannot be purchased individually
+                mContext.toast("Sorry, per-song purchase/download feature is not yet implemented...")
             }
         }
 

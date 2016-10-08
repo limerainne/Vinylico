@@ -18,8 +18,8 @@ class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment? {
         // TODO can dynamically initialize
         when (position) {
-            0 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_FEATURED)
-            1 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_NEW)
+            0 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_NEW)
+            1 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_FEATURED)
             2 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_TOP)
             3 -> return BrowseListFragment.newInstance(1, RequestStoreAlbums.CATEGORY_XSFM)
             else -> return null
@@ -28,8 +28,8 @@ class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence {
         when (position) {
-            0 -> return "Featured"
-            1 -> return "New"
+            0 -> return "New"
+            1 -> return "Featured"
             2 -> return "Top"
             3 -> return "XSFM"
         }

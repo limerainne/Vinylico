@@ -17,7 +17,9 @@ import space.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
 
 class PurchaseTool  {
     companion object    {
-        fun purchaseAlbum(mContext: Context, item: AlbumEntry) {
+        fun purchaseAlbum(mContext: Context, item: AlbumEntry) = purchaseAlbum(mContext, item.albumId, item.albumName)
+
+        fun purchaseAlbum(mContext: Context, albumId: Long, albumName: String) {
             /*
             http://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
 
@@ -34,7 +36,7 @@ class PurchaseTool  {
                         try {
                             val userInfo = UserInfo(mContext)
 
-                            success = RequestAlbumPurchased(item.albumId, userInfo.userId, true).execute()
+                            success = RequestAlbumPurchased(albumId, userInfo.userId, true).execute()
                         } catch (e: Exception) {
                             success = false
                             e.printStackTrace()
@@ -47,13 +49,13 @@ class PurchaseTool  {
                                     // TODO display purchase info & cautions
                                     val userInfo = UserInfo(mContext)
 
-                                    val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, item.albumId, mContext)
+                                    val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, albumId, mContext)
                                     mContext.transitToFragment(R.id.placeholder_top, webviewFragment, PurchaseWebviewFragment.TAG)
                                 }
                             }
                         } else {
                             uiThread {
-                                mContext.toast("Already purchased this album: ${item.albumName}")
+                                mContext.toast("Already purchased this album: ${albumName}")
                             }
                         }
 
