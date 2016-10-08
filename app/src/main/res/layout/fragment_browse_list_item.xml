@@ -112,6 +112,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
+                        android:tint="@android:color/tertiary_text_dark"
                         android:src="@drawable/ic_music_note"/>
                     <TextView
                         android:id="@+id/album_num_tracks"
@@ -120,6 +121,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
                         android:textSize="10sp"
+                        android:textColor="@android:color/tertiary_text_dark"
                         android:textAppearance="?attr/textAppearanceListItem"
                         android:text="10"/>
 
@@ -127,6 +129,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
+                        android:tint="@android:color/tertiary_text_dark"
                         android:src="@drawable/ic_today"/>
                     <TextView
                         android:id="@+id/album_date"
@@ -134,12 +137,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:textSize="10sp"
+                        android:textColor="@android:color/tertiary_text_dark"
                         android:textAppearance="?attr/textAppearanceListItem"
                         android:text="2014.00.00"/>
                 </LinearLayout>
             </RelativeLayout>
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/album_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/text_margin"
@@ -156,9 +160,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_centerVertical="true"
                     android:visibility="visible"
-                    android:tint="?android:attr/textColorHint"
+                    android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Lyrics"
-                    android:src="@drawable/ic_feature_lyrics"/>
+                    android:src="@drawable/ic_lyric_v2"/>
                 <ImageView
                     android:id="@+id/feature_booklet"
                     android:layout_width="16dp"
@@ -167,7 +171,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/feature_lyrics"
                     android:visibility="visible"
-                    android:tint="?android:attr/textColorHint"
+                    android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Booklet"
                     android:src="@drawable/ic_feature_booklet"/>
                 <ImageView
@@ -178,7 +182,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/feature_booklet"
                     android:visibility="visible"
-                    android:tint="?android:attr/textColorHint"
+                    android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Voice Record"
                     android:src="@drawable/ic_feature_record"/>
 

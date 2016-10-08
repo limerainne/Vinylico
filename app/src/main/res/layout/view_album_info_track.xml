@@ -76,7 +76,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@id/track_title"
-            android:layout_alignLeft="@id/track_title" >
+            android:layout_alignLeft="@id/track_title"
+            android:layout_marginRight="8dp" >
             <!-- feature icons -->
             <ImageView
                 android:id="@+id/feature_lyrics"
@@ -87,7 +88,7 @@
                 android:visibility="visible"
                 android:tint="@android:color/tertiary_text_dark"
                 android:contentDescription="Feature: Lyrics"
-                android:src="@drawable/ic_feature_lyrics"/>
+                android:src="@drawable/ic_lyric_v2"/>
             <ImageView
                 android:id="@+id/feature_record"
                 android:layout_width="12dp"
@@ -98,12 +99,20 @@
                 android:tint="@android:color/tertiary_text_dark"
                 android:contentDescription="Feature: Voice Record"
                 android:src="@drawable/ic_feature_record"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/file_info_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/track_title"
+            android:layout_toRightOf="@id/feature_container" >
             <TextView
                 android:id="@+id/track_bitrate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:textSize="10sp"
                 android:text="320k"
                 android:textColor="?android:attr/textColorTertiary" />
@@ -112,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:textSize="10sp"
                 android:text="8.3 MiB"/>
         </LinearLayout>
@@ -129,7 +138,9 @@
                 android:id="@+id/btn_track_lyric"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_feature_lyrics"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:drawableLeft="@drawable/ic_lyric_v2"
                 android:drawableTint="@color/colorAccent"
                 style="?android:attr/borderlessButtonStyle"
                 android:minHeight="24dp"
@@ -138,14 +149,14 @@
                 android:textSize="12sp"
                 android:textColor="?attr/colorAccent"
                 android:contentDescription="Show lyric of this track"
-                android:text=""
-                android:paddingTop="0dp"
-                android:paddingBottom="0dp" />
+                android:text="" />
             <!-- like a song button / although API doesn't have like count for each song -->
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_track_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:drawableLeft="@drawable/ic_love_filled"
                 android:drawableTint="@color/colorAccent"
                 style="?android:attr/borderlessButtonStyle"
@@ -155,16 +166,14 @@
                 android:textSize="12sp"
                 android:textColor="?attr/colorAccent"
                 android:contentDescription="Like this track"
-                android:text=""
-                android:paddingTop="0dp"
-                android:paddingBottom="0dp" />
+                android:text="" />
             <!-- purchase/downloadSong button -->
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/song_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
-                android:paddingBottom="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:layout_marginRight="4dip"
                 android:drawableLeft="@drawable/ic_buy"
                 android:drawableTint="@color/colorAccent"

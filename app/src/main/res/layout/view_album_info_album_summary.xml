@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/text_margin"
+    >
+    <TextView
+        android:id="@+id/album_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Park Hyo Shin" />
+    <TextView
+        android:id="@+id/album_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="I am A Dreamer"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!-- feature icons -->
+        <ImageView
+            android:id="@+id/feature_album_lyrics"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            android:tint="@android:color/tertiary_text_dark"
+            android:contentDescription="Feature: Lyrics"
+            android:src="@drawable/ic_lyric_v2"/>
+        <ImageView
+            android:id="@+id/feature_album_booklet"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            android:tint="@android:color/tertiary_text_dark"
+            android:contentDescription="Feature: Booklet"
+            android:src="@drawable/ic_feature_booklet"/>
+        <ImageView
+            android:id="@+id/feature_album_record"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            android:tint="@android:color/tertiary_text_dark"
+            android:contentDescription="Feature: Voice Record"
+            android:src="@drawable/ic_feature_record"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:tint="@android:color/tertiary_text_dark"
+            android:src="@drawable/ic_music_note"/>
+        <TextView
+            android:id="@+id/album_num_tracks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textSize="10sp"
+            android:text="10"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:tint="@android:color/tertiary_text_dark"
+            android:src="@drawable/ic_today"/>
+        <TextView
+            android:id="@+id/album_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textSize="10sp"
+            android:text="2014.00.00"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:tint="@android:color/tertiary_text_dark"
+            android:src="@drawable/ic_love_filled"/>
+        <TextView
+            android:id="@+id/album_wish_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textSize="10sp"
+            android:text="100"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:tint="@android:color/tertiary_text_dark"
+            android:src="@drawable/ic_download"/>
+        <TextView
+            android:id="@+id/album_buy_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textSize="10sp"
+            android:text="100"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:tint="@android:color/tertiary_text_dark"
+            android:src="@drawable/ic_comment"/>
+        <TextView
+            android:id="@+id/album_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textSize="10sp"
+            android:text="100"/>
+
+        <LinearLayout
+            android:id="@+id/file_info_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/album_bitrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:textSize="10sp"
+                android:text="320k"
+                android:textColor="?android:attr/textColorTertiary" />
+            <TextView
+                android:id="@+id/album_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:textSize="10sp"
+                android:text="8.3 MiB"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

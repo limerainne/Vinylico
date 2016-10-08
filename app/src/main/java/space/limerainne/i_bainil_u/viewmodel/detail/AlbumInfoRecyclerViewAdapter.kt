@@ -14,6 +14,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.view_album_info_album_desc.view.*
+import kotlinx.android.synthetic.main.view_album_info_album_summary.view.*
 import kotlinx.android.synthetic.main.view_album_info_track.view.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -21,7 +22,7 @@ import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
-import space.limerainne.i_bainil_u.extension.format
+import space.limerainne.i_bainil_u.extension.*
 import space.limerainne.i_bainil_u.view.main.WishlistFragment
 import java.util.*
 import kotlin.reflect.KClass
@@ -43,8 +44,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
         val viewInflater: (Int) -> View = { LayoutInflater.from(parent.context).inflate(it, parent, false) }
         when (viewType) {
-            ITEM_ALBUM_INFO ->  {
-                viewHolder = AlbumInfoViewHolder(viewInflater(R.layout.view_album_info_album_desc))
+            ITEM_ALBUM_SUMMARY ->  {
+                viewHolder = AlbumSummaryViewHolder(viewInflater(R.layout.view_album_info_album_summary))
             }
             ITEM_TRACK -> {
                 viewHolder = TrackViewHolder(viewInflater(R.layout.view_album_info_track))
@@ -63,7 +64,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
     override fun getItemViewType(position: Int): Int {
         when (position) {
-            0 -> return ITEM_ALBUM_INFO
+            0 -> return ITEM_ALBUM_SUMMARY
             in 1..mTracks.tracks.size -> return ITEM_TRACK
             mTracks.tracks.size+1 -> return ITEM_ALBUM_DESC
             mTracks.tracks.size+2 -> return ITEM_ALBUM_CREDIT
@@ -74,9 +75,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // check invalidness & bind
         when (getItemViewType(position))    {
-            ITEM_ALBUM_INFO ->  {
-                if (holder is AlbumInfoViewHolder) {
-                    holder.bind(mAlbum)
+            ITEM_ALBUM_SUMMARY ->  {
+                if (holder is AlbumSummaryViewHolder) {
+                    holder.bind(mAlbum, mTracks)
                     holder.mView.setOnClickListener {
                         mListener?.onListFragmentInteraction(holder.mItem)
                     }
@@ -86,7 +87,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             }
             ITEM_TRACK ->   {
                 if (holder is TrackViewHolder) {
-                    holder.bind(mTracks.tracks.get(position - 1))   // TODO better way to handle position
+                    holder.bind(mTracks.tracks.get(globalPosToTracksPos(position)))
                     holder.mView.setOnClickListener {
                         mListener?.onListFragmentInteraction(holder.mItem)
                     }
@@ -117,11 +118,11 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         }
     }
 
+    fun globalPosToTracksPos(globalPosition: Int) = globalPosition - 1
+
     inner abstract class ViewHolder(open val mView: View): RecyclerView.ViewHolder(mView)
 
-    inner class AlbumInfoViewHolder(override val mView: View): ViewHolder(mView) {
-        @BindView(R.id.album_desc)
-        lateinit var mAlbumDescView: TextView
+    inner class AlbumSummaryViewHolder(override val mView: View): ViewHolder(mView) {
 
         lateinit var mItem: AlbumDetail
 
@@ -136,10 +137,38 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 tintColor = mContext.getColor(R.color.colorAccent)
         }
 
-        fun bind(item: AlbumDetail)   {
+        fun bind(item: AlbumDetail, tracks: TrackList)   {
             mItem = item
-            // TODO currently, do nothing
-            // mAlbumDescView.text = item.albumDesc
+
+            mView.album_artist.text = item.artistName
+            mView.album_title.text = item.albumName
+
+            mView.feature_album_booklet.setVisibility4(item.feature_booklet)
+            mView.feature_album_lyrics.setVisibility4(item.feature_lyrics)
+            mView.feature_album_record.setVisibility4(item.feature_rec)
+
+            mView.album_num_tracks.text = item.tracks.toString()
+            mView.album_date.text = item.releaseDate
+
+            // get bitrate
+            mView.album_bitrate.text = tracks.bitrate.toBitrateText()
+
+            // get album size
+            mView.album_size.text = tracks.albumSize.toSizeText()
+
+            // TODO wish/trackLove count
+            // TODO trackLove count API?
+            mView.album_wish_count.text = item.wishCount.thirdCommaFormat()
+
+            // TODO buy count
+            // TODO is that right?
+            mView.album_buy_count.text = item.fans.thirdCommaFormat()
+
+            // TODO comment count
+            // TODO which API?
+            mView.album_comment_count.text = "-"
+
+            // TODO price
         }
 
         override fun toString(): String {
@@ -180,17 +209,19 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 mView.track_artist_track.visibility = View.INVISIBLE
 
             // create duration text
-            mView.track_duration.text = getDurationText(item.duration)
+            mView.track_duration.text = item.duration.toDurationText()
 
             // feature icons
-            setVisibility(mView.feature_lyrics, item.feature_lyrics)
-            setVisibility(mView.feature_record, item.feature_rec)
+            var iconCount = 0
+            iconCount += mView.feature_lyrics.setVisibility4(item.feature_lyrics)
+            iconCount += mView.feature_record.setVisibility4(item.feature_rec)
+            // setVisibility(mView.feature_container, iconCount > 0)
 
             // bitrate
-            mView.track_bitrate.text = if (item.bitrate.length > 0) (item.bitrate + "k") else ""
+            mView.track_bitrate.text = item.bitrate.toBitrateText()
 
             // size
-            mView.track_size.text = getSizeText(item.songSize)
+            mView.track_size.text = item.songSize.toSizeText()
 
             // TODO button functions
             mView.btn_track_like.setOnClickListener {
@@ -208,44 +239,6 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 // TODO have to get track purchase URL
                 // TODO have to check if it cannot be purchased individually
             }
-        }
-
-        fun setVisibility(view: View, isVisible: Boolean) {
-            view.visibility = if (isVisible) View.VISIBLE else View.GONE
-        }
-
-        fun getDurationText(duration: Int): String  {
-            var result = ""
-
-            if (duration < 0)
-                return "--:--"
-
-            val exactSecond = duration % 60
-            val minute = duration / 60
-            val exactMinute = minute % 60
-            val hour = minute / 60
-            // NOTE ignore if hrs more than 23
-
-            if (hour > 0)
-                result = "${hour.format(2)}:"
-            result += "${exactMinute.format(2)}:${exactSecond.format(2)}"
-
-            return result
-        }
-
-        fun getSizeText(size: Long): String  {
-            // input's unit is in byte
-            val unit: Double = 1024.0
-
-            // into KiB
-            var sizeInto = size / unit
-            if (sizeInto <= unit)    {
-                return "%.2f KiB".format(sizeInto)
-            }
-
-            // into MiB
-            sizeInto /= unit
-            return "%.2f MiB".format(sizeInto)
         }
 
         open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
@@ -337,7 +330,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
     }
 
     companion object    {
-        val ITEM_ALBUM_INFO = 0
+        val ITEM_ALBUM_SUMMARY = 0
         val ITEM_TRACK = 1
         val ITEM_ALBUM_DESC = 2
         val ITEM_ALBUM_CREDIT = 3

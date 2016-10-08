@@ -3,6 +3,7 @@ package space.limerainne.i_bainil_u.data.api
 import space.limerainne.i_bainil_u.extension.toDateString
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.util.*
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum
 
@@ -48,8 +49,58 @@ class APIDataMapper {
                 jacketImage ?: "",
                 price ?: "",
                 purchased ?: -1,
-                releaseDate ?: "",
+                convertDateStringInto(releaseDate),
                 tracks ?: -1)
+    }
+
+    fun convertDateStringInto(date: String?): String {
+        if (date == null)
+            return ""
+
+        val dateFormatInBainil = "yyyy-MM-dd"
+        var dateFormatted: String
+        try {
+            dateFormatted = convertDateInto(SimpleDateFormat(dateFormatInBainil).parse(date), date)
+        } catch(e: Exception)   {
+            e.printStackTrace()
+            dateFormatted = date    // just put as received
+        }
+
+        return dateFormatted
+    }
+
+    fun convertUnixDateStringInto(date: Long?): String  {
+        if (date == null)
+            return ""
+
+        var dateFormatted: String
+        try {
+            // NOTE in some environment, you have to multiply 1000L into Unix timestamp
+            dateFormatted = convertDateInto(Date(date), "")
+        }   catch (e: Exception)    {
+            e.printStackTrace()
+            dateFormatted = ""
+        }
+
+        return dateFormatted
+    }
+
+    fun convertDateInto(date: Date, textIfException: String): String {
+        var dateFormatted: String
+        try {
+            val formatText: String
+            if (SimpleDateFormat("yyyy").format(date) == SimpleDateFormat("yyyy").format(Date()))
+                formatText = "MM.dd"
+            else
+                formatText = "yyyy.MM.dd"
+
+            dateFormatted = SimpleDateFormat(formatText).format(date)
+        } catch(e: Exception)   {
+            e.printStackTrace()
+            dateFormatted = textIfException
+        }
+
+        return dateFormatted
     }
 
     fun convertStoreAlbumsToDomain(userId: Long, category: String, storeAlbums: StoreAlbums) = with(storeAlbums) {
@@ -78,7 +129,7 @@ class APIDataMapper {
                 jacketImage ?: "",
                 price ?: "",
                 purchased ?: -1,
-                releaseDate ?: "",
+                convertDateStringInto(releaseDate),
                 tracks ?: -1)
     }
 
@@ -91,14 +142,6 @@ class APIDataMapper {
     }
 
     fun convertConnectedAlbumToDomain(albumEntry: AlbumEntry): DomainConnectedAlbum = with(albumEntry) {
-        val purchasedDateStringify: String
-        try {
-            purchasedDateStringify = SimpleDateFormat("yyyy-MM-dd").format(purchaseDate)
-        } catch (e: Exception)  {
-            e.printStackTrace()
-            purchasedDateStringify = ""
-        }
-
         DomainConnectedAlbum(
                 albumId ?: -1,
                 albumName ?: "",
@@ -116,9 +159,9 @@ class APIDataMapper {
                 jacketImage ?: "",
                 price ?: "",
                 1,  // every album in this list is already purchased
-                releaseDate ?: "",
+                convertDateStringInto(releaseDate),
                 tracks ?: -1,
-                purchasedDate=purchasedDateStringify)
+                purchasedDate=convertUnixDateStringInto(purchaseDate))
     }
 
     fun convertAlbumDetailRespondToDomain(albumDetail: AlbumDetail): DomainAlbumDetail {
@@ -155,7 +198,7 @@ class APIDataMapper {
                     price ?: "",
                     publishId ?: -1,
                     publishName ?: "",
-                    releaseDate ?: "",
+                    convertDateStringInto(releaseDate),
                     tracks ?: -1,
                     wish ?: -1,
                     wishCount ?: -1)
@@ -163,7 +206,20 @@ class APIDataMapper {
     }
 
     fun convertTrackListRespondToDomain(albumId: Long, trackList: TrackList) = with(trackList) {
-        DomainTrackList(albumId, convertTrackListToDomain(result))
+        val domTrackList = DomainTrackList(albumId, convertTrackListToDomain(result), "", 0)
+
+        // album bitrate?
+        // TODO just get first track's
+        domTrackList.bitrate = domTrackList.tracks[0].bitrate
+
+        // album size?
+        var albumSize = 0L
+        for (track in domTrackList.tracks)  {
+            albumSize += track.songSize
+        }
+        domTrackList.albumSize = albumSize
+
+        domTrackList
     }
 
     private fun convertTrackListToDomain(list: List<Track>): List<DomainTrack> {

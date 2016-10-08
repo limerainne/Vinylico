@@ -76,7 +76,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         itemView.album_date.text = item.releaseDate
 
         // 2nd line
-        itemView.content.text = item.albumName
+        itemView.album_title.text = item.albumName
 
         // 3rd line
         setVisibility(itemView.feature_booklet, item.feature_booklet)
@@ -144,7 +144,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
     }
 
     override fun toString(): String {
-        return super.toString() + " '" + itemView.content.text + "'"
+        return super.toString() + " '" + itemView.album_title.text + "'"
     }
 }
 

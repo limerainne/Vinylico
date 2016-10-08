@@ -20,6 +20,7 @@ import butterknife.ButterKnife
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_album_info.*
+import kotlinx.android.synthetic.main.fragment_album_info.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
@@ -113,6 +114,8 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                         .load(wAlbumDetail.jacketImage)
                         .noFade()
                         .into(toolbar_background)
+
+                view.loading.visibility = View.INVISIBLE
 
                 rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, wAlbumDetail, wTracks, mListener)
                 Log.d("Found", wAlbumDetail.labelName)

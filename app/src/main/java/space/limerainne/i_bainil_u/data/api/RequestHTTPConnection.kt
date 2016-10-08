@@ -13,9 +13,7 @@ abstract class RequestHTTPConnection() : Request {
 
     protected abstract fun composeURL(): String
 
-    fun getHTTPResponseString(): String {
-        val len = 500
-
+    fun getHTTPResponseString(len: Int = 500): String {
         println(composeURL())
 
         val url = java.net.URL(composeURL())
