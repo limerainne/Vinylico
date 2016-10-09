@@ -268,9 +268,22 @@ class APIDataMapper {
                 price ?: "",
                 saleType ?: "",
                 songId ?: -1,
-                songName ?: "",
+                decorateSongName(songName),
                 songOrder ?: -1,
                 songPath ?: "",
                 songSize ?: -1)
+    }
+
+    fun decorateSongName(songName: String?): String  {
+        if (songName == null)   return ""
+
+        var decorated = songName
+        decorated = re_parenthesis_with_included.replace(decorated, "")
+
+        return decorated
+    }
+
+    companion object    {
+        val re_parenthesis_with_included = Regex("""\s?\(.* 삽입곡?\)""")
     }
 }

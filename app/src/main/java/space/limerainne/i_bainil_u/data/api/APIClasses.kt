@@ -132,7 +132,7 @@ data class Track(val artistId: Long?,
                  val iap: String?,
                  val lyricsPath: String?,
                  val price: String?,
-                 val saleType: String?,
+                 val saleType: String?, // 0 if can be purchased per song, 1 if only whole album
                  val songId: Long?,
                  val songName: String?,
                  val songOrder: Int?,

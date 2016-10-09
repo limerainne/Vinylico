@@ -314,6 +314,10 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
             // TODO have to find a way to know if album/individual_song is already purchased
             setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: 0)
+            if (item.saleType == "1")   {
+                // NOTE this track cannot be purchased per song!
+                mView.song_price.text = "-"
+            }
             mView.song_price.setOnClickListener {
                 // TODO buy/download each track
                 // TODO have to get track purchase URL
