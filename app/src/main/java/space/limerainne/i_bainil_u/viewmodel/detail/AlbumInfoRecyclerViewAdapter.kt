@@ -7,15 +7,21 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
+import android.text.Html
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
+import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.ms.square.android.expandabletextview.ExpandableTextView
 import kotlinx.android.synthetic.main.view_album_info_album_desc.view.*
 import kotlinx.android.synthetic.main.view_album_info_album_summary.view.*
 import kotlinx.android.synthetic.main.view_album_info_track.view.*
+import org.jetbrains.anko.displayMetrics
 import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -102,9 +108,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             ITEM_ALBUM_DESC ->  {
                 if (holder is AlbumDescViewHolder) {
                     holder.bind(mAlbum)
-                    holder.mView.setOnClickListener {
-                        mListener?.onListFragmentInteraction(holder.mItem)
-                    }
+//                    holder.mView.setOnClickListener {
+//                        mListener?.onListFragmentInteraction(holder.mItem)
+//                    }
                 }
                 else
                     throw RuntimeException()
@@ -195,24 +201,22 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 val priceAlbum = item.price.toDouble()
 
                 if (Math.abs(pricePerSong - priceAlbum) > .5)    {
-                    priceString = "${priceAlbum.format(2)} (${pricePerSong.format(2)})"
+                    mView.album_price.text = fromHtml4("\$ ${priceAlbum.format(2)} (<strike>${pricePerSong.format(2)}</strike>)")
+                }   else    {
+                    mView.album_price.text = if (item.price.contains(".")) "$ " + item.price else item.price
                 }
-            }   catch (e: Exception)    {}
+            }   catch (e: Exception)    {
+                mView.album_price.text = if (item.price.contains(".")) "$ " + item.price else item.price
+            }
 
-            setPriceButton(mView.album_price, priceString, mAlbumEntry?.purchased ?: 0)
+            setPriceButton(mView.album_price, mAlbumEntry?.purchased ?: 0)
             mView.album_price.setOnClickListener {
                 // TODO implement download function
                 PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName)
             }
         }
 
-        open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
-            // set price
-            if (price.contains("."))
-                view.text = "$ $price"
-            else
-                view.text = price
-
+        open fun setPriceButton(view: AppCompatButton, purchased: Int) {
             // if purchased, add strike to text
             if (purchased == 1)
                 view.paintFlags = view.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -365,7 +369,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
     inner class AlbumDescViewHolder(override val mView: View): ViewHolder(mView) {
         @BindView(R.id.album_desc)
-        lateinit var mAlbumDescView: TextView
+        lateinit var mAlbumDescView: ExpandableTextView
 
         lateinit var mItem: AlbumDetail
 
@@ -376,6 +380,23 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         fun bind(item: AlbumDetail)   {
             mItem = item
             mAlbumDescView.text = item.albumDesc
+
+            mAlbumDescView.setOnExpandStateChangeListener { textView, isExpanded ->
+                if (!isExpanded)    {
+                    mAlbumDescView.scrollTo(0, 0)
+                    textView.setTextIsSelectable(false)
+                    textView.isClickable = true
+                }   else    {
+                    textView.setTextIsSelectable(true)
+                    textView.isClickable = true
+                    textView.requestFocus()
+                }
+            }
+
+            mView.expandable_text.setOnClickListener { v ->
+                // TODO if text selected, ignore event
+                (v.parent as ExpandableTextView).onClick(mAlbumDescView)
+            }
         }
 
         override fun toString(): String {
@@ -385,7 +406,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
     inner class AlbumCreditViewHolder(override val mView: View): ViewHolder(mView) {
         @BindView(R.id.album_desc)
-        lateinit var mAlbumDescView: TextView
+        lateinit var mAlbumDescView: ExpandableTextView
 
         lateinit var mItem: AlbumDetail
 
@@ -398,6 +419,24 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
             mView.album_desc_title.text = "Album Credits"
             mAlbumDescView.text = item.albumCredit
+
+            mAlbumDescView.setOnExpandStateChangeListener { textView, isExpanded ->
+                if (!isExpanded)    {
+                    mAlbumDescView.scrollTo(0, 0)
+                    textView.setTextIsSelectable(false)
+                    textView.isClickable = true
+                }   else    {
+                    textView.setTextIsSelectable(true)
+                    textView.isClickable = true
+                    textView.requestFocus()
+                }
+            }
+
+            mView.expandable_text.setOnClickListener { v ->
+                // TODO if text selected, ignore event
+                (v.parent as ExpandableTextView).onClick(mAlbumDescView)
+            }
+
         }
 
         override fun toString(): String {

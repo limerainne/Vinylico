@@ -16,6 +16,9 @@
 
 package space.limerainne.i_bainil_u.extension
 
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import android.view.View
 import java.text.DateFormat
 import java.util.*
@@ -86,4 +89,11 @@ fun String.toBitrateText(): String = if (this.length > 0) (this + "k") else "-"
 fun View.setVisibility4(isVisible: Boolean): Int {
     this.visibility = if (isVisible) View.VISIBLE else View.GONE
     return if (isVisible == true) 1 else 0
+}
+
+fun fromHtml4(source: String): Spanned {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        return Html.fromHtml(source, Html.FROM_HTML_MODE_COMPACT)
+    else
+        return Html.fromHtml(source)
 }

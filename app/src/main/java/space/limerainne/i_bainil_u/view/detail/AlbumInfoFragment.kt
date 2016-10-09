@@ -71,7 +71,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         val view = inflater!!.inflate(R.layout.fragment_album_info, container, false)
         ButterKnife.bind(this, view)
 
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(view.toolbar)
 
         collapsingToolbarLayout.title =""
         toolbar.title = ""
