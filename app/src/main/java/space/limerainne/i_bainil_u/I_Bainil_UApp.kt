@@ -18,6 +18,8 @@ class I_Bainil_UApp : Application() {
         // val USER_ID: Long = 2543
         val USER_ID: Long = 2    // might be...?
 
+        val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: Int = 0
+
         operator fun get(context: Context): I_Bainil_UApp {
             return context.applicationContext as I_Bainil_UApp
         }

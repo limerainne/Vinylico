@@ -307,6 +307,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 // TODO like to track; what if user not bought this track?
                 // RequestToggleLike.doLikeTo(mContext, item.albumId, item.trackId, true)
             }
+            mView.btn_track_lyric.setVisibility4(item.feature_lyrics)
             mView.btn_track_lyric.setOnClickListener {
                 // TODO show lyrics
             }

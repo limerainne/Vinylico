@@ -90,7 +90,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         }
 
         itemView.btn_album_share.setOnClickListener {
-            ShareTool.shareAlbumWithImageView(mContext, itemView.album_cover, item.albumName, item.artistName, item.albumId)
+            ShareTool.shareAlbumWithHQImage(mContext, item.jacketImage, item.albumName, item.artistName, item.albumId)
         }
 
         itemView.album_price.setOnClickListener {
