@@ -106,6 +106,25 @@
                     android:src="@drawable/ic_feature_record"/>
             </LinearLayout>
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@android:color/tertiary_text_dark"
+                    android:src="@drawable/ic_comment"/>
+                <TextView
+                    android:id="@+id/track_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:textSize="10sp"
+                    android:text="100"/>
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/file_info_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

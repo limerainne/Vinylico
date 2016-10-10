@@ -288,6 +288,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             iconCount += mView.feature_record.setVisibility4(item.feature_rec)
             mView.feature_container.setVisibility4(iconCount > 0)
 
+            mView.track_comment_count.text = item.connected_msg.toString()
+
             // bitrate
             mView.track_bitrate.text = item.bitrate.toBitrateText()
 
