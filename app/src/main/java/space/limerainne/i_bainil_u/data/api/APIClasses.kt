@@ -138,3 +138,24 @@ data class Track(val artistId: Long?,
                  val songOrder: Int?,
                  val songPath: String?,
                  val songSize: Long?)
+
+// recommend album
+data class RecommendAlbumResponse(val success: Boolean,
+                     val result: RecommendAlbum)
+
+data class RecommendAlbum(val albumEnglish: String?,
+                          val albumName: String?,
+                          val albumDesc: String?,
+                          val albumId: Long?,
+                          val artistId: Long?,
+                          val fans: List<Fan>?,
+                          val artistEnglish: String?,
+                          val albumDescEnglish: String?,
+                          val artistName: String?,
+                          val jacketImage: String?)
+
+data class Fan(val userPic: String?,
+               val userId: Long?,
+               val userName: String?,
+               val userRole: String?    // ROLE_FAN
+)

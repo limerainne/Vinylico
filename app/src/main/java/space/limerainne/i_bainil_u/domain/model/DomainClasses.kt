@@ -144,3 +144,12 @@ data class AlbumDetail(val albumCredit: String,
                      val songPath: String,  // download path
                      val songSize: Long // in bit unit
     )
+
+    data class RecommendAlbum(val albumId: Long,
+                              val albumDetail: AlbumDetail,
+                              val fans: List<Fan>)
+
+    data class Fan(val userPic: String,
+                   val userId: Long,
+                   val userName: String,
+                   val userRole: String)

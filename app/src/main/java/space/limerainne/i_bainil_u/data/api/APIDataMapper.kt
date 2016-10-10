@@ -18,6 +18,9 @@ import space.limerainne.i_bainil_u.domain.model.AlbumDetail as DomainAlbumDetail
 import space.limerainne.i_bainil_u.domain.model.TrackList as DomainTrackList
 import space.limerainne.i_bainil_u.domain.model.Track as DomainTrack
 
+import space.limerainne.i_bainil_u.domain.model.RecommendAlbum as DomainRecommendAlbum
+import space.limerainne.i_bainil_u.domain.model.Fan as DomainFan
+
 /**
  * Created by Limerainne on 2016-07-21.
  */
@@ -286,4 +289,26 @@ class APIDataMapper {
     companion object    {
         val re_parenthesis_with_included = Regex("""\s?\(.* 삽입곡?\)""")
     }
+
+    fun convertRecommendAlbumToDomain(recommendAlbum: RecommendAlbum, albumDetail: AlbumDetail): DomainRecommendAlbum {
+        if (recommendAlbum.fans == null)
+            throw Exception()
+
+        return DomainRecommendAlbum(recommendAlbum.albumId ?: -1,
+                convertAlbumDetailRespondToDomain(albumDetail),
+                convertFansListToDomain(recommendAlbum.fans))
+    }
+
+    private fun convertFansListToDomain(list: List<Fan>): List<DomainFan> {
+        return list.map { convertFanToDomain(it) }
+    }
+
+    private fun convertFanToDomain(fan: Fan): DomainFan = with(fan) {
+        DomainFan(userPic ?: "",
+                userId ?: -1,
+                userName ?: "",
+                userRole ?: "")
+    }
+
+
 }
