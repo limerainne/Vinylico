@@ -2,14 +2,10 @@ package space.limerainne.i_bainil_u.view.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_browse.*
 import kotlinx.android.synthetic.main.fragment_browse.view.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.viewmodel.main.BrowseFragmentAdapter
 

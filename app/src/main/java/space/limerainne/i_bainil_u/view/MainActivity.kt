@@ -1,16 +1,11 @@
 package space.limerainne.i_bainil_u.view
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -35,9 +30,7 @@ import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.*
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
-import space.limerainne.i_bainil_u.domain.model.Wishlist
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
-import space.limerainne.i_bainil_u.view.dummy.DummyContent
 import space.limerainne.i_bainil_u.view.main.*
 import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
 import space.limerainne.i_bainil_u.view.webview.LogoutWebviewFragment

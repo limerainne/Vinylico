@@ -2,17 +2,10 @@ package space.limerainne.i_bainil_u.data.api
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
-import com.google.gson.Gson
-import com.github.salomonbrys.kotson.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.base.UserInfo
-import space.limerainne.i_bainil_u.view.MainActivity
-import java.io.*
-import java.net.HttpURLConnection
 
 /**
  * Created by Limerainne on 2016-07-21.

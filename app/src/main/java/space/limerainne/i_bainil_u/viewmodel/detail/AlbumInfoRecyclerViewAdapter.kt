@@ -7,13 +7,9 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
-import android.text.Html
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.OvershootInterpolator
-import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -21,7 +17,6 @@ import com.ms.square.android.expandabletextview.ExpandableTextView
 import kotlinx.android.synthetic.main.view_album_info_album_desc.view.*
 import kotlinx.android.synthetic.main.view_album_info_album_summary.view.*
 import kotlinx.android.synthetic.main.view_album_info_track.view.*
-import org.jetbrains.anko.displayMetrics
 import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -33,9 +28,6 @@ import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.extension.*
-import space.limerainne.i_bainil_u.view.main.WishlistFragment
-import java.util.*
-import kotlin.reflect.KClass
 
 /**
  * Created by Limerainne on 2016-08-16.

@@ -10,10 +10,6 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
 import space.limerainne.i_bainil_u.R

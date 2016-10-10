@@ -1,10 +1,7 @@
 package space.limerainne.i_bainil_u.base
 
 import android.content.Context
-import android.util.Log
 import space.limerainne.i_bainil_u.extension.DelegatesExt
-import space.limerainne.i_bainil_u.extension.Preference
-import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
 
 /**
  * Created by Limerainne on 2016-09-28.

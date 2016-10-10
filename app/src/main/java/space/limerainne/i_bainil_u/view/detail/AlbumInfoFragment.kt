@@ -1,39 +1,33 @@
 package space.limerainne.i_bainil_u.view.detail
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_album_info.*
 import kotlinx.android.synthetic.main.fragment_album_info.view.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.PurchaseTool
 import space.limerainne.i_bainil_u.base.UserInfo
-import space.limerainne.i_bainil_u.data.api.RequestAlbumPurchased
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.view.MainActivity
-import space.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
 import space.limerainne.i_bainil_u.viewmodel.detail.AlbumInfoRecyclerViewAdapter
 
 /**

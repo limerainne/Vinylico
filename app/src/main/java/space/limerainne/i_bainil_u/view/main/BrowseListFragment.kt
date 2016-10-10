@@ -12,20 +12,13 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import space.limerainne.i_bainil_u.I_Bainil_UApp
-
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.UserInfo
-import space.limerainne.i_bainil_u.data.api.Request
 import space.limerainne.i_bainil_u.data.api.RequestStoreAlbums
 import space.limerainne.i_bainil_u.data.api.Server
-import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.view.MainActivity
-import space.limerainne.i_bainil_u.view.dummy.DummyContent
-import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
 import space.limerainne.i_bainil_u.viewmodel.main.BrowseListRecyclerViewAdapter
-import space.limerainne.i_bainil_u.viewmodel.main.PurchasedRecyclerViewAdapter
 
 /**
  * A fragment representing a list of Items.

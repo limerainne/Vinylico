@@ -1,7 +1,5 @@
 package space.limerainne.i_bainil_u.domain.model
 
-import java.util.*
-
 /**
  * Created by Limerainne on 2016-07-21.
  */

@@ -1,11 +1,11 @@
 package space.limerainne.i_bainil_u.data.api
 
-import space.limerainne.i_bainil_u.domain.model.Wishlist
-import space.limerainne.i_bainil_u.domain.model.StoreAlbums
-import space.limerainne.i_bainil_u.domain.model.Connected
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
-import space.limerainne.i_bainil_u.domain.model.TrackList
+import space.limerainne.i_bainil_u.domain.model.Connected
 import space.limerainne.i_bainil_u.domain.model.RecommendAlbum
+import space.limerainne.i_bainil_u.domain.model.StoreAlbums
+import space.limerainne.i_bainil_u.domain.model.TrackList
+import space.limerainne.i_bainil_u.domain.model.Wishlist
 
 /**
  * Created by Limerainne on 2016-07-21.

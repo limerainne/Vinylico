@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -20,8 +19,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import butterknife.BindView
 import butterknife.ButterKnife
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_webview.view.*
 import space.limerainne.i_bainil_u.R
 import java.net.URISyntaxException
 

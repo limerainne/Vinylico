@@ -1,6 +1,5 @@
 package space.limerainne.i_bainil_u.view.main
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -10,20 +9,19 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.UserInfo
-import space.limerainne.i_bainil_u.data.api.*
+import space.limerainne.i_bainil_u.data.api.RequestAlbumPurchased
+import space.limerainne.i_bainil_u.data.api.RequestStoreAlbums
+import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.convertToAlbumEntry
-import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 
 /**
  * Created by Limerainne on 2016-08-07.

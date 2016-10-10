@@ -1,23 +1,16 @@
 package space.limerainne.i_bainil_u.view.webview
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.webkit.*
-import kotlinx.android.synthetic.main.fragment_webview.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import space.limerainne.i_bainil_u.R
+import android.webkit.CookieManager
+import android.webkit.JavascriptInterface
+import android.webkit.WebView
 import space.limerainne.i_bainil_u.base.LoginCookie
 import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
-import java.net.CookieHandler
-import java.net.CookiePolicy
-import java.net.HttpURLConnection
-import java.net.URL
 
 /**
  * Created by Limerainne on 2016-09-23.

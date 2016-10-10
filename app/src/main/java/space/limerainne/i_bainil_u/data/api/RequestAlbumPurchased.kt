@@ -1,11 +1,5 @@
 package space.limerainne.i_bainil_u.data.api
 
-import android.util.Log
-import com.google.gson.Gson
-import com.github.salomonbrys.kotson.*
-import java.io.*
-import java.net.HttpURLConnection
-
 /**
  * Created by Limerainne on 2016-07-21.
  */

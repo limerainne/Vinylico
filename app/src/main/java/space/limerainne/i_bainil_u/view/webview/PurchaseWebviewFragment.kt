@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.util.Log
 import android.webkit.WebView
 import org.jetbrains.anko.toast
-import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.base.BainilLauncher
 import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
