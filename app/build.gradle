@@ -38,6 +38,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    lintOptions{
+        // http://stackoverflow.com/questions/29696879/android-expected-resource-of-type-id
+        // disable "ResourceType"
+    }
 }
 
 dependencies {
@@ -77,8 +82,8 @@ dependencies {
 
 //    kapt 'com.android.databinding:compiler:2.2.0'
 
-    compile "com.jakewharton:butterknife:$butterknife_version"
-    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+    compile dependencies.butterKnife
+    kapt dependencies.butterKnifeCompiler
 
     compile 'org.sufficientlysecure:html-textview:2.0'
     compile 'com.ms-square:expandableTextView:0.1.4'

@@ -11,12 +11,13 @@ import com.tsengvn.typekit.Typekit
 class I_Bainil_UApp : Application() {
     override fun onCreate() {
         super.onCreate()
+
         Typekit.getInstance().addNormal(Typeface.DEFAULT).addBold(Typeface.DEFAULT_BOLD)
     }
 
     companion object {
         // val USER_ID: Long = 2543
-        val USER_ID: Long = 2    // might be...?
+        val USER_ID: Long = 2    // might be empty...?
 
         val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: Int = 0
 
