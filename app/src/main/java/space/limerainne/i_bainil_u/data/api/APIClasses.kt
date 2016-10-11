@@ -159,3 +159,13 @@ data class Fan(val userPic: String?,
                val userName: String?,
                val userRole: String?    // ROLE_FAN
 )
+
+// event banner
+data class EventResponse(val success: Boolean,
+                               val total: Int,
+                                  val result: List<Event>)
+
+data class Event(val bannerImage: String?,
+                 val seq: String?,
+                 val eventUrl: String?,
+                 val eventName: String?)

@@ -13,6 +13,8 @@ import space.limerainne.i_bainil_u.domain.model.StoreAlbums as DomainStoreAlbums
 import space.limerainne.i_bainil_u.domain.model.Track as DomainTrack
 import space.limerainne.i_bainil_u.domain.model.TrackList as DomainTrackList
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
+import space.limerainne.i_bainil_u.domain.model.Events as DomainEvents
+import space.limerainne.i_bainil_u.domain.model.Event as DomainEvent
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -303,5 +305,18 @@ class APIDataMapper {
                 userRole ?: "")
     }
 
+    fun convertEventsToDomain(events: EventResponse): DomainEvents    {
+        return DomainEvents(events.total, convertEventsListToDomain(events.result))
+    }
 
+    private fun convertEventsListToDomain(list: List<Event>): List<DomainEvent> {
+        return list.map { convertEventToDomain(it) }
+    }
+
+    private fun convertEventToDomain(event: Event): DomainEvent = with(event)   {
+        DomainEvent(bannerImage ?: "",
+                seq ?: "",
+                eventUrl ?: "",
+                eventName ?: "")
+    }
 }

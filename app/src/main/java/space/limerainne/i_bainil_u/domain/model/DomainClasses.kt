@@ -151,3 +151,11 @@ data class AlbumDetail(val albumCredit: String,
                    val userId: Long,
                    val userName: String,
                    val userRole: String)
+
+    data class Events(val count: Int,
+                      val events: List<Event>)
+
+    data class Event(val bannerImage: String,
+                     val seq: String,
+                     val eventUrl: String,
+                     val eventName: String)
