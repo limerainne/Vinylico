@@ -6,16 +6,20 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="@string/nav_home" />
+            android:title="@string/nav_home"
+            android:icon="@drawable/ic_menu_home"/>
         <item
             android:id="@+id/nav_browse"
-            android:title="@string/nav_browse" />
+            android:title="@string/nav_browse"
+            android:icon="@drawable/ic_menu_explore"/>
         <item
             android:id="@+id/nav_wishlist"
-            android:title="@string/nav_wishlist" />
+            android:title="@string/nav_wishlist"
+            android:icon="@drawable/ic_love_filled"/>
         <item
             android:id="@+id/nav_purchased"
-            android:title="@string/nav_purchased" />
+            android:title="@string/nav_purchased"
+            android:icon="@drawable/ic_buy"/>
 <!--
         <item
             android:id="@+id/nav_camera"
@@ -40,7 +44,8 @@
         android:id="@+id/nav_group_bottom">
         <item
             android:id="@+id/nav_downloading"
-            android:title="@string/nav_downloading" />
+            android:title="@string/nav_downloading"
+            android:icon="@drawable/ic_download"/>
         <item
             android:id="@+id/nav_setting"
             android:title="@string/nav_setting" />
