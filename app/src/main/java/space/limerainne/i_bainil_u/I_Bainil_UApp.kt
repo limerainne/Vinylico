@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Typeface
 import com.tsengvn.typekit.Typekit
+import space.limerainne.i_bainil_u.base.UserInfo
 
 /**
  * Created by Limerainne on 2016-06-23.
@@ -13,6 +14,8 @@ class I_Bainil_UApp : Application() {
         super.onCreate()
 
         Typekit.getInstance().addNormal(Typeface.DEFAULT).addBold(Typeface.DEFAULT_BOLD)
+
+        CURRENT_USER_ID = UserInfo.getUserIdOr(applicationContext)
     }
 
     companion object {
@@ -24,5 +27,7 @@ class I_Bainil_UApp : Application() {
         operator fun get(context: Context): I_Bainil_UApp {
             return context.applicationContext as I_Bainil_UApp
         }
+
+        var CURRENT_USER_ID = USER_ID
     }
 }

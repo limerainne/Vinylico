@@ -104,6 +104,15 @@ class UserInfo(context: Context) {
             return userInfo.userId > 0
         }
 
+        fun checkLoginThenRun4(context: Context, ok: () -> Unit, no: () -> Unit)    {
+            if (!checkLogin(context))   {
+                context.toast("Please login first!")
+                no()
+            }   else    {
+                ok()
+            }
+        }
+
         fun checkLoginThenRun(context: Context, ok: () -> Unit, no: () -> Unit)    {
             if (!checkLogin(context))   {
                 context.toast("Please login first!")

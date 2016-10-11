@@ -224,7 +224,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_login_logout ->    {
-                UserInfo.checkLoginThenRun(this, {
+                UserInfo.checkLoginThenRun4(this, {
                     // Logout
                     // TODO
                     toast("Sorry, logout feature is in development...")

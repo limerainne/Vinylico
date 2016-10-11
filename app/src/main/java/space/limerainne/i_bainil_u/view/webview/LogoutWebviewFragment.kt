@@ -2,12 +2,14 @@ package space.limerainne.i_bainil_u.view.webview
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.base.LoginCookie
 import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
@@ -22,6 +24,7 @@ class LogoutWebviewFragment: WebviewFragment() {
 
     val url_fan_profile = "http://www.bainil.com/fan/profile"
     val url_top = "http://www.bainil.com/browse"
+    val url_bainil = "http://www.bainil.com/"
 
     val url_signout = "https://www.bainil.com/signout"
 
@@ -97,6 +100,8 @@ class LogoutWebviewFragment: WebviewFragment() {
     }
 
     inner class MyLoginWebViewClient(context: Context): MyWebViewClient(context) {
+        var cookieFlushed = false
+
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             Log.v(TAG, "onPageFinished: " + url)
@@ -136,9 +141,19 @@ class LogoutWebviewFragment: WebviewFragment() {
                 mWebView.visibility = View.VISIBLE
             }
 
+            if (cookieFlushed)  return
+
             // clear login info
+            // TODO bainil.com/signout not work as expected
+            // token not expired?
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                CookieManager.getInstance().removeAllCookies {  }
+            else
+                CookieManager.getInstance().removeAllCookie()
             LoginCookie(context).clearCookie()
             UserInfo(context).clearInfo()
+
+            cookieFlushed = true
 
             // return to previous screen
             val activity = this_activity    // TODO why we have to save initial activity reference?
@@ -172,6 +187,7 @@ class LogoutWebviewFragment: WebviewFragment() {
                     }
                 }
                 url?.contains("facebook") ?: false -> {}    // TODO
+                url?.equals(url_bainil) ?: false -> {}
                 url?.equals(url_fan_profile) ?: false -> {}
                 url?.equals(init_url) ?: false ->   {
                     touched = true
