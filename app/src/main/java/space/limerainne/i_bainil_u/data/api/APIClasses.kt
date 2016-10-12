@@ -169,3 +169,45 @@ data class Event(val bannerImage: String?,
                  val seq: String?,
                  val eventUrl: String?,
                  val eventName: String?)
+
+data class SearchResultResponse(val success: Boolean,
+                         val result: SearchResult)
+
+data class SearchResult(val artists: List<SearchArtist>,
+                        val albums: List<SearchAlbum>,
+                        val tracks: List<SearchTrack>)
+
+data class SearchArtist(val albumEnglish: String?,
+                        val artistPicture: String?,
+                        val albumName: String?,
+                        val albumId: Long?,
+                        val artistId: Long?,
+                        val artistEnglish: String?,
+                        val artistName: String?,
+                        val trackList: List<SearchTrack>)
+
+data class SearchAlbum(val albumEnglish: String?,
+                       val albumName: String?,
+                       val albumId: Long?,
+                       val albumType: Int?,
+                       val artistEnglish: String?,
+                       val eventUrl: String?,
+                       val tracks: Int?,
+                       val free: Boolean?,
+                       val releaseDate: String?,
+                       val artistId: Long?,
+                       val event: Boolean?,
+                       val artistName: String?,
+                       val trackList: List<SearchTrack>,
+                       val jacketImage: String?)
+
+data class SearchTrack(val albumId: Long?,
+                       val artistId: Long?,
+                       val artistEnglish: String?,
+                       val adult: Int?, // used in SearchArtist, SearchAlbum
+                       val songEnglish: String?,
+                       val songName: String?,   // used
+                       val artistName: String?,
+                       val songId: Long?,   // used
+                       val songOrder: Int?  // ONLY IN SearchArtist, SearchAlbum
+)
