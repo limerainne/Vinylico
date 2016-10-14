@@ -269,7 +269,8 @@ class APIDataMapper {
                 decorateSongName(songName),
                 songOrder ?: -1,
                 songPath ?: "",
-                songSize ?: -1)
+                songSize ?: -1,
+                saleType == "0")    // TODO if saleType == "1", can't buy per song!
     }
 
     fun decorateSongName(songName: String?): String  {

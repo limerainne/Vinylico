@@ -140,7 +140,9 @@ data class AlbumDetail(val albumCredit: String,
                      val songName: String,
                      val songOrder: Int,    // track number
                      val songPath: String,  // download path
-                     val songSize: Long // in bit unit
+                     val songSize: Long, // in bit unit
+
+                    val perSongPayable: Boolean
     )
 
     data class RecommendAlbum(val albumId: Long,

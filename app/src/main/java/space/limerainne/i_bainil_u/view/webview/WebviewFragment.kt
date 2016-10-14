@@ -92,7 +92,8 @@ open class WebviewFragment: Fragment() {
 
             Log.v("Webview", "OnPageFinished: ${url}")
 
-            scroll_view.scrollTo(0, 0)
+            if (scroll_view != null)
+                scroll_view.scrollTo(0, 0)
         }
 
         // http://apogenes.tistory.com/4

@@ -314,6 +314,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             mView.btn_track_like.setOnClickListener {
                 // TODO like to track; what if user not bought this track?
                 // RequestToggleLike.doLikeTo(mContext, item.albumId, item.trackId, true)
+
+                mContext.toast("Sorry, 'like this song' feature is not yet implemented...")
             }
 
             lyricText = ""
@@ -347,11 +349,15 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
             // TODO have to find a way to know if album/individual_song is already purchased
             setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: 0)
-            if (item.saleType == "1")   {
+            if (!item.perSongPayable)   {
                 // NOTE this track cannot be purchased per song!
                 mView.song_price.text = "-"
             }
             mView.song_price.setOnClickListener {
+                if (!item.perSongPayable)   {
+                    mContext.toast("Sorry, this song can't be purchased individually..")
+                    return@setOnClickListener
+                }
                 // TODO buy/download each track
                 // TODO have to get track purchase URL
                 // TODO have to check if it cannot be purchased individually
