@@ -83,6 +83,7 @@ fun Long.toSizeText(): String  {
     return "%.2f GiB".format(sizeInto)
 }
 
+fun String.ifEmpty(alt: String = "-"): String = if (this.length > 0) this else alt
 fun String.toBitrateText(): String = if (this.length > 0) (this + "k") else "-"
 
 

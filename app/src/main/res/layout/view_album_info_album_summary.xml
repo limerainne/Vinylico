@@ -189,6 +189,23 @@
         android:orientation="horizontal"
         android:layout_gravity="center_vertical|right"
         android:gravity="center_vertical">
+        <!-- event button -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_album_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_event"
+            android:drawableTint="@color/colorAccent"
+            style="?android:attr/borderlessButtonStyle"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:minHeight="24dp"
+            android:minWidth="0dp"
+            android:clickable="true"
+            android:textSize="12sp"
+            android:textColor="?attr/colorAccent"
+            android:contentDescription="Open album event page"
+            android:text="" />
         <!-- wish button -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_album_wish"

@@ -185,6 +185,17 @@
                     android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Voice Record"
                     android:src="@drawable/ic_feature_record"/>
+                <ImageView
+                    android:id="@+id/feature_event"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/feature_record"
+                    android:visibility="visible"
+                    android:tint="@android:color/tertiary_text_dark"
+                    android:contentDescription="Feature: Event"
+                    android:src="@drawable/ic_event"/>
 
                 <!-- wish button -->
                 <android.support.v7.widget.AppCompatButton

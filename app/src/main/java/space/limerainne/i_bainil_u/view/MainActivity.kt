@@ -116,7 +116,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 drawer.closeDrawer(GravityCompat.START)
                 eventProcessed = true
             } else if (activeFragment is WebviewFragment && activeFragment.canGoBack())    {
+                Log.v("Activity", "Webview: Can go back!")
                 activeFragment.goBack()
+                eventProcessed = true
             } else if (supportFragmentManager.backStackEntryCount >= 1) {
                 popBackStack()
                 eventProcessed = true
@@ -359,6 +361,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (addToBackStack)
             transaction.addToBackStack(targetTag)
         transaction.commit()
+    }
+
+    fun openWebpage(url: String, title: String)    {
+        val webviewFragment = WebviewFragment.newInstance(url, title)
+        transitToFragment(R.id.placeholder_top, webviewFragment, WebviewFragment.TAG)
     }
 
     fun openLoginPage() {

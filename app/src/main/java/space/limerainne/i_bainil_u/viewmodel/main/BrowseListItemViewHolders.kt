@@ -78,6 +78,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         setVisibility(itemView.feature_booklet, item.feature_booklet)
         setVisibility(itemView.feature_lyrics, item.feature_lyrics)
         setVisibility(itemView.feature_record, item.feature_rec)
+        setVisibility(itemView.feature_event, item.event)
 
         setPriceButton(itemView.album_price, item.price, item.purchased)
 

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import butterknife.BindView
 import butterknife.ButterKnife
+import kotlinx.android.synthetic.main.fragment_webview.*
 import space.limerainne.i_bainil_u.R
 import java.net.URISyntaxException
 
@@ -85,6 +87,14 @@ open class WebviewFragment: Fragment() {
     }
 
     open inner class MyWebViewClient(context: Context): WebViewClient()   {
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+
+            Log.v("Webview", "OnPageFinished: ${url}")
+
+            scroll_view.scrollTo(0, 0)
+        }
+
         // http://apogenes.tistory.com/4
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
             if (url != null && url.startsWith("intent://")) {
@@ -116,7 +126,7 @@ open class WebviewFragment: Fragment() {
 
             }
             view?.loadUrl(url)
-            return false
+            return true
         }
 
         @SuppressLint("NewApi")
@@ -133,7 +143,9 @@ open class WebviewFragment: Fragment() {
     }
 
     fun goBack()    {
+        scroll_view.scrollTo(0, 0)
         mWebView.goBack()
+        scroll_view.scrollTo(0, 0)
     }
 
     companion object {

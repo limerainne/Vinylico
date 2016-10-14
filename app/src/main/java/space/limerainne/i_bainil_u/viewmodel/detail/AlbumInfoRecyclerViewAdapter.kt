@@ -31,6 +31,7 @@ import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.extension.*
+import space.limerainne.i_bainil_u.view.MainActivity
 
 /**
  * Created by Limerainne on 2016-08-16.
@@ -179,6 +180,14 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             // TODO comment count
             // TODO which API?
             mView.album_comment_count.text = "-"
+
+            mView.btn_album_event.setVisibility4(item.event)
+            mView.btn_album_event.setOnClickListener {
+                if (!item.event || item.eventUrl == null)    return@setOnClickListener
+
+                if (mContext is MainActivity)
+                    mContext.openWebpage(item.eventUrl, "Album Event")
+            }
 
             mView.btn_album_wish.setOnClickListener {
                 RequestToggleWish.doWishTo(mContext, item.albumId, true)
