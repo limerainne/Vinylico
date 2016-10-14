@@ -349,11 +349,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (item is AlbumEntry) {
             val albumInfoFragment = AlbumInfoFragment.newInstance(item)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
-            } else  {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
+//            } else  {
                 transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
-            }
+//            }
         }
     }
 

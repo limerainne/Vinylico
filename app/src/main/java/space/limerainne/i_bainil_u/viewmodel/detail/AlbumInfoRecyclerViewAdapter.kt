@@ -213,16 +213,16 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 mView.album_price.text = if (item.price.contains(".")) "$ " + item.price else item.price
             }
 
-            setPriceButton(mView.album_price, mAlbumEntry?.purchased ?: 0)
+            setPriceButton(mView.album_price, mAlbumEntry?.purchased ?: 0, item.free)
             mView.album_price.setOnClickListener {
                 // TODO implement download function
                 PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName)
             }
         }
 
-        open fun setPriceButton(view: AppCompatButton, purchased: Int) {
-            // if purchased, add strike to text
-            if (purchased == 1)
+        open fun setPriceButton(view: AppCompatButton, purchased: Int, free: Boolean) {
+            // if purchased or free, add strike to text
+            if (purchased == 1 || free)
                 view.paintFlags = view.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             else
                 view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
@@ -266,11 +266,15 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         @BindView(R.id.track_title)
         lateinit var mTrackTitleView: TextView
 
+        @BindView(R.id.expandable_text)
+        lateinit var mLyricTextView: TextView
+
         lateinit var mItem: Track
 
         val tintColor: Int
 
         var lyricText: String = ""
+        var showLyric: Boolean = false
 
         init {
             ButterKnife.bind(this, itemView)
@@ -334,21 +338,43 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                             uiThread {
                                 mView.track_lyric.text = lyricText
                                 mView.track_lyric.setVisibility4(true)
+                                showLyric = true
                             }
                         }
                     }
                     else    {
                         mView.track_lyric.text = lyricText
                         mView.track_lyric.setVisibility4(true)
+                        showLyric = true
                     }
 
                 }   else    {
                     mView.track_lyric.setVisibility4(false)
+                    showLyric = false
                 }
             }
 
+            mView.track_lyric.setVisibility4(showLyric)
+            mView.track_lyric.setOnExpandStateChangeListener { textView, isExpanded ->
+                if (!isExpanded)    {
+                    mView.track_lyric.scrollTo(0, 0)
+                    textView.setTextIsSelectable(false)
+                    //textView.isClickable = true
+                }   else    {
+                    textView.setTextIsSelectable(true)
+                    //textView.isClickable = true
+                    textView.requestFocus()
+                }
+            }
+
+            mLyricTextView.setOnClickListener { v ->
+                // TODO if text selected, ignore event
+                (v as TextView).setTextIsSelectable(false)
+                (v.parent as ExpandableTextView).onClick(mView.track_lyric)
+            }
+
             // TODO have to find a way to know if album/individual_song is already purchased
-            setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: 0)
+            setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: 0, mAlbum.free)
             if (!item.perSongPayable)   {
                 // NOTE this track cannot be purchased per song!
                 mView.song_price.text = "-"
@@ -365,15 +391,15 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             }
         }
 
-        open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
+        open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int, free: Boolean) {
             // set price
             if (price.contains("."))
                 view.text = "$ $price"
             else
                 view.text = price
 
-            // if purchased, add strike to text
-            if (purchased == 1)
+            // if purchased or free, add strike to text
+            if (purchased == 1 || free)
                 view.paintFlags = view.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             else
                 view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
@@ -441,6 +467,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
             mAlbumDescTextView.setOnClickListener { v ->
                 // TODO if text selected, ignore event
+                (v as TextView).setTextIsSelectable(false)
                 (v.parent as ExpandableTextView).onClick(mAlbumDescView)
             }
         }
@@ -482,6 +509,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
             albumCreditTextView.setOnClickListener { v ->
                 // TODO if text selected, ignore event
+                (v as TextView).setTextIsSelectable(false)
                 (v.parent as ExpandableTextView).onClick(mAlbumDescView)
             }
 

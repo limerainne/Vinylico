@@ -80,7 +80,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         setVisibility(itemView.feature_record, item.feature_rec)
         setVisibility(itemView.feature_event, item.event)
 
-        setPriceButton(itemView.album_price, item.price, item.purchased)
+        setPriceButton(itemView.album_price, item.price, item.purchased, item.free)
 
         itemView.btn_album_wish.setOnClickListener {
             RequestToggleWish.doWishTo(mContext, item.albumId, true)
@@ -100,15 +100,15 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
-    open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
+    open fun setPriceButton(view: AppCompatButton, price: String, purchased: Int, free: Boolean) {
         // set price
         if (price.contains("."))
             view.text = "$ $price"
         else
             view.text = price
 
-        // if purchased, add strike to text
-        if (purchased == 1)
+        // if purchased or free, add strike to text
+        if (purchased == 1 || free)
             view.paintFlags = view.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         else
             view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
@@ -192,8 +192,8 @@ class PurchasedItemViewHolder(mContext: Context, mView: View): BrowserListItemVi
         }
     }
 
-    override fun setPriceButton(view: AppCompatButton, price: String, purchased: Int) {
-        super.setPriceButton(view, price, purchased)
+    override fun setPriceButton(view: AppCompatButton, price: String, purchased: Int, free: Boolean) {
+        super.setPriceButton(view, price, purchased, free)
 
         // TODO because this item is in purchased page...
         view.paintFlags = view.paintFlags xor (view.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG)
