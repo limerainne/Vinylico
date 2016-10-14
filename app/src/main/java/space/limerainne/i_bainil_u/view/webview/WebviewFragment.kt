@@ -27,7 +27,7 @@ import java.net.URISyntaxException
  */
 open class WebviewFragment: Fragment() {
 
-    private var backEnabled = true
+    protected var backEnabled = true
 
     var init_url = "http://www.bainil.com/bainil"
     var toolbar_title = "Bainil"
