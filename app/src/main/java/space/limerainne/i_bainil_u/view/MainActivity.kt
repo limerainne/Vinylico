@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             mainFragment.changeChildFragment(browseFragment, BrowseFragment.TAG)
             fragments.put(R.id.nav_browse, browseFragment)
         }
+
+        (findViewById(R.id.drawer_layout) as DrawerLayout).openDrawer(GravityCompat.START)
     }
 
     override fun onDestroy()    {
