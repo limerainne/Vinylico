@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.PurchaseTool
 import space.limerainne.i_bainil_u.base.ShareTool
-import space.limerainne.i_bainil_u.data.api.RequestToggleWish
+import space.limerainne.i_bainil_u.data.api.request.RequestToggleWish
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 
 /**

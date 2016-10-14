@@ -17,12 +17,15 @@ import com.ms.square.android.expandabletextview.ExpandableTextView
 import kotlinx.android.synthetic.main.view_album_info_album_desc.view.*
 import kotlinx.android.synthetic.main.view_album_info_album_summary.view.*
 import kotlinx.android.synthetic.main.view_album_info_track.view.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.PurchaseTool
 import space.limerainne.i_bainil_u.base.ShareTool
-import space.limerainne.i_bainil_u.data.api.RequestToggleWish
+import space.limerainne.i_bainil_u.data.api.request.RequestToggleWish
+import space.limerainne.i_bainil_u.data.api.request.data.RequestTrackLyric
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
@@ -258,6 +261,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
         val tintColor: Int
 
+        var lyricText: String = ""
+
         init {
             ButterKnife.bind(this, itemView)
 
@@ -301,9 +306,34 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 // TODO like to track; what if user not bought this track?
                 // RequestToggleLike.doLikeTo(mContext, item.albumId, item.trackId, true)
             }
+
+            lyricText = ""
             mView.btn_track_lyric.setVisibility4(item.feature_lyrics)
             mView.btn_track_lyric.setOnClickListener {
-                // TODO show lyrics
+                if (!item.feature_lyrics)
+                    return@setOnClickListener   // do nothing
+
+                if (mView.track_lyric.visibility == View.GONE)   {
+                    if (lyricText == "") {
+                        // load lyrics from URL
+                        doAsync {
+                            val lyric = RequestTrackLyric(item.lyricsPath).execute()
+                            lyricText = lyric
+
+                            uiThread {
+                                mView.track_lyric.text = lyricText
+                                mView.track_lyric.setVisibility4(true)
+                            }
+                        }
+                    }
+                    else    {
+                        mView.track_lyric.text = lyricText
+                        mView.track_lyric.setVisibility4(true)
+                    }
+
+                }   else    {
+                    mView.track_lyric.setVisibility4(false)
+                }
             }
 
             // TODO have to find a way to know if album/individual_song is already purchased
@@ -369,6 +399,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
     inner class AlbumDescViewHolder(override val mView: View): ViewHolder(mView) {
         @BindView(R.id.album_desc)
         lateinit var mAlbumDescView: ExpandableTextView
+        @BindView(R.id.expandable_text)
+        lateinit var mAlbumDescTextView: TextView
 
         lateinit var mItem: AlbumDetail
 
@@ -392,7 +424,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 }
             }
 
-            mView.expandable_text.setOnClickListener { v ->
+            mAlbumDescTextView.setOnClickListener { v ->
                 // TODO if text selected, ignore event
                 (v.parent as ExpandableTextView).onClick(mAlbumDescView)
             }
@@ -406,6 +438,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
     inner class AlbumCreditViewHolder(override val mView: View): ViewHolder(mView) {
         @BindView(R.id.album_desc)
         lateinit var mAlbumDescView: ExpandableTextView
+        @BindView(R.id.expandable_text)
+        lateinit var albumCreditTextView: TextView
 
         lateinit var mItem: AlbumDetail
 
@@ -431,7 +465,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 }
             }
 
-            mView.expandable_text.setOnClickListener { v ->
+            albumCreditTextView.setOnClickListener { v ->
                 // TODO if text selected, ignore event
                 (v.parent as ExpandableTextView).onClick(mAlbumDescView)
             }

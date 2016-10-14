@@ -3,7 +3,7 @@ package space.limerainne.i_bainil_u.viewmodel.main
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import space.limerainne.i_bainil_u.data.api.RequestStoreAlbums
+import space.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import space.limerainne.i_bainil_u.view.main.BrowseListFragment
 
 /**

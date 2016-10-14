@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.data.api
+package space.limerainne.i_bainil_u.data.api.request
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -6,6 +6,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.data.api.request.data.RequestHTTPConnection
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -14,7 +15,7 @@ class RequestToggleWish(val albumId: Long,
                         val userId: Long,
                         val wish: Boolean) : RequestHTTPConnection() {
 
-    override fun composeURL() = "$URL?albumId=$albumId&userId=$userId&wish=" +
+    override fun composeURL() = "${URL}?albumId=$albumId&userId=$userId&wish=" +
                                     if (wish) "true" else "false"
 
     override fun execute(): Boolean {
@@ -35,7 +36,7 @@ class RequestToggleWish(val albumId: Long,
                     doAsync {
                         val success: Boolean
                         try {
-                            success = RequestToggleWish(albumId, UserInfo.getUserIdOrExcept(mContext), wish).execute()
+                            success = RequestToggleWish(albumId, UserInfo.Companion.getUserIdOrExcept(mContext), wish).execute()
                         } catch (e: Exception) {
                             success = false
                             e.printStackTrace()

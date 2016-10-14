@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.data.api
 
 import org.junit.Test
 import org.junit.Assert.*
+import space.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 
 import space.limerainne.i_bainil_u.domain.model.StoreAlbums as DomainStoreAlbums
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainStoreAlbum
@@ -22,7 +23,7 @@ class StoreAlbumsTest  {
     @Test
     fun testCanGetStoreAlbums()  {
         val server = Server()
-        var result: DomainStoreAlbums = server.requestStoreAlbums(category, USER_ID, offset, limit)
+        val result: DomainStoreAlbums = server.requestStoreAlbums(category, USER_ID, offset, limit)
 
         // check type of result data
         assertTrue(result is DomainStoreAlbums)

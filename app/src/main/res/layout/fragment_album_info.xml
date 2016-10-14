@@ -31,7 +31,9 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:tint="#20000000"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

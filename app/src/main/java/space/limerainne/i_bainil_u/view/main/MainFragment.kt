@@ -15,8 +15,8 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.UserInfo
-import space.limerainne.i_bainil_u.data.api.RequestAlbumPurchased
-import space.limerainne.i_bainil_u.data.api.RequestStoreAlbums
+import space.limerainne.i_bainil_u.data.api.request.data.RequestAlbumPurchased
+import space.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.convertToAlbumEntry
