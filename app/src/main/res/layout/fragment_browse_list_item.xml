@@ -76,6 +76,7 @@
             android:layout_height="64dp"
             android:layout_marginLeft="8dp"
             android:layout_gravity="top"
+            android:transitionName="album_cover"
             tools:src="@mipmap/ic_launcher"/>
 
         <LinearLayout

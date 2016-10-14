@@ -24,7 +24,7 @@ class WishlistRecyclerViewAdapter(private val mContext: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_browse_list_item, parent, false)
-        println(mContext)
+//        println(mContext)
         return WishlistItemViewHolder(mContext, view)
     }
 

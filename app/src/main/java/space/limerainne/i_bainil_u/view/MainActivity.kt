@@ -1,5 +1,6 @@
 package space.limerainne.i_bainil_u.view
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -346,7 +348,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (item is AlbumEntry) {
             val albumInfoFragment = AlbumInfoFragment.newInstance(item)
-            transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
+            } else  {
+                transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+            }
         }
     }
 
@@ -360,6 +367,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .add(targetPlaceHolder, targetFragment, targetTag)
         if (addToBackStack)
             transaction.addToBackStack(targetTag)
+        transaction.commit()
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    fun animatedTransitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String, addToBackStack: Boolean)  {
+        val changeTransform = TransitionInflater.from(this).inflateTransition(R.transition.change_image_transform)
+        val explodeTransform = TransitionInflater.from(this).inflateTransition(android.R.transition.explode)
+
+        // Setup exit transition on first fragment
+        val activeFragment = getActiveFragment()
+        activeFragment?.setSharedElementReturnTransition(changeTransform)
+        activeFragment?.setExitTransition(explodeTransform)
+
+        // Setup enter transition on second fragment
+        targetFragment.setSharedElementEnterTransition(changeTransform)
+        targetFragment.setEnterTransition(explodeTransform)
+
+        // Find the shared element (in Fragment A)
+        val album_cover = findViewById(R.id.album_cover) as ImageView
+
+        val transaction = supportFragmentManager.beginTransaction()
+//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .add(targetPlaceHolder, targetFragment, targetTag)
+        if (addToBackStack)
+            transaction.addToBackStack(targetTag)
+
+        // shared elem
+        transaction.addSharedElement(album_cover, "album_cover")
         transaction.commit()
     }
 

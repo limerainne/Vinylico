@@ -52,7 +52,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
     init {
 //        ButterKnife.bind(this, mView)
 
-        println(mContext)
+//        println(mContext)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
             tintColor = mContext.resources.getColor(R.color.colorAccent)
@@ -63,7 +63,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
     open fun bind(item: AlbumEntry) {
         mItem = item
 
-        Log.d("Picasso", item.jacketImage)
+//        Log.d("Picasso", item.jacketImage)
         Picasso.with(itemView.context).load(item.jacketImage).into(itemView.album_cover)
 
         // 1st line
