@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.view.webview
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
 import org.jetbrains.anko.toast
@@ -21,6 +22,13 @@ class PurchaseWebviewFragment(): WebviewFragment() {
 
     private var userId: Long = 0
     private var albumId: Long = 0
+
+    override fun onCreate(savedInstanceState: Bundle?)  {
+        super.onCreate(savedInstanceState)
+
+        // prohibit go backward page
+        backEnabled = false
+    }
 
     fun setURL(userId: Long, albumId: Long) {
         if (userId < 1 || albumId < 1)

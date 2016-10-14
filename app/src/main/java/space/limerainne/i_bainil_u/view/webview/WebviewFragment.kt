@@ -27,6 +27,8 @@ import java.net.URISyntaxException
  */
 open class WebviewFragment: Fragment() {
 
+    private var backEnabled = true
+
     var init_url = "http://www.bainil.com/bainil"
     var toolbar_title = "Bainil"
     var toolbar_subtitle = ""
@@ -122,6 +124,16 @@ open class WebviewFragment: Fragment() {
             val url: String = request?.url.toString()
             return this.shouldOverrideUrlLoading(view, url)
         }
+    }
+
+    fun canGoBack(): Boolean {
+        if (!backEnabled)   return false
+
+        return mWebView.canGoBack()
+    }
+
+    fun goBack()    {
+        mWebView.goBack()
     }
 
     companion object {

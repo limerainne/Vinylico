@@ -43,6 +43,9 @@ class LogoutWebviewFragment: WebviewFragment() {
 //        init_url = getString(R.string.URL_Login)
 //        init_url = url_signout
         toolbar_title = "Logout"
+
+        // prohibit go backward page
+        backEnabled = false
     }
 
     val javascriptInterfaceName = "HTMLRetriever"

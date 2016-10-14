@@ -35,6 +35,7 @@ import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.main.*
 import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
 import space.limerainne.i_bainil_u.view.webview.LogoutWebviewFragment
+import space.limerainne.i_bainil_u.view.webview.WebviewFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, OnListFragmentInteractionListener {
     val fragments: MutableMap<Int, Fragment> = mutableMapOf()
@@ -114,6 +115,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (drawer!!.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START)
                 eventProcessed = true
+            } else if (activeFragment is WebviewFragment && activeFragment.canGoBack())    {
+                activeFragment.goBack()
             } else if (supportFragmentManager.backStackEntryCount >= 1) {
                 popBackStack()
                 eventProcessed = true
