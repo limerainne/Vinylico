@@ -64,6 +64,16 @@ class LoginCookie(context: Context) {
         isAutoLogin = false
     }
 
+    fun clearCookieWithoutAutoLogin()  {
+        AWSELB = ""
+        JSESSIONID = ""
+        // auth_token = ""
+        // email = ""
+        // remember = ""
+
+        haveLoginCookie = false
+    }
+
     override fun toString(): String {
         return "AWSELB: " + AWSELB + ", " + "JSESSIONID: " + JSESSIONID + ", " +
             "Auto-Login? " + isAutoLogin

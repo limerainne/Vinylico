@@ -19,6 +19,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.webkit.CookieManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
@@ -90,8 +91,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             UserInfo(this).clearInfo()
             return true
         }
-        else
+        else {
+            loginToken.clearCookieWithoutAutoLogin()
             return false
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {
