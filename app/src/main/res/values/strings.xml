@@ -80,4 +80,7 @@
     <string name="nav_setting">설정</string>
     <string name="nav_about">앱 정보</string>
 
+    <!-- search widget -->
+    <string name="search_hint">Type artist, album, title or else...</string>
+
 </resources>
