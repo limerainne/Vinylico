@@ -22,6 +22,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.webkit.CookieManager
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
@@ -29,7 +30,10 @@ import com.tsengvn.typekit.TypekitContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.*
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
@@ -52,6 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // clear login info if...
         val loginInfoCleared = clearLoginTokenIf()
+        getJSESSIONTokenIf()
 
         val navigationView = nav_view
         navigationView.setNavigationItemSelectedListener(this)
@@ -88,7 +93,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun clearLoginTokenIf(): Boolean {
-        // true if info cleared
+        // return true if info cleared
+
+        // remove cookie in webview
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            CookieManager.getInstance().removeAllCookies {  }
+        else
+            CookieManager.getInstance().removeAllCookie()
+
         // clear login info if user did not check auto-login
         val loginToken = LoginCookie(this)
         if (!loginToken.isAutoLogin)    {
@@ -99,6 +111,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         else {
             loginToken.clearCookieWithoutAutoLogin()
             return false
+        }
+    }
+
+    fun getJSESSIONTokenIf()  {
+        val loginToken = LoginCookie(this)
+
+        fun setCookieTo(tag: String, value: String) {
+            CookieManager.getInstance().setCookie(I_Bainil_UApp.COOKIE_URL, "${tag}=${value}")
+        }
+
+        if (loginToken.isAutoLogin) {
+            setCookieTo("auth_token", loginToken.auth_token)
+            setCookieTo("email", loginToken.email)
+            setCookieTo("remember", loginToken.remember)
+        }
+
+        doAsync {
+            loginToken.getToken()
+            uiThread {
+                if (loginToken.haveLoginCookie) {
+                    setCookieTo("JSESSIONID", loginToken.JSESSIONID)
+                    setCookieTo("AWSELB", loginToken.AWSELB)
+                }
+            }
         }
     }
 
@@ -241,8 +277,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_login_logout ->    {
                 UserInfo.checkLoginThenRun4(this, {
                     // Logout
-                    // TODO
-                    toast("Sorry, logout feature is in development...")
                     openLogoutPage()
                 }, {
                     // Login

@@ -10,7 +10,7 @@ import space.limerainne.i_bainil_u.view.MainActivity
 /**
  * Created by Limerainne on 2016-09-28.
  */
-class UserInfo(context: Context) {
+class UserInfo(val context: Context) {
 
     var userId: Long by DelegatesExt.preference(context, "_userId", 0)
 
@@ -77,6 +77,10 @@ class UserInfo(context: Context) {
                 id.equals("instagram") -> instagramId = value.toLongOrElse(0)
             }
         }
+
+        // update App global UserID variable
+        if(userId != 0L)
+            I_Bainil_UApp.get(context).updateUserId(userId)
     }
 
     fun clearInfo() {

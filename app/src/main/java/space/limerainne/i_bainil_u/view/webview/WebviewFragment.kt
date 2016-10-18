@@ -14,14 +14,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.fragment_webview.*
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.base.LoginCookie
 import java.net.URISyntaxException
 
 /**
@@ -34,6 +32,8 @@ open class WebviewFragment: Fragment() {
     var init_url = "http://www.bainil.com/bainil"
     var toolbar_title = "Bainil"
     var toolbar_subtitle = ""
+
+    private val cookie_url = "www.bainil.com"
 
     lateinit var this_activity: Activity
 
@@ -79,6 +79,22 @@ open class WebviewFragment: Fragment() {
         // http://eclipse4j.tistory.com/220
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             mWebView.getSettings().mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+
+        // TODO get auto-login cookie if exists!
+        // "auth-token", "remember", "email" (?)
+        val loginCookie = LoginCookie(context)
+        fun setCookieTo(tag: String, value: String) {
+            CookieManager.getInstance().setCookie(cookie_url, "${tag}=${value}")
+        }
+        if (loginCookie.haveLoginCookie) {
+            setCookieTo("JSESSIONID", loginCookie.JSESSIONID)
+            if (loginCookie.isAutoLogin) {
+
+                setCookieTo("auth_token", loginCookie.auth_token)
+                setCookieTo("email", loginCookie.email)
+                setCookieTo("remember", loginCookie.remember)
+            }
+        }
     }
 
     override fun onResume() {

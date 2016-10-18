@@ -18,9 +18,15 @@ class I_Bainil_UApp : Application() {
         CURRENT_USER_ID = UserInfo.getUserIdOr(applicationContext)
     }
 
+    fun updateUserId(id: Long)  {
+        CURRENT_USER_ID = id
+    }
+
     companion object {
         // val USER_ID: Long = 2543
         val USER_ID: Long = 2    // might be empty...?
+
+        val COOKIE_URL = "www.bainil.com"
 
         val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: Int = 0
 

@@ -28,8 +28,6 @@ class LoginWebviewFragment: WebviewFragment() {
 
     private val cookie_url = "www.bainil.com"
 
-    val loginInfo: MutableMap<String, String> = mutableMapOf()
-
     var touched = false
 
     override fun onCreate(savedInstanceState: Bundle?)  {
@@ -74,17 +72,6 @@ class LoginWebviewFragment: WebviewFragment() {
 
         mWebView.setWebViewClient(MyLoginWebViewClient(context))
 
-        // TODO get auto-login cookie if exists!
-        // "auth-token", "remember", "email" (?)
-        val loginCookie = LoginCookie(context)
-        if (loginCookie.isAutoLogin)    {
-            fun setCookieTo(tag: String, value: String) {
-                CookieManager.getInstance().setCookie(cookie_url, "${tag}=${value}")
-            }
-            setCookieTo("auth_token", loginCookie.auth_token)
-            setCookieTo("email", loginCookie.email)
-            setCookieTo("remember", loginCookie.remember)
-        }
     }
 
     fun parseLoginCookie(cookie: String) {
