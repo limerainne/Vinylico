@@ -167,7 +167,8 @@ data class Event(val bannerImage: String,
                  val eventUrl: String,
                  val eventName: String)
 
-data class SearchResult(val artists: List<SearchArtist>,
+data class SearchResult(val keyword: String,
+                        val artists: List<SearchArtist>,
                         val albums: List<SearchAlbum>,
                         val tracks: List<SearchTrack>)
 

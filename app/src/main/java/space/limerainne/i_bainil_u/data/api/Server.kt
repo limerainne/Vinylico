@@ -64,6 +64,6 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
 
     fun requestSearchResult(keyword: String, userId: Long): SearchResult  {
         val resultSearchResult = RequestSearch(keyword, userId).execute()
-        return dataMapper.covertSearchResultToDomain(resultSearchResult)
+        return dataMapper.covertSearchResultToDomain(keyword, resultSearchResult)
     }
 }

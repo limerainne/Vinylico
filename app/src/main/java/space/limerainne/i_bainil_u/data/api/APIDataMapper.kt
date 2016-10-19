@@ -325,8 +325,9 @@ class APIDataMapper {
                 eventName ?: "")
     }
 
-    fun covertSearchResultToDomain(searchResultResponse: SearchResultResponse): DomainSearchResult  {
-        return DomainSearchResult(convertSearchArtistListToDomain(searchResultResponse.result.artists),
+    fun covertSearchResultToDomain(keyword: String, searchResultResponse: SearchResultResponse): DomainSearchResult  {
+        return DomainSearchResult(keyword,
+                convertSearchArtistListToDomain(searchResultResponse.result.artists),
                 convertSearchAlbumListToDomain(searchResultResponse.result.albums),
                 convertSearchTrackListToDomain(searchResultResponse.result.tracks))
     }
