@@ -167,3 +167,33 @@ data class Event(val bannerImage: String,
                  val eventUrl: String,
                  val eventName: String)
 
+data class SearchResult(val artists: List<SearchArtist>,
+                        val albums: List<SearchAlbum>,
+                        val tracks: List<SearchTrack>)
+
+data class SearchArtist(val artistPicture: String,
+                        val albumName: String,
+                        val albumId: Long,
+                        val artistId: Long,
+                        val artistName: String,
+                        val trackList: List<SearchTrack>)
+
+data class SearchAlbum(val albumName: String,
+                       val albumId: Long,
+                       val albumType: Int,
+                       val eventUrl: String,
+                       val tracks: Int,
+                       val free: Boolean,
+                       val releaseDate: String,
+                       val artistId: Long,
+                       val event: Boolean,
+                       val artistName: String,
+                       val trackList: List<SearchTrack>,
+                       val jacketImage: String)
+
+data class SearchTrack(val albumId: Long,
+                       val artistId: Long,
+                       val songName: String,
+                       val artistName: String,
+                       val songId: Long,
+                       val songOrder: Int)

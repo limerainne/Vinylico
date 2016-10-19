@@ -9,6 +9,7 @@ import space.limerainne.i_bainil_u.domain.model.StoreAlbums
 import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.domain.model.Wishlist
 import space.limerainne.i_bainil_u.domain.model.Events
+import space.limerainne.i_bainil_u.domain.model.SearchResult
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -56,8 +57,13 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
         return dataMapper.convertRecommendAlbumToDomain(resultRecommendAlbum.result, resultAlbumDetail)
     }
 
-    fun reqeustEvents(userId: Long): Events {
+    fun requestEvents(userId: Long): Events {
         val resultEvents = RequestEventBanner(userId).execute()
         return dataMapper.convertEventsToDomain(resultEvents)
+    }
+
+    fun requestSearchResult(keyword: String, userId: Long): SearchResult  {
+        val resultSearchResult = RequestSearch(keyword, userId).execute()
+        return dataMapper.covertSearchResultToDomain(resultSearchResult)
     }
 }

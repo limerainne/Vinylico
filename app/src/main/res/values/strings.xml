@@ -77,6 +77,7 @@
     <string name="nav_wishlist">위시리스트</string>
     <string name="nav_purchased">구입한 앨범</string>
     <string name="nav_downloading">다운로드</string>
+    <string name="nav_search_result">검색</string>
     <string name="nav_setting">설정</string>
     <string name="nav_about">앱 정보</string>
 

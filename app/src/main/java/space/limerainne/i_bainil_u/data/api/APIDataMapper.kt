@@ -15,6 +15,10 @@ import space.limerainne.i_bainil_u.domain.model.TrackList as DomainTrackList
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import space.limerainne.i_bainil_u.domain.model.Events as DomainEvents
 import space.limerainne.i_bainil_u.domain.model.Event as DomainEvent
+import space.limerainne.i_bainil_u.domain.model.SearchResult as DomainSearchResult
+import space.limerainne.i_bainil_u.domain.model.SearchArtist as DomainSearchArtist
+import space.limerainne.i_bainil_u.domain.model.SearchAlbum as DomainSearchAlbum
+import space.limerainne.i_bainil_u.domain.model.SearchTrack as DomainSearchTrack
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -319,5 +323,59 @@ class APIDataMapper {
                 seq ?: "",
                 eventUrl ?: "",
                 eventName ?: "")
+    }
+
+    fun covertSearchResultToDomain(searchResultResponse: SearchResultResponse): DomainSearchResult  {
+        return DomainSearchResult(convertSearchArtistListToDomain(searchResultResponse.result.artists),
+                convertSearchAlbumListToDomain(searchResultResponse.result.albums),
+                convertSearchTrackListToDomain(searchResultResponse.result.tracks))
+    }
+
+    private fun convertSearchArtistListToDomain(list: List<SearchArtist>): List<DomainSearchArtist>   {
+        return list.map { convertSearchArtistToDomain(it) }
+    }
+
+    private fun convertSearchArtistToDomain(artist: SearchArtist) = with(artist)    {
+        DomainSearchArtist(artistPicture ?: "",
+                albumName ?: "",
+                albumId ?: 0,
+                artistId ?: 0,
+                artistName ?: "",
+                convertSearchTrackListToDomain(trackList)
+        )
+    }
+
+    private fun convertSearchAlbumListToDomain(list: List<SearchAlbum>): List<DomainSearchAlbum>   {
+        return list.map { convertSearchAlbumToDomain(it) }
+    }
+
+    private fun convertSearchAlbumToDomain(album: SearchAlbum) = with(album)    {
+        DomainSearchAlbum(albumName ?: "",
+                albumId ?: 0,
+                albumType ?: -1,
+                eventUrl ?: "",
+                tracks ?: 0,
+                free ?: false,
+                releaseDate ?: "",
+                artistId ?: 0,
+                event ?: false,
+                artistName ?: "",
+                convertSearchTrackListToDomain(trackList),
+                jacketImage ?: ""
+                )
+    }
+
+    private fun convertSearchTrackListToDomain(list: List<SearchTrack>): List<DomainSearchTrack>   {
+        return list.map { convertSearchTrackToDomain(it) }
+    }
+
+    private fun convertSearchTrackToDomain(track: SearchTrack) = with(track)    {
+        DomainSearchTrack(albumId ?: 0,
+                artistId ?: 0,
+                songName ?: "",
+                artistName ?: "",
+                songId ?: 0,
+                songOrder ?: -1
+                )
     }
 }
