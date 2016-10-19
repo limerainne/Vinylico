@@ -173,4 +173,15 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         }
     }
 
+    interface PurchaseSuccessListener  {
+        fun purchaseSucceed()
+    }
+
+    inner class MyPurchaseSuccessListener: PurchaseSuccessListener    {
+        override fun purchaseSucceed() {
+
+        }
+
+    }
+
 }

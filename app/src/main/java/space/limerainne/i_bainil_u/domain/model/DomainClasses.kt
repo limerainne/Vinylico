@@ -32,7 +32,7 @@ data class AlbumEntry(val albumId: Long,
                       val free: Boolean,
                       val jacketImage: String,
                       val price: String,
-                      val purchased: Int,
+                      var purchased: Int,
                       val releaseDate: String,
                       val tracks: Int,
 
@@ -82,83 +82,88 @@ data class AlbumDetail(val albumCredit: String,
                        val releaseDate: String,
                        val tracks: Int,
                        val wish: Int,
-                       val wishCount: Int)
+                       val wishCount: Int,
 
-    fun convertToAlbumEntry(albumDetail: AlbumDetail, purchased: Int = 0): AlbumEntry = with (albumDetail) {
-        AlbumEntry(
-            albumId,
-            albumName,
-            albumType,
-            artistId,
-            artistName,
-            event,
-            feature_aac,
-            feature_adult,
-            feature_booklet,
-            feature_hd,
-            feature_lyrics,
-            feature_rec,
-            free,
-            jacketImage,
-            price,
-            purchased,  // no purchase info -_-
-            releaseDate,
-            tracks,
+                       var purchased: Int = -1
+                       )
 
-            songId = -1,
-            songName = "",
-            songPath = "",
+fun convertToAlbumEntry(albumDetail: AlbumDetail, purchased: Int = 0): AlbumEntry = with (albumDetail) {
+    AlbumEntry(
+        albumId,
+        albumName,
+        albumType,
+        artistId,
+        artistName,
+        event,
+        feature_aac,
+        feature_adult,
+        feature_booklet,
+        feature_hd,
+        feature_lyrics,
+        feature_rec,
+        free,
+        jacketImage,
+        price,
+        purchased,  // no purchase info -_-
+        releaseDate,
+        tracks,
 
-            purchasedDate = ""
-        )
-    }
+        songId = -1,
+        songName = "",
+        songPath = "",
 
-    // track list
-    data class TrackList(val albumId: Long,
-                         val tracks: List<Track>,
-                         var duration: Int,
-                         var bitrate: String,
-                         var albumSize: Long,
-                         var priceIfPerSong: String)
-
-    // track information
-    data class Track(val artistId: Long,
-                     val artistName: String,
-                     val bitrate: String,   // TODO just for MP3?
-                     val connected_msg: Int,    // TODO #msg? or msg itself?
-                     val duration: Int, // in second unit
-                     val feature_aac: Boolean,  // TODO is there any AAC music?
-                     val feature_adult: Boolean,
-                     val feature_hd: Boolean,   // TODO is there any FLAC music?
-                     val feature_lyrics: Boolean,
-                     val feature_rec: Boolean,
-                     val iap: String,   // TODO ??
-                     val lyricsPath: String,    // can download lyrics!
-                     val price: String,     // in dollar; flag for per-song buy
-                     val saleType: String,  // TODO ?
-                     val songId: Long,      // could be used to get preview
-                     val songName: String,
-                     val songOrder: Int,    // track number
-                     val songPath: String,  // download path
-                     val songSize: Long, // in bit unit
-
-                    val perSongPayable: Boolean
+        purchasedDate = ""
     )
+}
 
-    data class RecommendAlbum(val albumId: Long,
-                              val albumDetail: AlbumDetail,
-                              val fans: List<Fan>)
+// track list
+data class TrackList(val albumId: Long,
+                     val tracks: List<Track>,
+                     var duration: Int,
+                     var bitrate: String,
+                     var albumSize: Long,
+                     var priceIfPerSong: String)
 
-    data class Fan(val userPic: String,
-                   val userId: Long,
-                   val userName: String,
-                   val userRole: String)
+// track information
+data class Track(val artistId: Long,
+                 val artistName: String,
+                 val bitrate: String,   // TODO just for MP3?
+                 val connected_msg: Int,    // TODO #msg? or msg itself?
+                 val duration: Int, // in second unit
+                 val feature_aac: Boolean,  // TODO is there any AAC music?
+                 val feature_adult: Boolean,
+                 val feature_hd: Boolean,   // TODO is there any FLAC music?
+                 val feature_lyrics: Boolean,
+                 val feature_rec: Boolean,
+                 val iap: String,   // TODO ??
+                 val lyricsPath: String,    // can download lyrics!
+                 val price: String,     // in dollar; flag for per-song buy
+                 val saleType: String,  // TODO ?
+                 val songId: Long,      // could be used to get preview
+                 val songName: String,
+                 val songOrder: Int,    // track number
+                 val songPath: String,  // download path
+                 val songSize: Long, // in bit unit
 
-    data class Events(val count: Int,
-                      val events: List<Event>)
+                 val perSongPayable: Boolean,
+                 var lyricLoaded: Boolean = false,
+                 var lyric_text: String = ""
+)
 
-    data class Event(val bannerImage: String,
-                     val seq: String,
-                     val eventUrl: String,
-                     val eventName: String)
+data class RecommendAlbum(val albumId: Long,
+                          val albumDetail: AlbumDetail,
+                          val fans: List<Fan>)
+
+data class Fan(val userPic: String,
+               val userId: Long,
+               val userName: String,
+               val userRole: String)
+
+data class Events(val count: Int,
+                  val events: List<Event>)
+
+data class Event(val bannerImage: String,
+                 val seq: String,
+                 val eventUrl: String,
+                 val eventName: String)
 

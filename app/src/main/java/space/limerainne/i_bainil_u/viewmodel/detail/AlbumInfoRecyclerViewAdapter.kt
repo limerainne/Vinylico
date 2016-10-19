@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TableRow
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -32,6 +34,7 @@ import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.extension.*
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 
 /**
  * Created by Limerainne on 2016-08-16.
@@ -97,6 +100,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                     holder.mView.setOnClickListener {
                         mListener?.onListFragmentInteraction(holder.mItem)
                     }
+
+                    val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) // (width, height)
+                    holder.mView.setLayoutParams(params)
                 }
                 else
                     throw RuntimeException()
@@ -266,15 +272,12 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         @BindView(R.id.track_title)
         lateinit var mTrackTitleView: TextView
 
-        @BindView(R.id.expandable_text)
-        lateinit var mLyricTextView: TextView
+//        @BindView(R.id.expandable_text)
+//        lateinit var mLyricTextView: TextView
 
         lateinit var mItem: Track
 
         val tintColor: Int
-
-        var lyricText: String = ""
-        var showLyric: Boolean = false
 
         init {
             ButterKnife.bind(this, itemView)
@@ -322,56 +325,60 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 mContext.toast("Sorry, 'like this song' feature is not yet implemented...")
             }
 
-            lyricText = ""
             mView.btn_track_lyric.setVisibility4(item.feature_lyrics)
             mView.btn_track_lyric.setOnClickListener {
                 if (!item.feature_lyrics)
                     return@setOnClickListener   // do nothing
 
                 if (mView.track_lyric.visibility == View.GONE)   {
-                    if (lyricText == "") {
+                    if (!item.lyricLoaded) {
                         // load lyrics from URL
                         doAsync {
                             val lyric = RequestTrackLyric(item.lyricsPath).execute()
-                            lyricText = lyric
+                            item.lyric_text = lyric
 
                             uiThread {
-                                mView.track_lyric.text = lyricText
+                                mView.track_lyric.text = item.lyric_text
                                 mView.track_lyric.setVisibility4(true)
-                                showLyric = true
+                                item.lyricLoaded = true
                             }
                         }
                     }
                     else    {
-                        mView.track_lyric.text = lyricText
+                        mView.track_lyric.text = item.lyric_text
                         mView.track_lyric.setVisibility4(true)
-                        showLyric = true
+                        item.lyricLoaded = true
                     }
 
                 }   else    {
                     mView.track_lyric.setVisibility4(false)
-                    showLyric = false
+                    item.lyricLoaded = false
                 }
             }
 
-            mView.track_lyric.setVisibility4(showLyric)
-            mView.track_lyric.setOnExpandStateChangeListener { textView, isExpanded ->
-                if (!isExpanded)    {
-                    mView.track_lyric.scrollTo(0, 0)
-                    textView.setTextIsSelectable(false)
-                    //textView.isClickable = true
-                }   else    {
-                    textView.setTextIsSelectable(true)
-                    //textView.isClickable = true
-                    textView.requestFocus()
-                }
-            }
+            println("Bind: ${item.songName}")
+            mView.track_lyric.setVisibility4(false)
+            mView.track_lyric.text = item.lyric_text
 
-            mLyricTextView.setOnClickListener { v ->
-                // TODO if text selected, ignore event
-                (v as TextView).setTextIsSelectable(false)
-                (v.parent as ExpandableTextView).onClick(mView.track_lyric)
-            }
+//            mLyricTextView.invalidate()
+//            mView.track_lyric.invalidate()
+//            mView.track_lyric.setOnExpandStateChangeListener { textView, isExpanded ->
+//                if (!isExpanded)    {
+//                    mView.track_lyric.scrollTo(0, 0)
+//                    textView.setTextIsSelectable(false)
+//                    //textView.isClickable = true
+//                }   else    {
+//                    textView.setTextIsSelectable(true)
+//                    //textView.isClickable = true
+//                    textView.requestFocus()
+//                }
+//            }
+//
+//            mLyricTextView.setOnClickListener { v ->
+//                // TODO if text selected, ignore event
+//                (v as TextView).setTextIsSelectable(false)
+//                (v.parent as ExpandableTextView).onClick(mView.track_lyric)
+//            }
 
             // TODO have to find a way to know if album/individual_song is already purchased
             setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: 0, mAlbum.free)

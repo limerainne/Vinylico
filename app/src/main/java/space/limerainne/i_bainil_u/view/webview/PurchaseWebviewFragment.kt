@@ -9,6 +9,7 @@ import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.base.BainilLauncher
 import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 
 /**
  * Created by CottonCandy on 2016-10-03.

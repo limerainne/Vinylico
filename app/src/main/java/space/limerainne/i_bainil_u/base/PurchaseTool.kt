@@ -9,6 +9,7 @@ import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.data.api.request.data.RequestAlbumPurchased
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
 
 /**
