@@ -26,7 +26,9 @@ import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.PurchaseTool
 import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
+import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
+import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.view.MainActivity
 import space.limerainne.i_bainil_u.viewmodel.detail.AlbumInfoRecyclerViewAdapter
 
@@ -37,6 +39,9 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 
     // albumEntry from clicked entry; might not exist..
     var albumEntry: AlbumEntry? = null
+
+    lateinit var albumDetail: AlbumDetail
+    lateinit var albumTracks: TrackList
 
     private var mListener: OnListFragmentInteractionListener? = null
 
@@ -85,7 +90,19 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         fab.setOnClickListener {
             val albumEntry = albumEntry
             if (albumEntry != null)
-                PurchaseTool.purchaseAlbum(context, albumEntry)
+                if (albumEntry.purchased == 0)
+                    PurchaseTool.purchaseAlbum(context, albumEntry)
+                else if (albumEntry.purchased == 1) {
+                    // Download album
+                }
+
+            else if (albumDetail.purchased == 1)    {
+                    // Download album
+                }
+
+            else
+                    PurchaseTool.purchaseAlbum(context, albumEntry)
+
         }
 
         // link toolbar with drawer in activity
@@ -99,30 +116,40 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
             val albumId: Long = albumEntry?.albumId ?: 2423
 
             val w: Server = Server()
-            val wAlbumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
-            val wTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))
+            albumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
+            albumTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))
 
-            uiThread {
-                if (context != null) {
-                    Log.d("Picasso", wAlbumDetail.jacketImage)
-                    Picasso.with(activity)
-                            .load(wAlbumDetail.jacketImage)
-                            .noFade()
-                            .into(toolbar_background)
+            try {
+                // check if 2 vars are initialized
 
-                    view.loading.visibility = View.INVISIBLE
+                albumDetail.purchased = albumEntry?.purchased ?: -1
 
-                    rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, wAlbumDetail, wTracks, mListener)
-                    Log.d("Found", wAlbumDetail.labelName)
-                    Log.d("Found", wTracks.albumId.toString())
-                    Log.d("Found", wTracks.tracks[0].songName)
+                uiThread {
+                    if (context != null) {
+//                        Log.v("Picasso", albumDetail.jacketImage)
+                        Picasso.with(activity)
+                                .load(albumDetail.jacketImage)
+                                .noFade()
+                                .into(toolbar_background)
+
+                        view.loading.visibility = View.INVISIBLE
+
+                        rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, albumDetail, albumTracks, mListener)
+                        Log.d("Found", albumTracks.albumId.toString())
+                        Log.v("Found", albumDetail.labelName)
+                        Log.v("Found", albumTracks.tracks[0].songName)
+                    }
                 }
+            } catch (e: UninitializedPropertyAccessException)  {
+                e.printStackTrace()
+
+                // TODO show reload icon
             }
         }
 
-        if (savedInstanceState == null) {
-            // TODO
-        }
+//        if (savedInstanceState == null) {
+//            // TODO
+//        }
 
         return view
     }

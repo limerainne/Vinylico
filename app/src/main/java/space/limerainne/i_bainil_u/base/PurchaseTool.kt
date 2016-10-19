@@ -33,18 +33,18 @@ class PurchaseTool  {
                 UserInfo.checkLoginThenRun(mContext, {
                     doAsync {
                         // 1. check if previously purchased
-                        val success: Boolean
+                        val bought: Boolean
                         try {
                             val userInfo = UserInfo(mContext)
 
-                            success = RequestAlbumPurchased(albumId, userInfo.userId, true).execute()
+                            bought = RequestAlbumPurchased(albumId, userInfo.userId, true).execute()
                         } catch (e: Exception) {
-                            success = false
+                            bought = false
                             e.printStackTrace()
                         }
 
                         // 2. redirect to purchase page
-                        if (success) {
+                        if (bought) {
                             if (mContext is MainActivity) {
                                 uiThread {
                                     // TODO display purchase info & cautions
