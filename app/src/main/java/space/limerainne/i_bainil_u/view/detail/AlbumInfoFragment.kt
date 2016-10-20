@@ -92,21 +92,23 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         }
 
         fab.setOnClickListener {
-            val albumEntry = albumEntry
-            if (albumEntry != null)
-                if (albumEntry.purchased == 0)
-                    PurchaseTool.purchaseAlbum(context, albumEntry)
-                else if (albumEntry.purchased == 1) {
-                    // Download album
+            try {
+                val albumEntry = albumEntry
+                if (albumEntry != null) {
+                    if (albumEntry.purchased == 0)
+                        PurchaseTool.purchaseAlbum(context, albumEntry)
+                    else if (albumEntry.purchased == 1) {
+                        // Download album
+                    }
                 }
-
-            else if (albumDetail.purchased == 1)    {
+                else if (albumDetail.purchased == 1) {
                     // Download album
-                }
+                } else
+                    PurchaseTool.purchaseAlbum(context, albumId, albumName)
 
-            else
-                    PurchaseTool.purchaseAlbum(context, albumEntry)
+            } catch (e: UninitializedPropertyAccessException)   {
 
+            }
         }
 
         // link toolbar with drawer in activity
