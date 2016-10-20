@@ -4,9 +4,11 @@
     <group
         android:id="@+id/nav_group_top"
         android:checkableBehavior="single">
+        <!-- hide homescreen until... -->
         <item
             android:id="@+id/nav_home"
             android:title="@string/nav_home"
+            android:visible="false"
             android:icon="@drawable/ic_menu_home"/>
         <item
             android:id="@+id/nav_browse"
