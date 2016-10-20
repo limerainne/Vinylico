@@ -36,7 +36,7 @@ import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.*
-import space.limerainne.i_bainil_u.domain.model.AlbumEntry
+import space.limerainne.i_bainil_u.domain.model.*
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.main.*
 import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
@@ -262,6 +262,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 fragmentTAG = PurchasedFragment.TAG
             }
+            R.id.nav_search_result -> {
+                hasToChangeMainFragmentsChild = true
+                if (!fragments.containsKey(R.id.nav_search_result))   {
+                    fragments[R.id.nav_search_result] = SearchResultFragment.newInstance("러블리즈")
+                }
+                fragmentTAG = SearchResultFragment.TAG
+            }
             // new activity
             R.id.nav_downloading -> {
 
@@ -383,14 +390,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onListFragmentInteraction(item: Any) {
         // throw UnsupportedOperationException()
 
-        if (item is AlbumEntry) {
-            val albumInfoFragment = AlbumInfoFragment.newInstance(item)
+        when (item) {
+            is AlbumEntry -> {
+                val albumInfoFragment = AlbumInfoFragment.newInstance(item)
 
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
 //            } else  {
                 transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
 //            }
+            }
+            is SearchArtist ->  {
+                val albumInfoFragment = AlbumInfoFragment.newInstance(item.albumId, item.albumName, item.artistName)
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
+//            } else  {
+                transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+//            }
+            }
+            is SearchAlbum ->  {
+                val albumInfoFragment = AlbumInfoFragment.newInstance(item.albumId, item.albumName, item.artistName)
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
+//            } else  {
+                transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+//            }
+            }
+            is SearchTrack ->  {
+                val albumInfoFragment = AlbumInfoFragment.newInstance(item.albumId, "", item.artistName)
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
+//            } else  {
+                transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+//            }
+            }
         }
     }
 

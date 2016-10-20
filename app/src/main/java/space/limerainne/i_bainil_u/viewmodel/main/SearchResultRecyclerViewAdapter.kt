@@ -6,9 +6,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.view_search_album.view.*
+import kotlinx.android.synthetic.main.view_search_artist.view.*
+import kotlinx.android.synthetic.main.view_search_header.view.*
+import kotlinx.android.synthetic.main.view_search_track.view.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.*
+import space.limerainne.i_bainil_u.extension.setVisibility4
 import java.util.*
 
 /**
@@ -33,13 +39,14 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
         rangesList = mutableListOf()
         rangesList.add(ItemIndices(HEADER_ARTIST, if (hasArtist) 0 else -1, if (hasArtist) 0 else -1))
-        rangesList.add(ItemIndices(ITEM_ARTIST, rangesList[-1].to + 1, rangesList[-1].to + mResult.artists.size))
+        rangesList.add(ItemIndices(ITEM_ARTIST, rangesList.last().to + 1, rangesList.last().to + mResult.artists.size))
 
-        rangesList.add(ItemIndices(HEADER_ALBUM, rangesList[-1].to + if (hasAlbum) 1 else 0, rangesList[-1].to + if (hasAlbum) 1 else 0))
-        rangesList.add(ItemIndices(ITEM_ALBUM, rangesList[-1].to + 1, rangesList[-1].to + mResult.albums.size))
+        rangesList.add(ItemIndices(HEADER_ALBUM, rangesList.last().to + if (hasAlbum) 1 else 0, rangesList.last().to + if (hasAlbum) 1 else 0))
+        rangesList.add(ItemIndices(ITEM_ALBUM, rangesList.last().to + 1, rangesList.last().to + mResult.albums.size))
 
-        rangesList.add(ItemIndices(HEADER_TRACK, rangesList[-1].to + if (hasTrack) 1 else 0, rangesList[-1].to + if (hasTrack) 1 else 0))
-        rangesList.add(ItemIndices(ITEM_TRACK, rangesList[-1].to + 1, rangesList[-1].to + mResult.tracks.size))
+        rangesList.add(ItemIndices(HEADER_TRACK, rangesList.last().to + if (hasTrack) 1 else 0, rangesList.last().to + if (hasTrack) 1 else 0))
+        rangesList.add(ItemIndices(ITEM_TRACK, rangesList.last().to + 1, rangesList.last().to + mResult.tracks.size))
+        println(rangesList)
     }
 
     override fun getItemCount(): Int    {
@@ -85,9 +92,9 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
             ITEM_ARTIST ->
                     viewHolder = ArtistViewHolder(viewInflater(R.layout.view_search_artist))
             ITEM_ALBUM ->
-                    viewHolder = ArtistViewHolder(viewInflater(R.layout.view_search_album))
+                    viewHolder = AlbumViewHolder(viewInflater(R.layout.view_search_album))
             ITEM_TRACK ->
-                    viewHolder = ArtistViewHolder(viewInflater(R.layout.view_search_track))
+                    viewHolder = TrackViewHolder(viewInflater(R.layout.view_search_track))
             else ->
                     throw RuntimeException()
         }
@@ -97,17 +104,21 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val viewType = getItemViewType(position)
+
+        println("#${position} as ${viewType}: ${holder}")
+
         when (viewType) {
             HEADER_ARTIST, HEADER_ALBUM, HEADER_TRACK -> {
                 if (holder !is HeaderViewHolder)
                     throw RuntimeException()
                 when (viewType) {
+                    // TODO extract string into resource
                     HEADER_ARTIST ->
-                            holder.bind("ARTIST", "")
+                            holder.bind("ARTIST", "artist name, artist description, ...")
                     HEADER_ALBUM ->
-                            holder.bind("ALBUM", "")
+                            holder.bind("ALBUM", "album name, album description, ...")
                     HEADER_TRACK ->
-                            holder.bind("TRACK", "")
+                            holder.bind("TRACK", "track title, artist name, album name, ...")
                 }
             }
             ITEM_ARTIST ->  {
@@ -115,18 +126,30 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
                     throw RuntimeException()
 
                 holder.bind(mResult.artists[getItemIndex(viewType, position)])
+
+                holder.mView.setOnClickListener {
+                    mListener?.onListFragmentInteraction(holder.mItem)
+                }
             }
             ITEM_ALBUM -> {
                 if (holder !is AlbumViewHolder)
                     throw RuntimeException()
 
                 holder.bind(mResult.albums[getItemIndex(viewType, position)])
+
+                holder.mView.setOnClickListener {
+                    mListener?.onListFragmentInteraction(holder.mItem)
+                }
             }
             ITEM_TRACK -> {
                 if (holder !is TrackViewHolder)
                     throw RuntimeException()
 
                 holder.bind(mResult.tracks[getItemIndex(viewType, position)])
+
+                holder.mView.setOnClickListener {
+                    mListener?.onListFragmentInteraction(holder.mItem)
+                }
             }
             else ->
                 throw RuntimeException()
@@ -146,8 +169,9 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
     inner class HeaderViewHolder(override val mView: View): ViewHolder(mView)   {
 
-        fun bind(title: String, subTitle: String)   {
-
+        fun bind(title: String, description: String)   {
+            mView.header_title.text = title
+            mView.header_description.text = description
         }
     }
 
@@ -155,7 +179,14 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
         lateinit var mItem: SearchArtist
 
         fun bind(item: SearchArtist)   {
+            mItem = item
 
+            Picasso.with(mView.context).load(item.artistPicture).into(mView.artist_image)
+
+            mView.artist_name.text = item.artistName
+            mView.album_name.text = item.albumName
+
+            // TODO buttons/functions
         }
     }
 
@@ -163,7 +194,17 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
         lateinit var mItem: SearchAlbum
 
         fun bind(item: SearchAlbum)   {
+            mItem = item
 
+            Picasso.with(mView.context).load(item.jacketImage).into(mView.album_cover)
+
+            mView.album_artist.text = item.artistName
+            mView.album_num_tracks.text = item.tracks.toString()
+            mView.album_date.text = item.releaseDate
+
+            mView.album_title.text = item.albumName
+
+            // TODO buttons/functions
         }
     }
 
@@ -171,7 +212,16 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
         lateinit var mItem: SearchTrack
 
         fun bind(item: SearchTrack)   {
+            mItem = item
 
+            mView.track_artist.text = item.artistName
+
+            if (item.songOrder < 1)
+                mView.track_id.visibility = View.INVISIBLE
+            mView.track_id.text = item.songOrder.toString()
+            mView.track_title.text = item.songName
+
+            // TODO buttons/functions
         }
     }
 }

@@ -40,6 +40,11 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
     // albumEntry from clicked entry; might not exist..
     var albumEntry: AlbumEntry? = null
 
+    var albumId: Long = 2423
+
+    lateinit var albumName: String
+    lateinit var artistName: String
+
     lateinit var albumDetail: AlbumDetail
     lateinit var albumTracks: TrackList
 
@@ -75,11 +80,10 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         collapsingToolbarLayout.title =""
         toolbar.title = ""
 
-        val title = albumEntry?.artistName ?: ""
-        val subtitle = albumEntry?.albumName ?: ""
+        artistName = albumEntry?.artistName ?: ""
+        albumName = albumEntry?.albumName ?: ""
 
-        toolbarHeaderView.bindTo(title, subtitle)
-        floatHeaderView.bindTo(title, subtitle)
+        setToolbarTitles(artistName, albumName)
 
         appBarLayout.addOnOffsetChangedListener(this)
 
@@ -113,7 +117,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         rec_view?.layoutManager = LinearLayoutManager(context)
 
         doAsync() {
-            val albumId: Long = albumEntry?.albumId ?: 2423
+            val albumId: Long = albumEntry?.albumId ?: albumId
 
             val w: Server = Server()
             albumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
@@ -121,7 +125,6 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 
             try {
                 // check if 2 vars are initialized
-
                 albumDetail.purchased = albumEntry?.purchased ?: -1
 
                 uiThread {
@@ -133,6 +136,11 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                                 .into(toolbar_background)
 
                         view.loading.visibility = View.INVISIBLE
+
+                        artistName = albumDetail.artistName
+                        albumName = albumDetail.albumName
+
+                        setToolbarTitles(artistName, albumName)
 
                         rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, albumDetail, albumTracks, mListener)
                         Log.d("Found", albumTracks.albumId.toString())
@@ -152,6 +160,11 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 //        }
 
         return view
+    }
+
+    private fun setToolbarTitles(title: String, subtitle: String) {
+        toolbarHeaderView.bindTo(title, subtitle)
+        floatHeaderView.bindTo(title, subtitle)
     }
 
     override fun onAttach(context: Context?) {
@@ -198,6 +211,17 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 
             return albumInfoFragment
         }
+
+        fun newInstance(albumId: Long, albumName: String, artistName: String): AlbumInfoFragment {
+            val albumInfoFragment = AlbumInfoFragment()
+
+            albumInfoFragment.albumId = albumId
+            albumInfoFragment.albumName = albumName
+            albumInfoFragment.artistName = artistName
+
+            return albumInfoFragment
+        }
+
     }
 
     interface PurchaseSuccessListener  {

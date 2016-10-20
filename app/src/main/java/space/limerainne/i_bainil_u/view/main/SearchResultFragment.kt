@@ -4,16 +4,24 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.base.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.viewmodel.main.SearchResultRecyclerViewAdapter
+import space.limerainne.i_bainil_u.viewmodel.main.WishlistRecyclerViewAdapter
 
 /**
  * A simple [Fragment] subclass.
@@ -28,7 +36,7 @@ class SearchResultFragment : Fragment() {
     // TODO: Rename and change types of parameters
     var keyword: String = ""
 
-    private var mListener: OnFragmentInteractionListener? = null
+    private var mListener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,33 +48,26 @@ class SearchResultFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater!!.inflate(R.layout.fragment_home, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
 
-        doAsync {
-            Server()
-        }
+        loadData(view)
 
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        if (mListener != null) {
-            mListener!!.onFragmentInteraction(uri)
-        }
-    }
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            mListener = context as OnFragmentInteractionListener?
+        if (context is OnListFragmentInteractionListener) {
+            mListener = context as OnListFragmentInteractionListener?
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
         }
     }
 
     override fun onResume() {
         super.onResume()
+
+        Log.v("SearchResultFragment", "onResume")
 
         if (activity is MainActivity) {
             (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
@@ -77,6 +78,24 @@ class SearchResultFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mListener = null
+    }
+
+    fun loadData(view: View)    {
+        view.btn_reload.visibility = View.INVISIBLE
+
+        doAsync() {
+            val w: Server = Server()
+            val wResult = w.requestSearchResult(keyword, UserInfo.getUserIdOr(context))
+            uiThread { if (view.list is RecyclerView) {
+                if (context != null) {
+                    view.list.adapter = SearchResultRecyclerViewAdapter(context, wResult, mListener)
+
+                    view.loading.visibility = View.INVISIBLE
+                    view.list.visibility = View.VISIBLE
+                }
+            }
+            }
+        }
     }
 
     companion object {

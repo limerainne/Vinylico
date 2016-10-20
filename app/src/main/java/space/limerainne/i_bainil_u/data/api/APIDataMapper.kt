@@ -357,7 +357,7 @@ class APIDataMapper {
                 eventUrl ?: "",
                 tracks ?: 0,
                 free ?: false,
-                releaseDate ?: "",
+                convertDateStringInto(releaseDate),
                 artistId ?: 0,
                 event ?: false,
                 artistName ?: "",
@@ -373,7 +373,7 @@ class APIDataMapper {
     private fun convertSearchTrackToDomain(track: SearchTrack) = with(track)    {
         DomainSearchTrack(albumId ?: 0,
                 artistId ?: 0,
-                songName ?: "",
+                decorateSongName(songName),
                 artistName ?: "",
                 songId ?: 0,
                 songOrder ?: -1
