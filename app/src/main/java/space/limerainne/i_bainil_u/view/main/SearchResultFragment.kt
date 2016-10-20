@@ -37,6 +37,7 @@ class SearchResultFragment : Fragment() {
     var keyword: String = ""
 
     private var mListener: OnListFragmentInteractionListener? = null
+    lateinit private var mView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,11 +49,11 @@ class SearchResultFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
+        mView = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
 
-        loadData(view)
+        loadData(mView)
 
-        return view
+        return mView
     }
 
     override fun onAttach(context: Context?) {
@@ -81,7 +82,9 @@ class SearchResultFragment : Fragment() {
     }
 
     fun loadData(view: View)    {
+        view.loading.visibility = View.VISIBLE
         view.btn_reload.visibility = View.INVISIBLE
+        view.list.visibility = View.INVISIBLE
 
         doAsync() {
             val w: Server = Server()
@@ -91,11 +94,20 @@ class SearchResultFragment : Fragment() {
                     view.list.adapter = SearchResultRecyclerViewAdapter(context, wResult, mListener)
 
                     view.loading.visibility = View.INVISIBLE
+                    view.btn_reload.visibility = View.INVISIBLE
                     view.list.visibility = View.VISIBLE
                 }
             }
             }
         }
+    }
+
+    fun refresh(newKeyword: String) {
+        if (newKeyword == "" || newKeyword == keyword)
+            return
+
+        keyword = newKeyword
+        loadData(mView)
     }
 
     companion object {
@@ -115,8 +127,10 @@ class SearchResultFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         fun newInstance(keyword: String): SearchResultFragment {
             val fragment = SearchResultFragment()
+
             val args = Bundle()
             args.putString(ARG_KEYWORD, keyword)
+
             fragment.arguments = args
             return fragment
         }

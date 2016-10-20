@@ -12,9 +12,11 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.MenuItemCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
 import android.util.Log
@@ -178,11 +180,39 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportFragmentManager.popBackStack()
     }
 
+    private var searchKeyword: String? = null
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
 
+        val searchMenu = menu.findItem(R.id.action_search)
+        val searchView = searchMenu.actionView as SearchView
 
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener    {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // TODO implement autocomplete
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val query = query
+                if (query == null)
+                    return false
+
+                searchView.setIconified(true);
+                searchView.clearFocus();
+
+                MenuItemCompat.collapseActionView(searchMenu)
+
+                searchKeyword = query
+
+                val menu = this@MainActivity.nav_view.menu.findItem(R.id.nav_search_result)
+                this@MainActivity.onNavigationItemSelected(menu)
+
+                return true
+            }
+
+        })
 
         return true
     }
@@ -265,8 +295,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_search_result -> {
                 hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_search_result))   {
-                    fragments[R.id.nav_search_result] = SearchResultFragment.newInstance("러블리즈")
+                    fragments[R.id.nav_search_result] = SearchResultFragment.newInstance(searchKeyword ?: "")
+                }   else    {
+                    val searchFragment = fragments[R.id.nav_search_result] as SearchResultFragment
+                    searchFragment.refresh(searchKeyword ?: "")
                 }
+                searchKeyword = null
                 fragmentTAG = SearchResultFragment.TAG
             }
             // new activity
