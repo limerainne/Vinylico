@@ -120,6 +120,7 @@ class SearchResultFragment : Fragment() {
     fun showErrorMsg(view: View)  {
         view.list.visibility = View.INVISIBLE
         view.btn_reload.visibility = View.INVISIBLE
+        view.loading.visibility = View.INVISIBLE
 
         view.error_container.visibility = View.VISIBLE
         view.error_msg.text = "상단의 검색 버튼을 누르고,\n검색어를 입력해주세요!"

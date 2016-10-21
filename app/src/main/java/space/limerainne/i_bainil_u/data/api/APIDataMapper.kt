@@ -283,7 +283,7 @@ class APIDataMapper {
     fun decorateSongName(songName: String?): String  {
         if (songName == null)   return ""
 
-        var decorated = songName
+        var decorated = songName.trim()
         if (decorateEnabled)
             decorated = re_parenthesis_with_included.replace(decorated, "")
 
@@ -291,7 +291,7 @@ class APIDataMapper {
     }
 
     companion object    {
-        val re_parenthesis_with_included = Regex("""\s?\(.* 삽입곡?\)""")
+        val re_parenthesis_with_included = Regex("""\s?\(.* 삽입.*곡?\)""")
     }
 
     fun convertRecommendAlbumToDomain(recommendAlbum: RecommendAlbum, albumDetail: AlbumDetail): DomainRecommendAlbum {
