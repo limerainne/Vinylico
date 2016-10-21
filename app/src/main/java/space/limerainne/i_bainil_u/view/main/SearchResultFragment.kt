@@ -51,7 +51,10 @@ class SearchResultFragment : Fragment() {
         // Inflate the layout for this fragment
         mView = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
 
-        loadData(mView)
+        if (keyword.length > 0)
+            loadData(mView)
+        else
+            showErrorMsg(mView)
 
         return mView
     }
@@ -83,6 +86,7 @@ class SearchResultFragment : Fragment() {
 
     fun loadData(view: View)    {
         view.loading.visibility = View.VISIBLE
+        view.error_container.visibility = View.INVISIBLE
         view.btn_reload.visibility = View.INVISIBLE
         view.list.visibility = View.INVISIBLE
 
@@ -94,6 +98,7 @@ class SearchResultFragment : Fragment() {
                     view.list.adapter = SearchResultRecyclerViewAdapter(context, wResult, mListener)
 
                     view.loading.visibility = View.INVISIBLE
+                    view.error_container.visibility = View.INVISIBLE
                     view.btn_reload.visibility = View.INVISIBLE
                     view.list.visibility = View.VISIBLE
                 }
@@ -103,11 +108,21 @@ class SearchResultFragment : Fragment() {
     }
 
     fun refresh(newKeyword: String) {
-        if (newKeyword == "" || newKeyword == keyword)
+        if (newKeyword.length < 1 || newKeyword == keyword) {
+            showErrorMsg(mView)
             return
+        }
 
         keyword = newKeyword
         loadData(mView)
+    }
+
+    fun showErrorMsg(view: View)  {
+        view.list.visibility = View.INVISIBLE
+        view.btn_reload.visibility = View.INVISIBLE
+
+        view.error_container.visibility = View.VISIBLE
+        view.error_msg.text = "상단의 검색 버튼을 누르고,\n검색어를 입력해주세요!"
     }
 
     companion object {

@@ -22,7 +22,7 @@ import kotlin.reflect.KProperty
 
 object DelegatesExt {
     fun <T> notNullSingleValue(): ReadWriteProperty<Any?, T> = NotNullSingleValueVar()
-    fun <T: Any> preference(context: Context, name: String, default: T) = Preference(context, name, default)
+    fun <T: Any> preference(context: Context, name: String, default: T, cabinet: String = "default") = Preference(context, name, default, cabinet)
 }
 
 private class NotNullSingleValueVar<T>() : ReadWriteProperty<Any?, T> {
@@ -39,9 +39,9 @@ private class NotNullSingleValueVar<T>() : ReadWriteProperty<Any?, T> {
     }
 }
 
-class Preference<T>(val context: Context, val name: String, val default: T) : ReadWriteProperty<Any?, T> {
+class Preference<T>(val context: Context, val name: String, val default: T, cabinet: String = "default") : ReadWriteProperty<Any?, T> {
 
-    val prefs by lazy { context.getSharedPreferences("default", Context.MODE_PRIVATE) }
+    val prefs by lazy { context.getSharedPreferences(cabinet, Context.MODE_PRIVATE) }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
         return findPreference(name, default)

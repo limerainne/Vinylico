@@ -310,7 +310,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_setting -> {
                 // NOTE have to put a Java class, not Kotlin class!
                 // not SettingsActivity.class or SettingsActivity.javaClass
-                startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
+//                startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
+
+                hasToChangeMainFragmentsChild = false
+                if (!fragments.containsKey(R.id.nav_setting))   {
+                    fragments[R.id.nav_setting] = SettingsFragment.newInstance()
+                }
+                fragmentTAG = SettingsFragment.TAG
+
+                val frag = fragments[R.id.nav_setting]
+                if (frag != null)
+                    transitToFragment(R.id.placeholder_top, frag, SettingsFragment.TAG)
             }
             R.id.nav_about -> {
 

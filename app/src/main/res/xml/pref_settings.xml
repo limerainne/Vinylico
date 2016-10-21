@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.preference.PreferenceCategory
+        android:title="사용자 정보">
+        <android.support.v7.preference.Preference
+            android:title="이메일 계정"
+            android:summary="" />
+        <android.support.v7.preference.Preference
+            android:title="팬 이름 (URL)"
+            android:summary="" />
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory
+        android:title="보기">
+        <android.support.v7.preference.Preference
+            android:title="표시 언어"
+            android:summary="'한국어' / 영어" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="pref_view_remove_soundtrack_parenthesis"
+            android:title="삽입곡 문구 제거"
+            android:summary="광고 또는 영화 등의 삽입곡이라는 부연 설명을 숨깁니다."
+            android:defaultValue="true"/>
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory
+        android:title="다운로드">
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="pref_download_warn_if_in_data_network"
+            android:title="3G/LTE 다운로드 시 경고"
+            android:summary=""
+            android:defaultValue="false"/>
+        <android.support.v7.preference.Preference
+            android:title="다운로드 위치"
+            android:summary="[내부 저장소]/Download/" />
+        <android.support.v7.preference.Preference
+            android:title="파일 이름"
+            android:summary="(원래 이름)" />
+    </android.support.v7.preference.PreferenceCategory>
+
+
+</android.support.v7.preference.PreferenceScreen>

@@ -16,6 +16,8 @@ class I_Bainil_UApp : Application() {
         Typekit.getInstance().addNormal(Typeface.DEFAULT).addBold(Typeface.DEFAULT_BOLD)
 
         CURRENT_USER_ID = UserInfo.getUserIdOr(applicationContext)
+
+        AppContext = applicationContext
     }
 
     fun updateUserId(id: Long)  {
@@ -35,5 +37,7 @@ class I_Bainil_UApp : Application() {
         }
 
         var CURRENT_USER_ID = USER_ID
+
+        lateinit var AppContext: Context
     }
 }

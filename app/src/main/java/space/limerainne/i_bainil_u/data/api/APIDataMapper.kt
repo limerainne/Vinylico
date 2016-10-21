@@ -1,5 +1,7 @@
 package space.limerainne.i_bainil_u.data.api
 
+import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.extension.DelegatesExt
 import java.text.SimpleDateFormat
 import java.util.*
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail as DomainAlbumDetail
@@ -277,11 +279,13 @@ class APIDataMapper {
                 saleType == "0")    // TODO if saleType == "1", can't buy per song!
     }
 
+    val decorateEnabled: Boolean by DelegatesExt.preference(I_Bainil_UApp.AppContext, "pref_view_remove_soundtrack_parenthesis", true, "space.limerainne.i_bainil_u_preferences")
     fun decorateSongName(songName: String?): String  {
         if (songName == null)   return ""
 
         var decorated = songName
-        decorated = re_parenthesis_with_included.replace(decorated, "")
+        if (decorateEnabled)
+            decorated = re_parenthesis_with_included.replace(decorated, "")
 
         return decorated
     }

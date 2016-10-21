@@ -56,6 +56,7 @@ dependencies {
     compile dependencies.appCompat
     compile dependencies.cardView
     compile dependencies.recyclerView
+    compile dependencies.preference
     compile dependencies.design
     compile dependencies.support
 

@@ -11,6 +11,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Loading..."/>
+    <LinearLayout
+        android:id="@+id/error_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible">
+        <TextView
+            android:id="@+id/error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Unknown error occured!"/>
+    </LinearLayout>
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_reload"
         android:layout_width="wrap_content"
