@@ -2,6 +2,9 @@ package space.limerainne.i_bainil_u.view.main
 
 import android.os.Bundle
 import android.support.v7.preference.PreferenceFragmentCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.view.MainActivity
 
@@ -15,6 +18,11 @@ import space.limerainne.i_bainil_u.view.MainActivity
  * http://stackoverflow.com/questions/4003701/how-do-i-put-an-admob-adview-in-the-settings-screen-for-a-live-wallpaper
  */
 class SettingsFragment: PreferenceFragmentCompat() {
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.pref_settings)
     }
