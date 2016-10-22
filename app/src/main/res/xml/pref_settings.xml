@@ -16,6 +16,11 @@
             android:title="표시 언어"
             android:summary="'한국어' / 영어" />
         <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="pref_view_open_navigation_on_start"
+            android:title="시작 시 내비게이션 메뉴 표시"
+            android:summary=""
+            android:defaultValue="true"/>
+        <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_remove_soundtrack_parenthesis"
             android:title="삽입곡 문구 제거"
             android:summary="광고 또는 영화 등의 삽입곡이라는 부연 설명을 숨깁니다."

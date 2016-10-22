@@ -104,7 +104,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                 else if (albumDetail.purchased == 1) {
                     // Download album
                 } else
-                    PurchaseTool.purchaseAlbum(context, albumId, albumName)
+                    PurchaseTool.purchaseAlbum(context, albumId, albumName, albumDetail.free)
 
             } catch (e: UninitializedPropertyAccessException)   {
 

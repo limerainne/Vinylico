@@ -39,6 +39,7 @@ import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.*
 import space.limerainne.i_bainil_u.domain.model.*
+import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.main.*
 import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var header_account_photo: ImageView
     lateinit var header_account_name: TextView
     lateinit var header_account_email: TextView
+
+    private val decorateEnabled: Boolean by DelegatesExt.preference(I_Bainil_UApp.AppContext, "pref_view_open_navigation_on_start", true, "space.limerainne.i_bainil_u_preferences")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +87,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             fragments.put(R.id.nav_browse, browseFragment)
         }
 
-        (findViewById(R.id.drawer_layout) as DrawerLayout).openDrawer(GravityCompat.START)
+        if (decorateEnabled)
+            (findViewById(R.id.drawer_layout) as DrawerLayout).openDrawer(GravityCompat.START)
     }
 
     override fun onDestroy()    {

@@ -5,7 +5,7 @@ package space.limerainne.i_bainil_u.data.api.request.data
  */
 class RequestAlbumPurchased(val albumId: Long,
                         val userId: Long,
-                        val wish: Boolean) : RequestHTTPConnection() {
+                        val free: Boolean) : RequestHTTPConnection() {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/purchase/request"
@@ -14,7 +14,7 @@ class RequestAlbumPurchased(val albumId: Long,
         private val reSeqId = Regex("""\"seq\":(\d+)""")
     }
 
-    override fun composeURL() = "${URL}?userId=$userId&albumId=$albumId&store=1&type=pay"
+    override fun composeURL() = "${URL}?userId=$userId&albumId=$albumId&store=1&type=${if (free) "free" else "pay"}"
 
     override fun execute(): Response {
         // NOTE true means "purchasable"

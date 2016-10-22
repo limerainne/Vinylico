@@ -71,7 +71,7 @@ class MainFragment : Fragment() {
                     }
                 }
 
-                val purchased = RequestAlbumPurchased(target_id, UserInfo.getUserIdOr(context), true).execute()
+                val purchased = RequestAlbumPurchased(target_id, UserInfo.getUserIdOr(context), false).execute()
 
                 // 3. open album info activity
                 uiThread {

@@ -222,7 +222,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             setPriceButton(mView.album_price, mAlbumEntry?.purchased ?: 0, item.free)
             mView.album_price.setOnClickListener {
                 // TODO implement download function
-                PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName)
+                PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName, item.free)
             }
         }
 

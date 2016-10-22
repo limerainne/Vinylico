@@ -24,9 +24,9 @@ import space.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
 
 class PurchaseTool  {
     companion object    {
-        fun purchaseAlbum(mContext: Context, item: AlbumEntry) = purchaseAlbum(mContext, item.albumId, item.albumName)
+        fun purchaseAlbum(mContext: Context, item: AlbumEntry) = purchaseAlbum(mContext, item.albumId, item.albumName, item.free)
 
-        fun purchaseAlbum(mContext: Context, albumId: Long, albumName: String) {
+        fun purchaseAlbum(mContext: Context, albumId: Long, albumName: String, free: Boolean) {
             /*
             http://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
 
@@ -43,7 +43,7 @@ class PurchaseTool  {
                         try {
                             val userInfo = UserInfo(mContext)
 
-                            purchaseCheckResponse = RequestAlbumPurchased(albumId, userInfo.userId, true).execute()
+                            purchaseCheckResponse = RequestAlbumPurchased(albumId, userInfo.userId, free).execute()
                         } catch (e: Exception) {
                             purchaseCheckResponse = RequestAlbumPurchased.Response(false, 0L)
                             e.printStackTrace()
@@ -62,7 +62,10 @@ class PurchaseTool  {
                             }
                         } else {
                             uiThread {
-                                mContext.toast("Already purchased this album: ${albumName}")
+                                if (!free)
+                                    mContext.toast("Already purchased this album: ${albumName}")
+                                else
+                                    mContext.toast("Free album: ${albumName}")
                             }
                         }
 
