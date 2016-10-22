@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.fragment_webview.*
@@ -47,6 +49,8 @@ open class WebviewFragment: Fragment() {
     lateinit var toolbar: Toolbar
     @BindView(R.id.web_view)
     lateinit var mWebView: WebView
+    @BindView(R.id.web_url)
+    lateinit var mWebURL: TextView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_webview, container, false)
@@ -67,6 +71,7 @@ open class WebviewFragment: Fragment() {
 
     open protected fun onInitWebview()    {
         mWebView.loadUrl(init_url)
+        mWebURL.text = init_url
 
         // Enable Javascript
         val webSettings = mWebView.getSettings()
@@ -107,9 +112,16 @@ open class WebviewFragment: Fragment() {
             super.onPageFinished(view, url)
 
             Log.v("Webview", "OnPageFinished: ${url}")
+            mWebURL.text = url
 
             if (scroll_view != null)
                 scroll_view.scrollTo(0, 0)
+        }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+
+            mWebURL.text = url + " (Loading...)"
         }
 
         // http://apogenes.tistory.com/4
@@ -143,6 +155,7 @@ open class WebviewFragment: Fragment() {
 
             }
             view?.loadUrl(url)
+            mWebURL.text = url
             return true
         }
 

@@ -23,6 +23,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
 
     private var userId: Long = 0
     private var albumId: Long = 0
+    private var seqId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
         backEnabled = false
     }
 
-    fun setURL(userId: Long, albumId: Long) {
+    fun setURL(userId: Long, albumId: Long, seqId: Long) {
         if (userId < 1 || albumId < 1)
             return
 
@@ -39,6 +40,8 @@ class PurchaseWebviewFragment(): WebviewFragment() {
         this.albumId = albumId
 
         init_url = "${URL_PAYMENT_PREFIX}?albumId=${albumId}&userId=${userId}"
+        if (seqId > 0)
+            init_url = "${init_url}&seqId=${seqId}"
     }
 
     override fun onInitWebview()    {
@@ -83,14 +86,14 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     companion object {
         val TAG = PurchaseWebviewFragment::class.java.simpleName
 
-        fun newInstance(userId: Long, albumId: Long, context: Context): PurchaseWebviewFragment {
+        fun newInstance(userId: Long, albumId: Long, seqId: Long, context: Context): PurchaseWebviewFragment {
             val fragment = PurchaseWebviewFragment()
 
             fragment.init_url = "about:blank"
             fragment.toolbar_title = "Incorrect purchase target!"
 
             if (userId > 0 && albumId > 0 && checkLogin(userId, context))  {
-                fragment.setURL(userId, albumId)
+                fragment.setURL(userId, albumId, seqId)
                 fragment.toolbar_title = "Buy Album #${albumId}"
                 fragment.toolbar_subtitle = "to #${userId} (You)"
             }

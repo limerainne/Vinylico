@@ -14,6 +14,12 @@ import space.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
 
 /**
  * Created by CottonCandy on 2016-10-03.
+ *
+ * Per-song purchase
+ * #	Result	Protocol	Host	URL	Body	Caching	Content-Type	Process	Comments	Custom
+1211	200	HTTP	www.bainil.com	/api/v2/purchase/request?userId=2543&trackId=13694&store=1&type=pay	75	no-cache="set-cookie"	application/json;charset=UTF-8	qemu-system-i386:14624
+#	Result	Protocol	Host	URL	Body	Caching	Content-Type	Process	Comments	Custom
+1212	200	HTTP	www.bainil.com	/api/v2/kakaopay/request?albumId=3199&trackId=13694&userId=2543&seq=99714	8,194	no-cache="set-cookie"	text/html;charset=UTF-8	qemu-system-i386:14624
  */
 
 class PurchaseTool  {
@@ -33,24 +39,24 @@ class PurchaseTool  {
                 UserInfo.checkLoginThenRun(mContext, {
                     doAsync {
                         // 1. check if previously purchased
-                        val bought: Boolean
+                        val purchaseCheckResponse: RequestAlbumPurchased.Response
                         try {
                             val userInfo = UserInfo(mContext)
 
-                            bought = RequestAlbumPurchased(albumId, userInfo.userId, true).execute()
+                            purchaseCheckResponse = RequestAlbumPurchased(albumId, userInfo.userId, true).execute()
                         } catch (e: Exception) {
-                            bought = false
+                            purchaseCheckResponse = RequestAlbumPurchased.Response(false, 0L)
                             e.printStackTrace()
                         }
 
                         // 2. redirect to purchase page
-                        if (bought) {
+                        if (purchaseCheckResponse.notBought) {
                             if (mContext is MainActivity) {
                                 uiThread {
                                     // TODO display purchase info & cautions
                                     val userInfo = UserInfo(mContext)
 
-                                    val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, albumId, mContext)
+                                    val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, albumId, purchaseCheckResponse.seqId, mContext)
                                     mContext.transitToFragment(R.id.placeholder_top, webviewFragment, PurchaseWebviewFragment.TAG)
                                 }
                             }

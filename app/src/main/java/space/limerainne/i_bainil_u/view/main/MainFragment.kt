@@ -82,7 +82,7 @@ class MainFragment : Fragment() {
                         val activity = activity
                         val album_info = album_info
                         if (activity is MainActivity && album_info != null) {
-                            val entry = convertToAlbumEntry(album_info, if (purchased) 0 else 1)
+                            val entry = convertToAlbumEntry(album_info, if (purchased.notBought) 0 else 1)
                             val albumInfoFragment = AlbumInfoFragment.newInstance(entry)
                             activity.transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
                         }
