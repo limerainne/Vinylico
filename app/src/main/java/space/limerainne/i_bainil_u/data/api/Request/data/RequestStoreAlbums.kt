@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.data.api.request.data
 
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.data.api.StoreAlbums
 import space.limerainne.i_bainil_u.data.api.request.Request
 
@@ -12,7 +13,7 @@ class RequestStoreAlbums(val userId: Long,  // MANDATORY
                          val category: String = CATEGORY_FEATURED,
                          val offset: Long = 0,
                          val limit: Long = 20,
-                         val lang: String = "ko",
+                         val lang: String = I_Bainil_UApp.LangCode,
                          val gson: Gson = Gson()) : Request {
 
     // NOTE page number (=offset) is calculated by server regarding "limit" (item/page)!

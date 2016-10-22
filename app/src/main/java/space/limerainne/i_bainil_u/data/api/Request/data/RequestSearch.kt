@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.data.api.request.data
 
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.data.api.SearchResultResponse
 import space.limerainne.i_bainil_u.data.api.request.Request
 
@@ -693,10 +694,10 @@ result: Dict
 }
  */
 class RequestSearch(val keyword: String,
-                         val userId: Long,
-                         val store: Int = 1,
-                         val lang: String = "ko",
-                         val gson: Gson = Gson()) : Request {
+                    val userId: Long,
+                    val store: Int = 1,
+                    val lang: String = I_Bainil_UApp.LangCode,
+                    val gson: Gson = Gson()) : Request {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/search"

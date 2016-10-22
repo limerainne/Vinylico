@@ -5,11 +5,14 @@ import android.content.Context
 import android.graphics.Typeface
 import com.tsengvn.typekit.Typekit
 import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.extension.DelegatesExt
+import space.limerainne.i_bainil_u.extension.Preference
 
 /**
  * Created by Limerainne on 2016-06-23.
  */
 class I_Bainil_UApp : Application() {
+
     override fun onCreate() {
         super.onCreate()
 
@@ -18,6 +21,8 @@ class I_Bainil_UApp : Application() {
         CURRENT_USER_ID = UserInfo.getUserIdOr(applicationContext)
 
         AppContext = applicationContext
+        val prefUseEnglish = Preference(AppContext, "pref_view_use_english", false, "space.limerainne.i_bainil_u_preferences")
+        I_Bainil_UApp.useEnglish = prefUseEnglish.getValue()
     }
 
     fun updateUserId(id: Long)  {
@@ -39,5 +44,10 @@ class I_Bainil_UApp : Application() {
         var CURRENT_USER_ID = USER_ID
 
         lateinit var AppContext: Context
+
+        var useEnglish: Boolean = false
+
+        val LangCode: String
+            get() = if (useEnglish) "en" else "ko"
     }
 }

@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.data.api.request.data
 
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.data.api.RecommendAlbumResponse
 import space.limerainne.i_bainil_u.data.api.request.Request
 
@@ -17,8 +18,8 @@ http://www.bainil.com/api/v2/user/eml?userId=2543&&lang=ko
  */
 
 class RequestRecommendAlbum(val userId: Long,
-                         val lang: String = "ko",
-                         val gson: Gson = Gson()) : Request {
+                            val lang: String = I_Bainil_UApp.LangCode,
+                            val gson: Gson = Gson()) : Request {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/user/eml"

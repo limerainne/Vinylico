@@ -47,6 +47,8 @@ class Preference<T>(val context: Context, val name: String, val default: T, cabi
         return findPreference(name, default)
     }
 
+    fun getValue(): T = findPreference(name, default)
+
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         putPreference(name, value)
     }

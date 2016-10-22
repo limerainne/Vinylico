@@ -12,9 +12,11 @@
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory
         android:title="보기">
-        <android.support.v7.preference.Preference
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="pref_view_use_english"
             android:title="표시 언어"
-            android:summary="'한국어' / 영어" />
+            android:summary="한국어 (-) / 영어 (+)"
+            android:defaultValue="false"/>
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_open_navigation_on_start"
             android:title="시작 시 메뉴 표시"
