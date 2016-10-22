@@ -108,7 +108,7 @@ class SearchResultFragment : Fragment() {
     }
 
     fun refresh(newKeyword: String) {
-        if (newKeyword.length < 1 || newKeyword == keyword) {
+        if (newKeyword.length < 1) {
             showErrorMsg(mView)
             return
         }

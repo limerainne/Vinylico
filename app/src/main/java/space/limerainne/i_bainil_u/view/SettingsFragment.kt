@@ -1,10 +1,14 @@
-package space.limerainne.i_bainil_u.view.main
+package space.limerainne.i_bainil_u.view
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceFragmentCompat
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.content_main.view.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.view.MainActivity
 
@@ -20,7 +24,16 @@ import space.limerainne.i_bainil_u.view.MainActivity
 class SettingsFragment: PreferenceFragmentCompat() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val settingsView = super.onCreateView(inflater, container, savedInstanceState)
+        val parentView = inflater!!.inflate(R.layout.fragment_main, container, false)
+
+        parentView.content_main.addView(settingsView)
+        parentView.fab.visibility = View.GONE
+
+        val toolbar = parentView.findViewById(R.id.toolbar) as Toolbar?
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
+        return parentView
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
