@@ -21,8 +21,6 @@ class I_Bainil_UApp : Application() {
         CURRENT_USER_ID = UserInfo.getUserIdOr(applicationContext)
 
         AppContext = applicationContext
-        val prefUseEnglish = Preference(AppContext, "pref_view_use_english", false, "space.limerainne.i_bainil_u_preferences")
-        I_Bainil_UApp.useEnglish = prefUseEnglish.getValue()
     }
 
     fun updateUserId(id: Long)  {

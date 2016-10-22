@@ -48,8 +48,10 @@ class HeaderView : LinearLayout {
     private fun hideOrSetText(tv: TextView?, text: String?) {
         if (text == null || text == "")
             tv?.visibility = View.GONE
-        else
+        else {
+            tv?.visibility = View.VISIBLE
             tv?.text = text
+        }
     }
 
 }
