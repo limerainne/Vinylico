@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.base
+package space.limerainne.i_bainil_u.toolbox
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -6,6 +6,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.request.data.RequestAlbumPurchased
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.view.MainActivity

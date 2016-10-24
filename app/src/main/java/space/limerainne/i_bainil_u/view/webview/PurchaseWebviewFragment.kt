@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
 import org.jetbrains.anko.toast
-import space.limerainne.i_bainil_u.base.BainilLauncher
-import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.toolbox.BainilLauncher
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 

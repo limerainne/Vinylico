@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.base
+package space.limerainne.i_bainil_u.toolbox
 
 import android.Manifest
 import android.app.Activity
@@ -19,6 +19,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
 
 /**

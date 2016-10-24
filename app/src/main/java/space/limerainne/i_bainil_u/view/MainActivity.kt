@@ -38,9 +38,12 @@ import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.*
+import space.limerainne.i_bainil_u.credential.LoginCookie
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.domain.model.*
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.Preference
+import space.limerainne.i_bainil_u.toolbox.BainilLauncher
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.main.*
 import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment

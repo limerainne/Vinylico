@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.base
+package space.limerainne.i_bainil_u.credential
 
 import android.content.Context
 import org.jetbrains.anko.toast

@@ -21,7 +21,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.fragment_webview.*
 import space.limerainne.i_bainil_u.R
-import space.limerainne.i_bainil_u.base.LoginCookie
+import space.limerainne.i_bainil_u.credential.LoginCookie
 import java.net.URISyntaxException
 
 /**

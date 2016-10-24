@@ -8,8 +8,8 @@ import android.view.View
 import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import space.limerainne.i_bainil_u.base.LoginCookie
-import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.credential.LoginCookie
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
 
 /**

@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Typeface
 import com.tsengvn.typekit.Typekit
-import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.Preference
 

@@ -1,4 +1,4 @@
-package space.limerainne.i_bainil_u.base
+package space.limerainne.i_bainil_u.credential
 
 import android.content.Context
 import android.text.TextUtils
@@ -6,7 +6,9 @@ import android.util.Log
 import android.webkit.CookieManager
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.extension.DelegatesExt
+import space.limerainne.i_bainil_u.toolbox.WebviewTool
 import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * Created by Limerainne on 2016-09-28.
@@ -94,7 +96,7 @@ class LoginCookie(val context: Context) {
         val init_url = "https://www.bainil.com/"
         val cookies_header = "Set-Cookie";
 
-        val url = java.net.URL(init_url)
+        val url = URL(init_url)
 
         val conn = url.openConnection() as HttpURLConnection
         conn.setReadTimeout(10000 /* milliseconds */)

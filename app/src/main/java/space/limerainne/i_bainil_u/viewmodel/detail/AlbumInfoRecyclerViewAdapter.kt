@@ -24,8 +24,8 @@ import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import space.limerainne.i_bainil_u.base.PurchaseTool
-import space.limerainne.i_bainil_u.base.ShareTool
+import space.limerainne.i_bainil_u.toolbox.PurchaseTool
+import space.limerainne.i_bainil_u.toolbox.ShareTool
 import space.limerainne.i_bainil_u.data.api.request.RequestToggleWish
 import space.limerainne.i_bainil_u.data.api.request.data.RequestTrackLyric
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail

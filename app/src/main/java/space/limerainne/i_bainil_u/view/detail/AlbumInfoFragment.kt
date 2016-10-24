@@ -23,8 +23,8 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import space.limerainne.i_bainil_u.base.PurchaseTool
-import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.toolbox.PurchaseTool
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry

@@ -2,7 +2,7 @@ package space.limerainne.i_bainil_u.data.api
 
 import org.junit.Test
 import org.junit.Assert.*
-import space.limerainne.i_bainil_u.base.LoginCookie
+import space.limerainne.i_bainil_u.credential.LoginCookie
 
 import space.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum

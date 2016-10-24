@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
-import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.request.data.RequestAlbumPurchased
 import space.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import space.limerainne.i_bainil_u.data.api.Server
