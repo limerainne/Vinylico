@@ -44,6 +44,7 @@ import space.limerainne.i_bainil_u.domain.model.*
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.Preference
 import space.limerainne.i_bainil_u.toolbox.BainilLauncher
+import space.limerainne.i_bainil_u.toolbox.DownloadTool
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import space.limerainne.i_bainil_u.view.main.*
 import space.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
@@ -147,6 +148,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     setCookieTo("JSESSIONID", loginToken.JSESSIONID)
                     setCookieTo("AWSELB", loginToken.AWSELB)
                 }
+
+                // TODO TEST
+                val dlTool = DownloadTool.newInstance(12657L, "")
+                dlTool.getFilenameFromHeaderAsync()
             }
         }
     }

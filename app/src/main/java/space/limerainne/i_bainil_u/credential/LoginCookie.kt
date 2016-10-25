@@ -91,6 +91,21 @@ class LoginCookie(val context: Context) {
             "Auto-Login? " + isAutoLogin
     }
 
+    fun getCookieStr(addSessionHeader: Boolean = true): String {
+        var cookieStr = ""
+        cookieStr += "country_code=KR; "
+        if (addSessionHeader) {
+            cookieStr += "JSESSIONID=${JSESSIONID}; "
+            cookieStr += "AWSELB=${AWSELB}; "
+        }
+        if (isAutoLogin) {
+            cookieStr += "auth_token=${auth_token}; "
+            cookieStr += "email=${email}; "
+            cookieStr += "remember=${remember}; "
+        }
+        return cookieStr
+    }
+
     fun getToken()  {
         // http://stackoverflow.com/questions/16150089/how-to-handle-cookies-in-httpurlconnection-using-cookiemanager
         val init_url = "https://www.bainil.com/"
@@ -103,16 +118,12 @@ class LoginCookie(val context: Context) {
         conn.setConnectTimeout(15000 /* milliseconds */)
         conn.setRequestMethod("GET")
 
-        // append cookie if
+        // append properties
+        // - auto login cookie
         if (isAutoLogin) {
-            var cookieStr = ""
-            cookieStr += "auth_token: ${auth_token}; "
-            cookieStr += "email: ${email}; "
-            cookieStr += "remember: ${remember}"
-
-            conn.setRequestProperty("Cookie", cookieStr)
+            conn.setRequestProperty("Cookie", getCookieStr(addSessionHeader = false))
         }
-
+        // - user agent
         conn.setRequestProperty("User-Agent", WebviewTool().getDefaultUserAgentString(context))
 
         conn.setDoInput(true)

@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import space.limerainne.i_bainil_u.base.UserInfo
+import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.request.data.RequestHTTPConnection
 
 /**
