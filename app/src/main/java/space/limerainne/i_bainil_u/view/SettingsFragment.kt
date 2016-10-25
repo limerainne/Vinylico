@@ -32,6 +32,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
         val toolbar = parentView.findViewById(R.id.toolbar) as Toolbar?
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar?.setTitle(R.string.nav_setting)
 
         return parentView
     }

@@ -82,6 +82,6 @@
     <string name="nav_about">앱 정보</string>
 
     <!-- search widget -->
-    <string name="search_hint">Type artist, album, title or else...</string>
+    <string name="search_hint">Type artist, album, title or else&#8230;</string>
 
 </resources>
