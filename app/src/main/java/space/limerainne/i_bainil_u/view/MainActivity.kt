@@ -244,9 +244,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val topFrag = getActiveFragment()
             when    {
                 topFrag is AlbumInfoFragment -> {
-                    val albumEntry = topFrag.albumEntry
-                    if (albumEntry != null)
-                        BainilLauncher.executeBainilAppAlbumScreen(this, albumEntry.albumId)
+                    if (topFrag.albumId > 0)
+                        BainilLauncher.executeBainilAppAlbumScreen(this, topFrag.albumId)
                     else
                         BainilLauncher.executeBainilApp(this)
                 }

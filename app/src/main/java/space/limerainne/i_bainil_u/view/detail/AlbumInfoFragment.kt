@@ -119,8 +119,6 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         rec_view?.layoutManager = LinearLayoutManager(context)
 
         doAsync() {
-            val albumId: Long = albumEntry?.albumId ?: albumId
-
             val w: Server = Server()
             albumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
             albumTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))
@@ -210,6 +208,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         fun newInstance(albumEntry: AlbumEntry): AlbumInfoFragment {
             val albumInfoFragment = AlbumInfoFragment()
             albumInfoFragment.albumEntry = albumEntry
+            albumInfoFragment.albumId = albumEntry.albumId
 
             return albumInfoFragment
         }

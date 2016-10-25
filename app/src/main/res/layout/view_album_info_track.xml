@@ -229,8 +229,6 @@
         android:textAppearance="?attr/textAppearanceListItem"
         android:visibility="gone"
         android:textIsSelectable="true"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:ellipsize="end"/>
 
     <!--<com.ms.square.android.expandabletextview.ExpandableTextView-->
