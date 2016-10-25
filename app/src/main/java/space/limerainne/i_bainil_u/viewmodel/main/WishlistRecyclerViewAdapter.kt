@@ -9,13 +9,7 @@ import android.view.animation.AnimationUtils
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.domain.model.Wishlist
-import space.limerainne.i_bainil_u.view.dummy.DummyContent.DummyItem
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class WishlistRecyclerViewAdapter(private val mContext: Context,
                                   private val mValues: Wishlist,
                                   private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<WishlistItemViewHolder>() {
