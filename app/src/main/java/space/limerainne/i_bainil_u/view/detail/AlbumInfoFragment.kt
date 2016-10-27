@@ -130,7 +130,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                 uiThread {
                     if (context != null) {
 //                        Log.v("Picasso", albumDetail.jacketImage)
-                        Picasso.with(activity)
+                        Picasso.with(context)
                                 .load(albumDetail.jacketImage)
                                 .noFade()
                                 .into(toolbar_background)
@@ -185,6 +185,13 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
             (activity as MainActivity).unsetNavigationViewCheckedItem()
             (activity as MainActivity).setToolbarColor()
         }
+    }
+
+    override fun onPause()  {
+        super.onPause()
+
+        Picasso.with(context)
+                .cancelRequest(toolbar_background)
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, offset: Int) {

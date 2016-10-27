@@ -705,7 +705,7 @@ class RequestSearch(val keyword: String,
     }
 
     private fun composeURL(): String {
-        var url = "${URL}?q=${keyword}"
+        var url = "${URL}?q=${keyword.replace(' ', '+')}"
         url += "&userId=$userId"
         url += "&store=$store&lang=$lang"
         return url
