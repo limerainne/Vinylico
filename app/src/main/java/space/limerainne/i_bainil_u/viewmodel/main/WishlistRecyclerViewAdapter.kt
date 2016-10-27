@@ -29,7 +29,7 @@ class WishlistRecyclerViewAdapter(private val mContext: Context,
             mListener?.onListFragmentInteraction(holder.mItem!!)
         }
 
-        startAnimation(holder.mView, position)
+        // startAnimation(holder.mView, position)
     }
 
     override fun onViewDetachedFromWindow(holder: WishlistItemViewHolder) {

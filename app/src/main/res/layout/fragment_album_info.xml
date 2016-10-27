@@ -19,8 +19,8 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:statusBarScrim="?attr/colorAccent"
-            app:contentScrim="?attr/colorPrimary"
+            app:statusBarScrim="?attr/colorPrimary"
+            app:contentScrim="#80000000"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <!-- app:contentScrim="?attr/colorPrimary" -->
 

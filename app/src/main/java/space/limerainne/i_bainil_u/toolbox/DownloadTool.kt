@@ -12,6 +12,8 @@ import java.net.URLDecoder
 /**
  * Created by Limerainne on 2016-10-24.
  *
+ * refer to: http://stackoverflow.com/questions/23069965/get-file-name-from-headers-with-downloadmanager-in-android
+ *
  * http://www.bainil.com/track/download?no=12657
  */
 class DownloadTool(val url: String, val path: String) {
@@ -73,12 +75,13 @@ class DownloadTool(val url: String, val path: String) {
     }
 
     companion object    {
+        private val TrackDownloadURLPrefix = "http://www.bainil.com/track/download?no="
+
         fun newInstance(url: String, path: String): DownloadTool    {
             return DownloadTool(url, path)
         }
 
         fun newInstance(trackId: Long, path: String): DownloadTool    {
-            val TrackDownloadURLPrefix = "http://www.bainil.com/track/download?no="
             return newInstance(TrackDownloadURLPrefix + "${trackId}", path)
         }
     }

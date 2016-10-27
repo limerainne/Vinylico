@@ -125,7 +125,7 @@ class MainFragment : Fragment() {
             Log.d("Test", targetFragment.toString())
 
             val transaction = childFragmentManager.beginTransaction()
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
             if (backStack)
                 transaction.addToBackStack(fragmentTAG)

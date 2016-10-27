@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.data.api.SearchResultResponse
 import space.limerainne.i_bainil_u.data.api.request.Request
+import java.net.URLEncoder
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -704,7 +705,7 @@ class RequestSearch(val keyword: String,
     }
 
     private fun composeURL(): String {
-        var url = "${URL}?q=$keyword"
+        var url = "${URL}?q=${keyword}"
         url += "&userId=$userId"
         url += "&store=$store&lang=$lang"
         return url
