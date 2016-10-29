@@ -544,4 +544,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val webviewFragment = LogoutWebviewFragment.newInstance()
         transitToFragment(R.id.placeholder_top, webviewFragment, LogoutWebviewFragment.TAG)
     }
+
+    // A method to find height of the status bar
+    fun getStatusBarHeight(): Int {
+        var result = 0
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
 }

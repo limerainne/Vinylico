@@ -7,7 +7,7 @@
     <dimen name="nav_header_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="album_info_header_height">180dp</dimen>
+    <dimen name="album_info_header_height">280dp</dimen>
 
     <!-- custom coordinatorlayout headerview -->
     <dimen name="header_view_start_margin_left">16dp</dimen>

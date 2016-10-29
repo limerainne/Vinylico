@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:fitsSystemWindows="true"
     tools:context="space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment">
 
     <android.support.design.widget.AppBarLayout
@@ -19,7 +18,7 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:statusBarScrim="?attr/colorPrimary"
+            app:statusBarScrim="#80000000"
             app:contentScrim="#80000000"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <!-- app:contentScrim="?attr/colorPrimary" -->
@@ -30,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
+                android:fitsSystemWindows="false"
                 android:tint="#20000000"
                 android:transitionName="album_cover"
                 app:layout_collapseMode="parallax"
@@ -40,7 +40,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:fitsSystemWindows="true"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="?homeAsUpIndicator"
                 app:popupTheme="@style/AppTheme.PopupOverlay" >
@@ -88,7 +87,7 @@
         layout="@layout/view_album_info_toolbar_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         app:layout_behavior="space.limerainne.i_bainil_u.view.ViewBehavior"
         android:visibility="gone"
         />

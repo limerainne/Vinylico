@@ -76,6 +76,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         ButterKnife.bind(this, view)
 
         (activity as AppCompatActivity).setSupportActionBar(view.toolbar)
+//        view.toolbar.setPadding(0, (activity as MainActivity).getStatusBarHeight(), 0, 0)
 
         collapsingToolbarLayout.title =""
         toolbar.title = ""
