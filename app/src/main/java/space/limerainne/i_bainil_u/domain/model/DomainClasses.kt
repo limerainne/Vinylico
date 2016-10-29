@@ -147,7 +147,9 @@ data class Track(val artistId: Long,
 
                  val perSongPayable: Boolean,
                  var lyricLoaded: Boolean = false,
-                 var lyric_text: String = ""
+                 var lyric_text: String = "",
+
+                 var downloadId: Long   // TODO in some case, songId is different from web songId for "download"
 )
 
 data class RecommendAlbum(val albumId: Long,
