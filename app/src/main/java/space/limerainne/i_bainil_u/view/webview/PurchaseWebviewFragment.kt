@@ -17,7 +17,9 @@ import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 class PurchaseWebviewFragment(): WebviewFragment() {
 
     final val URL_PAYMENT_PREFIX = "https://www.bainil.com/api/v2/kakaopay/request"
+    final val URL_PAYMENT_RESULT = "https://www.bainil.com/api/v2/kakaopay/result"
     final val URL_CLOSE = "www.bainil.com/payment/close"
+    final val URL_DOWNLOAD = "www.bainil.com/payment/download"
 
     final val URL_ANDROID_INAPP_PAY = "www.bainil.com/payment/inapp"
 
@@ -57,7 +59,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
 
             if (url != null)    {
                 // for payment failed -> "Close" button
-                if (url.endsWith(URL_CLOSE))   {
+                if (url.endsWith(URL_CLOSE) || url.endsWith(URL_DOWNLOAD))   {
                     view?.stopLoading()
 
                     // return to previous screen

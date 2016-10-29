@@ -33,6 +33,7 @@ import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.Track
 import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.extension.*
+import space.limerainne.i_bainil_u.toolbox.DownloadTool
 import space.limerainne.i_bainil_u.view.MainActivity
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 
@@ -221,8 +222,13 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
             setPriceButton(mView.album_price, mAlbumEntry?.purchased ?: 0, item.free)
             mView.album_price.setOnClickListener {
-                // TODO implement download function
-                PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName, item.free)
+                if (item.purchased == 1) {
+                    // TODO implement download function
+                    for (track in tracks.tracks)   {
+                        DownloadTool.newInstance(track.songId, track.songName).doDownload(mContext)
+                    }
+                }   else
+                    PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName, item.free)
             }
         }
 
@@ -387,14 +393,19 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 mView.song_price.text = "-"
             }
             mView.song_price.setOnClickListener {
-                if (!item.perSongPayable)   {
-                    mContext.toast("Sorry, this song can't be purchased individually..")
-                    return@setOnClickListener
+                if (mAlbum.purchased == 1)  {
+                    DownloadTool.newInstance(item.songId, item.songName).doDownload(mContext)
                 }
-                // TODO buy/download each track
-                // TODO have to get track purchase URL
-                // TODO have to check if it cannot be purchased individually
-                mContext.toast("Sorry, per-song purchase/download feature is not yet implemented...")
+                else {
+                    if (!item.perSongPayable) {
+                        mContext.toast("Sorry, this song can't be purchased individually..")
+                        return@setOnClickListener
+                    }
+                    // TODO buy/download each track
+                    // TODO have to get track purchase URL
+                    // TODO have to check if it cannot be purchased individually
+                    mContext.toast("Sorry, per-song purchase/download feature is not yet implemented...")
+                }
             }
         }
 

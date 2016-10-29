@@ -91,7 +91,9 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         }
 
         itemView.album_price.setOnClickListener {
-            // TODO implement download function
+            if (item.purchased == 1)    {
+                // TODO implement album download function
+            }   else
             PurchaseTool.purchaseAlbum(mContext, item)
         }
     }
@@ -188,7 +190,7 @@ class PurchasedItemViewHolder(mContext: Context, mView: View): BrowserListItemVi
         itemView.album_price.text = item.purchasedDate
 
         itemView.album_price.setOnClickListener {
-            PurchaseTool.purchaseAlbum(mContext, item)
+            // TODO implement album download function
         }
     }
 

@@ -7,10 +7,12 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.support.v4.os.EnvironmentCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.widget.DrawerLayout
@@ -43,6 +45,7 @@ import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.domain.model.*
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.Preference
+import space.limerainne.i_bainil_u.extension.context
 import space.limerainne.i_bainil_u.toolbox.BainilLauncher
 import space.limerainne.i_bainil_u.toolbox.DownloadTool
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
@@ -150,8 +153,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
                 // TODO TEST
-                val dlTool = DownloadTool.newInstance(12657L, "")
-                dlTool.getFilenameFromHeaderAsync()
+//                val dlTool = DownloadTool.newInstance(12657L, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "DownloadTest", "Youngjoon")
+//                dlTool.doDownload(this@MainActivity.context)
             }
         }
     }
