@@ -174,6 +174,12 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     addRequestHeader("Cookie", loginCookie.getCookieStr())
                     addRequestHeader("User-Agent", WebviewTool().getDefaultUserAgentString(I_Bainil_UApp.AppContext))
                     addRequestHeader("Host", header_host)
+                    addRequestHeader("Accept-Language",
+                            if (!I_Bainil_UApp.useEnglish)
+                                "ko-KR,ko;q=0.8,en-US,en;q=0.3"
+                            else
+                                "en-US,en;q=0.8,ko-KR,ko;q=0.3"
+                    )
 
                     // if 3G/LTE...
                     setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or

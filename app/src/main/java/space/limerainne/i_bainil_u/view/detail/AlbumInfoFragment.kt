@@ -26,6 +26,7 @@ import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.toolbox.PurchaseTool
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
+import space.limerainne.i_bainil_u.domain.job.AnnotateWebDownloadIdCommand
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.TrackList
@@ -149,6 +150,10 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                         Log.v("Found", albumTracks.tracks[0].songName)
                     }
                 }
+
+                if (albumDetail.purchased == 1)
+                    AnnotateWebDownloadIdCommand(albumId, albumTracks).execute()
+
             } catch (e: UninitializedPropertyAccessException)  {
                 e.printStackTrace()
 

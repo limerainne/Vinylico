@@ -225,7 +225,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 if (item.purchased == 1) {
                     // TODO implement download function
                     for (track in tracks.tracks)   {
-                        DownloadTool.newInstance(track.songId, track.songName).doDownload(mContext)
+                        DownloadTool.newInstance(if (track.downloadId > 0) track.downloadId else track.songId, track.songName).doDownload(mContext)
                     }
                 }   else
                     PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName, item.free)
@@ -394,7 +394,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             }
             mView.song_price.setOnClickListener {
                 if (mAlbum.purchased == 1)  {
-                    DownloadTool.newInstance(item.songId, item.songName).doDownload(mContext)
+                    DownloadTool.newInstance(if (item.downloadId > 0) item.downloadId else item.songId, item.songName).doDownload(mContext)
                 }
                 else {
                     if (!item.perSongPayable) {

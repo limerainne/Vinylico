@@ -122,7 +122,9 @@ data class TrackList(val albumId: Long,
                      var duration: Int,
                      var bitrate: String,
                      var albumSize: Long,
-                     var priceIfPerSong: String)
+                     var priceIfPerSong: String,
+
+                     var downloadId: Long = 0L)
 
 // track information
 data class Track(val artistId: Long,
@@ -149,7 +151,7 @@ data class Track(val artistId: Long,
                  var lyricLoaded: Boolean = false,
                  var lyric_text: String = "",
 
-                 var downloadId: Long   // TODO in some case, songId is different from web songId for "download"
+                 var downloadId: Long = 0L   // TODO in some case, songId is different from web songId for "download"
 )
 
 data class RecommendAlbum(val albumId: Long,

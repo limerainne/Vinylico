@@ -1,6 +1,9 @@
 package space.limerainne.i_bainil_u.data.api.request.data
 
+import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.credential.LoginCookie
 import space.limerainne.i_bainil_u.data.api.request.Request
+import space.limerainne.i_bainil_u.toolbox.WebviewTool
 import java.io.*
 import java.net.HttpURLConnection
 
@@ -14,12 +17,34 @@ abstract class RequestHTTPConnection() : Request {
     fun getHTTPResponseString(): String {
         println(composeURL())
 
+        val header_host = "www.bainil.com"
+
         val url = java.net.URL(composeURL())
         val conn = url.openConnection() as HttpURLConnection
         conn.setReadTimeout(10000 /* milliseconds */)
         conn.setConnectTimeout(15000 /* milliseconds */)
         conn.setRequestMethod("GET")
         conn.setDoInput(true)
+
+        // append cookie
+        // - cookie
+        val loginCookie = LoginCookie(I_Bainil_UApp.AppContext)
+        conn.setRequestProperty("Cookie", loginCookie.getCookieStr())
+
+        // - user agent
+        conn.setRequestProperty("User-Agent", WebviewTool().getDefaultUserAgentString(I_Bainil_UApp.AppContext))
+
+        // - host
+        conn.setRequestProperty("Host", header_host)
+
+        // - Accept-Language? determines filename
+        conn.setRequestProperty("Accept-Language",
+                if (!I_Bainil_UApp.useEnglish)
+                    "ko-KR,ko;q=0.8,en-US,en;q=0.3"
+                else
+                    "en-US,en;q=0.8,ko-KR,ko;q=0.3"
+        )
+
         // Starts the query
         conn.connect()
         val response = conn.getResponseCode()
