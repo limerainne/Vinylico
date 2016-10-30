@@ -17,6 +17,7 @@ import space.limerainne.i_bainil_u.toolbox.PurchaseTool
 import space.limerainne.i_bainil_u.toolbox.ShareTool
 import space.limerainne.i_bainil_u.data.api.request.RequestToggleWish
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
+import space.limerainne.i_bainil_u.toolbox.DownloadTool
 
 /**
  * Created by CottonCandy on 2016-10-03.
@@ -92,9 +93,9 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
 
         itemView.album_price.setOnClickListener {
             if (item.purchased == 1)    {
-                // TODO implement album download function
+                DownloadTool.downloadAlbum(item.albumId, mContext)
             }   else
-            PurchaseTool.purchaseAlbum(mContext, item)
+                PurchaseTool.purchaseAlbum(mContext, item)
         }
     }
 
@@ -186,12 +187,8 @@ class PurchasedItemViewHolder(mContext: Context, mView: View): BrowserListItemVi
     override fun bind(item: AlbumEntry)  {
         super.bind(item)
 
-        // TODO because purchased page..
         itemView.album_price.text = item.purchasedDate
-
-        itemView.album_price.setOnClickListener {
-            // TODO implement album download function
-        }
+        item.purchased = 1
     }
 
     override fun setPriceButton(view: AppCompatButton, price: String, purchased: Int, free: Boolean) {

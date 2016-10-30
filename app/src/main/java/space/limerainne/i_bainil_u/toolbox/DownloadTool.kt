@@ -15,7 +15,10 @@ import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.credential.LoginCookie
+import space.limerainne.i_bainil_u.credential.UserInfo
+import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.data.api.Track
+import space.limerainne.i_bainil_u.domain.job.AnnotateWebDownloadIdCommand
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -209,6 +212,17 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
 
         fun newInstance(trackId: Long, songName: String): DownloadTool  {
             return newInstance(trackId, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "Bainil: ${songName}", "")
+        }
+
+        fun downloadAlbum(albumId: Long, context: Context)    {
+            doAsync {
+                val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
+                AnnotateWebDownloadIdCommand(albumId, albumTracks).execute  {
+                    for (track in albumTracks.tracks)   {
+                        DownloadTool.newInstance(if (track.downloadId > 0) track.downloadId else track.songId, track.songName).doDownload(context)
+                    }
+                }
+            }
         }
     }
 }

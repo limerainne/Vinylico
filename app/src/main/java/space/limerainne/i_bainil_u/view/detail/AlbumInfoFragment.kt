@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_album_info.*
 import kotlinx.android.synthetic.main.fragment_album_info.view.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
@@ -30,6 +31,7 @@ import space.limerainne.i_bainil_u.domain.job.AnnotateWebDownloadIdCommand
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.TrackList
+import space.limerainne.i_bainil_u.toolbox.DownloadTool
 import space.limerainne.i_bainil_u.view.MainActivity
 import space.limerainne.i_bainil_u.viewmodel.detail.AlbumInfoRecyclerViewAdapter
 
@@ -101,15 +103,23 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                         PurchaseTool.purchaseAlbum(context, albumEntry)
                     else if (albumEntry.purchased == 1) {
                         // Download album
+                        for (track in albumTracks.tracks)   {
+                            DownloadTool.newInstance(if (track.downloadId > 0) track.downloadId else track.songId, track.songName).doDownload(context)
+                        }
                     }
                 }
+
                 else if (albumDetail.purchased == 1) {
                     // Download album
+                    for (track in albumTracks.tracks)   {
+                        DownloadTool.newInstance(if (track.downloadId > 0) track.downloadId else track.songId, track.songName).doDownload(context)
+                    }
+
                 } else
                     PurchaseTool.purchaseAlbum(context, albumId, albumName, albumDetail.free)
 
             } catch (e: UninitializedPropertyAccessException)   {
-
+                context.toast("Wait till contents are loaded...")
             }
         }
 

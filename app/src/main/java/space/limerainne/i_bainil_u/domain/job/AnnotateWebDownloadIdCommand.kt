@@ -12,7 +12,11 @@ import space.limerainne.i_bainil_u.domain.model.TrackList
  * Created by CottonCandy on 2016-10-30.
  */
 class AnnotateWebDownloadIdCommand(val albumId: Long, val trackList: TrackList): Command<Unit> {
-    override fun execute() {
+    override fun execute()  {
+        execute {  }
+    }
+
+    fun execute(callback: () -> Unit) {
         doAsync {
             val webIdPair = RequestWebDownloadId(albumId).execute()
 
@@ -28,6 +32,8 @@ class AnnotateWebDownloadIdCommand(val albumId: Long, val trackList: TrackList):
             uiThread {
                 I_Bainil_UApp.AppContext.toast("Web download ID annotated!")
             }
+
+            callback()
         }
     }
 }
