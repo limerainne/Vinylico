@@ -29,6 +29,7 @@
                 android:contentDescription="Album Cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#ffffff"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
                 android:tint="#00000000"
