@@ -167,7 +167,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
 
                 val request = DownloadManager.Request(Uri.parse(url)).apply {
                     setTitle(title)
-                    setDescription(desc)
+                    setDescription(filename)
                     setDestinationUri(Uri.fromFile(File(path, filename)))
                     setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     allowScanningByMediaScanner()

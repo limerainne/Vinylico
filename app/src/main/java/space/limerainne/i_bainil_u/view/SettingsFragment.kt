@@ -2,6 +2,7 @@ package space.limerainne.i_bainil_u.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
@@ -49,6 +50,14 @@ class SettingsFragment: PreferenceFragmentCompat() {
             (activity as MainActivity).setToolbarColor()
             //(activity as MainActivity).setToolbarColor(R.color.babyPink, R.color.babyPinkDark)
         }
+
+        // set contents
+        fun setSummaryAsItsString(key: String)   {
+            val pref = findPreference(key)
+            pref.summary = pref.sharedPreferences.getString(key, "")
+        }
+        setSummaryAsItsString("email")
+        setSummaryAsItsString("_userURL")
     }
 
 

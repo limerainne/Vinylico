@@ -4,17 +4,26 @@
     <android.support.v7.preference.PreferenceCategory
         android:title="사용자 정보">
         <android.support.v7.preference.Preference
-            android:title="이메일 계정"
-            android:summary="" />
+            android:key="email"
+            android:persistent="true"
+            android:title="이메일 계정" />
         <android.support.v7.preference.Preference
-            android:title="팬 이름 (URL)"
-            android:summary="" />
+            android:key="_userURL"
+            android:persistent="true"
+            android:title="팬 이름 (및 URL 별명)" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="__is_auto_login"
+            android:title="자동 로그인"
+            android:summary="로그인할 때 자동 로그인 선택 여부"
+            android:summaryOff="이번 세션만 로그인되었습니다"
+            android:summaryOn="사용자 인증 키가 보관되었습니다"
+            android:enabled="false" />
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory
         android:title="보기">
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_use_english"
-            android:title="표시 언어"
+            android:title="앨범 표시 언어"
             android:summary="체크 시 영어; 앱 재시작 필요"
             android:defaultValue="false"/>
         <android.support.v7.preference.SwitchPreferenceCompat

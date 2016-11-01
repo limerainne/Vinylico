@@ -17,6 +17,7 @@
 package space.limerainne.i_bainil_u.extension
 
 import android.content.Context
+import org.jetbrains.anko.defaultSharedPreferences
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -41,7 +42,12 @@ private class NotNullSingleValueVar<T>() : ReadWriteProperty<Any?, T> {
 
 class Preference<T>(val context: Context, val name: String, val default: T, cabinet: String = "default") : ReadWriteProperty<Any?, T> {
 
-    val prefs by lazy { context.getSharedPreferences(cabinet, Context.MODE_PRIVATE) }
+    val prefs by lazy {
+        if (cabinet != "default")
+            context.getSharedPreferences(cabinet, Context.MODE_PRIVATE)
+        else
+            context.defaultSharedPreferences
+    }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
         return findPreference(name, default)

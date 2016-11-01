@@ -129,12 +129,14 @@ open class WebviewFragment: Fragment() {
             if (url != null && url.startsWith("intent://")) {
                 try {
                     val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     val existPackage = context.getPackageManager().getLaunchIntentForPackage(intent.getPackage())
                     if (existPackage != null) {
                         startActivity(intent)
                     } else {
                         val marketIntent = Intent(Intent.ACTION_VIEW)
                         marketIntent.setData(Uri.parse("market://details?id=" + intent.getPackage()))
+                        marketIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(marketIntent)
                     }
                     return true

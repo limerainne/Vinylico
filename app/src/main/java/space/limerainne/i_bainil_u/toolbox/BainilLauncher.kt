@@ -10,8 +10,10 @@ import android.net.Uri
 class BainilLauncher {
     companion object    {
         fun executeBainilApp(context: Context)  {
-            val pkgName = "com.bainil.app"
+            executePkgName(context, "com.bainil.app")
+        }
 
+        fun executePkgName(context: Context, pkgName: String)  {
             try {
                 val existPackage = context.packageManager.getLaunchIntentForPackage(pkgName)
                 if (existPackage != null) {
@@ -39,6 +41,7 @@ class BainilLauncher {
 
             try {
                 val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
                 val existPackage = context.packageManager.getLaunchIntentForPackage(intent.`package`)
                 if (existPackage != null) {
@@ -46,6 +49,7 @@ class BainilLauncher {
                 } else {
                     val marketIntent = Intent(Intent.ACTION_VIEW)
                     marketIntent.data = Uri.parse("market://details?id=" + intent.`package`)
+                    marketIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(marketIntent)
                 }
             } catch (e: Exception) {

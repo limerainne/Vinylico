@@ -1,6 +1,7 @@
 package space.limerainne.i_bainil_u.view
 
 import android.annotation.TargetApi
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -323,7 +324,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             // new activity
             R.id.nav_downloading -> {
-
+                // open download manager
+                // ref: http://stackoverflow.com/questions/9676786/how-to-launch-download-manager-from-broadcast-receiver
+                val dm = Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)
+                dm.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(dm)
             }
             R.id.nav_setting -> {
                 // NOTE have to put a Java class, not Kotlin class!
