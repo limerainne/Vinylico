@@ -81,7 +81,7 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         (activity as AppCompatActivity).setSupportActionBar(view.toolbar)
 //        view.toolbar.setPadding(0, (activity as MainActivity).getStatusBarHeight(), 0, 0)
 
-        collapsingToolbarLayout.title =""
+        view.toolbar_layout.title =""
         toolbar.title = ""
 
         artistName = albumEntry?.artistName ?: ""

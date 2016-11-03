@@ -46,17 +46,14 @@
                     android:text="Loading..." />
             </RelativeLayout>
 
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/scroll_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <WebView
-                    android:id="@+id/web_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible" />
-            </android.support.v4.widget.NestedScrollView>
-        </FrameLayout>
+            <!-- http://stackoverflow.com/questions/33688701/webview-height-grows-indefinitely-inside-a-nestedscrollview -->
+                    <WebView
+                        android:id="@+id/web_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:windowSoftInputMode="adjustResize"
+                        android:visibility="visible" />
+                </FrameLayout>
 
         <TextView
             android:id="@+id/web_url"

@@ -56,7 +56,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
             val pref = findPreference(key)
             pref.summary = pref.sharedPreferences.getString(key, "")
         }
-        setSummaryAsItsString("email")
+        setSummaryAsItsString("_userEmail")
         setSummaryAsItsString("_userURL")
     }
 

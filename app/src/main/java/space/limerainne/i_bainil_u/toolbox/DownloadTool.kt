@@ -5,10 +5,14 @@ import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Environment
+import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.net.ConnectivityManagerCompat
 import android.util.Log
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
@@ -38,6 +42,9 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
     var filename: String = ""
 
     fun doDownload(mContext: Context)   {
+        // check if 3G/LTE
+        if (checkIfDataNetworkInSongDownload(mContext)) return
+
         if (checkIfPermission(mContext)) {
             getFilenameFromHeaderAsync() {
                 // create path if nonexist
@@ -157,7 +164,8 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
     }
 
     fun addToQueue(context: Context)    {
-        // check permission!
+        // check if 3G/LTE
+        if (checkIfDataNetworkInSongDownload(context)) return
 
         doAsync {
             try {
@@ -184,9 +192,12 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                                 "en-US,en;q=0.8,ko-KR,ko;q=0.3"
                     )
 
-                    // if 3G/LTE...
-                    setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or
+                    // if 3G/LTE allowed...
+                    if (I_Bainil_UApp.CommonPrefs.allowDataNetwork)
+                        setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or
                             DownloadManager.Request.NETWORK_MOBILE)
+                    else
+                        setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
 
                     // visible in Download app (?)
                     setVisibleInDownloadsUi(true)
@@ -214,7 +225,28 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
             return newInstance(trackId, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "Bainil: ${songName}", "")
         }
 
+        fun checkIfDataNetworkInSongDownload(context: Context): Boolean    {
+            return checkIfDataNetwork(context, "Can't download a song! Device is in 3G/LTE network!")
+        }
+
+        fun checkIfDataNetworkInAlbumDownload(context: Context): Boolean    {
+            return checkIfDataNetwork(context, "Can't download an album! Device is in 3G/LTE network!")
+        }
+
+        fun checkIfDataNetwork(context: Context, errorMsg: String): Boolean    {
+            if (!I_Bainil_UApp.CommonPrefs.allowDataNetwork) {
+                val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                if (connMgr.activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE) {
+                    context.toast(errorMsg)
+                    return true
+                }
+            }
+            return false
+        }
+
         fun downloadAlbum(albumId: Long, context: Context)    {
+            if (checkIfDataNetworkInAlbumDownload(context)) return
+
             doAsync {
                 val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
                 AnnotateWebDownloadIdCommand(albumId, albumTracks).execute  {

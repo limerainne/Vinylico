@@ -114,8 +114,8 @@ open class WebviewFragment: Fragment() {
             Log.v("Webview", "OnPageFinished: ${url}")
             mWebURL.text = url
 
-            if (scroll_view != null)
-                scroll_view.scrollTo(0, 0)
+//            if (scroll_view != null)
+//                scroll_view.scrollTo(0, 0)
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -175,9 +175,9 @@ open class WebviewFragment: Fragment() {
     }
 
     fun goBack()    {
-        scroll_view.scrollTo(0, 0)
+//        scroll_view.scrollTo(0, 0)
         mWebView.goBack()
-        scroll_view.scrollTo(0, 0)
+//        scroll_view.scrollTo(0, 0)
     }
 
     companion object {
