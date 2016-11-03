@@ -13,5 +13,8 @@
 # and specify the fully qualified class name to the JavaScript interface
 # class:
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+#    public *;
+# }
+-keepattributes SourceFile,LineNumberTable
+-dontwarn com.squareup.picasso.**
+-dontwarn org.jetbrains.anko.internals.**

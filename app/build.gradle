@@ -24,7 +24,7 @@ android {
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
 
         multiDexEnabled true
     }
@@ -39,12 +39,12 @@ android {
     }
 
     dataBinding {
-        enabled = true
+        enabled = false
     }
 
     lintOptions{
         // http://stackoverflow.com/questions/29696879/android-expected-resource-of-type-id
-        // disable "ResourceType"
+         disable "ResourceType"
     }
 }
 
@@ -72,7 +72,7 @@ dependencies {
 //    compile dependencies.rxAndroid
 //    compile dependencies.circleImageView
 
-    compile dependencies.jsoup
+//    compile dependencies.jsoup
     compile dependencies.gson
     compile dependencies.kotson
 
