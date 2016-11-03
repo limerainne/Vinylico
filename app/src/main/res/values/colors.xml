@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+    <!-- Aspirin C: https://color.adobe.com/ko/Aspirin-C-color-theme-251864/-->
+    <color name="colorPrimary">#1695A3</color>
+    <color name="colorPrimaryDark">#225378</color>
+    <color name="colorAccent">#EB7F00</color>
+    <color name="colorAccent2">#ACF0F2</color>
+    <color name="colorBackground">#F3FFE2</color>
 
     <color name="babyPink">#F7D3D3</color>
     <color name="babyPinkDark">#F7ACAC</color>

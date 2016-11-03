@@ -39,7 +39,7 @@ abstract class RequestHTTPConnection() : Request {
 
         // - Accept-Language? determines filename
         conn.setRequestProperty("Accept-Language",
-                if (!I_Bainil_UApp.useEnglish)
+                if (!I_Bainil_UApp.CommonPrefs.useEnglish)
                     "ko-KR,ko;q=0.8,en-US,en;q=0.3"
                 else
                     "en-US,en;q=0.8,ko-KR,ko;q=0.3"

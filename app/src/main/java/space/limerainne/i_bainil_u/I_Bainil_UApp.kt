@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Typeface
 import com.tsengvn.typekit.Typekit
+import space.limerainne.i_bainil_u.base.CommonPrefs
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.Preference
@@ -21,6 +22,7 @@ class I_Bainil_UApp : Application() {
         CURRENT_USER_ID = UserInfo.getUserIdOr(applicationContext)
 
         AppContext = applicationContext
+        CommonPrefs = CommonPrefs(AppContext)
     }
 
     fun updateUserId(id: Long)  {
@@ -42,10 +44,9 @@ class I_Bainil_UApp : Application() {
         var CURRENT_USER_ID = USER_ID
 
         lateinit var AppContext: Context
-
-        var useEnglish: Boolean = false
+        lateinit var CommonPrefs: CommonPrefs
 
         val LangCode: String
-            get() = if (useEnglish) "en" else "ko"
+            get() = if (CommonPrefs.useEnglish) "en" else "ko"
     }
 }

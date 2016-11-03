@@ -62,14 +62,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var header_account_name: TextView
     lateinit var header_account_email: TextView
 
-    private val decorateEnabled: Boolean by DelegatesExt.preference(I_Bainil_UApp.AppContext, "pref_view_open_navigation_on_start", true, "space.limerainne.i_bainil_u_preferences")
-    private val useEnglish: Boolean by DelegatesExt.preference(I_Bainil_UApp.AppContext, "pref_view_use_english", false, "space.limerainne.i_bainil_u_preferences")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        I_Bainil_UApp.useEnglish = useEnglish
 
         // clear login info if...
         val loginInfoCleared = clearLoginTokenIf()
@@ -99,7 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             fragments.put(R.id.nav_browse, browseFragment)
         }
 
-        if (decorateEnabled)
+        if (I_Bainil_UApp.CommonPrefs.showMenu)
             (findViewById(R.id.drawer_layout) as DrawerLayout).openDrawer(GravityCompat.START)
     }
 

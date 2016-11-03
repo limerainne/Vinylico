@@ -279,12 +279,11 @@ class APIDataMapper {
                 saleType == "0")    // TODO if saleType == "1", can't buy per song!
     }
 
-    val decorateEnabled: Boolean by DelegatesExt.preference(I_Bainil_UApp.AppContext, "pref_view_remove_soundtrack_parenthesis", true, "space.limerainne.i_bainil_u_preferences")
     fun decorateSongName(songName: String?): String  {
         if (songName == null)   return ""
 
         var decorated = songName.trim()
-        if (decorateEnabled)
+        if (I_Bainil_UApp.CommonPrefs.decorateEnabled)
             decorated = re_parenthesis_with_included.replace(decorated, "")
 
         return decorated

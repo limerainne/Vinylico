@@ -24,7 +24,8 @@
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_use_english"
             android:title="앨범 표시 언어"
-            android:summary="체크 시 영어; 앱 재시작 필요"
+            android:summaryOff="한국어"
+            android:summaryOn="영어"
             android:defaultValue="false"/>
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_open_navigation_on_start"
