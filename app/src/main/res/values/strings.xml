@@ -106,7 +106,7 @@
     <string name="search_album_desc">album name, album description, &#8230;</string>
 
     <string name="search_track_header">TRACK · %1$s</string>
-    <string name="search_track_desc">track title, artist name, album name, &#8230;</string>
+    <string name="search_track_desc">track title, artist name, &#8230;</string>
 
     <!-- settings -->
     <string name="setting_userinfo_header">User Information</string>
