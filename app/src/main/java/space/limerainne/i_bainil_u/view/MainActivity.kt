@@ -27,6 +27,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.webkit.CookieManager
+import android.webkit.CookieSyncManager
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
@@ -119,8 +120,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // remove cookie in webview
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             CookieManager.getInstance().removeAllCookies {  }
-        else
+        else {
+            CookieSyncManager.createInstance(context)
             CookieManager.getInstance().removeAllCookie()
+        }
 
         // clear login info if user did not check auto-login
         val loginToken = LoginCookie(this)
