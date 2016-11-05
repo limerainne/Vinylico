@@ -4,6 +4,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.data.web.RequestWebDownloadId
 import space.limerainne.i_bainil_u.domain.commands.Command
 import space.limerainne.i_bainil_u.domain.model.TrackList
@@ -18,6 +19,10 @@ class AnnotateWebDownloadIdCommand(val albumId: Long, val trackList: TrackList):
 
     fun execute(callback: () -> Unit) {
         doAsync {
+            uiThread {
+                I_Bainil_UApp.AppContext.toast(I_Bainil_UApp.AppContext.getString(R.string.msg_web_download_id_annotating))
+            }
+
             val webIdPair = RequestWebDownloadId(albumId).execute()
 
             // albumId
@@ -30,7 +35,7 @@ class AnnotateWebDownloadIdCommand(val albumId: Long, val trackList: TrackList):
             }
 
             uiThread {
-                I_Bainil_UApp.AppContext.toast("Web download ID annotated!")
+                I_Bainil_UApp.AppContext.toast(I_Bainil_UApp.AppContext.getString(R.string.msg_web_download_id_annotated))
             }
 
             callback()

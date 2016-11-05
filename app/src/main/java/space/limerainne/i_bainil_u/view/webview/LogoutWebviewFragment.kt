@@ -10,6 +10,7 @@ import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.credential.LoginCookie
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
@@ -40,7 +41,7 @@ class LogoutWebviewFragment: WebviewFragment() {
         init_url = url_logout
 //        init_url = getString(R.string.URL_Login)
 //        init_url = url_signout
-        toolbar_title = "Logout"
+        toolbar_title = I_Bainil_UApp.AppContext.getString(R.string.nav_logout)
 
         // prohibit go backward page
         backEnabled = false

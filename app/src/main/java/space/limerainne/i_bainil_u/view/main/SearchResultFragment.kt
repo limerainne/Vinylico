@@ -61,7 +61,7 @@ class SearchResultFragment : MyFragment(), DataLoadable, UpdatingToolbar, Intera
     }
 
     override fun updateTitle(callback: (title: String, subtitle: String) -> Unit)   {
-        callback(I_Bainil_UApp.AppName, getString(SearchResultFragment.NavMenuName))
+        callback(I_Bainil_UApp.AppName, I_Bainil_UApp.AppContext.getString(SearchResultFragment.NavMenuName))
     }
 
     override fun onAttach(context: Context?) {
@@ -141,7 +141,7 @@ class SearchResultFragment : MyFragment(), DataLoadable, UpdatingToolbar, Intera
         view.loading.visibility = View.INVISIBLE
 
         view.error_container.visibility = View.VISIBLE
-        view.error_msg.text = "상단의 검색 버튼을 누르고,\n검색어를 입력해주세요!"
+        view.error_msg.text = I_Bainil_UApp.AppContext.getString(R.string.msg_search_notice_type_keyword)
     }
 
     companion object {

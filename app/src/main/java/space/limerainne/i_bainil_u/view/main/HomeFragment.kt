@@ -82,7 +82,7 @@ class HomeFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWithMa
     }
 
     override fun updateTitle(callback: (title: String, subtitle: String) -> Unit)   {
-        callback(I_Bainil_UApp.AppName, getString(NavMenuName))
+        callback(I_Bainil_UApp.AppName, I_Bainil_UApp.AppContext.getString(NavMenuName))
     }
 
     // TODO: Rename method, update argument and hook method into UI event

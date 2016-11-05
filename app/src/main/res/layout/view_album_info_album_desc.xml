@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/text_margin"
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_marginRight="@dimen/text_margin"
-        android:text="Album Description" />
+        android:text="@string/album_info_description" />
 
     <com.ms.square.android.expandabletextview.ExpandableTextView
         xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"

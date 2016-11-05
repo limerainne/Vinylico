@@ -34,7 +34,8 @@ class I_Bainil_UApp : Application() {
         // val USER_ID: Long = 2543
         val USER_ID: Long = 2    // might be empty...?
 
-        val COOKIE_URL = "www.bainil.com"
+        val COOKIE_URL: String
+            get() = AppContext.getString(R.string.url_cookie)
 
         val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: Int = 0
 

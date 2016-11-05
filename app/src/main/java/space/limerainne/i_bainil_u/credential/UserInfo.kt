@@ -3,6 +3,7 @@ package space.limerainne.i_bainil_u.credential
 import android.content.Context
 import org.jetbrains.anko.toast
 import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.extension.DelegatesExt
 import space.limerainne.i_bainil_u.extension.toLongOrElse
 import space.limerainne.i_bainil_u.view.MainActivity
@@ -112,7 +113,8 @@ class UserInfo(val context: Context) {
 
         fun checkLoginThenRun4(context: Context, ok: () -> Unit, no: () -> Unit)    {
             if (!checkLogin(context))   {
-                context.toast("Please login first!")
+                context.toast(context.getString(R.string.msg_login_required))
+                
                 no()
             }   else    {
                 ok()
@@ -121,10 +123,12 @@ class UserInfo(val context: Context) {
 
         fun checkLoginThenRun(context: Context, ok: () -> Unit, no: () -> Unit)    {
             if (!checkLogin(context))   {
-                context.toast("Please login first!")
+                context.toast(context.getString(R.string.msg_login_required))
+
                 val context = context
                 if (context is MainActivity)
                     context.openLoginPage()
+
                 no()
             }   else    {
                 ok()

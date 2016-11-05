@@ -64,9 +64,9 @@ class PurchaseTool  {
                         } else {
                             uiThread {
                                 if (!free)
-                                    mContext.toast("Already purchased this album: ${albumName}")
+                                    mContext.toast("${mContext.getString(R.string.msg_err_album_already_purchased)}: ${albumName}")
                                 else
-                                    mContext.toast("Free album: ${albumName}")
+                                    mContext.toast("${mContext.getString(R.string.msg_notice_free_album)}: ${albumName}")
                             }
                         }
 
@@ -74,7 +74,7 @@ class PurchaseTool  {
                     }
                 }, {})
             } else {
-                mContext.toast("Check network connection!")
+                mContext.toast(mContext.getString(R.string.msg_err_check_network_connection))
             }
         }
     }

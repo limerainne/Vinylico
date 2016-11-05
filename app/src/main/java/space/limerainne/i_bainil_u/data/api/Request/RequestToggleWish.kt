@@ -5,6 +5,8 @@ import android.net.ConnectivityManager
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.request.data.RequestHTTPConnection
 
@@ -46,20 +48,20 @@ class RequestToggleWish(val albumId: Long,
                             val msg: String
                             if (success)
                                 if (wish)
-                                    msg = "Adding album to wishlist succeed!"
+                                    msg = I_Bainil_UApp.AppContext.getString(R.string.msg_wishlist_add_succeed)
                                 else
-                                    msg = "Removing album from wishlist succeed!"
+                                    msg = I_Bainil_UApp.AppContext.getString(R.string.msg_wishlist_remove_succeed)
                             else
                                 if (wish)
-                                    msg = "Failed to add album to wishlist..."
+                                    msg = I_Bainil_UApp.AppContext.getString(R.string.msg_wishlist_add_failed)
                                 else
-                                    msg = "Failed to remove album from wishlist..."
+                                    msg = I_Bainil_UApp.AppContext.getString(R.string.msg_wishlist_remove_failed)
                             mContext.toast(msg)
                         }
                     }
                 }, { })
             } else {
-                mContext.toast("Check network connection!")
+                mContext.toast(I_Bainil_UApp.AppContext.getString(R.string.msg_err_check_network_connection))
             }
         }
     }

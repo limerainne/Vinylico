@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.request.data.RequestAlbumPurchased
@@ -43,7 +44,7 @@ class MainFragment : MyFrameFragment(), HavingToolbar, DataLoadable, InteractWit
         val fab = view.findViewById(R.id.fab) as FloatingActionButton?
         fab!!.setOnClickListener {
             view ->
-            val snackbar_instance = Snackbar.make(view, "Finding random album...", Snackbar.LENGTH_LONG).setAction("Action", null)
+            val snackbar_instance = Snackbar.make(view, I_Bainil_UApp.AppContext.getString(R.string.msg_feelinglucky_finding), Snackbar.LENGTH_LONG).setAction("Action", null)
             snackbar_instance.show()
 
             doAsync {
@@ -78,7 +79,7 @@ class MainFragment : MyFrameFragment(), HavingToolbar, DataLoadable, InteractWit
                 uiThread {
                     snackbar_instance.dismiss()
                     if (target_id < 1)  {
-                        Snackbar.make(view, "Failed to open random album...try again later!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                        Snackbar.make(view, I_Bainil_UApp.AppContext.getString(R.string.msg_err_feelinglucky), Snackbar.LENGTH_LONG).setAction("Action", null).show()
                     }   else    {
                         val activity = activity
                         val album_info = album_info

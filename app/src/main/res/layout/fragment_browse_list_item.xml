@@ -114,7 +114,7 @@
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
                         android:tint="@android:color/tertiary_text_dark"
-                        android:src="@drawable/ic_music_note"/>
+                        app:srcCompat="@drawable/ic_music_note"/>
                     <TextView
                         android:id="@+id/album_num_tracks"
                         android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
                         android:tint="@android:color/tertiary_text_dark"
-                        android:src="@drawable/ic_today"/>
+                        app:srcCompat="@drawable/ic_today"/>
                     <TextView
                         android:id="@+id/album_date"
                         android:layout_width="wrap_content"
@@ -163,7 +163,7 @@
                     android:visibility="visible"
                     android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Lyrics"
-                    android:src="@drawable/ic_lyric_v2"/>
+                    app:srcCompat="@drawable/ic_lyric_v2"/>
                 <ImageView
                     android:id="@+id/feature_booklet"
                     android:layout_width="16dp"
@@ -174,7 +174,7 @@
                     android:visibility="visible"
                     android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Booklet"
-                    android:src="@drawable/ic_feature_booklet"/>
+                    app:srcCompat="@drawable/ic_feature_booklet"/>
                 <ImageView
                     android:id="@+id/feature_record"
                     android:layout_width="16dp"
@@ -185,7 +185,7 @@
                     android:visibility="visible"
                     android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Voice Record"
-                    android:src="@drawable/ic_feature_record"/>
+                    app:srcCompat="@drawable/ic_feature_record"/>
                 <ImageView
                     android:id="@+id/feature_event"
                     android:layout_width="16dp"
@@ -196,7 +196,7 @@
                     android:visibility="visible"
                     android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Event"
-                    android:src="@drawable/ic_event"/>
+                    app:srcCompat="@drawable/ic_event"/>
 
                 <!-- wish button -->
                 <android.support.v7.widget.AppCompatButton

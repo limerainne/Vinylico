@@ -193,7 +193,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 if (!item.event || item.eventUrl == null)    return@setOnClickListener
 
                 if (mContext is MainActivity)
-                    mContext.openWebpage(item.eventUrl, "Album Event")
+                    mContext.openWebpage(item.eventUrl, mContext.getString(R.string.msg_event_title))
             }
 
             mView.btn_album_wish.setOnClickListener {
@@ -328,7 +328,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 // TODO like to track; what if user not bought this track?
                 // RequestToggleLike.doLikeTo(mContext, item.albumId, item.trackId, true)
 
-                mContext.toast("Sorry, 'like this song' feature is not yet implemented...")
+                mContext.toast(mContext.getString(R.string.msg_tobeimplemented_like_song))
             }
 
             mView.btn_track_lyric.setVisibility4(item.feature_lyrics)
@@ -398,13 +398,13 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 }
                 else {
                     if (!item.perSongPayable) {
-                        mContext.toast("Sorry, this song can't be purchased individually..")
+                        mContext.toast(mContext.getString(R.string.msg_err_purchase_cannot_single_track))
                         return@setOnClickListener
                     }
                     // TODO buy/download each track
                     // TODO have to get track purchase URL
                     // TODO have to check if it cannot be purchased individually
-                    mContext.toast("Sorry, per-song purchase/download feature is not yet implemented...")
+                    mContext.toast(mContext.getString(R.string.msg_tobeimplemented_single_track))
                 }
             }
         }
@@ -469,6 +469,8 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
         fun bind(item: AlbumDetail)   {
             mItem = item
+
+            mView.album_desc_title.text = mContext.getString(R.string.album_info_description)
             mAlbumDescView.text = item.albumDesc
 
             mAlbumDescView.setOnExpandStateChangeListener { textView, isExpanded ->
@@ -510,7 +512,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         fun bind(item: AlbumDetail)   {
             mItem = item
 
-            mView.album_desc_title.text = "Album Credits"
+            mView.album_desc_title.text = mContext.getString(R.string.album_info_credits)
             mAlbumDescView.text = item.albumCredit
 
             mAlbumDescView.setOnExpandStateChangeListener { textView, isExpanded ->

@@ -121,7 +121,7 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
                     PurchaseTool.purchaseAlbum(context, albumId, albumName, albumDetail.free)
 
             } catch (e: UninitializedPropertyAccessException)   {
-                context.toast("Wait till contents are loaded...")
+                context.toast(context.getString(R.string.msg_err_loading_contents))
             }
         }
 

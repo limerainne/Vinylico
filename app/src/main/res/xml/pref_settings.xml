@@ -2,55 +2,52 @@
 <android.support.v7.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <android.support.v7.preference.PreferenceCategory
-        android:title="사용자 정보">
+        android:title="@string/setting_userinfo_header">
         <android.support.v7.preference.Preference
             android:key="_userEmail"
             android:persistent="true"
-            android:title="이메일 계정" />
+            android:title="@string/setting_userinfo_email" />
         <android.support.v7.preference.Preference
             android:key="_userURL"
             android:persistent="true"
-            android:title="팬 이름 (및 URL 별명)" />
+            android:title="@string/setting_userinfo_fan_alias" />
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="__is_auto_login"
-            android:title="자동 로그인"
-            android:summary="로그인할 때 자동 로그인 선택 여부"
-            android:summaryOff="이번 세션만 로그인되었습니다"
-            android:summaryOn="사용자 인증 키가 보관되었습니다"
+            android:title="@string/setting_userinfo_autologin"
+            android:summaryOff="@string/setting_userinfo_autologin_summary_on"
+            android:summaryOn="@string/setting_userinfo_autologin_summary_off"
             android:enabled="false" />
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory
-        android:title="보기">
+        android:title="@string/setting_view_header">
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_use_english"
-            android:title="앨범 표시 언어"
-            android:summaryOff="한국어"
-            android:summaryOn="영어"
+            android:title="@string/setting_view_content_lang"
+            android:summaryOff="@string/setting_view_content_lang_korean"
+            android:summaryOn="@string/setting_view_content_lang_english"
             android:defaultValue="false"/>
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_open_navigation_on_start"
-            android:title="시작 시 메뉴 표시"
-            android:summary=""
+            android:title="@string/setting_view_show_menu_when_app_opens"
             android:defaultValue="true"/>
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_view_remove_soundtrack_parenthesis"
-            android:title="삽입곡 문구 제거"
-            android:summary="곡 제목에 덧붙은 삽입곡 부연 설명을 숨깁니다."
+            android:title="@string/setting_view_remove_extra_soundtrack_tag"
+            android:summary="@string/setting_view_remove_extra_soundtrack_tag_summary"
             android:defaultValue="true"/>
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory
-        android:title="다운로드">
+        android:title="@string/setting_download_header">
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pref_download_allow_data_network"
-            android:title="3G/LTE 다운로드 허용"
-            android:summary=""
+            android:title="@string/setting_download_allow_cellular"
             android:defaultValue="false"/>
         <android.support.v7.preference.Preference
-            android:title="다운로드 위치"
-            android:summary="[내부 저장소]/Music/" />
+            android:title="@string/setting_download_location"
+            android:summary="@string/setting_download_location_desc" />
         <android.support.v7.preference.Preference
-            android:title="파일 이름"
-            android:summary="(원래 이름)" />
+            android:title="@string/setting_download_filename"
+            android:summary="@string/setting_download_filename_desc" />
     </android.support.v7.preference.PreferenceCategory>
 
 

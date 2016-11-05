@@ -9,7 +9,7 @@ import space.limerainne.i_bainil_u.extension.DelegatesExt
  */
 class CommonPrefs(appContext: Context) {
 
-    private val prefCabinet = "space.limerainne.i_bainil_u_preferences"
+    private val prefCabinet = appContext.packageName + "_preferences"
 
     val showMenu: Boolean by DelegatesExt.preference(appContext, "pref_view_open_navigation_on_start", true, prefCabinet)
 

@@ -119,13 +119,13 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
                 when (viewType) {
                     // TODO extract string into resource
                     HEADER_KEYWORD ->
-                        holder.bind("Search Keyword: ${mResult.keyword}", "Result: Ar = ${mResult.artists.size}, Al = ${mResult.albums.size}, Tr = ${mResult.tracks.size}")
+                        holder.bind(mContext.getString(R.string.search_keyword_header, mResult.keyword), mContext.getString(R.string.search_keyword_desc, mResult.artists.size, mResult.albums.size, mResult.tracks.size))
                     HEADER_ARTIST ->
-                            holder.bind("ARTIST - ${mResult.artists.size}", "artist name, artist description, ...")
+                        holder.bind(mContext.getString(R.string.search_artist_header, mResult.artists.size), mContext.getString(R.string.search_artist_desc))
                     HEADER_ALBUM ->
-                            holder.bind("ALBUM - ${mResult.albums.size}", "album name, album description, ...")
+                        holder.bind(mContext.getString(R.string.search_album_header, mResult.albums.size), mContext.getString(R.string.search_album_desc))
                     HEADER_TRACK ->
-                            holder.bind("TRACK - ${mResult.tracks.size}", "track title, artist name, album name, ...")
+                        holder.bind(mContext.getString(R.string.search_track_header, mResult.tracks.size), mContext.getString(R.string.search_track_desc))
                 }
             }
             ITEM_ARTIST ->  {

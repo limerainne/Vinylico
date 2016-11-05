@@ -3,6 +3,7 @@ package space.limerainne.i_bainil_u.toolbox
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import space.limerainne.i_bainil_u.R
 
 /**
  * Created by CottonCandy on 2016-10-03.
@@ -10,7 +11,7 @@ import android.net.Uri
 class BainilLauncher {
     companion object    {
         fun executeBainilApp(context: Context)  {
-            executePkgName(context, "com.bainil.app")
+            executePkgName(context, context.getString(R.string.bainil_pkg_name))
         }
 
         fun executePkgName(context: Context, pkgName: String)  {
@@ -37,7 +38,7 @@ class BainilLauncher {
             // http://apogenes.tistory.com/4
             // { act=android.intent.action.VIEW dat=bainilapp://?type=A&code=2423 pkg=com.bainil.app }
 
-            val url = """intent://?type=A&code=${albumId}#Intent;scheme=bainilapp;package=com.bainil.app;end;"""
+            val url = """intent://?type=A&code=${albumId}#Intent;scheme=bainilapp;package=${context.getString(R.string.bainil_pkg_name)};end;"""
 
             try {
                 val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)

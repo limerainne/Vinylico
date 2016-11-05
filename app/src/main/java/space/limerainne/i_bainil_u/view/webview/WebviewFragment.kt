@@ -20,6 +20,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.fragment_webview.*
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.credential.LoginCookie
 import space.limerainne.i_bainil_u.view.DataLoadable
@@ -36,11 +37,11 @@ open class WebviewFragment: MyFragment(), HavingToolbar, DataLoadable {
 
     protected var backEnabled = true
 
-    var init_url = "http://www.bainil.com/bainil"
-    var toolbar_title = "Bainil"
+    var init_url = I_Bainil_UApp.AppContext.getString(R.string.url_bainil_about)
+    var toolbar_title = I_Bainil_UApp.AppContext.getString(R.string.msg_bainil_title)
     var toolbar_subtitle = ""
 
-    private val cookie_url = "www.bainil.com"
+    private val cookie_url = I_Bainil_UApp.AppContext.getString(R.string.url_cookie)
 
     lateinit var this_activity: Activity
 
@@ -129,7 +130,7 @@ open class WebviewFragment: MyFragment(), HavingToolbar, DataLoadable {
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
 
-            mWebURL.text = url + " (Loading...)"
+            mWebURL.text = url + " (${getString(R.string.msg_web_loading)})"
         }
 
         // http://apogenes.tistory.com/4

@@ -19,8 +19,6 @@ abstract class RequestHTTPConnection() : Request {
         try {
             println(composeURL())
 
-            val header_host = "www.bainil.com"
-
             val url = URL(composeURL())
             val conn = url.openConnection() as HttpURLConnection
             conn.readTimeout = 10000 /* milliseconds */

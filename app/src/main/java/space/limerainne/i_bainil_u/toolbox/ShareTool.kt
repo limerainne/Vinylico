@@ -19,6 +19,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
 
@@ -29,7 +30,7 @@ class ShareTool {
     companion object {
         fun shareAlbumWithImageView(mContext: Context, view: ImageView, albumName: String, artistName: String, albumId: Long) {
             if (!checkIfPermission(mContext))   return
-            mContext.toast("Preparing to share with...")
+            mContext.toast(mContext.getString(R.string.msg_prepare_sharing))
 
             val mDrawable = view.getDrawable()
             val mBitmap = (mDrawable as BitmapDrawable).getBitmap()
@@ -45,16 +46,16 @@ class ShareTool {
             val shareIntent = Intent()
             shareIntent.setAction(Intent.ACTION_SEND)
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Listen \"${albumName}\" by ${artistName} with Bainil!\nhttp://bainil.com/a/${albumId}")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_msg, albumName, artistName, albumId))
             shareIntent.setType("image/*")
 
             // Launch sharing dialog for image
-            mContext.startActivity(Intent.createChooser(shareIntent, "Invite Bainil with Album to"))
+            mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.title_share_album)))
         }
 
         fun shareAlbumWithImageURL(mContext: Context, url: String, albumName: String, artistName: String, albumId: Long) {
             if (!checkIfPermission(mContext))   return
-            mContext.toast("Preparing to share with...")
+            mContext.toast(mContext.getString(R.string.msg_prepare_sharing))
 
             fun getLocalBitmapUri(bitmap: Bitmap): Uri {
                 // TODO request permission to WRITE_EXTERNAL_STORAGE, grantUriPermission()
@@ -72,11 +73,11 @@ class ShareTool {
                     val shareIntent = Intent()
                     shareIntent.setAction(Intent.ACTION_SEND)
                     shareIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap))
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "Listen \"${albumName}\" by ${artistName} with Bainil!\nhttp://bainil.com/a/${albumId}")
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_msg, albumName, artistName, albumId))
                     shareIntent.setType("image/*")
 
                     // Launch sharing dialog for image
-                    mContext.startActivity(Intent.createChooser(shareIntent, "Invite Bainil with Album to"))
+                    mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.title_share_album)))
                 }
 
                 override fun onBitmapFailed(errorDrawable: Drawable?) {
@@ -91,7 +92,7 @@ class ShareTool {
 
         fun shareAlbumWithHQImage(mContext: Context, url: String, albumName: String, artistName: String, albumId: Long) {
             if (!checkIfPermission(mContext))   return
-            mContext.toast("Preparing to share with...")
+            mContext.toast(mContext.getString(R.string.msg_prepare_sharing))
 
             // request URL in AlbumDetail
             doAsync {
@@ -121,7 +122,7 @@ class ShareTool {
 //                } else {
 
                 // No explanation needed, we can request the permission.
-                mContext.toast("Please grant permission first, then retry sharing...")
+                mContext.toast(mContext.getString(R.string.msg_err_share_requires_permission))
 
                 ActivityCompat.requestPermissions(mContext as Activity,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),

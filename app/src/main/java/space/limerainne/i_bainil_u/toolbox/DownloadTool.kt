@@ -18,6 +18,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.credential.LoginCookie
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
@@ -107,8 +108,6 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 val filesize_header = "Content-Length"
                 val filetype_header = "Content-Type"
 
-                val header_host = "www.bainil.com"
-
                 val url = URL(url)
 
                 val conn = url.openConnection() as HttpURLConnection
@@ -122,9 +121,6 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
 
                 // - user agent
                 conn.setRequestProperty("User-Agent", WebviewTool().getDefaultUserAgentString(I_Bainil_UApp.AppContext))
-
-                // - host
-                conn.setRequestProperty("Host", header_host)
 
                 // - Accept-Language? determines filename
                 conn.setRequestProperty("Accept-Language",
@@ -169,8 +165,6 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
 
         doAsync {
             try {
-                val header_host = "www.bainil.com"
-
                 val manager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
                 val request = DownloadManager.Request(Uri.parse(url)).apply {
@@ -184,7 +178,6 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     val loginCookie = LoginCookie(I_Bainil_UApp.AppContext)
                     addRequestHeader("Cookie", loginCookie.getCookieStr())
                     addRequestHeader("User-Agent", WebviewTool().getDefaultUserAgentString(I_Bainil_UApp.AppContext))
-                    addRequestHeader("Host", header_host)
                     addRequestHeader("Accept-Language",
                             if (!I_Bainil_UApp.CommonPrefs.useEnglish)
                                 "ko-KR,ko;q=0.8,en-US,en;q=0.3"
@@ -226,11 +219,11 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         }
 
         fun checkIfDataNetworkInSongDownload(context: Context): Boolean    {
-            return checkIfDataNetwork(context, "Can't download a song! Device is in 3G/LTE network!")
+            return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_song)}\n${context.getString(R.string.msg_err_cellular_network)}")
         }
 
         fun checkIfDataNetworkInAlbumDownload(context: Context): Boolean    {
-            return checkIfDataNetwork(context, "Can't download an album! Device is in 3G/LTE network!")
+            return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_cellular_network)}")
         }
 
         fun checkIfDataNetwork(context: Context, errorMsg: String): Boolean    {

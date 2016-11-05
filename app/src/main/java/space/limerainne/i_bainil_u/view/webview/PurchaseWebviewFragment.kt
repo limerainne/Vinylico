@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
 import org.jetbrains.anko.toast
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.toolbox.BainilLauncher
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.view.MainActivity
@@ -73,7 +74,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
                     view?.stopLoading()
 
                     // notify message
-                    context.toast("Google Play In-App purchase has to be placed in the official Bainil app!")
+                    context.toast(context.getString(R.string.msg_err_purchase_inapp_purchase_impossible))
                     // call Bainil app
                     val activity = this_activity
                     if (activity is MainActivity) {
@@ -92,12 +93,12 @@ class PurchaseWebviewFragment(): WebviewFragment() {
             val fragment = PurchaseWebviewFragment()
 
             fragment.init_url = "about:blank"
-            fragment.toolbar_title = "Incorrect purchase target!"
+            fragment.toolbar_title = context.getString(R.string.msg_err_purhcase_incorrect_URL)
 
             if (userId > 0 && albumId > 0 && checkLogin(userId, context))  {
                 fragment.setURL(userId, albumId, seqId)
-                fragment.toolbar_title = "Buy Album #${albumId}"
-                fragment.toolbar_subtitle = "to #${userId} (You)"
+                fragment.toolbar_title = context.getString(R.string.msg_notice_purchase_title, albumId)
+                fragment.toolbar_subtitle = context.getString(R.string.msg_notice_purchase_subtitle, userId)
             }
 
             return fragment

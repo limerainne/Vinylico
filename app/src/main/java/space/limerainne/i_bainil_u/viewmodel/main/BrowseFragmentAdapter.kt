@@ -3,6 +3,8 @@ package space.limerainne.i_bainil_u.viewmodel.main
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import space.limerainne.i_bainil_u.I_Bainil_UApp
+import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import space.limerainne.i_bainil_u.view.main.BrowseListFragment
 
@@ -27,10 +29,10 @@ class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence {
         when (position) {
-            0 -> return "New"
-            1 -> return "Featured"
-            2 -> return "Top"
-            3 -> return "XSFM"
+            0 -> return I_Bainil_UApp.AppContext.getString(R.string.browse_top)
+            1 -> return I_Bainil_UApp.AppContext.getString(R.string.browse_featured)
+            2 -> return I_Bainil_UApp.AppContext.getString(R.string.browse_new)
+            3 -> return I_Bainil_UApp.AppContext.getString(R.string.browse_xsfm)
         }
 
         return super.getPageTitle(position)

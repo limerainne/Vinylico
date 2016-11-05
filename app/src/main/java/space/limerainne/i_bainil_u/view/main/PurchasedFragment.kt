@@ -71,7 +71,7 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
     }
 
     override fun updateTitle(callback: (title: String, subtitle: String) -> Unit)   {
-        callback(I_Bainil_UApp.AppName, getString(PurchasedFragment.NavMenuName))
+        callback(I_Bainil_UApp.AppName, I_Bainil_UApp.AppContext.getString(PurchasedFragment.NavMenuName))
     }
 
     override fun onAttach(context: Context?) {
@@ -99,13 +99,12 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
         }
 
         if (fragView.btn_reload.visibility == View.VISIBLE)   {
-            if (LoginCookie(context).haveLoginCookie) {
-                doAsync {
-                    Thread.sleep(500)
+            doAsync {
+                Thread.sleep(500)
+                if (UserInfo.checkLogin(context))
                     uiThread {
                         loadData()
                     }
-                }
             }
         }
     }

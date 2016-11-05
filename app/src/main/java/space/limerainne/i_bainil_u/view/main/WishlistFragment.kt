@@ -73,7 +73,7 @@ class WishlistFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWi
 
 
     override fun updateTitle(callback: (title: String, subtitle: String) -> Unit)   {
-        callback(I_Bainil_UApp.AppName, getString(WishlistFragment.NavMenuName))
+        callback(I_Bainil_UApp.AppName, I_Bainil_UApp.AppContext.getString(WishlistFragment.NavMenuName))
     }
 
     override fun onAttach(context: Context?) {
@@ -100,13 +100,13 @@ class WishlistFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWi
         }
 
         if (fragView.btn_reload.visibility == View.VISIBLE)   {
-            if (LoginCookie(context).haveLoginCookie)
-                doAsync {
-                    Thread.sleep(500)
+            doAsync {
+                Thread.sleep(500)
+                if (UserInfo.checkLogin(context))
                     uiThread {
                         loadData()
                     }
-                }
+            }
         }
     }
 

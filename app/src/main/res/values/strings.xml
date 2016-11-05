@@ -1,28 +1,135 @@
 <resources>
-    <string name="app_name">I.Bainil.U</string>
+    <string name="app_name" translatable="false">I.Bainil.U</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- Strings related to Settings -->
-
     <!-- URLs -->
+    <string name="bainil_pkg_name" translatable="false">com.bainil.app</string>
+
+    <string name="url_cookie" translatable="false">www.bainil.com</string>
+
     <!--<string name="URL_Login">https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile</string>-->
+    <string name="url_bainil" translatable="false">http://www.bainil.com/</string>
+    <string name="url_bainil_about" translatable="false">http://www.bainil.com/bainil</string>
 
     <!-- Menu items -->
-    <string name="nav_home">홈</string>
-    <string name="nav_browse">탐색</string>
-    <string name="nav_wishlist">위시리스트</string>
-    <string name="nav_purchased">구입한 앨범</string>
-    <string name="nav_downloading">다운로드</string>
-    <string name="nav_search_result">검색</string>
-    <string name="nav_setting">설정</string>
-    <string name="nav_about">앱 정보</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_browse">Browse</string>
+    <string name="nav_wishlist">Wishlist</string>
+    <string name="nav_purchased">Purchased Albums</string>
+    <string name="nav_downloading">Download</string>
+    <string name="nav_search_result">Search</string>
+    <string name="nav_setting">Settings</string>
+    <string name="nav_about">App Info</string>
 
-    <string name="nav_login">로그인</string>
-    <string name="nav_logout">로그아웃</string>
+    <string name="nav_login">Login</string>
+    <string name="nav_logout">Logout</string>
+
+    <!-- browse categories -->
+    <string name="browse_new">New</string>
+    <string name="browse_featured">Featured</string>
+    <string name="browse_top">Top</string>
+    <string name="browse_xsfm">XSFM</string>
+
+    <!-- Album Info page -->
+    <string name="album_info_description">Album Description</string>
+    <string name="album_info_credits">Album Credits</string>
 
     <!-- search widget -->
     <string name="search_hint">Type artist, album, title or else&#8230;</string>
+
+    <!-- Webview msg -->
+    <string name="msg_notice_purchase_title">Buy Album: #%1$s</string>
+    <string name="msg_notice_purchase_subtitle">to #%1$s (You)</string>
+
+    <string name="msg_loading">Loading&#8230;</string>
+    <string name="msg_web_loading">Loading&#8230;</string>
+
+    <string name="msg_bainil_title" translatable="false">Bainil</string>
+    <string name="msg_event_title">Album Event</string>
+
+    <!-- share -->
+    <string name="share_msg">Listen \"%1$s\" by %2$s with Bainil!\nhttp://bainil.com/a/%3$s</string>
+
+    <!-- messages -->
+    <string name="btn_reload">Reload</string>
+
+    <string name="msg_err_unknown">Unknown error occured!</string>
+    <string name="msg_login_required">Please login first!</string>
+
+    <string name="msg_wishlist_add_succeed">Adding album to wishlist succeed!</string>
+    <string name="msg_wishlist_remove_succeed">Removing album from wishlist succeed!</string>
+    <string name="msg_wishlist_add_failed">Failed to add album to wishlist&#8230;</string>
+    <string name="msg_wishlist_remove_failed">Failed to remove album from wishlist&#8230;</string>
+
+    <string name="msg_err_check_network_connection">Check network connection!</string>
+
+    <string name="msg_web_download_id_annotating">Retrieving song ID for download&#8230;</string>
+    <string name="msg_web_download_id_annotated">Song ID for download annotated!</string>
+
+    <string name="msg_err_cant_download_album">Can\'t download an album!</string>
+    <string name="msg_err_cant_download_song">Can\'t download a song!</string>
+    <string name="msg_err_cellular_network">Device is in 3G/LTE network!</string>
+
+    <string name="msg_err_album_already_purchased">Already purchased this album</string>
+    <string name="msg_notice_free_album">Free album</string>
+
+    <string name="msg_prepare_sharing">Preparing to share with&#8230;</string>
+    <string name="title_share_album">Invite to Bainil by</string>
+
+    <string name="msg_err_share_requires_permission">Please grant permission first, then retry sharing&#8230;</string>
+
+    <string name="msg_err_loading_contents">Wait till contents are loaded&#8230;</string>
+
+    <string name="msg_feelinglucky_finding">Finding random album&#8230;</string>
+    <string name="msg_err_feelinglucky">Failed to open random album. Try again later!</string>
+
+    <string name="msg_search_notice_type_keyword">Click search button in toolbar,\nthen type search keyword!</string>
+
+    <string name="msg_err_purchase_inapp_purchase_impossible">Google Play In-App purchase has to be placed in the official Bainil app!</string>
+    <string name="msg_err_purhcase_incorrect_URL">Incorrect purchase target!</string>
+
+    <string name="msg_tobeimplemented_like_song">Sorry, \'like this song\' feature is not yet implemented&#8230;</string>
+    <string name="msg_tobeimplemented_single_track">Sorry, per-song purchase/download feature is not yet implemented&#8230;</string>
+
+    <string name="msg_err_purchase_cannot_single_track">Sorry, this song can\'t be purchased individually&#8230;</string>
+
+    <!-- search result -->
+    <string name="search_keyword_header">Search Keyword: %1$s</string>
+    <string name="search_keyword_desc">Result: Ar = %1$s, Al = %2$s, Tr = %3$s</string>
+
+    <string name="search_artist_header">ARTIST · %1$s</string>
+    <string name="search_artist_desc">artist name, artist description, &#8230;</string>
+
+    <string name="search_album_header">ALBUM · %1$s</string>
+    <string name="search_album_desc">album name, album description, &#8230;</string>
+
+    <string name="search_track_header">TRACK · %1$s</string>
+    <string name="search_track_desc">track title, artist name, album name, &#8230;</string>
+
+    <!-- settings -->
+    <string name="setting_userinfo_header">User Information</string>
+
+    <string name="setting_userinfo_email">Email</string>
+    <string name="setting_userinfo_fan_alias">Fan name (a.k.a. URL alias)</string>
+    <string name="setting_userinfo_autologin">Auto Login</string>
+    <string name="setting_userinfo_autologin_summary_on">Auth key is stored</string>
+    <string name="setting_userinfo_autologin_summary_off">Just for this session</string>
+
+    <string name="setting_view_header">View</string>
+    <string name="setting_view_content_lang">Language for Album Entries</string>
+    <string name="setting_view_content_lang_korean">Korean</string>
+    <string name="setting_view_content_lang_english">English</string>
+    <string name="setting_view_show_menu_when_app_opens">Show menu when app opens</string>
+    <string name="setting_view_remove_extra_soundtrack_tag">Hide extra soundtrack tag</string>
+    <string name="setting_view_remove_extra_soundtrack_tag_summary">Hide extra "soundtrack" tag attached to song title</string>
+
+    <string name="setting_download_header">Download</string>
+    <string name="setting_download_allow_cellular">Allow 3G/LTE download</string>
+    <string name="setting_download_location">Download location</string>
+    <string name="setting_download_location_desc">[Internal Storage]/Music/</string>
+    <string name="setting_download_filename">Song filename</string>
+    <string name="setting_download_filename_desc">(original)</string>
 
 </resources>
