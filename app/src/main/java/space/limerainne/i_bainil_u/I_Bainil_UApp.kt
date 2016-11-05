@@ -23,6 +23,7 @@ class I_Bainil_UApp : Application() {
 
         AppContext = applicationContext
         CommonPrefs = CommonPrefs(AppContext)
+        AppName = getString(R.string.app_name)
     }
 
     fun updateUserId(id: Long)  {
@@ -45,6 +46,7 @@ class I_Bainil_UApp : Application() {
 
         lateinit var AppContext: Context
         lateinit var CommonPrefs: CommonPrefs
+        lateinit var AppName: String
 
         val LangCode: String
             get() = if (CommonPrefs.useEnglish) "en" else "ko"

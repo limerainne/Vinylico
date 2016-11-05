@@ -26,6 +26,10 @@
             android:id="@+id/nav_search_result"
             android:title="@string/nav_search_result"
             android:icon="@drawable/ic_search"/>
+        <item
+            android:id="@+id/nav_top_none"
+            android:title=""
+            android:visible="false"/>
     </group>
 
     <group
@@ -57,7 +61,7 @@
         android:id="@+id/nav_group_login">
         <item
             android:id="@+id/nav_login_logout"
-            android:title="로그인/로그아웃" />
+            android:title="@string/nav_login" />
     </group>
 
     <item

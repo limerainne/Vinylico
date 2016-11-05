@@ -38,7 +38,10 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
         hasTrack = mResult.tracks.size > 0
 
         rangesList = mutableListOf()
-        rangesList.add(ItemIndices(HEADER_ARTIST, if (hasArtist) 0 else -1, if (hasArtist) 0 else -1))
+
+        rangesList.add(ItemIndices(HEADER_KEYWORD, 0, 0))
+
+        rangesList.add(ItemIndices(HEADER_ARTIST, rangesList.last().to + if (hasArtist) 1 else 0, rangesList.last().to + if (hasArtist) 1 else 0))
         rangesList.add(ItemIndices(ITEM_ARTIST, rangesList.last().to + 1, rangesList.last().to + mResult.artists.size))
 
         rangesList.add(ItemIndices(HEADER_ALBUM, rangesList.last().to + if (hasAlbum) 1 else 0, rangesList.last().to + if (hasAlbum) 1 else 0))
@@ -51,6 +54,8 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
     override fun getItemCount(): Int    {
         var count = 0
+
+        count += 1
 
         fun countMore(targetList: List<Any>): Int = targetList.size + if (targetList.size > 0) 1 else 0
 
@@ -87,7 +92,7 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
         val viewInflater: (Int) -> View = { LayoutInflater.from(parent.context).inflate(it, parent, false) }
         when (viewType) {
-            HEADER_ARTIST, HEADER_ALBUM, HEADER_TRACK ->
+            HEADER_KEYWORD, HEADER_ARTIST, HEADER_ALBUM, HEADER_TRACK ->
                     viewHolder = HeaderViewHolder(viewInflater(R.layout.view_search_header))
             ITEM_ARTIST ->
                     viewHolder = ArtistViewHolder(viewInflater(R.layout.view_search_artist))
@@ -108,11 +113,13 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
         println("#${position} as ${viewType}: ${holder}")
 
         when (viewType) {
-            HEADER_ARTIST, HEADER_ALBUM, HEADER_TRACK -> {
+            HEADER_KEYWORD, HEADER_ARTIST, HEADER_ALBUM, HEADER_TRACK -> {
                 if (holder !is HeaderViewHolder)
                     throw RuntimeException()
                 when (viewType) {
                     // TODO extract string into resource
+                    HEADER_KEYWORD ->
+                        holder.bind("Search Keyword: ${mResult.keyword}", "Result: Ar = ${mResult.artists.size}, Al = ${mResult.albums.size}, Tr = ${mResult.tracks.size}")
                     HEADER_ARTIST ->
                             holder.bind("ARTIST - ${mResult.artists.size}", "artist name, artist description, ...")
                     HEADER_ALBUM ->
@@ -157,6 +164,7 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
     }
 
     companion object    {
+        val HEADER_KEYWORD = -1
         val HEADER_ARTIST = 0
         val ITEM_ARTIST = 1
         val HEADER_ALBUM = 2

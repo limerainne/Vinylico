@@ -19,6 +19,9 @@
     <string name="nav_setting">설정</string>
     <string name="nav_about">앱 정보</string>
 
+    <string name="nav_login">로그인</string>
+    <string name="nav_logout">로그아웃</string>
+
     <!-- search widget -->
     <string name="search_hint">Type artist, album, title or else&#8230;</string>
 

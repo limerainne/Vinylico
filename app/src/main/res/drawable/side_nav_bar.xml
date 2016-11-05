@@ -6,10 +6,16 @@
         <!--android:endColor="#2E7D32"-->
         <!--android:startColor="#81C784"-->
         <!--android:type="linear" />-->
+    <!--<gradient-->
+        <!--android:angle="135"-->
+        <!--android:centerColor="#225378"-->
+        <!--android:endColor="#225378"-->
+        <!--android:startColor="#225378"-->
+        <!--android:type="linear" />-->
     <gradient
-        android:angle="135"
-        android:centerColor="#225378"
-        android:endColor="#225378"
-        android:startColor="#225378"
+        android:angle="45"
+        android:startColor="@color/colorPrimaryDark"
+        android:centerColor="@color/colorPrimaryDark"
+        android:endColor="@color/colorPrimaryDark"
         android:type="linear" />
 </shape>

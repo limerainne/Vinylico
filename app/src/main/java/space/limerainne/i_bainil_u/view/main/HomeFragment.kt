@@ -3,15 +3,20 @@ package space.limerainne.i_bainil_u.view.main
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.internal.NavigationMenu
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import space.limerainne.i_bainil_u.view.DataLoadable
+import space.limerainne.i_bainil_u.view.InteractWithMainActivity
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.MyFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -21,7 +26,9 @@ import space.limerainne.i_bainil_u.view.MainActivity
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWithMainActivity {
+
+    override val TargetLayout = R.layout.fragment_home
 
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
@@ -39,8 +46,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val view = inflater!!.inflate(R.layout.fragment_home, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState) as View
 
 //        val toolbar = parentFragment.toolbar
 //        toolbar.title = getString(R.string.nav_home)
@@ -75,6 +81,10 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    override fun updateTitle(callback: (title: String, subtitle: String) -> Unit)   {
+        callback(I_Bainil_UApp.AppName, getString(NavMenuName))
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         if (mListener != null) {
@@ -94,6 +104,10 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        interactTo()
+    }
+
+    override fun interactTo() {
         if (activity is MainActivity) {
             (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
             (activity as MainActivity).setToolbarColor()
@@ -105,9 +119,14 @@ class HomeFragment : Fragment() {
         mListener = null
     }
 
+    override fun loadData() {
+        // TODO do nothing for now
+    }
+
     companion object {
         val TAG = HomeFragment::class.java.simpleName
         val NavMenuId = R.id.nav_home
+        val NavMenuName = R.string.nav_home
 
         // TODO: Rename parameter arguments, choose names that match
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

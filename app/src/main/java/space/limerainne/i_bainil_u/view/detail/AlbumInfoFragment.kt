@@ -32,13 +32,18 @@ import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.AlbumEntry
 import space.limerainne.i_bainil_u.domain.model.TrackList
 import space.limerainne.i_bainil_u.toolbox.DownloadTool
+import space.limerainne.i_bainil_u.view.DataLoadable
+import space.limerainne.i_bainil_u.view.HavingToolbar
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.MyFragment
 import space.limerainne.i_bainil_u.viewmodel.detail.AlbumInfoRecyclerViewAdapter
 
 /**
  * Created by Limerainne on 2016-08-11.
  */
-class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
+class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, HavingToolbar, DataLoadable {
+
+    override val TargetLayout = R.layout.fragment_album_info
 
     // albumEntry from clicked entry; might not exist..
     var albumEntry: AlbumEntry? = null
@@ -57,8 +62,6 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         super.onCreate(savedInstanceState)
     }
 
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
     @BindView(R.id.fab)
     lateinit var fab: FloatingActionButton
 
@@ -75,10 +78,9 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_album_info, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState) as View
         ButterKnife.bind(this, view)
 
-        (activity as AppCompatActivity).setSupportActionBar(view.toolbar)
 //        view.toolbar.setPadding(0, (activity as MainActivity).getStatusBarHeight(), 0, 0)
 
         view.toolbar_layout.title =""
@@ -176,6 +178,10 @@ class AlbumInfoFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 //        }
 
         return view
+    }
+
+    override fun initToolbar()  {
+        attachToolbar(fragView)
     }
 
     private fun setToolbarTitles(title: String, subtitle: String) {

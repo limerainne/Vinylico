@@ -20,13 +20,17 @@ import space.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import space.limerainne.i_bainil_u.data.api.Server
 import space.limerainne.i_bainil_u.domain.model.AlbumDetail
 import space.limerainne.i_bainil_u.domain.model.convertToAlbumEntry
-import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.*
 import space.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 
 /**
  * Created by Limerainne on 2016-08-07.
  */
-class MainFragment : Fragment() {
+class MainFragment : MyFrameFragment(), HavingToolbar, DataLoadable, InteractWithMainActivity {
+
+    override val TargetLayout = R.layout.fragment_main
+
+    override val DefaultFragmentTag = BrowseFragment.TAG
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
@@ -34,10 +38,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_main, container, false)
-
-        val toolbar = view.findViewById(R.id.toolbar) as Toolbar?
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        val view = super.onCreateView(inflater, container, savedInstanceState) as View
 
         val fab = view.findViewById(R.id.fab) as FloatingActionButton?
         fab!!.setOnClickListener {
@@ -91,10 +92,6 @@ class MainFragment : Fragment() {
             }
         }
 
-        // link toolbar with drawer in activity
-        if (activity is MainActivity && toolbar != null)
-            (activity as MainActivity).linkDrawerToToolbar(toolbar)
-
         if (savedInstanceState == null) {
 
         }
@@ -102,44 +99,39 @@ class MainFragment : Fragment() {
         return view
     }
 
+    override fun initToolbar()  {
+        attachToolbar(fragView)
+
+        // link toolbar with drawer in activity
+        if (activity is MainActivity)
+            (activity as MainActivity).linkDrawerToToolbar(toolbar)
+
+        val child = activeChildFragment
+        if (child != null && child is UpdatingToolbar) {
+            child.updateTitle { title, subtitle ->
+                println(title + " " + subtitle)
+                toolbar.title = title
+                toolbar.subtitle = subtitle
+            }
+        }
+    }
+
+    override fun loadData()  {
+        val child = activeChildFragment
+        if (child is MyFragment && child is DataLoadable)
+            child.loadData()
+    }
+
     override fun onResume() {
         super.onResume()
 
+        interactTo()
     }
 
-    fun onBackPressed(): Boolean    {
-        if (childFragmentManager.backStackEntryCount >= 1) {
-            childFragmentManager.popBackStack()
-            return true
-        }
-        return false
-    }
-
-    fun changeChildFragment(targetFragment: Fragment, fragmentTAG: String, backStack: Boolean = false)   {
-        Log.d("Test", getActiveChildFragment()?.tag.toString())
-
-        val currentChildFragmentTag = getActiveChildFragment()?.tag
-        if (currentChildFragmentTag != null && currentChildFragmentTag.equals(targetFragment.tag)) {
-
-        }   else    {
-            Log.d("Test", targetFragment.toString())
-
-            val transaction = childFragmentManager.beginTransaction()
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            transaction.replace(R.id.content_main, targetFragment, fragmentTAG)
-            if (backStack)
-                transaction.addToBackStack(fragmentTAG)
-            transaction.commit()
-        }
-    }
-
-    fun getActiveChildFragment(): Fragment? {
-        if (childFragmentManager.backStackEntryCount === 0) {
-            return childFragmentManager?.findFragmentByTag(HomeFragment.TAG)
-        }
-
-        val tag = childFragmentManager.getBackStackEntryAt(childFragmentManager.backStackEntryCount - 1).name
-        return childFragmentManager.findFragmentByTag(tag)
+    override fun interactTo()   {
+        val child = activeChildFragment
+        if (child != null && child is InteractWithMainActivity)
+            child.interactTo()
     }
 
     companion object {

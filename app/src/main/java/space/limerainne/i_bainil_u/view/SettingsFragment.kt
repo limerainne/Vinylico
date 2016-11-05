@@ -22,20 +22,29 @@ import space.limerainne.i_bainil_u.view.MainActivity
  * * show Admob:
  * http://stackoverflow.com/questions/4003701/how-do-i-put-an-admob-adview-in-the-settings-screen-for-a-live-wallpaper
  */
-class SettingsFragment: PreferenceFragmentCompat() {
+class SettingsFragment: PreferenceFragmentCompat(), HavingToolbar {
+
+    val toolbar: Toolbar
+        get() = view?.findViewById(R.id.toolbar) as Toolbar
+
+    lateinit var settingsView: View
+    lateinit var parentView: View
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val settingsView = super.onCreateView(inflater, container, savedInstanceState)
-        val parentView = inflater!!.inflate(R.layout.fragment_main, container, false)
+        settingsView = super.onCreateView(inflater, container, savedInstanceState) as View
+        parentView = inflater!!.inflate(R.layout.fragment_main, container, false)
 
         parentView.content_main.addView(settingsView)
         parentView.fab.visibility = View.GONE
 
-        val toolbar = parentView.findViewById(R.id.toolbar) as Toolbar?
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar?.setTitle(R.string.nav_setting)
-
         return parentView
+    }
+
+    override fun initToolbar()  {
+        val toolbar = parentView.findViewById(R.id.toolbar) as Toolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
+        toolbar.setTitle(R.string.nav_setting)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

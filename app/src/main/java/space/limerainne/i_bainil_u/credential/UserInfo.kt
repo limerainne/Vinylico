@@ -15,6 +15,8 @@ class UserInfo(val context: Context) {
     var userId: Long by DelegatesExt.preference(context, "_userId", 0)
 
     var userImageURL: String by DelegatesExt.preference(context, "_userImageURL", "")
+    val userImageURLFull: String
+        get() = "http://cloud.bainil.com/upload/user" + userImageURL
 
     var userName: String by DelegatesExt.preference(context, "_userName", "")
     var userURL: String by DelegatesExt.preference(context, "_userURL", "")

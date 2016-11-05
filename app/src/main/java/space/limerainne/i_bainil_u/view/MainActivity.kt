@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (!loginInfoCleared) {
             updateNavigationViewUserInfoArea()
-    }
+        }
 
         if (savedInstanceState == null) {
             val mainFragment = MainFragment.newInstance()
@@ -96,6 +96,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (I_Bainil_UApp.CommonPrefs.showMenu)
             (findViewById(R.id.drawer_layout) as DrawerLayout).openDrawer(GravityCompat.START)
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            val activeFragment = activeFragment
+            if (activeFragment is HavingToolbar)
+                activeFragment.initToolbar()
+            if (activeFragment is InteractWithMainActivity)
+                activeFragment.interactTo()
+        }
     }
 
     override fun onDestroy()    {
@@ -164,7 +172,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             var eventProcessed = false
 
             val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
-            val activeFragment = getActiveFragment()
+            val activeFragment = activeFragment
 
             Log.v("Activity", "BackStack: " + supportFragmentManager.backStackEntryCount.toString())
             if (drawer!!.isDrawerOpen(GravityCompat.START)) {
@@ -240,7 +248,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_bainil_app)   {
-            val topFrag = getActiveFragment()
+            val topFrag = activeFragment
             when    {
                 topFrag is AlbumInfoFragment -> {
                     if (topFrag.albumId > 0)
@@ -337,20 +345,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragmentTAG = SettingsFragment.TAG
 
                 val frag = fragments[R.id.nav_setting]
-                if (frag != null)
+                if (frag != null && activeFragment !is SettingsFragment)
                     transitToFragment(R.id.placeholder_top, frag, SettingsFragment.TAG)
             }
             R.id.nav_about -> {
 
             }
             R.id.nav_login_logout ->    {
-                UserInfo.checkLoginThenRun4(this, {
-                    // Logout
-                    openLogoutPage()
-                }, {
-                    // Login
-                    openLoginPage()
-                })
+                if (activeFragment !is LoginWebviewFragment && activeFragment !is LogoutWebviewFragment) {
+                    UserInfo.checkLoginThenRun4(this, {
+                        // Logout
+                        openLogoutPage()
+                    }, {
+                        // Login
+                        openLoginPage()
+                    })
+                }
             }
         }
 
@@ -358,10 +368,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val targetFragment = fragments[item.itemId]
 
             if (targetFragment != null) {
-                if (getActiveFragment() !is MainFragment)   {
+                if (activeFragment !is MainFragment)   {
                     supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 }
-                val frag = getActiveFragment()
+                val frag = activeFragment
                 if (frag is MainFragment)
                     frag.changeChildFragment(targetFragment, fragmentTAG)
             }
@@ -373,13 +383,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun getActiveFragment(): Fragment? {
-        if (supportFragmentManager.backStackEntryCount === 0) {
-            return supportFragmentManager?.findFragmentByTag(MainFragment.TAG)
-        }
-
-        val tag = supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
-        return supportFragmentManager.findFragmentByTag(tag)
+    val activeFragment: Fragment?
+        get() {
+            return supportFragmentManager.findFragmentById(R.id.placeholder_top)
     }
 
     fun linkDrawerToToolbar(toolbar: Toolbar)   {
@@ -393,21 +399,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun updateNavigationViewUserInfoArea()  {
         val userInfo = UserInfo(this)
 
+        val navigationView = nav_view
+        // TODO toggle login/logout msg
+        val menu = navigationView.menu
+        val logInOutMenu = menu.findItem(R.id.nav_login_logout)
+
         if (userInfo.userId > 0) {
-            Picasso.with(this).load("http://cloud.bainil.com/upload/user" + userInfo.userImageURL).into(header_account_photo)
+            Picasso.with(this).load(userInfo.userImageURLFull).into(header_account_photo)
             header_account_name.text = userInfo.userName
             header_account_email.text = "${userInfo.userEmail} (#${userInfo.userId})"
+
+            logInOutMenu.setTitle(R.string.nav_logout)
         }
         else    {
             account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
             // TODO move into resource
             account_name.text = "Bainil"
             account_email.text = "please.login@bainil.com"
+
+            logInOutMenu.setTitle(R.string.nav_login)
         }
     }
 
     fun unsetNavigationViewCheckedItem()   {
         val navigationView = nav_view
+        navigationView?.setCheckedItem(R.id.nav_top_none)
         navigationView?.setCheckedItem(R.id.nav_none)
     }
 
@@ -511,7 +527,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val explodeTransform = TransitionInflater.from(this).inflateTransition(android.R.transition.explode)
 
         // Setup exit transition on first fragment
-        val activeFragment = getActiveFragment()
         activeFragment?.setSharedElementReturnTransition(changeTransform)
         activeFragment?.setExitTransition(explodeTransform)
 

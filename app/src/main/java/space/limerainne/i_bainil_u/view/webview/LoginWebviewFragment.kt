@@ -57,8 +57,6 @@ class LoginWebviewFragment: WebviewFragment() {
 
                 u.parseInfo(html)
 
-                println(u)
-
                 synchronized(myLock) {
                     myLockVar = true
                     try {

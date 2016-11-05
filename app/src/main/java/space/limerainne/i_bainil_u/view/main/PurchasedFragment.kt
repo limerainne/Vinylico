@@ -12,11 +12,16 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
+import space.limerainne.i_bainil_u.credential.LoginCookie
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
+import space.limerainne.i_bainil_u.view.DataLoadable
+import space.limerainne.i_bainil_u.view.InteractWithMainActivity
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.MyFragment
 import space.limerainne.i_bainil_u.viewmodel.main.PurchasedRecyclerViewAdapter
 
 /**
@@ -26,7 +31,10 @@ import space.limerainne.i_bainil_u.viewmodel.main.PurchasedRecyclerViewAdapter
  * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
  * interface.
  */
-class PurchasedFragment : Fragment() {
+class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWithMainActivity {
+
+    override val TargetLayout = R.layout.fragment_browse_list
+
     // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
@@ -41,14 +49,14 @@ class PurchasedFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState) as View
 
 //        val toolbar = parentFragment.toolbar
 //        toolbar.title = getString(R.string.nav_home)
 //        toolbar.subtitle = getString(R.string.app_name)
 
         // TODO get data
-        loadData(view)
+        loadData()
 
         // Set the adapter
         if (view.list is RecyclerView) {
@@ -62,6 +70,9 @@ class PurchasedFragment : Fragment() {
         return view
     }
 
+    override fun updateTitle(callback: (title: String, subtitle: String) -> Unit)   {
+        callback(I_Bainil_UApp.AppName, getString(PurchasedFragment.NavMenuName))
+    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -77,10 +88,25 @@ class PurchasedFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        interactTo()
+    }
+
+    override fun interactTo()   {
         if (activity is MainActivity) {
             (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
             (activity as MainActivity).setToolbarColor()
             //(activity as MainActivity).setToolbarColor(R.color.babyPink, R.color.babyPinkDark)
+        }
+
+        if (fragView.btn_reload.visibility == View.VISIBLE)   {
+            if (LoginCookie(context).haveLoginCookie) {
+                doAsync {
+                    Thread.sleep(500)
+                    uiThread {
+                        loadData()
+                    }
+                }
+            }
         }
     }
 
@@ -93,7 +119,9 @@ class PurchasedFragment : Fragment() {
         mListener = null
     }
 
-    fun loadData(view: View)  {
+    override fun loadData()  {
+        val view = fragView
+
         UserInfo.checkLoginThenRun(context, {
             view.btn_reload.visibility = View.INVISIBLE
 
@@ -116,7 +144,7 @@ class PurchasedFragment : Fragment() {
         }, {
             view.btn_reload.visibility = View.VISIBLE
             view.btn_reload.setOnClickListener {
-                loadData(view)
+                loadData()
             }
         })
     }
@@ -124,6 +152,7 @@ class PurchasedFragment : Fragment() {
     companion object {
         val TAG = PurchasedFragment::class.java.simpleName
         val NavMenuId = R.id.nav_purchased
+        val NavMenuName = R.string.nav_purchased
 
         // TODO: Customize parameter argument names
         private val ARG_COLUMN_COUNT = "column-count"

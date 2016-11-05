@@ -17,7 +17,9 @@ import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import space.limerainne.i_bainil_u.data.api.Server
+import space.limerainne.i_bainil_u.view.DataLoadable
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.MyFragment
 import space.limerainne.i_bainil_u.viewmodel.main.BrowseListRecyclerViewAdapter
 
 /**
@@ -27,7 +29,9 @@ import space.limerainne.i_bainil_u.viewmodel.main.BrowseListRecyclerViewAdapter
  * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
  * interface.
  */
-class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScrollListener {
+class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessScrollListener, DataLoadable {
+
+    override val TargetLayout = R.layout.fragment_browse_list
 
     // TODO: Customize parameters
     private var mColumnCount = 1
@@ -50,31 +54,10 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState) as View
 
-        // TODO get data
-        doAsync() {
-            nextOffset = 0L
-
-            val s: Server = Server()
-            val sList = s.requestStoreAlbums(category, UserInfo.getUserIdOr(context), nextOffset, length)
-
-            uiThread { if (view.list is RecyclerView) {
-                if (context != null) {
-                    viewAdapter = BrowseListRecyclerViewAdapter(context, sList, mListener)
-                    viewAdapter.setEndlessScrollListener(this@BrowseListFragment)
-                    view.list.adapter = viewAdapter
-
-                    offset = nextOffset
-                    nextOffset += 1
-                    println("offset: ${offset}, nextOffset: ${nextOffset}")
-
-                    view.loading.visibility = View.INVISIBLE
-                    view.list.visibility = View.VISIBLE
-                }
-            }
-            }
-        }
+        // get data
+        loadData()
 
         // Set the adapter
         if (view.list is RecyclerView) {
@@ -100,16 +83,6 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (activity is MainActivity) {
-            (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
-            (activity as MainActivity).setToolbarColor()
-            //(activity as MainActivity).setToolbarColor(R.color.babyPink, R.color.babyPinkDark)
-        }
-    }
-
     override fun onPause()  {
         super.onPause()
 
@@ -129,7 +102,6 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
 
     companion object {
         val TAG = BrowseListFragment::class.java.simpleName
-        val NavMenuId = R.id.nav_browse
 
         // TODO: Customize parameter argument names
         private val ARG_COLUMN_COUNT = "column-count"
@@ -145,6 +117,39 @@ class BrowseListFragment : Fragment(), BrowseListRecyclerViewAdapter.EndlessScro
             fragment.category = category
 
             return fragment
+        }
+    }
+
+    override fun loadData() {
+        val view = fragView
+
+        // show loading msg
+        view.loading.visibility = View.VISIBLE
+        view.list.visibility = View.INVISIBLE
+
+        doAsync() {
+            nextOffset = 0L
+
+            val s: Server = Server()
+            val sList = s.requestStoreAlbums(category, UserInfo.getUserIdOr(context), nextOffset, length)
+
+            uiThread { if (view.list is RecyclerView) {
+                if (context != null) {
+                    viewAdapter = BrowseListRecyclerViewAdapter(context, sList, mListener)
+                    viewAdapter.setEndlessScrollListener(this@BrowseListFragment)
+                    view.list.adapter = viewAdapter
+
+                    // init offset
+                    offset = nextOffset
+                    nextOffset += 1
+                    println("offset: ${offset}, nextOffset: ${nextOffset}")
+
+                    // hide loading msg
+                    view.loading.visibility = View.GONE
+                    view.list.visibility = View.VISIBLE
+                }
+            }
+            }
         }
     }
 

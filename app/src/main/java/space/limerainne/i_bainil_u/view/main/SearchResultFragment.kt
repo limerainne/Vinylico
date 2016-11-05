@@ -14,12 +14,16 @@ import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import space.limerainne.i_bainil_u.I_Bainil_UApp
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import space.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import space.limerainne.i_bainil_u.credential.UserInfo
 import space.limerainne.i_bainil_u.data.api.Server
+import space.limerainne.i_bainil_u.view.DataLoadable
+import space.limerainne.i_bainil_u.view.InteractWithMainActivity
 import space.limerainne.i_bainil_u.view.MainActivity
+import space.limerainne.i_bainil_u.view.MyFragment
 import space.limerainne.i_bainil_u.viewmodel.main.SearchResultRecyclerViewAdapter
 import space.limerainne.i_bainil_u.viewmodel.main.WishlistRecyclerViewAdapter
 
@@ -31,13 +35,13 @@ import space.limerainne.i_bainil_u.viewmodel.main.WishlistRecyclerViewAdapter
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SearchResultFragment : Fragment() {
+class SearchResultFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWithMainActivity {
 
-    // TODO: Rename and change types of parameters
+    override val TargetLayout = R.layout.fragment_browse_list
+
     var keyword: String = ""
 
     private var mListener: OnListFragmentInteractionListener? = null
-    lateinit private var mView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +53,15 @@ class SearchResultFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        mView = inflater!!.inflate(R.layout.fragment_browse_list, container, false)
+        val fragView = super.onCreateView(inflater, container, savedInstanceState) as View
 
-        if (keyword.length > 0)
-            loadData(mView)
-        else
-            showErrorMsg(mView)
+        loadData()
 
-        return mView
+        return fragView
+    }
+
+    override fun updateTitle(callback: (title: String, subtitle: String) -> Unit)   {
+        callback(I_Bainil_UApp.AppName, getString(SearchResultFragment.NavMenuName))
     }
 
     override fun onAttach(context: Context?) {
@@ -71,8 +76,10 @@ class SearchResultFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        Log.v("SearchResultFragment", "onResume")
+        interactTo()
+    }
 
+    override fun interactTo() {
         if (activity is MainActivity) {
             (activity as MainActivity).setNavigationViewCheckedItem(NavMenuId)
             (activity as MainActivity).setToolbarColor()
@@ -84,7 +91,16 @@ class SearchResultFragment : Fragment() {
         mListener = null
     }
 
-    fun loadData(view: View)    {
+    override fun loadData() {
+        if (keyword.length > 0)
+            loadDataImpl()
+        else
+            showErrorMsg()
+    }
+
+    fun loadDataImpl()    {
+        val view = fragView
+
         view.loading.visibility = View.VISIBLE
         view.error_container.visibility = View.INVISIBLE
         view.btn_reload.visibility = View.INVISIBLE
@@ -109,15 +125,17 @@ class SearchResultFragment : Fragment() {
 
     fun refresh(newKeyword: String) {
         if (newKeyword.length < 1) {
-            showErrorMsg(mView)
+            showErrorMsg()
             return
         }
 
         keyword = newKeyword
-        loadData(mView)
+        loadDataImpl()
     }
 
-    fun showErrorMsg(view: View)  {
+    fun showErrorMsg()  {
+        val view = fragView
+
         view.list.visibility = View.INVISIBLE
         view.btn_reload.visibility = View.INVISIBLE
         view.loading.visibility = View.INVISIBLE
@@ -129,6 +147,7 @@ class SearchResultFragment : Fragment() {
     companion object {
         val TAG = SearchResultFragment::class.java.simpleName
         val NavMenuId = R.id.nav_search_result
+        val NavMenuName = R.string.nav_search_result
 
         private val ARG_KEYWORD = "keyword"
 

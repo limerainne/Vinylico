@@ -4,12 +4,12 @@
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/nav_header_vertical_margin"
     android:paddingLeft="@dimen/nav_header_horizontal_margin"
     android:paddingRight="@dimen/nav_header_horizontal_margin"
     android:paddingTop="@dimen/nav_header_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/account_photo"

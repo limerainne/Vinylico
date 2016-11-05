@@ -22,12 +22,17 @@ import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.fragment_webview.*
 import space.limerainne.i_bainil_u.R
 import space.limerainne.i_bainil_u.credential.LoginCookie
+import space.limerainne.i_bainil_u.view.DataLoadable
+import space.limerainne.i_bainil_u.view.HavingToolbar
+import space.limerainne.i_bainil_u.view.MyFragment
 import java.net.URISyntaxException
 
 /**
  * Created by Limerainne on 2016-09-22.
  */
-open class WebviewFragment: Fragment() {
+open class WebviewFragment: MyFragment(), HavingToolbar, DataLoadable {
+
+    override val TargetLayout = R.layout.fragment_webview
 
     protected var backEnabled = true
 
@@ -45,15 +50,13 @@ open class WebviewFragment: Fragment() {
         this.this_activity = activity
     }
 
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
     @BindView(R.id.web_view)
     lateinit var mWebView: WebView
     @BindView(R.id.web_url)
     lateinit var mWebURL: TextView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_webview, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState) as View
         ButterKnife.bind(this, view)
 
         onInitToolbar()
@@ -62,8 +65,13 @@ open class WebviewFragment: Fragment() {
         return view
     }
 
-    open protected fun onInitToolbar() {
+    override fun initToolbar()  {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
+        onInitToolbar()
+    }
+
+    open protected fun onInitToolbar() {
         toolbar.title = toolbar_title
         if (toolbar_subtitle.length > 0)
             toolbar.subtitle = toolbar_subtitle
