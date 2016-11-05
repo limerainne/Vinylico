@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.content_main.view.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.view.MainActivity
 
 /**
@@ -72,8 +73,13 @@ class SettingsFragment: PreferenceFragmentCompat(), HavingToolbar {
             val pref = findPreference(key)
             pref.summary = pref.sharedPreferences.getString(key, "")
         }
+        fun setSummaryAsText(key: String, text: String) {
+            findPreference(key).summary = text
+        }
         setSummaryAsItsString("_userEmail")
         setSummaryAsItsString("_userURL")
+        if (!UserInfo.checkLogin(context))
+            setSummaryAsText("__is_auto_login", getString(R.string.setting_userinfo_autologin_summary))
     }
 
 
