@@ -14,6 +14,7 @@
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="__is_auto_login"
             android:title="@string/setting_userinfo_autologin"
+            android:summary="@string/setting_userinfo_autologin_summary"
             android:summaryOff="@string/setting_userinfo_autologin_summary_on"
             android:summaryOn="@string/setting_userinfo_autologin_summary_off"
             android:enabled="false" />

@@ -114,6 +114,7 @@
     <string name="setting_userinfo_email">Email</string>
     <string name="setting_userinfo_fan_alias">Fan name (a.k.a. URL alias)</string>
     <string name="setting_userinfo_autologin">Auto Login</string>
+    <string name="setting_userinfo_autologin_summary">Check AutoLogin when you login to Bainil</string>
     <string name="setting_userinfo_autologin_summary_on">Auth key is stored</string>
     <string name="setting_userinfo_autologin_summary_off">Just for this session</string>
 
