@@ -132,4 +132,6 @@
     <string name="setting_download_filename">Song filename</string>
     <string name="setting_download_filename_desc">(original)</string>
 
+    <string name="test_banner_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

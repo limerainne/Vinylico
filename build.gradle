@@ -10,6 +10,7 @@ ext {
     retrofitVersion = '2.1.0'
     anko_version = '0.9'
     butterknife_version = '8.4.0'
+    firebase_version = '9.6.1'
 
     dependencies = [
             appCompat: "com.android.support:appcompat-v7:$supportLibraryVersion",
@@ -42,7 +43,11 @@ ext {
             typeKit: 'com.tsengvn:Typekit:1.0.0',
 
             butterKnife: "com.jakewharton:butterknife:$butterknife_version",
-            butterKnifeCompiler: "com.jakewharton:butterknife-compiler:$butterknife_version"
+            butterKnifeCompiler: "com.jakewharton:butterknife-compiler:$butterknife_version",
+
+            firebase_core: "com.google.firebase:firebase-core:$firebase_version",
+            firebase_crash: "com.google.firebase:firebase-crash:$firebase_version",
+            firebase_ads: "com.google.firebase:firebase-ads:$firebase_version",
     ]
 }
 

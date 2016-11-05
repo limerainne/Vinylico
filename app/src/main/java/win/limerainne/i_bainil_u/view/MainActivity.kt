@@ -31,6 +31,7 @@ import android.webkit.CookieSyncManager
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import com.tsengvn.typekit.TypekitContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -62,6 +63,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var header_account_photo: ImageView
     lateinit var header_account_name: TextView
     lateinit var header_account_email: TextView
+
+    lateinit private var mFirebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +108,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (activeFragment is InteractWithMainActivity)
                 activeFragment.interactTo()
         }
+
+        // start Firebase analytics
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
     }
 
     override fun onDestroy()    {

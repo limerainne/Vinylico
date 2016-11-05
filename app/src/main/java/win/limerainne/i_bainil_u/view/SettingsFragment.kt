@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.content_main.view.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import win.limerainne.i_bainil_u.R
@@ -32,10 +34,15 @@ class SettingsFragment: PreferenceFragmentCompat(), HavingToolbar {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         settingsView = super.onCreateView(inflater, container, savedInstanceState) as View
-        parentView = inflater!!.inflate(R.layout.fragment_main, container, false)
+        parentView = inflater!!.inflate(R.layout.fragment_main_ad, container, false)
 
         parentView.content_main.addView(settingsView)
         parentView.fab.visibility = View.GONE
+
+        // add ad
+        val mAdView: AdView = parentView.findViewById(R.id.adView) as AdView
+        val adRequest: AdRequest = AdRequest.Builder().addTestDevice("0").build()
+        mAdView.loadAd(adRequest)
 
         return parentView
     }
