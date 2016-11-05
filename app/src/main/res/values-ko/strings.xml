@@ -16,7 +16,7 @@
     <string name="msg_err_purchase_cannot_single_track">죄송합니다, 이 곡은 개별 구매가 불가능합니다&#8230;</string>
     <string name="msg_err_purchase_inapp_purchase_impossible">Google 인앱 결제는 Bainil 공식 앱에서 이뤄져야 합니다!</string>
     <string name="msg_err_purhcase_incorrect_URL">구매 대상이 잘못되었습니다!</string>
-    <string name="msg_err_share_requires_permission">권한을 먼저 허가해주신 후, 다시 공유를 시도해주세요&#8230;</string>
+    <string name="msg_err_share_requires_permission">먼저 권한을 허가한 후, 다시 공유를 시도해주세요&#8230;</string>
     <string name="msg_event_title">앨범 행사</string>
     <string name="msg_feelinglucky_finding">운좋은 예감&#8230;</string>
     <string name="msg_login_required">먼저 로그인해주세요!</string>
@@ -24,7 +24,7 @@
     <string name="msg_notice_purchase_subtitle">#%1$s(당신)에게</string>
     <string name="msg_notice_purchase_title">앨범 구매: #%1$s</string>
     <string name="msg_prepare_sharing">공유 준비 중&#8230;</string>
-    <string name="msg_search_notice_type_keyword">상단의 검색 버튼을 누르고,\\n검색어를 입력해주세요!</string>
+    <string name="msg_search_notice_type_keyword">상단의 검색 버튼을 누르고,\n검색어를 입력해주세요!</string>
     <string name="msg_tobeimplemented_like_song">죄송합니다, \'이 곡 좋아요\' 기능은 구현되지 않았습니다&#8230;</string>
     <string name="msg_tobeimplemented_single_track">죄송합니다, 곡별 구매/다운로드 기능은 아직 구현되지 않았습니다&#8230;</string>
     <string name="msg_web_download_id_annotated">다운로드를 위한 곡 ID를 가져왔습니다!</string>
