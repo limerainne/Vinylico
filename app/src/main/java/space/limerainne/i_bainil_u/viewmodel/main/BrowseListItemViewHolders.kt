@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.support.v7.content.res.AppCompatResources
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -125,20 +126,21 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
 
         val btnDrawable: Drawable?
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            btnDrawable = mContext.resources.getDrawable(btnResId)
+            // btnDrawable = mContext.resources.getDrawable(btnResId)
+            btnDrawable = AppCompatResources.getDrawable(mContext, btnResId)
         else
             btnDrawable = mContext.getDrawable(btnResId)
 
         val drawables = view.compoundDrawables
         val leftCompoundDrawable = drawables[0]
-        btnDrawable.bounds = leftCompoundDrawable.bounds
+        btnDrawable?.bounds = leftCompoundDrawable.bounds
         // NOTE above line MUST be REQUIRED to display properly!
 
         // http://stackoverflow.com/questions/1309629/how-to-change-colors-of-a-drawable-in-android
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            btnDrawable.setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY)
+            btnDrawable?.setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY)
         else
-            btnDrawable.setTint(tintColor)
+            btnDrawable?.setTint(tintColor)
 
         view.setCompoundDrawables(btnDrawable, null, null, null)
     }
@@ -164,20 +166,21 @@ class WishlistItemViewHolder(mContext: Context, mView: View): BrowserListItemVie
     fun changeButtonDrawableLeft(btnResId: Int, tintColor: Int, view: Button) {
         val btnDrawable: Drawable?
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            btnDrawable = mContext.resources.getDrawable(btnResId)
+            // btnDrawable = mContext.resources.getDrawable(btnResId)
+            btnDrawable = AppCompatResources.getDrawable(mContext, btnResId)
         else
             btnDrawable = mContext.getDrawable(btnResId)
 
         val drawables = view.compoundDrawables
         val leftCompoundDrawable = drawables[0]
-        btnDrawable.bounds = leftCompoundDrawable.bounds
+        btnDrawable?.bounds = leftCompoundDrawable.bounds
         // NOTE above line MUST be REQUIRED to display properly!
 
         // http://stackoverflow.com/questions/1309629/how-to-change-colors-of-a-drawable-in-android
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            btnDrawable.setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY)
+            btnDrawable?.setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY)
         else
-            btnDrawable.setTint(tintColor)
+            btnDrawable?.setTint(tintColor)
 
         view.setCompoundDrawables(btnDrawable, null, null, null)
     }
