@@ -156,7 +156,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             mView.album_artist.text = item.artistName
             mView.album_title.text = item.albumName
 
-            mView.album_label_publisher.text = "${item.labelName} | ${item.publishName}"
+            mView.album_label_publisher.text = "${item.genre} · ${item.labelName} · ${item.publishName}"
 
             var iconCount = 0
             iconCount += mView.feature_album_booklet.setVisibility4(item.feature_booklet)
