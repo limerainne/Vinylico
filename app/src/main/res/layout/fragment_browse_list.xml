@@ -43,6 +43,6 @@
         android:visibility="invisible"
         android:background="@android:color/white"
         app:layoutManager="LinearLayoutManager"
-        tools:context="space.limerainne.i_bainil_u.view.main.BrowseListFragment"
+        tools:context="win.limerainne.i_bainil_u.view.main.BrowseListFragment"
         tools:listitem="@layout/fragment_browse_list_item" />
 </FrameLayout>

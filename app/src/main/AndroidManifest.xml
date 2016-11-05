@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="space.limerainne.i_bainil_u">
+    package="win.limerainne.i_bainil_u">
     
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".I_Bainil_UApp"
+        android:name="win.limerainne.i_bainil_u.ThisApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.SplashActivity"
+            android:name="win.limerainne.i_bainil_u.view.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name=".view.MainActivity"
+            android:name="win.limerainne.i_bainil_u.view.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden|screenSize"

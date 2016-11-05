@@ -66,6 +66,9 @@ buildscript {
         // run gradle command:
         // gradle dependencyUpdates -Drevision=release -DoutputFormatter=json,xml
         // latter report option doesn't have to be inserted..
+
+        // firebase or else
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 

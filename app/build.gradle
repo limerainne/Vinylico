@@ -20,7 +20,7 @@ android {
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
-        applicationId "space.limerainne.i_bainil_u"
+        applicationId "win.limerainne.i_bainil_u"
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode 1
@@ -117,3 +117,5 @@ kapt {
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'com.google.gms.google-services'

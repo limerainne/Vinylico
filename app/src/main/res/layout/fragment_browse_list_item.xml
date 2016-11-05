@@ -243,6 +243,8 @@
                     android:contentDescription="Buy/Download"
                     android:text="$ 9.99" />
 
+                <!-- tint/drawableLeft gives FC -->
+
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
