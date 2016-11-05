@@ -488,13 +488,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            }
             }
             is SearchArtist ->  {
-                val albumInfoFragment = AlbumInfoFragment.newInstance(item.albumId, item.albumName, item.artistName)
+                //val albumInfoFragment = AlbumInfoFragment.newInstance(item.albumId, item.albumName, item.artistName)
 
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                animatedTransitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG, true)
 //            } else  {
-                transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
+                // transitToFragment(R.id.placeholder_top, albumInfoFragment, AlbumInfoFragment.TAG)
 //            }
+                // TODO for now, re-search with Artist name
+                searchKeyword = item.artistName
+
+                val menu = this@MainActivity.nav_view.menu.findItem(R.id.nav_search_result)
+                this@MainActivity.onNavigationItemSelected(menu)
+
+                toast(getString(R.string.msg_notice_artist_page))
             }
             is SearchAlbum ->  {
                 val albumInfoFragment = AlbumInfoFragment.newInstance(item.albumId, item.albumName, item.artistName)

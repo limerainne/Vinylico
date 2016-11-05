@@ -108,6 +108,8 @@
     <string name="search_track_header">TRACK · %1$s</string>
     <string name="search_track_desc">track title, artist name, &#8230;</string>
 
+    <string name="msg_notice_artist_page">Sorry, Artist page is not yet implemented&#8230;\nSearching with artist name&#8230;</string>
+
     <!-- settings -->
     <string name="setting_userinfo_header">User Information</string>
 
