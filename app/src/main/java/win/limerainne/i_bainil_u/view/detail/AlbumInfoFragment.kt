@@ -105,17 +105,13 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
                         PurchaseTool.purchaseAlbum(context, albumEntry)
                     else if (albumEntry.purchased == 1) {
                         // Download album
-                        for (track in albumTracks.tracks)   {
-                            DownloadTool.newInstance(if (track.downloadId > 0) track.downloadId else track.songId, track.songName).doDownload(context)
-                        }
+                        DownloadTool.downloadAlbum(albumId, albumTracks, context)
                     }
                 }
 
                 else if (albumDetail.purchased == 1) {
                     // Download album
-                    for (track in albumTracks.tracks)   {
-                        DownloadTool.newInstance(if (track.downloadId > 0) track.downloadId else track.songId, track.songName).doDownload(context)
-                    }
+                    DownloadTool.downloadAlbum(albumId, albumTracks, context)
 
                 } else
                     PurchaseTool.purchaseAlbum(context, albumId, albumName, albumDetail.free)
@@ -163,8 +159,8 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
                     }
                 }
 
-                if (albumDetail.purchased == 1)
-                    AnnotateWebDownloadIdCommand(albumId, albumTracks).execute()
+//                if (albumDetail.purchased == 1)
+//                    AnnotateWebDownloadIdCommand(albumId, albumTracks).execute()
 
             } catch (e: UninitializedPropertyAccessException)  {
                 e.printStackTrace()

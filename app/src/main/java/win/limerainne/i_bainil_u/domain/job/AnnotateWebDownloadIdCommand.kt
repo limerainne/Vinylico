@@ -1,5 +1,8 @@
 package win.limerainne.i_bainil_u.domain.job
 
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
@@ -19,26 +22,30 @@ class AnnotateWebDownloadIdCommand(val albumId: Long, val trackList: TrackList):
 
     fun execute(callback: () -> Unit) {
         doAsync {
-            uiThread {
-                ThisApp.AppContext.toast(ThisApp.AppContext.getString(R.string.msg_web_download_id_annotating))
+                var toast: Toast? = null
+
+                uiThread {
+                    toast = Toast.makeText(ThisApp.AppContext, R.string.msg_web_download_id_annotating, Toast.LENGTH_SHORT).apply { show() }
+                }
+                trackList.downloadId = -1L
+
+                val webIdPair = RequestWebDownloadId(albumId).execute()
+
+                // albumId
+                if (webIdPair.albumId > 0L)
+                    trackList.downloadId = webIdPair.albumId
+
+                // for each track
+                for (track in trackList.tracks) {
+                    track.downloadId = webIdPair.tracksIdPair[track.songId] ?: -1L
+                }
+
+                uiThread {
+//                ThisApp.AppContext.toast(ThisApp.AppContext.getString(R.string.msg_web_download_id_annotated))
+                    toast?.cancel()
+                }
+
+                callback()
             }
-
-            val webIdPair = RequestWebDownloadId(albumId).execute()
-
-            // albumId
-            if (webIdPair.albumId != 0L)
-                trackList.downloadId = webIdPair.albumId
-
-            // for each track
-            for (track in trackList.tracks) {
-                track.downloadId = webIdPair.tracksIdPair[track.songId] ?: 0L
-            }
-
-            uiThread {
-                ThisApp.AppContext.toast(ThisApp.AppContext.getString(R.string.msg_web_download_id_annotated))
-            }
-
-            callback()
-        }
     }
 }

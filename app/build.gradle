@@ -57,12 +57,14 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //compile "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 
+    compile dependencies.support
     compile dependencies.appCompat
     compile dependencies.cardView
     compile dependencies.recyclerView
     compile dependencies.preference
     compile dependencies.design
-    compile dependencies.support
+    compile dependencies.vectordrawable
+    compile dependencies.vectordrawable_animated
     compile 'com.android.support:multidex:1.0.1'
 
 //    compile dependencies.retrofit

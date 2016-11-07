@@ -64,8 +64,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
-                        android:tint="@android:color/tertiary_text_dark"
-                        app:srcCompat="@drawable/ic_music_note"/>
+                        app:srcCompat="@drawable/ic_music_note_gray"/>
                     <TextView
                         android:id="@+id/album_num_tracks"
                         android:layout_width="wrap_content"
@@ -81,8 +80,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
-                        android:tint="@android:color/tertiary_text_dark"
-                        app:srcCompat="@drawable/ic_today"/>
+                        app:srcCompat="@drawable/ic_today_gray"/>
                     <TextView
                         android:id="@+id/album_date"
                         android:layout_width="wrap_content"

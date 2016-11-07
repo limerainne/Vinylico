@@ -113,8 +113,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
-                        android:tint="@android:color/tertiary_text_dark"
-                        app:srcCompat="@drawable/ic_music_note"/>
+                        app:srcCompat="@drawable/ic_music_note_gray"/>
                     <TextView
                         android:id="@+id/album_num_tracks"
                         android:layout_width="wrap_content"
@@ -130,8 +129,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
-                        android:tint="@android:color/tertiary_text_dark"
-                        app:srcCompat="@drawable/ic_today"/>
+                        app:srcCompat="@drawable/ic_today_gray"/>
                     <TextView
                         android:id="@+id/album_date"
                         android:layout_width="wrap_content"
@@ -161,9 +159,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_centerVertical="true"
                     android:visibility="visible"
-                    android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Lyrics"
-                    app:srcCompat="@drawable/ic_lyric_v2"/>
+                    app:srcCompat="@drawable/ic_lyric_v2_gray"/>
                 <ImageView
                     android:id="@+id/feature_booklet"
                     android:layout_width="16dp"
@@ -172,9 +169,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/feature_lyrics"
                     android:visibility="visible"
-                    android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Booklet"
-                    app:srcCompat="@drawable/ic_feature_booklet"/>
+                    app:srcCompat="@drawable/ic_feature_booklet_gray"/>
                 <ImageView
                     android:id="@+id/feature_record"
                     android:layout_width="16dp"
@@ -183,9 +179,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/feature_booklet"
                     android:visibility="visible"
-                    android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Voice Record"
-                    app:srcCompat="@drawable/ic_feature_record"/>
+                    app:srcCompat="@drawable/ic_feature_record_gray"/>
                 <ImageView
                     android:id="@+id/feature_event"
                     android:layout_width="16dp"
@@ -194,9 +189,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/feature_record"
                     android:visibility="visible"
-                    android:tint="@android:color/tertiary_text_dark"
                     android:contentDescription="Feature: Event"
-                    app:srcCompat="@drawable/ic_event"/>
+                    app:srcCompat="@drawable/ic_event_gray"/>
 
                 <!-- wish button -->
                 <android.support.v7.widget.AppCompatButton
@@ -204,10 +198,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/btn_album_share"
-                    android:drawableLeft="@drawable/ic_love_filled"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_love_filled_layer"
                     style="?android:attr/borderlessButtonStyle"
-                    android:minWidth = "0dip"
+                    android:minWidth="0dip"
                     android:clickable="true"
                     android:textSize="12sp"
                     android:textColor="?attr/colorAccent"
@@ -219,10 +212,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/album_price"
-                    android:drawableLeft="@drawable/ic_share"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_share_layer"
                     style="?android:attr/borderlessButtonStyle"
-                    android:minWidth = "0dip"
+                    android:minWidth="0dip"
                     android:textSize="12sp"
                     android:textColor="?attr/colorAccent"
                     android:contentDescription="Share link to this album"
@@ -234,8 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="4dip"
-                    android:drawableLeft="@drawable/ic_buy"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_buy_layer"
                     style="?android:attr/borderlessButtonStyle"
                     android:gravity="right|center_vertical"
                     android:textSize="12sp"

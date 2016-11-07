@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/text_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I.Bainil.U는 모바일 음악 플랫폼 Bainil을 위한 비공식 클라이언트입니다.\n\n창작자에게 보다 많은 수익을 돌려주는 Bainil 서비스를 사용하면서, 앨범 구매 및 MP3 파일 다운로드를 한 큐에 손쉽게 할 수 있습니다."/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다음 기능을 제공합니다:\n* 앨범 열람: 추천, 인기, 최신, XSFM\n* 랜덤 앨범 추천\n* 키워드 검색\n* 앨범 구매 페이지 연결 (KakaoPay 결제)\n* 위시리스트 추가/열람\n* 가사 열람\n* 앨범 구매 내역 열람\n* 앨범/곡 다운로드 (Web 다운로드 링크를 통해서)"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="아직 다음 기능을 제공하지 않습니다:\n* 장르별 앨범 열람\n* 미리듣기\n* Google Play 인앱 결제 통한 구매 (공식 앱에서만 가능합니다)\n* 단곡 구매, 구매 기록 열람, 다운로드\n* 댓글 열람/남기기\n* 모바일 앨범: 부클릿 열람, MR 음원 듣기·목소리 녹음\n..."/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="앨범 다운로드 관련 안내 및 주의사항\n* 현재는 Android 기본 다운로드 관리자를 이용합니다.\n* 한 곡별로 차례대로 다운로드되지 않고 동시에 다운로드되니, 한 번에 너무 많은 곡을 받으면 Bainil 서버에 부담이 됩니다.\n* 현재는 저장 경로 및 파일 이름 변경은 불가능합니다.\n* 내부 저장소의 Music 폴더에 저장되며, 폴더가 없으면 생성됩니다."/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="앱 내 광고 안내:\n* Google AdMob 광고를 사용합니다.\n* 설정 페이지 및 앱 정보 페이지에만 (이 곳) 광고가 표시됩니다." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사용 권한:\n* 인터넷 접속: Bainil API/Web 접속 및 광고 표시에 사용합니다.\n* 저장소 읽기/쓰기: 음원 다운로드 및 앨범 링크 공유를 위한 앨범 이미지 임시 저장"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="개인 정보 수집 및 이용:\n* 본 앱의 개발자는 여러분의 어떤 개인정보도 수집하지 않습니다.\n* Bainil 로그인은 HTTPS 프로토콜로 접속한 Bainil 웹 페이지를 통해 이루어지며, 계정 암호가 앱에 저장되지 않습니다.\n* 대신 로그인 세션 획득 및 추후 자동 로그인(로그인 시 선택한 경우)을 위해 세션 토큰, (자동 로그인) 인증키 등의 쿠키를 보관합니다.\n* 또한, Web의 계정 정보 페이지에서 계정 고유번호, 계정 이메일, SNS 연동 여부 등을 획득해 로그인한 동안 앱 내에 보관합니다."/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사용한 오픈소스 라이브러리:\n* Android Support Libraries\n\n* Picasso\n\n* Gson\n\n* Kotlin\n* Anko\n* Kotson\n\n* TypeKit\n* ButterKnife\n\n* ExpandableTextView\n* Mp3agic"/>
+    </LinearLayout>
+</ScrollView>

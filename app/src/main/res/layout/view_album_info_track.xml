@@ -96,9 +96,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_centerVertical="true"
                         android:visibility="visible"
-                        android:tint="@android:color/tertiary_text_dark"
                         android:contentDescription="Feature: Lyrics"
-                        app:srcCompat="@drawable/ic_lyric_v2"/>
+                        app:srcCompat="@drawable/ic_lyric_v2_gray"/>
                     <ImageView
                         android:id="@+id/feature_record"
                         android:layout_width="12dp"
@@ -106,9 +105,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_centerVertical="true"
                         android:visibility="visible"
-                        android:tint="@android:color/tertiary_text_dark"
                         android:contentDescription="Feature: Voice Record"
-                        app:srcCompat="@drawable/ic_feature_record"/>
+                        app:srcCompat="@drawable/ic_feature_record_gray"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -118,8 +116,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
-                        android:tint="@android:color/tertiary_text_dark"
-                        app:srcCompat="@drawable/ic_comment"/>
+                        app:srcCompat="@drawable/ic_comment_gray"/>
                     <TextView
                         android:id="@+id/track_comment_count"
                         android:layout_width="wrap_content"
@@ -170,8 +167,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:drawableLeft="@drawable/ic_lyric_v2"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_lyric_v2_accent_layer"
                     style="?android:attr/borderlessButtonStyle"
                     android:minHeight="24dp"
                     android:minWidth="0dp"
@@ -187,8 +183,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:drawableLeft="@drawable/ic_love_filled"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_love_filled_layer"
                     style="?android:attr/borderlessButtonStyle"
                     android:minHeight="24dp"
                     android:minWidth="0dp"
@@ -205,8 +200,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:layout_marginRight="4dip"
-                    android:drawableLeft="@drawable/ic_buy"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_buy_layer"
                     style="?android:attr/borderlessButtonStyle"
                     android:gravity="right|center_vertical"
                     android:textSize="12sp"

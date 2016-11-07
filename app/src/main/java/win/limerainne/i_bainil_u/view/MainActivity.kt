@@ -13,12 +13,14 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.support.v4.content.ContextCompat
 import android.support.v4.os.EnvironmentCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
@@ -358,7 +360,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     transitToFragment(R.id.placeholder_top, frag, SettingsFragment.TAG)
             }
             R.id.nav_about -> {
+                hasToChangeMainFragmentsChild = false
+                if (!fragments.containsKey(R.id.nav_about))   {
+                    fragments[R.id.nav_about] = AboutFragment.newInstance()
+                }
+                fragmentTAG = AboutFragment.TAG
 
+                val frag = fragments[R.id.nav_about]
+                if (frag != null && activeFragment !is AboutFragment)
+                    transitToFragment(R.id.placeholder_top, frag, AboutFragment.TAG)
             }
             R.id.nav_login_logout ->    {
                 if (activeFragment !is LoginWebviewFragment && activeFragment !is LogoutWebviewFragment) {
@@ -421,7 +431,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             logInOutMenu.setTitle(R.string.nav_logout)
         }
         else    {
-            account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
+            else
+                account_photo.setImageDrawable(ContextCompat.getDrawable(context, android.R.drawable.sym_def_app_icon))
             // TODO move into resource
             account_name.text = "Bainil"
             account_email.text = "please.login@bainil.com"

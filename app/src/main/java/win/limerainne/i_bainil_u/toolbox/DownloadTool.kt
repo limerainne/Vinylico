@@ -24,6 +24,7 @@ import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.Server
 import win.limerainne.i_bainil_u.data.api.Track
 import win.limerainne.i_bainil_u.domain.job.AnnotateWebDownloadIdCommand
+import win.limerainne.i_bainil_u.domain.model.TrackList
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -83,7 +84,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
 //                } else {
 
             // No explanation needed, we can request the permission.
-            mContext.toast("Please grant permission first, then retry download...")
+            mContext.toast(mContext.getString(R.string.msg_err_download_requires_permission))
 
             ActivityCompat.requestPermissions(mContext as Activity,
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -203,48 +204,101 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         }
     }
 
-    companion object    {
+    companion object {
         private val TrackDownloadURLPrefix = "http://www.bainil.com/track/download?no="
 
-        fun newInstance(url: String, path: File, title: String = "", desc: String = ""): DownloadTool    {
+        fun newInstance(url: String, path: File, title: String = "", desc: String = ""): DownloadTool {
             return DownloadTool(url, path, title, desc)
         }
 
-        fun newInstance(trackId: Long, path: File, title: String, desc: String): DownloadTool    {
+        fun newInstance(trackId: Long, path: File, title: String, desc: String): DownloadTool {
             return newInstance(TrackDownloadURLPrefix + "${trackId}", path, title, desc)
         }
 
-        fun newInstance(trackId: Long, songName: String): DownloadTool  {
+        fun newInstance(trackId: Long, songName: String): DownloadTool {
             return newInstance(trackId, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "Bainil: ${songName}", "")
         }
 
-        fun checkIfDataNetworkInSongDownload(context: Context): Boolean    {
+        fun checkIfDataNetworkInSongDownload(context: Context): Boolean {
             return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_song)}\n${context.getString(R.string.msg_err_cellular_network)}")
         }
 
-        fun checkIfDataNetworkInAlbumDownload(context: Context): Boolean    {
+        fun checkIfDataNetworkInAlbumDownload(context: Context): Boolean {
             return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_cellular_network)}")
         }
 
-        fun checkIfDataNetwork(context: Context, errorMsg: String): Boolean    {
+        fun checkIfDataNetwork(context: Context, errorMsg: String): Boolean {
             if (!ThisApp.CommonPrefs.allowDataNetwork) {
                 val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 if (connMgr.activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE) {
-                    context.toast(errorMsg)
                     return true
                 }
             }
             return false
         }
 
-        fun downloadAlbum(albumId: Long, context: Context)    {
+        fun downloadTrack(trackId: Long, albumTracks: TrackList, context: Context) {
+            if (checkIfDataNetworkInSongDownload(context)) return
+
+            if (albumTracks.downloadId == 0L)
+                doAsync {
+                    AnnotateWebDownloadIdCommand(albumTracks.albumId, albumTracks).execute {
+                        uiThread {
+                            DownloadTool.downloadTrack(trackId, albumTracks, context)
+                        }
+                    }
+                }
+            else if (albumTracks.downloadId == -1L)
+                context.toast("${context.getString(R.string.msg_err_cant_download_song)}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+            else
+                for (track in albumTracks.tracks) {
+                    if (track.songId == trackId) {
+                        if (track.downloadId > 0L)
+                            DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
+                        else
+                            context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+
+                        break
+                    }
+                }
+        }
+
+        fun downloadAlbum(albumId: Long, albumTracks: TrackList, context: Context) {
+            if (checkIfDataNetworkInSongDownload(context)) return
+
+            if (albumTracks.downloadId == 0L)
+                doAsync {
+                    AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
+                        uiThread {
+                            DownloadTool.downloadAlbum(albumId, albumTracks, context)
+                        }
+                    }
+                }
+            else if (albumTracks.downloadId == -1L)
+                context.toast("${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+            else
+                for (track in albumTracks.tracks) {
+                    if (track.downloadId > 0L)
+                        DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
+                    else
+                        context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+                    break
+                }
+        }
+
+        fun downloadAlbum(albumId: Long, context: Context) {
             if (checkIfDataNetworkInAlbumDownload(context)) return
 
             doAsync {
                 val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
-                AnnotateWebDownloadIdCommand(albumId, albumTracks).execute  {
-                    for (track in albumTracks.tracks)   {
-                        DownloadTool.newInstance(if (track.downloadId > 0) track.downloadId else track.songId, track.songName).doDownload(context)
+                AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
+                    uiThread {
+                        for (track in albumTracks.tracks) {
+                            if (track.downloadId > 0L)
+                                DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
+                            else
+                                context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+                        }
                     }
                 }
             }

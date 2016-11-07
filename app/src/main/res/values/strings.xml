@@ -72,6 +72,8 @@
     <string name="msg_err_cant_download_song">Can\'t download a song!</string>
     <string name="msg_err_cellular_network">Device is in 3G/LTE network!</string>
 
+    <string name="msg_err_track_no_download_id">Failed to get song ID in album webpage&#8230;</string>
+
     <string name="msg_err_album_already_purchased">Already purchased this album</string>
     <string name="msg_notice_free_album">Free album</string>
 
@@ -79,6 +81,7 @@
     <string name="title_share_album">Invite to Bainil by</string>
 
     <string name="msg_err_share_requires_permission">Please grant permission first, then retry sharing&#8230;</string>
+    <string name="msg_err_download_requires_permission">"Please grant permission first, then retry download&#8230;</string>
 
     <string name="msg_err_loading_contents">Wait till contents are loaded&#8230;</string>
 

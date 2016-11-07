@@ -3,7 +3,10 @@ package win.limerainne.i_bainil_u
 import android.app.Application
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
+import android.support.v7.app.AppCompatDelegate
 import com.tsengvn.typekit.Typekit
+import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.base.CommonPrefs
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.extension.DelegatesExt
@@ -24,6 +27,10 @@ class ThisApp : Application() {
         AppContext = applicationContext
         CommonPrefs = CommonPrefs(AppContext)
         AppName = getString(R.string.app_name)
+
+        // TODO XXX could cause high memory usage
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     fun updateUserId(id: Long)  {

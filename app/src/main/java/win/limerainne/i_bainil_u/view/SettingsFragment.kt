@@ -40,6 +40,8 @@ class SettingsFragment: PreferenceFragmentCompat(), HavingToolbar {
         parentView.content_main.addView(settingsView)
         parentView.fab.visibility = View.GONE
 
+        initToolbar()
+
         // add ad
         val mAdView: AdView = parentView.findViewById(R.id.adView) as AdView
         val adRequest: AdRequest = AdRequest.Builder().addTestDevice("0").build()
