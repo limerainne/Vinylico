@@ -3,15 +3,14 @@ package win.limerainne.i_bainil_u.view.main
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.internal.NavigationMenu
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.base.OnFragmentInteractionListener
 import win.limerainne.i_bainil_u.view.DataLoadable
 import win.limerainne.i_bainil_u.view.InteractWithMainActivity

@@ -10,7 +10,6 @@ import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.request.data.RequestAlbumPurchased
 import win.limerainne.i_bainil_u.domain.model.AlbumEntry
 import win.limerainne.i_bainil_u.view.MainActivity
-import win.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import win.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
 
 /**
@@ -38,7 +37,7 @@ class PurchaseTool  {
             if (networkInfo != null && networkInfo!!.isConnected) {
                 // check login first
                 UserInfo.checkLoginThenRun(mContext, {
-                    doAsync {
+                    doAsync(ThisApp.ExceptionHandler) {
                         // 1. check if previously purchased
                         val purchaseCheckResponse: RequestAlbumPurchased.Response
                         try {

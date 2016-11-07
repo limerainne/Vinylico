@@ -6,11 +6,9 @@ import android.graphics.Typeface
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
 import com.tsengvn.typekit.Typekit
-import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.base.CommonPrefs
 import win.limerainne.i_bainil_u.credential.UserInfo
-import win.limerainne.i_bainil_u.extension.DelegatesExt
-import win.limerainne.i_bainil_u.extension.Preference
+import win.limerainne.i_bainil_u.toolbox.DownloadTool
 
 /**
  * Created by Limerainne on 2016-06-23.
@@ -30,7 +28,9 @@ class ThisApp : Application() {
 
         // TODO XXX could cause high memory usage
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
-            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        DownloadTool.addReceiverOnClick(AppContext)
     }
 
     fun updateUserId(id: Long)  {
@@ -58,5 +58,7 @@ class ThisApp : Application() {
 
         val LangCode: String
             get() = if (CommonPrefs.useEnglish) "en" else "ko"
+
+        val ExceptionHandler = { e: Throwable -> e.printStackTrace() }
     }
 }

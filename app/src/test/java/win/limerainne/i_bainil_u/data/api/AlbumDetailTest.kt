@@ -1,8 +1,8 @@
 package win.limerainne.i_bainil_u.data.api
 
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.Assert.*
-
 import win.limerainne.i_bainil_u.domain.model.AlbumDetail as DomainAlbumDetail
 import win.limerainne.i_bainil_u.domain.model.TrackList as DomainTrackList
 

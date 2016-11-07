@@ -8,17 +8,16 @@ import android.os.Build
 import android.support.v7.content.res.AppCompatResources
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
 import win.limerainne.i_bainil_u.R
-import win.limerainne.i_bainil_u.toolbox.PurchaseTool
-import win.limerainne.i_bainil_u.toolbox.ShareTool
 import win.limerainne.i_bainil_u.data.api.request.RequestToggleWish
 import win.limerainne.i_bainil_u.domain.model.AlbumEntry
 import win.limerainne.i_bainil_u.toolbox.DownloadTool
+import win.limerainne.i_bainil_u.toolbox.PurchaseTool
+import win.limerainne.i_bainil_u.toolbox.ShareTool
 
 /**
  * Created by CottonCandy on 2016-10-03.

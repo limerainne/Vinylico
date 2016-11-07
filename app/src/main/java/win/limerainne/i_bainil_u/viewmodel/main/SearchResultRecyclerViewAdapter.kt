@@ -1,7 +1,6 @@
 package win.limerainne.i_bainil_u.viewmodel.main
 
 import android.content.Context
-import android.preference.PreferenceActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +12,10 @@ import kotlinx.android.synthetic.main.view_search_header.view.*
 import kotlinx.android.synthetic.main.view_search_track.view.*
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import win.limerainne.i_bainil_u.domain.model.*
-import win.limerainne.i_bainil_u.extension.setVisibility4
-import java.util.*
+import win.limerainne.i_bainil_u.domain.model.SearchAlbum
+import win.limerainne.i_bainil_u.domain.model.SearchArtist
+import win.limerainne.i_bainil_u.domain.model.SearchResult
+import win.limerainne.i_bainil_u.domain.model.SearchTrack
 
 /**
  * Created by Limerainne on 2016-10-19.

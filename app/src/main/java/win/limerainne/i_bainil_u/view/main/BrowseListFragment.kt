@@ -2,7 +2,6 @@ package win.limerainne.i_bainil_u.view.main
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,8 +14,8 @@ import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import win.limerainne.i_bainil_u.credential.UserInfo
-import win.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import win.limerainne.i_bainil_u.data.api.Server
+import win.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
 import win.limerainne.i_bainil_u.view.DataLoadable
 import win.limerainne.i_bainil_u.view.MainActivity
 import win.limerainne.i_bainil_u.view.MyFragment
@@ -127,7 +126,7 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
         view.loading.visibility = View.VISIBLE
         view.list.visibility = View.INVISIBLE
 
-        doAsync() {
+        doAsync(ThisApp.ExceptionHandler) {
             nextOffset = 0L
 
             val s: Server = Server()
@@ -155,7 +154,7 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
 
     override fun onLoadMore(position: Int): Boolean {
         println("onLoadMore:" + position + ", to:o:" + nextOffset + ",l:" + length)
-        doAsync {
+        doAsync(ThisApp.ExceptionHandler) {
             val s: Server = Server()
             val sList = s.requestStoreAlbums(category, UserInfo.getUserIdOr(context), nextOffset, length)
 

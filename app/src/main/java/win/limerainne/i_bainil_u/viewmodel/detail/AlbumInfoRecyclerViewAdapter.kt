@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.TableRow
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -25,8 +24,6 @@ import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import win.limerainne.i_bainil_u.toolbox.PurchaseTool
-import win.limerainne.i_bainil_u.toolbox.ShareTool
 import win.limerainne.i_bainil_u.data.api.request.RequestToggleWish
 import win.limerainne.i_bainil_u.data.api.request.data.RequestTrackLyric
 import win.limerainne.i_bainil_u.domain.model.AlbumDetail
@@ -35,8 +32,9 @@ import win.limerainne.i_bainil_u.domain.model.Track
 import win.limerainne.i_bainil_u.domain.model.TrackList
 import win.limerainne.i_bainil_u.extension.*
 import win.limerainne.i_bainil_u.toolbox.DownloadTool
+import win.limerainne.i_bainil_u.toolbox.PurchaseTool
+import win.limerainne.i_bainil_u.toolbox.ShareTool
 import win.limerainne.i_bainil_u.view.MainActivity
-import win.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 
 /**
  * Created by Limerainne on 2016-08-16.
@@ -338,7 +336,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 if (mView.track_lyric.visibility == View.GONE)   {
                     if (!item.lyricLoaded) {
                         // load lyrics from URL
-                        doAsync {
+                        doAsync(ThisApp.ExceptionHandler) {
                             val lyric = RequestTrackLyric(item.lyricsPath).execute()
                             item.lyric_text = lyric
 

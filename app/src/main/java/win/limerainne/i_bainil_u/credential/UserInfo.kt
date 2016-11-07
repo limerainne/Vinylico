@@ -2,8 +2,8 @@ package win.limerainne.i_bainil_u.credential
 
 import android.content.Context
 import org.jetbrains.anko.toast
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.extension.DelegatesExt
 import win.limerainne.i_bainil_u.extension.toLongOrElse
 import win.limerainne.i_bainil_u.view.MainActivity

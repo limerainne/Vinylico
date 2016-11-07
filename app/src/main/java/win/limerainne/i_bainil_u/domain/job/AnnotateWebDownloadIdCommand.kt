@@ -1,13 +1,10 @@
 package win.limerainne.i_bainil_u.domain.job
 
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.data.web.RequestWebDownloadId
 import win.limerainne.i_bainil_u.domain.commands.Command
 import win.limerainne.i_bainil_u.domain.model.TrackList
@@ -21,7 +18,7 @@ class AnnotateWebDownloadIdCommand(val albumId: Long, val trackList: TrackList):
     }
 
     fun execute(callback: () -> Unit) {
-        doAsync {
+        doAsync(ThisApp.ExceptionHandler) {
                 var toast: Toast? = null
 
                 uiThread {

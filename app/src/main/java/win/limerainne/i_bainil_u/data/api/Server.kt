@@ -1,15 +1,14 @@
 package win.limerainne.i_bainil_u.data.api
 
-import win.limerainne.i_bainil_u.data.api.request.*
 import win.limerainne.i_bainil_u.data.api.request.data.*
+import win.limerainne.i_bainil_u.domain.model.*
 import win.limerainne.i_bainil_u.domain.model.AlbumDetail
 import win.limerainne.i_bainil_u.domain.model.Connected
 import win.limerainne.i_bainil_u.domain.model.RecommendAlbum
+import win.limerainne.i_bainil_u.domain.model.SearchResult
 import win.limerainne.i_bainil_u.domain.model.StoreAlbums
 import win.limerainne.i_bainil_u.domain.model.TrackList
 import win.limerainne.i_bainil_u.domain.model.Wishlist
-import win.limerainne.i_bainil_u.domain.model.Events
-import win.limerainne.i_bainil_u.domain.model.SearchResult
 
 /**
  * Created by Limerainne on 2016-07-21.

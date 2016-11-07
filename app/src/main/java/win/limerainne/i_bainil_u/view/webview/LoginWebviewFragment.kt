@@ -8,8 +8,8 @@ import android.view.View
 import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.credential.LoginCookie
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.view.MainActivity

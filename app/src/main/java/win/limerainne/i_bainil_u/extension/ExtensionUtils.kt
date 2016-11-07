@@ -16,7 +16,6 @@
 
 package win.limerainne.i_bainil_u.extension
 
-import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.View

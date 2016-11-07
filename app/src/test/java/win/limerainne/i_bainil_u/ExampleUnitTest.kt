@@ -1,8 +1,8 @@
 package win.limerainne.i_bainil_u
 
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.

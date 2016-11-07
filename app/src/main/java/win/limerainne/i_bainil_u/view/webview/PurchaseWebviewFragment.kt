@@ -7,10 +7,9 @@ import android.util.Log
 import android.webkit.WebView
 import org.jetbrains.anko.toast
 import win.limerainne.i_bainil_u.R
-import win.limerainne.i_bainil_u.toolbox.BainilLauncher
 import win.limerainne.i_bainil_u.credential.UserInfo
+import win.limerainne.i_bainil_u.toolbox.BainilLauncher
 import win.limerainne.i_bainil_u.view.MainActivity
-import win.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 
 /**
  * Created by CottonCandy on 2016-10-03.

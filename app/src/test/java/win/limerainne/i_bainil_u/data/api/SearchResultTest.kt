@@ -1,12 +1,10 @@
 package win.limerainne.i_bainil_u.data.api
 
 import org.junit.Test
-import org.junit.Assert.*
 import win.limerainne.i_bainil_u.data.api.request.data.RequestSearch
-
-import win.limerainne.i_bainil_u.domain.model.StoreAlbums as DomainStoreAlbums
 import win.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainStoreAlbum
 import win.limerainne.i_bainil_u.domain.model.SearchResult as DomainSearchResult
+import win.limerainne.i_bainil_u.domain.model.StoreAlbums as DomainStoreAlbums
 
 /**
  * Created by Limerainne on 2016-07-21.

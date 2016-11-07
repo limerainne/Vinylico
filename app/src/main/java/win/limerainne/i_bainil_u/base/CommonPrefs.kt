@@ -1,7 +1,6 @@
 package win.limerainne.i_bainil_u.base
 
 import android.content.Context
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.extension.DelegatesExt
 
 /**

@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.data.api.SearchResultResponse
 import win.limerainne.i_bainil_u.data.api.request.Request
-import java.net.URLEncoder
 
 /**
  * Created by Limerainne on 2016-07-21.

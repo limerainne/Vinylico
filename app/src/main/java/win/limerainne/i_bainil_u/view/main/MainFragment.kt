@@ -3,22 +3,17 @@ package win.limerainne.i_bainil_u.view.main
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.credential.UserInfo
+import win.limerainne.i_bainil_u.data.api.Server
 import win.limerainne.i_bainil_u.data.api.request.data.RequestAlbumPurchased
 import win.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
-import win.limerainne.i_bainil_u.data.api.Server
 import win.limerainne.i_bainil_u.domain.model.AlbumDetail
 import win.limerainne.i_bainil_u.domain.model.convertToAlbumEntry
 import win.limerainne.i_bainil_u.view.*
@@ -47,7 +42,7 @@ class MainFragment : MyFrameFragment(), HavingToolbar, DataLoadable, InteractWit
             val snackbar_instance = Snackbar.make(view, ThisApp.AppContext.getString(R.string.msg_feelinglucky_finding), Snackbar.LENGTH_LONG).setAction("Action", null)
             snackbar_instance.show()
 
-            doAsync {
+            doAsync(ThisApp.ExceptionHandler) {
                 // 1. get new list --> get latest album ID
                 val list_new = RequestStoreAlbums(UserInfo.getUserIdOr(context), RequestStoreAlbums.CATEGORY_NEW, 0, 10).execute()
                 val latest_album_id: Long = run<Long> {

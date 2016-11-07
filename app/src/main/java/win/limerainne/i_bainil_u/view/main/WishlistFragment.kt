@@ -1,23 +1,19 @@
 package win.limerainne.i_bainil_u.view.main
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import win.limerainne.i_bainil_u.credential.LoginCookie
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.Server
 import win.limerainne.i_bainil_u.view.DataLoadable
@@ -100,7 +96,7 @@ class WishlistFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWi
         }
 
         if (fragView.btn_reload.visibility == View.VISIBLE)   {
-            doAsync {
+            doAsync(ThisApp.ExceptionHandler) {
                 Thread.sleep(500)
                 if (UserInfo.checkLogin(context))
                     uiThread {
@@ -116,7 +112,7 @@ class WishlistFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWi
         UserInfo.checkLoginThenRun(context, {
             view.btn_reload.visibility = View.INVISIBLE
 
-            doAsync() {
+            doAsync(ThisApp.ExceptionHandler) {
                 val w: Server = Server()
                 val wList = w.requestWishlist(UserInfo.getUserIdOr(context))
                 uiThread { if (view.list is RecyclerView) {

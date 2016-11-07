@@ -1,10 +1,7 @@
 package win.limerainne.i_bainil_u.credential
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.Log
-import android.webkit.CookieManager
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.extension.DelegatesExt
 import win.limerainne.i_bainil_u.toolbox.WebviewTool
 import java.net.HttpURLConnection

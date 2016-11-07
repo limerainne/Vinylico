@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/text_margin"
     android:layout_marginLeft="@dimen/text_margin"
-    android:layout_marginRight="@dimen/text_margin"
-    >
+    android:layout_marginRight="@dimen/text_margin">
     <TextView
         android:id="@+id/album_artist"
         android:layout_width="match_parent"

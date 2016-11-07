@@ -1,22 +1,17 @@
 package win.limerainne.i_bainil_u.view.main
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_browse_list.view.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
-import win.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.Server
@@ -25,7 +20,6 @@ import win.limerainne.i_bainil_u.view.InteractWithMainActivity
 import win.limerainne.i_bainil_u.view.MainActivity
 import win.limerainne.i_bainil_u.view.MyFragment
 import win.limerainne.i_bainil_u.viewmodel.main.SearchResultRecyclerViewAdapter
-import win.limerainne.i_bainil_u.viewmodel.main.WishlistRecyclerViewAdapter
 
 /**
  * A simple [Fragment] subclass.
@@ -106,7 +100,7 @@ class SearchResultFragment : MyFragment(), DataLoadable, UpdatingToolbar, Intera
         view.btn_reload.visibility = View.INVISIBLE
         view.list.visibility = View.INVISIBLE
 
-        doAsync() {
+        doAsync(ThisApp.ExceptionHandler) {
             val w: Server = Server()
             val wResult = w.requestSearchResult(keyword, UserInfo.getUserIdOr(context))
             uiThread { if (view.list is RecyclerView) {

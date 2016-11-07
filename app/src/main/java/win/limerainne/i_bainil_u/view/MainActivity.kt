@@ -8,19 +8,16 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
-import android.support.v4.os.EnvironmentCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
@@ -30,7 +27,6 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
-import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -42,17 +38,18 @@ import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
-import win.limerainne.i_bainil_u.base.*
+import win.limerainne.i_bainil_u.ThisApp
+import win.limerainne.i_bainil_u.base.OnFragmentInteractionListener
+import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import win.limerainne.i_bainil_u.credential.LoginCookie
 import win.limerainne.i_bainil_u.credential.UserInfo
-import win.limerainne.i_bainil_u.domain.model.*
-import win.limerainne.i_bainil_u.extension.DelegatesExt
-import win.limerainne.i_bainil_u.extension.Preference
+import win.limerainne.i_bainil_u.domain.model.AlbumEntry
+import win.limerainne.i_bainil_u.domain.model.SearchAlbum
+import win.limerainne.i_bainil_u.domain.model.SearchArtist
+import win.limerainne.i_bainil_u.domain.model.SearchTrack
 import win.limerainne.i_bainil_u.extension.context
 import win.limerainne.i_bainil_u.toolbox.BainilLauncher
-import win.limerainne.i_bainil_u.toolbox.DownloadTool
 import win.limerainne.i_bainil_u.view.detail.AlbumInfoFragment
 import win.limerainne.i_bainil_u.view.main.*
 import win.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
@@ -159,7 +156,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setCookieTo("remember", loginToken.remember)
         }
 
-        doAsync {
+        doAsync(ThisApp.ExceptionHandler) {
             loginToken.getToken()
             uiThread {
                 if (loginToken.haveLoginCookie) {

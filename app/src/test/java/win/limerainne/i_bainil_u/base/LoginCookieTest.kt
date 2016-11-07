@@ -1,11 +1,7 @@
 package win.limerainne.i_bainil_u.data.api
 
-import org.junit.Test
-import org.junit.Assert.*
-import win.limerainne.i_bainil_u.credential.LoginCookie
-
-import win.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 import win.limerainne.i_bainil_u.domain.model.AlbumEntry as DomainWishAlbum
+import win.limerainne.i_bainil_u.domain.model.Wishlist as DomainWishlist
 
 /**
  * Created by Limerainne on 2016-07-21.

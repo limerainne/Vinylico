@@ -2,7 +2,6 @@ package win.limerainne.i_bainil_u.view.main
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,10 +11,9 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import win.limerainne.i_bainil_u.credential.LoginCookie
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.Server
 import win.limerainne.i_bainil_u.view.DataLoadable
@@ -99,7 +97,7 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
         }
 
         if (fragView.btn_reload.visibility == View.VISIBLE)   {
-            doAsync {
+            doAsync(ThisApp.ExceptionHandler) {
                 Thread.sleep(500)
                 if (UserInfo.checkLogin(context))
                     uiThread {
@@ -124,7 +122,7 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
         UserInfo.checkLoginThenRun(context, {
             view.btn_reload.visibility = View.INVISIBLE
 
-            doAsync() {
+            doAsync(ThisApp.ExceptionHandler) {
                 println("PurchasedFragment: request data")
                 val s: Server = Server()
                 val pList = s.requestConnected(UserInfo.getUserIdOr(context))

@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,15 +20,15 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
-import win.limerainne.i_bainil_u.toolbox.PurchaseTool
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.Server
-import win.limerainne.i_bainil_u.domain.job.AnnotateWebDownloadIdCommand
 import win.limerainne.i_bainil_u.domain.model.AlbumDetail
 import win.limerainne.i_bainil_u.domain.model.AlbumEntry
 import win.limerainne.i_bainil_u.domain.model.TrackList
 import win.limerainne.i_bainil_u.toolbox.DownloadTool
+import win.limerainne.i_bainil_u.toolbox.PurchaseTool
 import win.limerainne.i_bainil_u.view.DataLoadable
 import win.limerainne.i_bainil_u.view.HavingToolbar
 import win.limerainne.i_bainil_u.view.MainActivity
@@ -128,7 +125,7 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
         val rec_view = view.findViewById(R.id.info_recycler_view) as RecyclerView?
         rec_view?.layoutManager = LinearLayoutManager(context)
 
-        doAsync() {
+        doAsync(ThisApp.ExceptionHandler) {
             val w: Server = Server()
             albumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
             albumTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))

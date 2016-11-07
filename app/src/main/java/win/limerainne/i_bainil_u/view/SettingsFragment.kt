@@ -2,7 +2,6 @@ package win.limerainne.i_bainil_u.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import kotlinx.android.synthetic.main.content_main.view.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.credential.UserInfo
-import win.limerainne.i_bainil_u.view.MainActivity
 
 /**
  * Created by Limerainne on 2016-10-21.

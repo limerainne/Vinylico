@@ -3,26 +3,24 @@ package win.limerainne.i_bainil_u.toolbox
 import android.Manifest
 import android.app.Activity
 import android.app.DownloadManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Environment
-import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v4.net.ConnectivityManagerCompat
-import android.util.Log
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.credential.LoginCookie
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.Server
-import win.limerainne.i_bainil_u.data.api.Track
 import win.limerainne.i_bainil_u.domain.job.AnnotateWebDownloadIdCommand
 import win.limerainne.i_bainil_u.domain.model.TrackList
 import java.io.File
@@ -102,7 +100,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
     }
 
     fun getFilenameFromHeaderAsync(callback: () -> Unit) {
-        doAsync {
+        doAsync(ThisApp.ExceptionHandler) {
             try {
                 // http://stackoverflow.com/questions/16150089/how-to-handle-cookies-in-httpurlconnection-using-cookiemanager
                 val filename_header = "Content-Disposition"
@@ -164,7 +162,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         // check if 3G/LTE
         if (checkIfDataNetworkInSongDownload(context)) return
 
-        doAsync {
+        doAsync(ThisApp.ExceptionHandler) {
             try {
                 val manager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
@@ -241,7 +239,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
             if (checkIfDataNetworkInSongDownload(context)) return
 
             if (albumTracks.downloadId == 0L)
-                doAsync {
+                doAsync(ThisApp.ExceptionHandler) {
                     AnnotateWebDownloadIdCommand(albumTracks.albumId, albumTracks).execute {
                         uiThread {
                             DownloadTool.downloadTrack(trackId, albumTracks, context)
@@ -267,7 +265,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
             if (checkIfDataNetworkInSongDownload(context)) return
 
             if (albumTracks.downloadId == 0L)
-                doAsync {
+                doAsync(ThisApp.ExceptionHandler) {
                     AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
                         uiThread {
                             DownloadTool.downloadAlbum(albumId, albumTracks, context)
@@ -289,7 +287,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         fun downloadAlbum(albumId: Long, context: Context) {
             if (checkIfDataNetworkInAlbumDownload(context)) return
 
-            doAsync {
+            doAsync(ThisApp.ExceptionHandler) {
                 val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
                 AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
                     uiThread {
@@ -302,6 +300,21 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     }
                 }
             }
+        }
+
+        fun addReceiverOnClick(context: Context)    {
+            val onComplete = object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    val dm = Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)
+                    dm.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(dm)
+                }
+            }
+
+            context.registerReceiver(onComplete,
+                    IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+            context.registerReceiver(onComplete,
+                    IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED))
         }
     }
 }

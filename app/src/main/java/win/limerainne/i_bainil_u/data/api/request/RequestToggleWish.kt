@@ -5,8 +5,8 @@ import android.net.ConnectivityManager
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.request.data.RequestHTTPConnection
 
@@ -35,7 +35,7 @@ class RequestToggleWish(val albumId: Long,
             if (networkInfo != null && networkInfo!!.isConnected) {
                 // check login
                 UserInfo.checkLoginThenRun(mContext, {
-                    doAsync {
+                    doAsync(ThisApp.ExceptionHandler) {
                         val success: Boolean
                         try {
                             success = RequestToggleWish(albumId, UserInfo.Companion.getUserIdOrExcept(mContext), wish).execute()
