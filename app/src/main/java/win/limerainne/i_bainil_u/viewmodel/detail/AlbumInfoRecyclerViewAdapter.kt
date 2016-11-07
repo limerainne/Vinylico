@@ -23,6 +23,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import win.limerainne.i_bainil_u.data.api.request.RequestToggleWish
 import win.limerainne.i_bainil_u.data.api.request.data.RequestTrackLyric

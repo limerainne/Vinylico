@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_browse_list.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.base.OnListFragmentInteractionListener
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.data.api.Server
