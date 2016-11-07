@@ -139,7 +139,7 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 //                        Log.v("Picasso", albumDetail.jacketImage)
                         Picasso.with(context)
                                 .load(albumDetail.jacketImage)
-                                .noFade()
+//                                .noFade()
                                 .into(toolbar_background)
 
                         view.loading.visibility = View.INVISIBLE
