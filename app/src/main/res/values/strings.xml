@@ -81,9 +81,10 @@
     <string name="title_share_album">Invite to Bainil by</string>
 
     <string name="msg_err_share_requires_permission">Please grant permission first, then retry sharing&#8230;</string>
-    <string name="msg_err_download_requires_permission">"Please grant permission first, then retry download&#8230;</string>
+    <string name="msg_err_download_requires_permission">Please grant permission first, then retry download&#8230;</string>
 
     <string name="msg_err_loading_contents">Wait till contents are loaded&#8230;</string>
+    <string name="msg_err_failed_to_retrieve_album_info">Could't retrieve album information!</string>
 
     <string name="msg_feelinglucky_finding">Finding random album&#8230;</string>
     <string name="msg_err_feelinglucky">Failed to open random album. Try again later!</string>

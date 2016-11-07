@@ -25,6 +25,7 @@ import win.limerainne.i_bainil_u.domain.job.AnnotateWebDownloadIdCommand
 import win.limerainne.i_bainil_u.domain.model.TrackList
 import java.io.File
 import java.net.HttpURLConnection
+import java.net.ProtocolException
 import java.net.URL
 import java.net.URLDecoder
 
@@ -281,7 +282,6 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                         DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
                     else
                         context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
-                    break
                 }
         }
 
@@ -289,15 +289,21 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
             if (checkIfDataNetworkInAlbumDownload(context)) return
 
             doAsync(ThisApp.ExceptionHandler) {
-                val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
-                AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
-                    uiThread {
-                        for (track in albumTracks.tracks) {
-                            if (track.downloadId > 0L)
-                                DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
-                            else
-                                context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+                try {
+                    val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
+                    AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
+                        uiThread {
+                            for (track in albumTracks.tracks) {
+                                if (track.downloadId > 0L)
+                                    DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
+                                else
+                                    context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+                            }
                         }
+                    }
+                } catch (e: ProtocolException)  {
+                    uiThread {
+                        context.toast("${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_failed_to_retrieve_album_info)}")
                     }
                 }
             }
