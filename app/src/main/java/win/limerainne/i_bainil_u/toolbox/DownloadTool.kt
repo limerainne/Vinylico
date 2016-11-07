@@ -229,6 +229,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
             if (!ThisApp.CommonPrefs.allowDataNetwork) {
                 val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 if (connMgr.activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE) {
+                    context.toast(R.string.msg_err_cellular_network)
                     return true
                 }
             }
@@ -311,8 +312,8 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 }
             }
 
-            context.registerReceiver(onComplete,
-                    IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+//            context.registerReceiver(onComplete,
+//                    IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
             context.registerReceiver(onComplete,
                     IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED))
         }
