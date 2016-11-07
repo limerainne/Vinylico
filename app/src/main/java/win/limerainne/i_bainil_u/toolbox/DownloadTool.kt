@@ -136,7 +136,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 conn.connect()
 
                 val headers = conn.headerFields
-                println(headers)
+//                println(headers)
                 val filenameHeader = headers[filename_header]
 
                 val reFilename = Regex("""filename=\"(.+)\"""")
@@ -145,7 +145,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     filename = reFilename.find(entry)?.groupValues?.get(1) ?: ""
                     filename = URLDecoder.decode(filename, "UTF-8")
                 }
-                println("Filename to download: ${filename}")
+//                println("Filename to download: ${filename}")
 
                 if (filename.length > 0)
                     uiThread {

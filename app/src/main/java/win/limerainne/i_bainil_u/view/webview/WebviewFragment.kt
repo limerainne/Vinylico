@@ -117,7 +117,7 @@ open class WebviewFragment: MyFragment(), HavingToolbar, DataLoadable {
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
 
-            Log.v("Webview", "OnPageFinished: ${url}")
+//            Log.v("Webview", "OnPageFinished: ${url}")
             mWebURL.text = url
 
 //            if (scroll_view != null)

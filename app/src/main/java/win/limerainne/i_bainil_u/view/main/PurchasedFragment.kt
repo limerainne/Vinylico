@@ -123,13 +123,11 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
             view.btn_reload.visibility = View.INVISIBLE
 
             doAsync(ThisApp.ExceptionHandler) {
-                println("PurchasedFragment: request data")
                 val s: Server = Server()
                 val pList = s.requestConnected(UserInfo.getUserIdOr(context))
-                println("PurchasedFragment: got data")
+
                 uiThread { if (view.list is RecyclerView) {
                     if (context != null) {
-                        println("PurchasedFragment: showing data")
                         view.list.adapter = PurchasedRecyclerViewAdapter(context, pList, mListener)
 
                         view.loading.visibility = View.INVISIBLE

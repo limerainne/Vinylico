@@ -49,7 +49,6 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
         rangesList.add(ItemIndices(HEADER_TRACK, rangesList.last().to + if (hasTrack) 1 else 0, rangesList.last().to + if (hasTrack) 1 else 0))
         rangesList.add(ItemIndices(ITEM_TRACK, rangesList.last().to + 1, rangesList.last().to + mResult.tracks.size))
-        println(rangesList)
     }
 
     override fun getItemCount(): Int    {
@@ -110,14 +109,11 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val viewType = getItemViewType(position)
 
-        println("#${position} as ${viewType}: ${holder}")
-
         when (viewType) {
             HEADER_KEYWORD, HEADER_ARTIST, HEADER_ALBUM, HEADER_TRACK -> {
                 if (holder !is HeaderViewHolder)
                     throw RuntimeException()
                 when (viewType) {
-                    // TODO extract string into resource
                     HEADER_KEYWORD ->
                         holder.bind(mContext.getString(R.string.search_keyword_header, mResult.keyword), mContext.getString(R.string.search_keyword_desc, mResult.artists.size, mResult.albums.size, mResult.tracks.size))
                     HEADER_ARTIST ->

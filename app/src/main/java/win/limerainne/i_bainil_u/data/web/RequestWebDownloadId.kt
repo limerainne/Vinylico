@@ -12,7 +12,7 @@ class RequestWebDownloadId(val albumId: Long): RequestHTTPConnection() {
     override fun composeURL(): String = "http://www.bainil.com/album/${albumId}"
 
     override fun execute(): WebDownloadId {
-        println("RequestWebDownloadId.execute()")
+//        println("RequestWebDownloadId.execute()")
 
         val response = getHTTPResponseString()
 
@@ -21,28 +21,22 @@ class RequestWebDownloadId(val albumId: Long): RequestHTTPConnection() {
             it.groupValues[1].toLong()
         } ?: 0L
 
-        println(albumId)
+//        println(albumId)
 
         val trackIdPairList: Map<Long, Long> = reTrackId.findAll(response).let {
-            println(it)
 
             val list = mutableMapOf<Long, Long>()
 
             for (match in it)   {
-                println(match)
-                println(match.groupValues)
                 val trackId = match.groupValues[1].toLong()
                 val downloadId = match.groupValues[2].toLong()
                 list.put(trackId, downloadId)
-                println("${trackId}, ${downloadId}")
             }
 
             list
         }
 
-        println(trackIdPairList)
-
-        println("${albumId}\n${trackIdPairList}")
+//        println("${albumId}\n${trackIdPairList}")
 
         return WebDownloadId(albumId, trackIdPairList)
     }

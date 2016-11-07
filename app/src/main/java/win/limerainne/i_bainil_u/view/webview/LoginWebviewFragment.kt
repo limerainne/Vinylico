@@ -75,23 +75,23 @@ class LoginWebviewFragment: WebviewFragment() {
     }
 
     fun parseLoginCookie(cookie: String) {
-        Log.v(TAG, "parseLoginCookie: " + cookie)
+//        Log.v(TAG, "parseLoginCookie: " + cookie)
         // TODO differentiate auto login/one-time login
 
         val cookieParser = LoginCookie(this_activity)
 
         cookieParser.parseLoginCookie(cookie)
 
-        Log.v(TAG, "parseLoginCookie: " + cookieParser)
+//        Log.v(TAG, "parseLoginCookie: " + cookieParser)
     }
 
     inner class MyLoginWebViewClient(context: Context): MyWebViewClient(context) {
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
-            Log.v(TAG, "onPageFinished: " + url)
+//            Log.v(TAG, "onPageFinished: " + url)
 
             val cookies = CookieManager.getInstance().getCookie(cookie_url)
-            Log.d(TAG, "onPageFinished: " + cookies)
+//            Log.d(TAG, "onPageFinished: " + cookies)
 
             if (url.equals(url_fan_profile))    {
                 mWebView.visibility = View.INVISIBLE
@@ -128,10 +128,10 @@ class LoginWebviewFragment: WebviewFragment() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            Log.v(TAG, "onPageStarted: " + url)
+//            Log.v(TAG, "onPageStarted: " + url)
 
             val cookies = CookieManager.getInstance().getCookie(cookie_url)
-            Log.d(TAG, "onPageStarted: " + cookies)
+//            Log.d(TAG, "onPageStarted: " + cookies)
 
             mWebView.visibility = View.VISIBLE
 

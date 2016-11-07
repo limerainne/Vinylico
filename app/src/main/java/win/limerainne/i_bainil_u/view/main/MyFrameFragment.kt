@@ -23,17 +23,17 @@ abstract class MyFrameFragment: MyFragment(), HavingToolbar, HavingChildFragment
                               savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState) as View
 
-        childFragmentManager.addOnBackStackChangedListener {
-            Log.v("ChildFragStack", "Yay")
-            val child = activeChildFragment as Fragment
-            if (child is UpdatingToolbar)
-                child.updateTitle { title, subtitle ->
-                    println(title + " " + subtitle)
-                    toolbar.subtitle = title
-                    toolbar.title = subtitle
-                }
-        }
-        Log.v("ChildFragStack", "registered")
+//        childFragmentManager.addOnBackStackChangedListener {
+//            Log.v("ChildFragStack", "Yay")
+//            val child = activeChildFragment as Fragment
+//            if (child is UpdatingToolbar)
+//                child.updateTitle { title, subtitle ->
+//                    println(title + " " + subtitle)
+//                    toolbar.subtitle = title
+//                    toolbar.title = subtitle
+//                }
+//        }
+//        Log.v("ChildFragStack", "registered")
 
         return view
     }
@@ -47,13 +47,13 @@ abstract class MyFrameFragment: MyFragment(), HavingToolbar, HavingChildFragment
     }
 
     override fun changeChildFragment(targetFragment: Fragment, fragmentTAG: String, backStack: Boolean)   {
-        Log.d("Test", activeChildFragment?.tag.toString())
+//        Log.d("Test", activeChildFragment?.tag.toString())
 
         val currentChildFragmentTag = activeChildFragment?.tag
         if (currentChildFragmentTag != null && currentChildFragmentTag.equals(targetFragment.tag)) {
 
         }   else    {
-            Log.d("Test", targetFragment.toString())
+//            Log.d("Test", targetFragment.toString())
 
             val transaction = childFragmentManager.beginTransaction()
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

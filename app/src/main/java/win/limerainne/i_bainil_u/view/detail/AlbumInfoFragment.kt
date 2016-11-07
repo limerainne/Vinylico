@@ -150,9 +150,9 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
                         setToolbarTitles(artistName, albumName)
 
                         rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, albumDetail, albumTracks, mListener)
-                        Log.d("Found", albumTracks.albumId.toString())
-                        Log.v("Found", albumDetail.labelName)
-                        Log.v("Found", albumTracks.tracks[0].songName)
+//                        Log.d("Found", albumTracks.albumId.toString())
+//                        Log.v("Found", albumDetail.labelName)
+//                        Log.v("Found", albumTracks.tracks[0].songName)
                     }
                 }
 

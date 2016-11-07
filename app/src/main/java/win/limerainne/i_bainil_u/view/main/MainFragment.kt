@@ -105,7 +105,6 @@ class MainFragment : MyFrameFragment(), HavingToolbar, DataLoadable, InteractWit
         val child = activeChildFragment
         if (child != null && child is UpdatingToolbar) {
             child.updateTitle { title, subtitle ->
-                println(title + " " + subtitle)
                 toolbar.title = title
                 toolbar.subtitle = subtitle
             }

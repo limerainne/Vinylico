@@ -17,7 +17,7 @@ abstract class RequestHTTPConnection() : Request {
 
     fun getHTTPResponseString(appendPreferLang: Boolean = true): String {
         try {
-            println(composeURL())
+//            println(composeURL())
 
             val url = URL(composeURL())
             val conn = url.openConnection() as HttpURLConnection

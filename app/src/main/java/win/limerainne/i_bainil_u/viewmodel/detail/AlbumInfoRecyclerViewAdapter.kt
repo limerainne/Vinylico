@@ -360,7 +360,6 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 }
             }
 
-            println("Bind: ${item.songName}")
             mView.track_lyric.setVisibility4(false)
             mView.track_lyric.text = item.lyric_text
 

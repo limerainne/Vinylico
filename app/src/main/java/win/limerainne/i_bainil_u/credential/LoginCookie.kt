@@ -131,7 +131,7 @@ class LoginCookie(val context: Context) {
         val cookies = headers[cookies_header]
 
         if (cookies != null)    {
-            Log.v("LoginCookie", "Cookie: ${cookies}")
+//            Log.v("LoginCookie", "Cookie: ${cookies}")
 
             for (cookie in cookies) {
                 parseLoginCookieEntry(cookie)

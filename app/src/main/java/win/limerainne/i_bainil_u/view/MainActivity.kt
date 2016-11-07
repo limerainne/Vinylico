@@ -182,12 +182,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val drawer = findViewById(R.id.drawer_layout) as DrawerLayout?
             val activeFragment = activeFragment
 
-            Log.v("Activity", "BackStack: " + supportFragmentManager.backStackEntryCount.toString())
+//            Log.v("Activity", "BackStack: " + supportFragmentManager.backStackEntryCount.toString())
             if (drawer!!.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START)
                 eventProcessed = true
             } else if (activeFragment is WebviewFragment && activeFragment.canGoBack())    {
-                Log.v("Activity", "Webview: Can go back!")
                 activeFragment.goBack()
                 eventProcessed = true
             } else if (supportFragmentManager.backStackEntryCount >= 1) {
@@ -197,7 +196,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 eventProcessed = activeFragment.onBackPressed()
             }
 
-            Log.v("Activity", eventProcessed.toString())
+//            Log.v("Activity", eventProcessed.toString())
             if (!eventProcessed)
                 super.onBackPressed()
         }   catch (e: Exception) {
@@ -288,8 +287,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var hasToChangeMainFragmentsChild = false
         var fragmentTAG = ""
-
-        Log.d("Test", item.itemId.toString())
 
         // Handle navigation view item clicks here.
         when (item.itemId)   {
@@ -449,7 +446,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun setNavigationViewCheckedItem(itemId: Int)   {
         val navigationView = nav_view
 
-        Log.d("NavView", itemId.toString())
+//        Log.d("NavView", itemId.toString())
 
         navigationView?.setCheckedItem(itemId)
     }

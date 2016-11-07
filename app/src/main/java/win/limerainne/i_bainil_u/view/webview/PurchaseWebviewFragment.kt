@@ -55,7 +55,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     inner class MyPurchaseWebViewClient(context: Context): MyWebViewClient(context)    {
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            Log.v(PurchaseWebviewFragment.TAG, "onPageStarted: " + url)
+//            Log.v(PurchaseWebviewFragment.TAG, "onPageStarted: " + url)
 
             if (url != null)    {
                 // for payment failed -> "Close" button

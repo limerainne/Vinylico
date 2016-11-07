@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -142,7 +143,7 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
                     // init offset
                     offset = nextOffset
                     nextOffset += 1
-                    println("offset: ${offset}, nextOffset: ${nextOffset}")
+                    Log.v("BrowseList", "offset: ${offset}, nextOffset: ${nextOffset}")
 
                     // hide loading msg
                     view.loading.visibility = View.GONE
@@ -154,12 +155,12 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
     }
 
     override fun onLoadMore(position: Int): Boolean {
-        println("onLoadMore:" + position + ", to:o:" + nextOffset + ",l:" + length)
+        Log.v("BrowseList", "onLoadMore:" + position + ", to:o:" + nextOffset + ",l:" + length)
         doAsync(ThisApp.ExceptionHandler) {
             val s: Server = Server()
             val sList = s.requestStoreAlbums(category, UserInfo.getUserIdOr(context), nextOffset, length)
 
-            println(sList)
+//            println(sList)
 
             if (sList.albumEntries.size > 0) {
                 uiThread {
@@ -167,7 +168,7 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
 
                     offset = nextOffset
                     nextOffset += 1
-                    println("offset: ${offset}, nextOffset: ${nextOffset}")
+                    Log.v("BrowseList", "offset: ${offset}, nextOffset: ${nextOffset}")
                 }
             }
         }
