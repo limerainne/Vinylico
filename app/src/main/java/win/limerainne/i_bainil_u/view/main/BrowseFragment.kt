@@ -66,10 +66,9 @@ class BrowseFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWith
     }
 
     override fun loadData() {
-        val childId = pagerYay.currentItem
-        val child = pageAdapter.getItem(childId) as Fragment
+        val child = pageAdapter.currentFragment
 
-        if (child is MyFragment && child is DataLoadable)
+        if (child is DataLoadable)
             child.loadData()
     }
 

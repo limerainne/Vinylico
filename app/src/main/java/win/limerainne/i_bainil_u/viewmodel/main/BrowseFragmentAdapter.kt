@@ -3,6 +3,7 @@ package win.limerainne.i_bainil_u.viewmodel.main
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.view.ViewGroup
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.data.api.request.data.RequestStoreAlbums
@@ -12,6 +13,16 @@ import win.limerainne.i_bainil_u.view.main.BrowseListFragment
  * Created by CottonCandy on 2016-09-17.
  */
 class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+
+    lateinit var currentFragment: Fragment
+        private set
+
+    override fun setPrimaryItem(container: ViewGroup?, position: Int, `object`: Any?) {
+        if (`object` is Fragment)
+            currentFragment = `object`
+        super.setPrimaryItem(container, position, `object`)
+    }
+
     override fun getCount(): Int {
         return 4
     }
