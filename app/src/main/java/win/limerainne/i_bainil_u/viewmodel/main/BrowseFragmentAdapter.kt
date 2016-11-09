@@ -40,9 +40,9 @@ class BrowseFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence {
         when (position) {
-            0 -> return ThisApp.AppContext.getString(R.string.browse_top)
+            0 -> return ThisApp.AppContext.getString(R.string.browse_new)
             1 -> return ThisApp.AppContext.getString(R.string.browse_featured)
-            2 -> return ThisApp.AppContext.getString(R.string.browse_new)
+            2 -> return ThisApp.AppContext.getString(R.string.browse_top)
             3 -> return ThisApp.AppContext.getString(R.string.browse_xsfm)
         }
 
