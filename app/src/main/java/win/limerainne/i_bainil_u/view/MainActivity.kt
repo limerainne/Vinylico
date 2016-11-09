@@ -429,7 +429,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun updateNavigationViewUserInfoArea()  {
-        val userInfo = UserInfo(this)
+        val userInfo = UserInfo(ThisApp.AppContext)
+        println(userInfo)
 
         val navigationView = nav_view
         // TODO toggle login/logout msg
@@ -444,13 +445,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             logInOutMenu.setTitle(R.string.nav_logout)
         }
         else    {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
-            else
-                account_photo.setImageDrawable(ContextCompat.getDrawable(context, android.R.drawable.sym_def_app_icon))
-            // TODO move into resource
-            account_name.text = "Bainil"
-            account_email.text = "please.login@bainil.com"
+            if (account_photo != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
+                else
+                    account_photo.setImageDrawable(ContextCompat.getDrawable(context, android.R.drawable.sym_def_app_icon))
+
+                // TODO move into resource
+                account_name.text = "Bainil"
+                account_email.text = "please.login@bainil.com"
+            }
 
             logInOutMenu.setTitle(R.string.nav_login)
         }

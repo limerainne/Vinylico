@@ -5,8 +5,10 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.credential.UserInfo
 import win.limerainne.i_bainil_u.toolbox.BainilLauncher
@@ -56,6 +58,8 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     }
 
     inner class MyPurchaseWebViewClient(context: Context): MyWebViewClient(context)    {
+        var finished = false
+
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
 //            Log.v(PurchaseWebviewFragment.TAG, "onPageStarted: " + url)
@@ -63,19 +67,27 @@ class PurchaseWebviewFragment(): WebviewFragment() {
             if (url != null)    {
                 // for payment failed -> "Close" button
                 if (url.endsWith(URL_CLOSE) || url.endsWith(URL_DOWNLOAD))   {
+                    if (finished)   return
+
                     view?.stopLoading()
 
                     // return to previous screen
                     // TODO incorrect implementation
                     val activity = this_activity
                     if (activity is MainActivity) {
-                        activity.popBackStack()
-
-                        if (url.endsWith(URL_DOWNLOAD))
-                            activity.runOnUiThread {
-                                afterBought()
+                        doAsync {
+                            Thread.sleep(500)
+                            uiThread {
+                                activity.popBackStack()
                             }
+                            if (url.endsWith(URL_DOWNLOAD))
+                                activity.runOnUiThread {
+                                    afterBought()
+                                }
+                        }
                     }
+
+                    finished = true
                 }
                 if (url.endsWith(URL_ANDROID_INAPP_PAY))    {
                     view?.stopLoading()

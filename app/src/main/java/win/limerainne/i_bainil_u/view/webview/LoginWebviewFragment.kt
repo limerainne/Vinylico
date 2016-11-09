@@ -8,6 +8,8 @@ import android.view.View
 import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.credential.LoginCookie
@@ -47,6 +49,7 @@ class LoginWebviewFragment: WebviewFragment() {
     val javascriptInterfaceName = "HTMLRetriever"
     val myLock = Any()
     var myLockVar: Boolean = false
+    var gotUserInfo = false
 
     override fun onInitWebview()    {
         super.onInitWebview()
@@ -59,14 +62,27 @@ class LoginWebviewFragment: WebviewFragment() {
 
                 u.parseInfo(html)
 
-                synchronized(myLock) {
-                    myLockVar = true
-                    try {
-                        (myLock as java.lang.Object).notifyAll()
-                    } catch (e: IllegalMonitorStateException)   {
-                        e.printStackTrace()
+//                synchronized(myLock) {
+//                    myLockVar = true
+                    if (u.userId > 0) {
+                        val activity = this_activity    // TODO why we have to save initial activity reference?
+                        if (activity is MainActivity) {
+                            doAsync {
+                                Thread.sleep(500)
+                                uiThread {
+                                    activity.popBackStack()
+                                    activity.updateNavigationViewUserInfoArea()
+                                }
+                            }
+                        }
                     }
-                }
+
+//                    try {
+//                        (myLock as java.lang.Object).notifyAll()
+//                    } catch (e: IllegalMonitorStateException)   {
+//                        e.printStackTrace()
+//                    }
+//                }
             }
         }, javascriptInterfaceName)
 
@@ -82,10 +98,12 @@ class LoginWebviewFragment: WebviewFragment() {
 
         cookieParser.parseLoginCookie(cookie)
 
-//        Log.v(TAG, "parseLoginCookie: " + cookieParser)
+        Log.v(TAG, "parseLoginCookie: " + cookieParser)
     }
 
     inner class MyLoginWebViewClient(context: Context): MyWebViewClient(context) {
+        var finished: Boolean = false
+
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
 //            Log.v(TAG, "onPageFinished: " + url)
@@ -93,7 +111,7 @@ class LoginWebviewFragment: WebviewFragment() {
             val cookies = CookieManager.getInstance().getCookie(cookie_url)
 //            Log.d(TAG, "onPageFinished: " + cookies)
 
-            if (url.equals(url_fan_profile))    {
+            if (url.equals(url_fan_profile) && !finished)    {
                 mWebView.visibility = View.INVISIBLE
 
                 // get cookie & other informations
@@ -109,17 +127,26 @@ class LoginWebviewFragment: WebviewFragment() {
 
                     view.loadUrl("javascript:" + javascriptInterfaceName + ".getHtml(document.getElementsByTagName('html')[0].innerHTML);")
 
-                    synchronized(myLock)    {   // wait till javascript method called
-                        if (!myLockVar)
-                            (myLock as java.lang.Object).wait(5000)
-                    }
+//                    synchronized(myLock)    {   // wait till javascript method called
+//                        if (!myLockVar)
+//                            (myLock as java.lang.Object).wait(5000)
+//                    }
                 }
 
                 // return to previous screen
-                val activity = this_activity    // TODO why we have to save initial activity reference?
-                if (activity is MainActivity) {
-                    activity.popBackStack()
-                    activity.updateNavigationViewUserInfoArea()
+                if (gotUserInfo) {
+                    val activity = this_activity    // TODO why we have to save initial activity reference?
+                    if (activity is MainActivity) {
+                        doAsync {
+                            Thread.sleep(500)
+                            uiThread {
+                                activity.popBackStack()
+                                activity.updateNavigationViewUserInfoArea()
+                            }
+                        }
+                    }
+
+                    finished = true
                 }
             }   else    {
                 mWebView.visibility = View.VISIBLE

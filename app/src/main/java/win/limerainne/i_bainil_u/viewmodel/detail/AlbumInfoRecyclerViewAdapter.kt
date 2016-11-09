@@ -220,7 +220,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 mView.album_price.text = if (item.price.contains(".")) "$ " + item.price else item.price
             }
 
-            setPriceButton(mView.album_price, mAlbumEntry?.purchased ?: 0, item.free)
+            setPriceButton(mView.album_price, mAlbumEntry?.purchased ?: mItem.purchased, item.free)
             mView.album_price.setOnClickListener {
                 if (item.purchased == 1) {
                     DownloadTool.downloadAlbum(mAlbum.albumId, tracks, mContext)
@@ -229,7 +229,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                         try {
 
                             mAlbumEntry?.purchased = 1
-                            mAlbum.purchased == 1
+                            mAlbum.purchased = 1
 
                             this@AlbumInfoRecyclerViewAdapter.notifyDataSetChanged()
                         } catch(e: Exception) {
@@ -394,7 +394,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 //            }
 
             // TODO have to find a way to know if album/individual_song is already purchased
-            setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: 0, mAlbum.free)
+            setPriceButton(mView.song_price, item.price, mAlbumEntry?.purchased ?: mAlbum.purchased, mAlbum.free)
             if (!item.perSongPayable)   {
                 // NOTE this track cannot be purchased per song!
                 mView.song_price.text = "-"
