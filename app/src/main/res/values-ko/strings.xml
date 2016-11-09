@@ -9,7 +9,7 @@
     <string name="msg_err_album_already_purchased">이미 구매한 앨범입니다</string>
     <string name="msg_err_cant_download_album">앨범을 다운로드할 수 없습니다!</string>
     <string name="msg_err_cant_download_song">곡을 다운로드할 수 없습니다!</string>
-    <string name="msg_err_cellular_network">3G/LTE 네트워크를 사용중입니다!</string>
+    <string name="msg_err_cellular_network">모바일 네트워크를 사용중입니다!\\n(설정에서 제한을 해제할 수 있습니다)</string>
     <string name="msg_err_check_network_connection">네트워크 연결을 확인하세요!</string>
     <string name="msg_err_feelinglucky">운좋은 앨범을 찾지 못했습니다. 다음에 다시 시도해주세요!</string>
     <string name="msg_err_loading_contents">앨범 정보를 불러오는 동안 기다려주세요&#8230;</string>
@@ -55,7 +55,7 @@
     <string name="search_keyword_header">검색어: %1$s</string>
     <string name="search_track_desc">곡 제목, 아티스트 이름&#8230;</string>
     <string name="search_track_header">곡·%1$s</string>
-    <string name="setting_download_allow_cellular">3G/LTE 다운로드 허용</string>
+    <string name="setting_download_allow_cellular">모바일 네트워크 허용</string>
     <string name="setting_download_filename">곡 파일 이름</string>
     <string name="setting_download_filename_desc">(원래 이름)</string>
     <string name="setting_download_header">다운로드</string>
