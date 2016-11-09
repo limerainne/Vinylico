@@ -19,17 +19,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="다음 기능을 제공합니다:\n* 앨범 열람: 추천, 인기, 최신, XSFM\n* 랜덤 앨범 추천\n* 키워드 검색\n* 앨범 구매 페이지 연결 (KakaoPay 결제)\n* 위시리스트 추가/열람\n* 가사 열람\n* 앨범 구매 내역 열람\n* 앨범/곡 다운로드 (Web 다운로드 링크를 통해서)"/>
+            android:text="다음 기능을 제공합니다:\n* 앨범 열람: 추천, 인기, 최신, XSFM\n* 랜덤 앨범 추천 (하지만 미리듣기가 되지 않습니다..)\n* 키워드 검색\n* 앨범 구매 페이지 연결 (KakaoPay 결제)\n* 위시리스트 추가/열람\n* 가사 열람\n* 앨범 구매 내역 열람\n* 앨범/곡 다운로드 (Web 다운로드 링크를 통해서)"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="아직 다음 기능을 제공하지 않습니다:\n* 장르별 앨범 열람\n* 미리듣기\n* Google Play 인앱 결제 통한 구매 (공식 앱에서만 가능합니다)\n* 단곡 구매, 구매 기록 열람, 다운로드\n* 댓글 열람/남기기\n* 모바일 앨범: 부클릿 열람, MR 음원 듣기·목소리 녹음\n..."/>
+            android:text="아직 다음 기능을 제공하지 않습니다:\n* 장르별 앨범 열람\n* 미리듣기\n* Google Play 인앱 결제 통한 구매 (공식 앱에서만 가능합니다)\n* 단곡 구매, 구매 기록 열람, 다운로드\n* SNS 기능: 댓글 열람/남기기\n* 모바일 앨범: 부클릿 열람, MR 음원 듣기·목소리 녹음\n* 아티스트 페이지\n* 이벤트 배너 표시..."/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="앨범 다운로드 관련 안내 및 주의사항\n* 현재는 Android 기본 다운로드 관리자를 이용합니다.\n* 한 곡별로 차례대로 다운로드되지 않고 동시에 다운로드되니, 한 번에 너무 많은 곡을 받으면 Bainil 서버에 부담이 됩니다.\n* 현재는 저장 경로 및 파일 이름 변경은 불가능합니다.\n* 내부 저장소의 Music 폴더에 저장되며, 폴더가 없으면 생성됩니다."/>
+            android:text="앨범 다운로드 관련 안내 및 주의사항\n* 현재는 Android 기본 다운로드 관리자를 이용합니다.\n* 한 곡별로 차례대로 다운로드되지 않고 동시에 다운로드되니, 한 번에 너무 많은 곡을 받으면 Bainil 서버에 부담이 됩니다.\n* 현재는 저장 경로 및 파일 이름 변경은 불가능합니다.\n* 내부 저장소의 Music 폴더에 저장되며, 폴더가 없으면 생성됩니다.\n* 추후 자체 다운로드 관리자와 함께, SD 카드 저장 기능이 추가될 예정입니다."/>
 
         <TextView
             android:layout_width="match_parent"
@@ -49,6 +49,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="사용한 오픈소스 라이브러리:\n* Android Support Libraries\n\n* Picasso\n\n* Gson\n\n* Kotlin\n* Anko\n* Kotson\n\n* TypeKit\n* ButterKnife\n\n* ExpandableTextView\n* Mp3agic"/>
+            android:text="사용한 오픈소스 라이브러리:\n* Android Support Libraries\n* Picasso\n* Gson\n* Kotlin\n* Anko\n* Kotson\n* TypeKit\n* ButterKnife\n* ExpandableTextView\n* Mp3agic"/>
     </LinearLayout>
 </ScrollView>

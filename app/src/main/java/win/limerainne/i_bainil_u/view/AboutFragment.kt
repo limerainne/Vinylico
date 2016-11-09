@@ -11,6 +11,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.content_main.view.*
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.base.AdReqBuilder
 
 /**
  * Created by Limerainne on 2016-11-07.
@@ -35,8 +36,7 @@ class AboutFragment: Fragment(), HavingToolbar {
 
         // add ad
         val mAdView: AdView = fragView.findViewById(R.id.adView) as AdView
-        val adRequest: AdRequest = AdRequest.Builder().addTestDevice("0").build()
-        mAdView.loadAd(adRequest)
+        mAdView.loadAd(AdReqBuilder.getAdRequest())
 
         return fragView
     }

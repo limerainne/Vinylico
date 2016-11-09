@@ -1,5 +1,6 @@
 package win.limerainne.i_bainil_u.view
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceFragmentCompat
@@ -11,7 +12,9 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.content_main.view.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import win.limerainne.i_bainil_u.BuildConfig
 import win.limerainne.i_bainil_u.R
+import win.limerainne.i_bainil_u.base.AdReqBuilder
 import win.limerainne.i_bainil_u.credential.UserInfo
 
 /**
@@ -42,8 +45,7 @@ class SettingsFragment: PreferenceFragmentCompat(), HavingToolbar {
 
         // add ad
         val mAdView: AdView = parentView.findViewById(R.id.adView) as AdView
-        val adRequest: AdRequest = AdRequest.Builder().addTestDevice("0").build()
-        mAdView.loadAd(adRequest)
+        mAdView.loadAd(AdReqBuilder.getAdRequest())
 
         return parentView
     }
