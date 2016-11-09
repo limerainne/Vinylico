@@ -261,15 +261,4 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 
     }
 
-    interface PurchaseSuccessListener  {
-        fun purchaseSucceed()
-    }
-
-    inner class MyPurchaseSuccessListener: PurchaseSuccessListener    {
-        override fun purchaseSucceed() {
-
-        }
-
-    }
-
 }
