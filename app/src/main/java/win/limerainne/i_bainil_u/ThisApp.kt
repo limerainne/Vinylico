@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
+import com.google.firebase.crash.FirebaseCrash
 import com.tsengvn.typekit.Typekit
 import win.limerainne.i_bainil_u.base.CommonPrefs
 import win.limerainne.i_bainil_u.credential.UserInfo
@@ -59,6 +60,9 @@ class ThisApp : Application() {
         val LangCode: String
             get() = if (CommonPrefs.useEnglish) "en" else "ko"
 
-        val ExceptionHandler = { e: Throwable -> e.printStackTrace() }
+        val ExceptionHandler = { e: Throwable ->
+            e.printStackTrace()
+            FirebaseCrash.report(e)
+        }
     }
 }
