@@ -47,7 +47,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         if (checkIfDataNetworkInSongDownload(mContext)) return
 
         if (checkIfPermission(mContext)) {
-            getFilenameFromHeaderAsync() {
+            getFilenameFromHeaderAsync(mContext) {
                 // create path if nonexist
                 path.mkdirs()
 
@@ -100,7 +100,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         return true // permission granted
     }
 
-    fun getFilenameFromHeaderAsync(callback: () -> Unit) {
+    fun getFilenameFromHeaderAsync(context: Context, callback: () -> Unit) {
         doAsync(ThisApp.ExceptionHandler) {
             try {
                 // http://stackoverflow.com/questions/16150089/how-to-handle-cookies-in-httpurlconnection-using-cookiemanager
@@ -152,9 +152,16 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     uiThread {
                         callback()
                     }
+                else
+                    uiThread {
+                        context.toast(context.getString(R.string.msg_err_cant_download_song))
+                    }
             }
             catch (e: Exception)    {
                 e.printStackTrace()
+                uiThread {
+                    context.toast(context.getString(R.string.msg_err_cant_download_song))
+                }
             }
         }
     }
@@ -199,6 +206,9 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 manager.enqueue(request)
             } catch (e: Exception)  {
                 e.printStackTrace()
+                uiThread {
+                    context.toast(context.getString(R.string.msg_err_cant_download_song))
+                }
             }
         }
     }
