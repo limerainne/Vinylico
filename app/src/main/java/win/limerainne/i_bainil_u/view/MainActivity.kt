@@ -251,6 +251,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         })
 
+        if (activeFragment is DataLoadable) {
+            menu.findItem(R.id.action_refresh).apply {
+                isVisible = true
+            }
+
+        }
+
         return true
     }
 
@@ -277,6 +284,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             return true;
+        }
+        if (id == R.id.action_refresh)  {
+            val topFrag = activeFragment
+            if (topFrag is DataLoadable)  {
+                topFrag.loadData()
+            }
         }
         if (id == R.id.action_settings) {
             return true

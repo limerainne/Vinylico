@@ -90,53 +90,10 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 
         appBarLayout.addOnOffsetChangedListener(this)
 
-        // link toolbar with drawer in activity
-        //if (activity is MainActivity && toolbar != null)
-        //    (activity as MainActivity).linkDrawerToToolbar(toolbar)
-
         val rec_view = view.findViewById(R.id.info_recycler_view) as RecyclerView?
         rec_view?.layoutManager = LinearLayoutManager(context)
 
-        doAsync(ThisApp.ExceptionHandler) {
-            val w: Server = Server()
-            albumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
-            albumTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))
-
-            try {
-                // check if 2 vars are initialized
-                albumDetail.purchased = albumEntry?.purchased ?: -1
-
-                uiThread {
-                    if (context != null) {
-//                        Log.v("Picasso", albumDetail.jacketImage)
-                        Picasso.with(context)
-                                .load(albumDetail.jacketImage)
-//                                .noFade()
-                                .into(toolbar_background)
-
-                        view.loading.visibility = View.INVISIBLE
-
-                        artistName = albumDetail.artistName
-                        albumName = albumDetail.albumName
-
-                        setToolbarTitles(artistName, albumName)
-
-                        rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, albumDetail, albumTracks, mListener)
-//                        Log.d("Found", albumTracks.albumId.toString())
-//                        Log.v("Found", albumDetail.labelName)
-//                        Log.v("Found", albumTracks.tracks[0].songName)
-                    }
-                }
-
-//                if (albumDetail.purchased == 1)
-//                    AnnotateWebDownloadIdCommand(albumId, albumTracks).execute()
-
-            } catch (e: UninitializedPropertyAccessException)  {
-                e.printStackTrace()
-
-                // TODO show reload icon
-            }
-        }
+        loadData()
 
         if (albumEntry?.purchased == 1) {
             fab.setImageResource(R.drawable.ic_download_white)
@@ -236,6 +193,48 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 //            isHideToolbarView = !isHideToolbarView
 //        }
         toolbarHeaderView.visibility = View.VISIBLE
+    }
+
+    override fun loadData() {
+        val rec_view = view?.findViewById(R.id.info_recycler_view) as RecyclerView?
+
+        doAsync(ThisApp.ExceptionHandler) {
+            val w: Server = Server()
+            albumDetail = w.requestAlbumDetail(albumId, UserInfo.getUserIdOr(context))
+            albumTracks = w.requestTrackList(albumId, UserInfo.getUserIdOr(context))
+
+            try {
+                // check if 2 vars are initialized
+                albumDetail.purchased = albumEntry?.purchased ?: -1
+
+                uiThread {
+                    if (context != null) {
+//                        Log.v("Picasso", albumDetail.jacketImage)
+                        Picasso.with(context)
+                                .load(albumDetail.jacketImage)
+//                                .noFade()
+                                .into(toolbar_background)
+
+                        view?.loading?.visibility = View.INVISIBLE
+
+                        artistName = albumDetail.artistName
+                        albumName = albumDetail.albumName
+
+                        setToolbarTitles(artistName, albumName)
+
+                        rec_view?.adapter = AlbumInfoRecyclerViewAdapter(context, albumEntry, albumDetail, albumTracks, mListener)
+//                        Log.d("Found", albumTracks.albumId.toString())
+//                        Log.v("Found", albumDetail.labelName)
+//                        Log.v("Found", albumTracks.tracks[0].songName)
+                    }
+                }
+
+            } catch (e: UninitializedPropertyAccessException)  {
+                e.printStackTrace()
+
+                // TODO show reload icon
+            }
+        }
     }
 
     companion object {
