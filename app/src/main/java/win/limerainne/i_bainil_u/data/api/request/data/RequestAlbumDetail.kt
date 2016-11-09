@@ -13,13 +13,13 @@ class RequestAlbumDetail(val albumId: Long,
                          val userId: Long,
                          val store: Int = 1,
                          val lang: String = ThisApp.LangCode,
-                         val gson: Gson = Gson()) : Request {
+                         val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/store/album"
     }
 
-    private fun composeURL(): String {
+    override fun composeURL(): String {
         var url = "${URL}?albumId=$albumId"
         url += "&userId=$userId"
         url += "&store=$store&lang=$lang"
@@ -27,7 +27,7 @@ class RequestAlbumDetail(val albumId: Long,
     }
 
     override fun execute(): AlbumDetail {
-        val albumDetailJsonStr = java.net.URL(composeURL()).readText()
+        val albumDetailJsonStr = getHTTPResponseString()
         return gson.fromJson<AlbumDetail>(albumDetailJsonStr)
     }
 }

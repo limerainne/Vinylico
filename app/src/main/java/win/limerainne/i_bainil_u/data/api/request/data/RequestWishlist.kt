@@ -10,17 +10,17 @@ import win.limerainne.i_bainil_u.data.api.request.Request
  */
 class RequestWishlist(val userId: Long,
                       val wish: String = "album",
-                      val gson: Gson = Gson()) : Request {
+                      val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/user/wishes"
     }
 
-    private fun composeURL() = "${URL}?userId=$userId&wish=$wish"
+    override fun composeURL() = "${URL}?userId=$userId&wish=$wish"
     // &offset=0&limit=20&lang=en // not working?
 
     override fun execute(): Wishlist {
-        val wishlistJsonStr = java.net.URL(composeURL()).readText()
+        val wishlistJsonStr = getHTTPResponseString()
         return gson.fromJson<Wishlist>(wishlistJsonStr)
     }
 }

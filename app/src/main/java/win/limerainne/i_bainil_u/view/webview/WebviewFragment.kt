@@ -20,6 +20,7 @@ import butterknife.ButterKnife
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.ThisApp
 import win.limerainne.i_bainil_u.credential.LoginCookie
+import win.limerainne.i_bainil_u.toolbox.WebviewTool
 import win.limerainne.i_bainil_u.view.DataLoadable
 import win.limerainne.i_bainil_u.view.HavingToolbar
 import win.limerainne.i_bainil_u.view.MyFragment
@@ -79,9 +80,14 @@ open class WebviewFragment: MyFragment(), HavingToolbar, DataLoadable {
         mWebView.loadUrl(init_url)
         mWebURL.text = init_url
 
-        // Enable Javascript
         val webSettings = mWebView.getSettings()
+
+        // Enable Javascript
         webSettings.setJavaScriptEnabled(true)
+
+        // userAgent
+        webSettings.userAgentString = WebviewTool().getDefaultUserAgentString(context)
+        print(webSettings.userAgentString)
 
         // Force links and redirects to open in the WebView instead of in a browser
         mWebView.setWebViewClient(MyWebViewClient(context))

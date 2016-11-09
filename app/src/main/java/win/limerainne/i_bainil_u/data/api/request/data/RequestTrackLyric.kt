@@ -10,13 +10,15 @@ class RequestTrackLyric(val lyricURL: String): RequestHTTPConnection() {
         val lyric = getHTTPResponseString()
 
         // TODO tidy lyric text e.g. remove timestamp
-        val lyric_tidy = re_lyric_timestamp.replace(lyric, "")
+        var lyric_tidy = re_lyric_timestamp.replace(lyric, "")
+        lyric_tidy = re_empty_line.replace(lyric_tidy, "")
 
         return lyric_tidy
     }
 
     companion object    {
         val re_lyric_timestamp = Regex("""\[\d{2}:\d{2}[\.:]\d{2}\]""")
+        val re_empty_line = Regex("""(?m)^\s+$""")
     }
 
 }

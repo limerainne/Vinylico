@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.Log
 import android.webkit.WebSettings
 import android.webkit.WebView
+import win.limerainne.i_bainil_u.ThisApp
 
 /**
  * Created by Limerainne on 2016-10-18.
@@ -32,6 +33,8 @@ class WebviewTool {
                 userAgent = WebView(context).getSettings().getUserAgentString()
             }
         }
+
+        userAgent += " ${ThisApp.AppName}.Android"
 
         Log.v("WebviewTool", "User agent: ${userAgent}")
 

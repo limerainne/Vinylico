@@ -11,16 +11,16 @@ import win.limerainne.i_bainil_u.data.api.request.Request
  */
 class RequestConnected(val userId: Long,
                        val lang: String = ThisApp.LangCode,
-                       val gson: Gson = Gson()) : Request {
+                       val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/user/connected/albums"
     }
 
-    private fun composeURL() = "${URL}?userId=$userId&lang=$lang"
+    override fun composeURL() = "${URL}?userId=$userId&lang=$lang"
 
     override fun execute(): Connected {
-        val JsonStr = java.net.URL(composeURL()).readText()
+        val JsonStr = getHTTPResponseString()
         return gson.fromJson<Connected>(JsonStr)
     }
 }

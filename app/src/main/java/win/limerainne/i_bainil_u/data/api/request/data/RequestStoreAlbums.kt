@@ -14,7 +14,7 @@ class RequestStoreAlbums(val userId: Long,  // MANDATORY
                          val offset: Long = 0,
                          val limit: Long = 20,
                          val lang: String = ThisApp.LangCode,
-                         val gson: Gson = Gson()) : Request {
+                         val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     // NOTE page number (=offset) is calculated by server regarding "limit" (item/page)!
 
@@ -30,10 +30,10 @@ class RequestStoreAlbums(val userId: Long,  // MANDATORY
 
     }
 
-    private fun composeURL() = "${URL}/$category?userId=$userId&offset=$offset&limit=$limit&lang=$lang"
+    override fun composeURL() = "${URL}/$category?userId=$userId&offset=$offset&limit=$limit&lang=$lang"
 
     override fun execute(): StoreAlbums {
-        val storeAlbumsJsonStr = java.net.URL(composeURL()).readText()
+        val storeAlbumsJsonStr = getHTTPResponseString()
         val albums = gson.fromJson<StoreAlbums>(storeAlbumsJsonStr)
         albums.offset = offset
         albums.limit = limit

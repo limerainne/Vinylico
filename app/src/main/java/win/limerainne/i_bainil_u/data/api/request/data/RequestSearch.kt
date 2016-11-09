@@ -697,13 +697,13 @@ class RequestSearch(val keyword: String,
                     val userId: Long,
                     val store: Int = 1,
                     val lang: String = ThisApp.LangCode,
-                    val gson: Gson = Gson()) : Request {
+                    val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/search"
     }
 
-    private fun composeURL(): String {
+    override fun composeURL(): String {
         var url = "${URL}?q=${keyword.replace(' ', '+')}"
         url += "&userId=$userId"
         url += "&store=$store&lang=$lang"
@@ -711,7 +711,7 @@ class RequestSearch(val keyword: String,
     }
 
     override fun execute(): SearchResultResponse {
-        val searchResultJsonStr = java.net.URL(composeURL()).readText()
+        val searchResultJsonStr = getHTTPResponseString()
         return gson.fromJson<SearchResultResponse>(searchResultJsonStr)
     }
 }

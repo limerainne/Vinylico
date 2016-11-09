@@ -19,20 +19,20 @@ http://www.bainil.com/api/v2/user/eml?userId=2543&&lang=ko
 
 class RequestRecommendAlbum(val userId: Long,
                             val lang: String = ThisApp.LangCode,
-                            val gson: Gson = Gson()) : Request {
+                            val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
         private val URL = "http://www.bainil.com/api/v2/user/eml"
     }
 
-    private fun composeURL(): String {
+    override fun composeURL(): String {
         var url = "${URL}?userId=$userId"
         url += "&lang=$lang"
         return url
     }
 
     override fun execute(): RecommendAlbumResponse {
-        val RecommendAlbumResponseStr = java.net.URL(composeURL()).readText()
+        val RecommendAlbumResponseStr = getHTTPResponseString()
         return gson.fromJson<RecommendAlbumResponse>(RecommendAlbumResponseStr)
     }
 }
