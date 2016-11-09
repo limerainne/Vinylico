@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
+import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.credential.UserInfo
@@ -26,6 +27,8 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     private var userId: Long = 0
     private var albumId: Long = 0
     private var seqId: Long = 0
+
+    private var afterBought: () -> Unit = {}
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
@@ -67,6 +70,11 @@ class PurchaseWebviewFragment(): WebviewFragment() {
                     val activity = this_activity
                     if (activity is MainActivity) {
                         activity.popBackStack()
+
+                        if (url.endsWith(URL_DOWNLOAD))
+                            activity.runOnUiThread {
+                                afterBought()
+                            }
                     }
                 }
                 if (url.endsWith(URL_ANDROID_INAPP_PAY))    {
@@ -88,11 +96,13 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     companion object {
         val TAG = PurchaseWebviewFragment::class.java.simpleName
 
-        fun newInstance(userId: Long, albumId: Long, seqId: Long, context: Context): PurchaseWebviewFragment {
+        fun newInstance(userId: Long, albumId: Long, seqId: Long, context: Context, afterBought: () -> Unit): PurchaseWebviewFragment {
             val fragment = PurchaseWebviewFragment()
 
             fragment.init_url = "about:blank"
             fragment.toolbar_title = context.getString(R.string.msg_err_purhcase_incorrect_URL)
+
+            fragment.afterBought = afterBought
 
             if (userId > 0 && albumId > 0 && checkLogin(userId, context))  {
                 fragment.setURL(userId, albumId, seqId)

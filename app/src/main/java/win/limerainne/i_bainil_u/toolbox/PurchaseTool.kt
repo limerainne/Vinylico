@@ -25,9 +25,12 @@ import win.limerainne.i_bainil_u.view.webview.PurchaseWebviewFragment
 
 class PurchaseTool  {
     companion object    {
-        fun purchaseAlbum(mContext: Context, item: AlbumEntry) = purchaseAlbum(mContext, item.albumId, item.albumName, item.free)
+        fun purchaseAlbum(mContext: Context, item: AlbumEntry, isBought: () -> Unit) = purchaseAlbum(mContext, item.albumId, item.albumName, item.free, isBought)
+        fun purchaseAlbum(mContext: Context, item: AlbumEntry) = purchaseAlbum(mContext, item.albumId, item.albumName, item.free, {})
 
-        fun purchaseAlbum(mContext: Context, albumId: Long, albumName: String, free: Boolean) {
+        fun purchaseAlbum(mContext: Context, albumId: Long, albumName: String, free: Boolean) = purchaseAlbum(mContext, albumId, albumName, free, {})
+
+        fun purchaseAlbum(mContext: Context, albumId: Long, albumName: String, free: Boolean, isBought: () -> Unit) {
             /*
             http://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
 
@@ -57,7 +60,7 @@ class PurchaseTool  {
                                     // TODO display purchase info & cautions
                                     val userInfo = UserInfo(mContext)
 
-                                    val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, albumId, purchaseCheckResponse.seqId, mContext)
+                                    val webviewFragment = PurchaseWebviewFragment.newInstance(userInfo.userId, albumId, purchaseCheckResponse.seqId, mContext, isBought)
                                     mContext.transitToFragment(R.id.placeholder_top, webviewFragment, PurchaseWebviewFragment.TAG)
                                 }
                             }
@@ -67,6 +70,8 @@ class PurchaseTool  {
                                     mContext.toast("${mContext.getString(R.string.msg_err_album_already_purchased)}: ${albumName}")
                                 else
                                     mContext.toast("${mContext.getString(R.string.msg_notice_free_album)}: ${albumName}")
+
+                                isBought()
                             }
                         }
 

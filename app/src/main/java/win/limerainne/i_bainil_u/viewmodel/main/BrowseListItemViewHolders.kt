@@ -95,7 +95,11 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
             if (item.purchased == 1)    {
                 DownloadTool.downloadAlbum(item.albumId, mContext)
             }   else
-                PurchaseTool.purchaseAlbum(mContext, item)
+                PurchaseTool.purchaseAlbum(mContext, item)   {
+                    item.purchased = 1
+
+                    this.bind(item)
+                }
         }
     }
 

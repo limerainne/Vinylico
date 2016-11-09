@@ -90,34 +90,6 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 
         appBarLayout.addOnOffsetChangedListener(this)
 
-        if (albumEntry?.purchased == 1) {
-            fab.setImageResource(R.drawable.ic_download_white)
-        }
-
-        fab.setOnClickListener {
-            try {
-                val albumEntry = albumEntry
-                if (albumEntry != null) {
-                    if (albumEntry.purchased == 0)
-                        PurchaseTool.purchaseAlbum(context, albumEntry)
-                    else if (albumEntry.purchased == 1) {
-                        // Download album
-                        DownloadTool.downloadAlbum(albumId, albumTracks, context)
-                    }
-                }
-
-                else if (albumDetail.purchased == 1) {
-                    // Download album
-                    DownloadTool.downloadAlbum(albumId, albumTracks, context)
-
-                } else
-                    PurchaseTool.purchaseAlbum(context, albumId, albumName, albumDetail.free)
-
-            } catch (e: UninitializedPropertyAccessException)   {
-                context.toast(context.getString(R.string.msg_err_loading_contents))
-            }
-        }
-
         // link toolbar with drawer in activity
         //if (activity is MainActivity && toolbar != null)
         //    (activity as MainActivity).linkDrawerToToolbar(toolbar)
@@ -163,6 +135,48 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
                 e.printStackTrace()
 
                 // TODO show reload icon
+            }
+        }
+
+        if (albumEntry?.purchased == 1) {
+            fab.setImageResource(R.drawable.ic_download_white)
+        }
+
+        fab.setOnClickListener {
+            try {
+                val albumEntry = albumEntry
+                if (albumEntry != null) {
+                    if (albumEntry.purchased == 0)
+                        PurchaseTool.purchaseAlbum(context, albumEntry)   {
+                            albumEntry.purchased = 1
+                            albumDetail.purchased = 1
+
+                            fab.setImageResource(R.drawable.ic_download_white)
+
+                            rec_view?.adapter?.notifyDataSetChanged()
+                        }
+                    else if (albumEntry.purchased == 1) {
+                        // Download album
+                        DownloadTool.downloadAlbum(albumId, albumTracks, context)
+                    }
+                }
+
+                else if (albumDetail.purchased == 1) {
+                    // Download album
+                    DownloadTool.downloadAlbum(albumId, albumTracks, context)
+
+                } else
+                    PurchaseTool.purchaseAlbum(context, albumId, albumName, albumDetail.free)   {
+                        albumEntry?.purchased = 1
+                        albumDetail.purchased = 1
+
+                        fab.setImageResource(R.drawable.ic_download_white)
+
+                        rec_view?.adapter?.notifyDataSetChanged()
+                    }
+
+            } catch (e: UninitializedPropertyAccessException)   {
+                context.toast(context.getString(R.string.msg_err_loading_contents))
             }
         }
 

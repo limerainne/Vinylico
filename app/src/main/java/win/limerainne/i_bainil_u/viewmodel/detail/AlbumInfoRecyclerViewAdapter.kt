@@ -225,7 +225,12 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
                 if (item.purchased == 1) {
                     DownloadTool.downloadAlbum(mAlbum.albumId, tracks, mContext)
                 }   else
-                    PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName, item.free)
+                    PurchaseTool.purchaseAlbum(mContext, item.albumId, item.albumName, item.free)   {
+                        mAlbumEntry?.purchased = 1
+                        item.purchased == 1
+
+                        this@AlbumInfoRecyclerViewAdapter.notifyDataSetChanged()
+                    }
             }
         }
 
