@@ -155,6 +155,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 else
                     uiThread {
                         context.toast(context.getString(R.string.msg_err_cant_download_song))
+                        throw Exception("${url}")
                     }
             }
             catch (e: Exception)    {
@@ -162,6 +163,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 uiThread {
                     context.toast(context.getString(R.string.msg_err_cant_download_song))
                 }
+                throw e
             }
         }
     }
@@ -209,6 +211,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 uiThread {
                     context.toast(context.getString(R.string.msg_err_cant_download_song))
                 }
+                throw e
             }
         }
     }
@@ -315,6 +318,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     uiThread {
                         context.toast("${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_failed_to_retrieve_album_info)}")
                     }
+                    throw e
                 }
             }
         }

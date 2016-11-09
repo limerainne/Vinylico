@@ -196,7 +196,7 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
     }
 
     override fun loadData() {
-        val rec_view = view?.findViewById(R.id.info_recycler_view) as RecyclerView?
+        val rec_view = fragView.info_recycler_view
 
         doAsync(ThisApp.ExceptionHandler) {
             val w: Server = Server()
@@ -215,7 +215,7 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 //                                .noFade()
                                 .into(toolbar_background)
 
-                        view?.loading?.visibility = View.INVISIBLE
+                        fragView.loading?.visibility = View.INVISIBLE
 
                         artistName = albumDetail.artistName
                         albumName = albumDetail.albumName

@@ -55,21 +55,21 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState) as View
+        super.onCreateView(inflater, container, savedInstanceState) as View
 
         // get data
         loadData()
 
         // Set the adapter
-        if (view.list is RecyclerView) {
-            val context = view.getContext()
+        if (fragView.list is RecyclerView) {
+            val context = fragView.getContext()
             if (mColumnCount <= 1) {
-                view.list.layoutManager = LinearLayoutManager(context)
+                fragView.list.layoutManager = LinearLayoutManager(context)
             } else {
-                view.list.layoutManager = GridLayoutManager(context, mColumnCount)
+                fragView.list.layoutManager = GridLayoutManager(context, mColumnCount)
             }
         }
-        return view
+        return fragView
     }
 
 
@@ -122,7 +122,12 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
     }
 
     override fun loadData() {
-        val view = fragView
+        val view: View
+        try {
+            view = fragView
+        } catch(e: UninitializedPropertyAccessException)    {
+            view = getView() ?: return
+        }
 
         // show loading msg
         view.loading.visibility = View.VISIBLE

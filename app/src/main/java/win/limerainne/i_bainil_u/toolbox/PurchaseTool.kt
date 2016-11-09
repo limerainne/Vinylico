@@ -3,6 +3,7 @@ package win.limerainne.i_bainil_u.toolbox
 import android.content.Context
 import android.net.ConnectivityManager
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import win.limerainne.i_bainil_u.R
@@ -50,7 +51,7 @@ class PurchaseTool  {
                             purchaseCheckResponse = RequestAlbumPurchased(albumId, userInfo.userId, free).execute()
                         } catch (e: Exception) {
                             purchaseCheckResponse = RequestAlbumPurchased.Response(false, 0L)
-                            e.printStackTrace()
+                            throw e
                         }
 
                         // 2. redirect to purchase page
@@ -71,11 +72,9 @@ class PurchaseTool  {
                                 else
                                     mContext.toast("${mContext.getString(R.string.msg_notice_free_album)}: ${albumName}")
 
-                                isBought()
+                                mContext.runOnUiThread { isBought() }
                             }
                         }
-
-                        // 3. TODO check if purhcase succeed (when? where?)
                     }
                 }, {})
             } else {
