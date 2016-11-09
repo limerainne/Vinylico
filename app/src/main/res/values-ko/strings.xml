@@ -84,4 +84,7 @@
     <string name="msg_err_download_requires_permission">먼저 권한을 허가한 후, 다시 다운로드를 시도해주세요&#8230;</string>
     <string name="msg_err_failed_to_retrieve_album_info">앨범 정보를 가져오지 못했습니다!</string>
     <string name="msg_err_track_no_download_id">앨범 웹 페이지에서 곡 ID를 가져오지 못했습니다&#8230;</string>
+    <string name="setting_download_ask_before_download">다운로드 하기 전 묻기</string>
+    <string name="msg_warning_download_data_network_title">모바일 네트워크 경고</string>
+    <string name="msg_warning_download_data_network_desc">정말 다운로드할까요?</string>
 </resources>

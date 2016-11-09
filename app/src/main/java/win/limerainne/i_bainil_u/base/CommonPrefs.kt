@@ -16,4 +16,5 @@ class CommonPrefs(appContext: Context) {
     val useEnglish: Boolean by DelegatesExt.preference(appContext, "pref_view_use_english", false, prefCabinet)
 
     val allowDataNetwork: Boolean by DelegatesExt.preference(appContext, "pref_download_allow_data_network", false, prefCabinet)
+    val askBeforeDownload: Boolean by DelegatesExt.preference(appContext, "pref_download_ask_before_download", true, prefCabinet)
 }

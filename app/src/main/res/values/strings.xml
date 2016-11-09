@@ -72,6 +72,9 @@
     <string name="msg_err_cant_download_song">Can\'t download a song!</string>
     <string name="msg_err_cellular_network">Device is in 3G/LTE network!</string>
 
+    <string name="msg_warning_download_data_network_title">Cellular warning</string>
+    <string name="msg_warning_download_data_network_desc">Do you really want to download?</string>
+
     <string name="msg_err_track_no_download_id">Failed to get song ID in album webpage&#8230;</string>
 
     <string name="msg_err_album_already_purchased">Already purchased this album</string>
@@ -134,6 +137,7 @@
 
     <string name="setting_download_header">Download</string>
     <string name="setting_download_allow_cellular">Allow 3G/LTE download</string>
+    <string name="setting_download_ask_before_download">Ask before download starts</string>
     <string name="setting_download_location">Download location</string>
     <string name="setting_download_location_desc">[Internal Storage]/Music/</string>
     <string name="setting_download_filename">Song filename</string>

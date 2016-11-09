@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import org.jetbrains.anko.AlertDialogBuilder
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
@@ -44,7 +45,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
 
     fun doDownload(mContext: Context)   {
         // check if 3G/LTE
-        if (checkIfDataNetworkInSongDownload(mContext)) return
+        if (checkIfDataNetworkInSongDownload(mContext, true)) return
 
         if (checkIfPermission(mContext)) {
             getFilenameFromHeaderAsync(mContext) {
@@ -173,7 +174,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
 
     fun addToQueue(context: Context)    {
         // check if 3G/LTE
-        if (checkIfDataNetworkInSongDownload(context)) return
+        if (checkIfDataNetworkInSongDownload(context, true)) return
 
         doAsync(ThisApp.ExceptionHandler) {
             try {
@@ -235,33 +236,51 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
             return newInstance(trackId, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "Bainil: ${songName}", "")
         }
 
-        fun checkIfDataNetworkInSongDownload(context: Context): Boolean {
-            return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_song)}\n${context.getString(R.string.msg_err_cellular_network)}")
+        fun checkIfDataNetworkInSongDownload(context: Context, dismissWarning: Boolean = false, proceed: () -> Unit = {}): Boolean {
+            return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_song)}\n${context.getString(R.string.msg_err_cellular_network)}", dismissWarning, proceed)
         }
 
-        fun checkIfDataNetworkInAlbumDownload(context: Context): Boolean {
-            return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_cellular_network)}")
+        fun checkIfDataNetworkInAlbumDownload(context: Context, dismissWarning: Boolean = false, proceed: () -> Unit = {}): Boolean {
+            return checkIfDataNetwork(context, "${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_cellular_network)}", dismissWarning, proceed)
         }
 
-        fun checkIfDataNetwork(context: Context, errorMsg: String): Boolean {
-            if (!ThisApp.CommonPrefs.allowDataNetwork) {
-                val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                if (connMgr.activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE) {
-                    context.toast(R.string.msg_err_cellular_network)
+        fun checkIfDataNetwork(context: Context, errorMsg: String, dismissWarning: Boolean = false, proceed: () -> Unit = {}): Boolean {
+            val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (connMgr.activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE) {
+                if (!ThisApp.CommonPrefs.allowDataNetwork) {
+                    context.toast(errorMsg)
                     return true
                 }
+                else if (!dismissWarning && ThisApp.CommonPrefs.askBeforeDownload)  {
+                    // ask before download
+                    AlertDialogBuilder(context).run {
+                        title(context.getString(R.string.msg_warning_download_data_network_title))
+                        message(context.getString(R.string.msg_warning_download_data_network_desc))
+                        positiveButton(context.getString(android.R.string.ok), {proceed()})
+                        negativeButton(context.getString(android.R.string.cancel), {})
+                        show()
+                    }
+                }
+                else
+                    proceed()
+            }   else    {
+                proceed()
             }
+
             return false
         }
 
         fun downloadTrack(trackId: Long, albumTracks: TrackList, context: Context) {
-            if (checkIfDataNetworkInSongDownload(context)) return
-
+            checkIfDataNetworkInSongDownload(context) {
+                DownloadTool.downloadTrackImpl(trackId, albumTracks, context)
+            }
+        }
+        fun downloadTrackImpl(trackId: Long, albumTracks: TrackList, context: Context) {
             if (albumTracks.downloadId == 0L)
                 doAsync(ThisApp.ExceptionHandler) {
                     AnnotateWebDownloadIdCommand(albumTracks.albumId, albumTracks).execute {
                         uiThread {
-                            DownloadTool.downloadTrack(trackId, albumTracks, context)
+                            DownloadTool.downloadTrackImpl(trackId, albumTracks, context)
                         }
                     }
                 }
@@ -281,13 +300,16 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         }
 
         fun downloadAlbum(albumId: Long, albumTracks: TrackList, context: Context) {
-            if (checkIfDataNetworkInSongDownload(context)) return
-
+            checkIfDataNetworkInSongDownload(context) {
+                DownloadTool.downloadAlbumImpl(albumId, albumTracks, context)
+            }
+        }
+        fun downloadAlbumImpl(albumId: Long, albumTracks: TrackList, context: Context) {
             if (albumTracks.downloadId == 0L)
                 doAsync(ThisApp.ExceptionHandler) {
                     AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
                         uiThread {
-                            DownloadTool.downloadAlbum(albumId, albumTracks, context)
+                            DownloadTool.downloadAlbumImpl(albumId, albumTracks, context)
                         }
                     }
                 }
@@ -303,26 +325,27 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
         }
 
         fun downloadAlbum(albumId: Long, context: Context) {
-            if (checkIfDataNetworkInAlbumDownload(context)) return
+            checkIfDataNetworkInAlbumDownload(context) {
 
-            doAsync(ThisApp.ExceptionHandler) {
-                try {
-                    val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
-                    AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
-                        uiThread {
-                            for (track in albumTracks.tracks) {
-                                if (track.downloadId > 0L)
-                                    DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
-                                else
-                                    context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+                doAsync(ThisApp.ExceptionHandler) {
+                    try {
+                        val albumTracks = Server().requestTrackList(albumId, UserInfo.getUserIdOr(context))
+                        AnnotateWebDownloadIdCommand(albumId, albumTracks).execute {
+                            uiThread {
+                                for (track in albumTracks.tracks) {
+                                    if (track.downloadId > 0L)
+                                        DownloadTool.newInstance(track.downloadId, track.songName).doDownload(context)
+                                    else
+                                        context.toast("${context.getString(R.string.msg_err_cant_download_song)}: ${track.songName}\n${context.getString(R.string.msg_err_track_no_download_id)}")
+                                }
                             }
                         }
+                    } catch (e: Exception) {   // ProtocolException, IllegalStateException
+                        uiThread {
+                            context.toast("${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_failed_to_retrieve_album_info)}")
+                        }
+                        throw e
                     }
-                } catch (e: Exception)  {   // ProtocolException, IllegalStateException
-                    uiThread {
-                        context.toast("${context.getString(R.string.msg_err_cant_download_album)}\n${context.getString(R.string.msg_err_failed_to_retrieve_album_info)}")
-                    }
-                    throw e
                 }
             }
         }
