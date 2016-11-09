@@ -48,6 +48,9 @@ abstract class RequestHTTPConnection() : Request {
                 )
             }
 
+            // Connection: close
+            conn.setRequestProperty("Connection", "close")
+
             // Starts the query
             conn.connect()
             val response = conn.getResponseCode()

@@ -130,6 +130,9 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     "en-US,en;q=0.8,ko-KR,ko;q=0.3"
                 )
 
+                // - avoid quick succession error
+                conn.setRequestProperty("Connection", "close")
+
                 // - refefer TODO
 
                 conn.setDoInput(true)
@@ -193,6 +196,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                             else
                                 "en-US,en;q=0.8,ko-KR,ko;q=0.3"
                     )
+                    addRequestHeader("Connection", "keep-alive")
 
                     // if 3G/LTE allowed...
                     if (ThisApp.CommonPrefs.allowDataNetwork)
