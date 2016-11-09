@@ -210,14 +210,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportFragmentManager.popBackStack()
     }
 
-    private var searchKeyword: String? = null
+    private var searchKeyword: String = ""
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
 
+        // hide screen-specific menus
+        menu.findItem(R.id.action_refresh).isVisible = false
+
+        // init searchWidget
         val searchMenu = menu.findItem(R.id.action_search)
         val searchView = searchMenu.actionView as SearchView
 
+        searchView.setOnSearchClickListener { view ->
+            (view as SearchView).setQuery(searchKeyword, false)
+        }
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener    {
             override fun onQueryTextChange(newText: String?): Boolean {
                 // TODO implement autocomplete
@@ -226,11 +233,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 val query = query
-                if (query == null)
+                if (query == null || query == "")
                     return false
 
-                searchView.setIconified(true);
-                searchView.clearFocus();
+                searchView.isIconified = true
+                searchView.clearFocus()
 
                 MenuItemCompat.collapseActionView(searchMenu)
 
@@ -322,12 +329,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_search_result -> {
                 hasToChangeMainFragmentsChild = true
                 if (!fragments.containsKey(R.id.nav_search_result))   {
-                    fragments[R.id.nav_search_result] = SearchResultFragment.newInstance(searchKeyword ?: "")
+                    fragments[R.id.nav_search_result] = SearchResultFragment.newInstance(searchKeyword)
                 }   else    {
                     val searchFragment = fragments[R.id.nav_search_result] as SearchResultFragment
-                    searchFragment.refresh(searchKeyword ?: "")
+                    searchFragment.refresh(searchKeyword)
                 }
-                searchKeyword = null
                 fragmentTAG = SearchResultFragment.TAG
             }
             // new activity
