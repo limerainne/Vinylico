@@ -561,9 +561,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String, addToBackStack: Boolean)  {
         val transaction = supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .add(targetPlaceHolder, targetFragment, targetTag)
+                .replace(targetPlaceHolder, targetFragment, targetTag)
         if (addToBackStack)
             transaction.addToBackStack(targetTag)
+
         transaction.commit()
     }
 

@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
@@ -66,6 +67,8 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
     lateinit var appBarLayout: AppBarLayout
     @BindView(R.id.toolbar_layout)
     lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
+    @BindView(R.id.toolbar_background)
+    lateinit var albumCover: ImageView
     @BindView(R.id.toolbar_header_view)
     lateinit var toolbarHeaderView: HeaderView
     @BindView(R.id.float_header_view)
@@ -213,7 +216,7 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
                         Picasso.with(context)
                                 .load(albumDetail.jacketImage)
 //                                .noFade()
-                                .into(toolbar_background)
+                                .into(albumCover)
 
                         fragView.loading?.visibility = View.INVISIBLE
 
