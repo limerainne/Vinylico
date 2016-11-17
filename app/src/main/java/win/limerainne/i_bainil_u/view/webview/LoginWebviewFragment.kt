@@ -98,7 +98,7 @@ class LoginWebviewFragment: WebviewFragment() {
 
         cookieParser.parseLoginCookie(cookie)
 
-        Log.v(TAG, "parseLoginCookie: " + cookieParser)
+//        Log.v(TAG, "parseLoginCookie: " + cookieParser)
     }
 
     inner class MyLoginWebViewClient(context: Context): MyWebViewClient(context) {

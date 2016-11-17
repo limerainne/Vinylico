@@ -148,7 +148,7 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
                     // init offset
                     offset = nextOffset
                     nextOffset += 1
-                    Log.v("BrowseList", "offset: ${offset}, nextOffset: ${nextOffset}")
+//                    Log.v("BrowseList", "offset: ${offset}, nextOffset: ${nextOffset}")
 
                     // hide loading msg
                     view.loading.visibility = View.GONE
@@ -160,7 +160,7 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
     }
 
     override fun onLoadMore(position: Int): Boolean {
-        Log.v("BrowseList", "onLoadMore:" + position + ", to:o:" + nextOffset + ",l:" + length)
+//        Log.v("BrowseList", "onLoadMore:" + position + ", to:o:" + nextOffset + ",l:" + length)
         doAsync(ThisApp.ExceptionHandler) {
             val s: Server = Server()
             val sList = s.requestStoreAlbums(category, UserInfo.getUserIdOr(context), nextOffset, length)
@@ -173,7 +173,7 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
 
                     offset = nextOffset
                     nextOffset += 1
-                    Log.v("BrowseList", "offset: ${offset}, nextOffset: ${nextOffset}")
+//                    Log.v("BrowseList", "offset: ${offset}, nextOffset: ${nextOffset}")
                 }
             }
         }

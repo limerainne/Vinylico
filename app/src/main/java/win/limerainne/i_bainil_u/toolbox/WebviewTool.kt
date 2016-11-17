@@ -36,7 +36,7 @@ class WebviewTool {
 
         userAgent += " ${ThisApp.AppName}.Android"
 
-        Log.v("WebviewTool", "User agent: ${userAgent}")
+//        Log.v("WebviewTool", "User agent: ${userAgent}")
 
         return userAgent
     }
