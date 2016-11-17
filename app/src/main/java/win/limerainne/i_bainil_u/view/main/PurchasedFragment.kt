@@ -20,6 +20,7 @@ import win.limerainne.i_bainil_u.view.DataLoadable
 import win.limerainne.i_bainil_u.view.InteractWithMainActivity
 import win.limerainne.i_bainil_u.view.MainActivity
 import win.limerainne.i_bainil_u.view.MyFragment
+import win.limerainne.i_bainil_u.view.webview.LoginWebviewFragment
 import win.limerainne.i_bainil_u.viewmodel.main.PurchasedRecyclerViewAdapter
 
 /**
@@ -32,6 +33,9 @@ import win.limerainne.i_bainil_u.viewmodel.main.PurchasedRecyclerViewAdapter
 class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWithMainActivity {
 
     override val TargetLayout = R.layout.fragment_browse_list
+
+    private val KEY_PREVIOUSLY_OPEN = "PREVIOUSLY_OPEN"
+    private var previouslyOpened = false
 
     // TODO: Customize parameters
     private var mColumnCount = 1
@@ -53,9 +57,6 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
 //        toolbar.title = getString(R.string.nav_home)
 //        toolbar.subtitle = getString(R.string.app_name)
 
-        // TODO get data
-        loadData()
-
         // Set the adapter
         if (view.list is RecyclerView) {
             val context = view.getContext()
@@ -65,6 +66,15 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
                 view.list.layoutManager = GridLayoutManager(context, mColumnCount)
             }
         }
+
+        val act = activity
+        if (act is MainActivity)
+            previouslyOpened = act.lastFragmentTag == LoginWebviewFragment.TAG
+        if (savedInstanceState != null)
+            previouslyOpened = savedInstanceState.getBoolean(KEY_PREVIOUSLY_OPEN)
+
+        loadData()
+
         return view
     }
 
@@ -99,10 +109,11 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
         if (fragView.btn_reload.visibility == View.VISIBLE)   {
             doAsync(ThisApp.ExceptionHandler) {
                 Thread.sleep(500)
-                if (UserInfo.checkLogin(context))
+                if (context != null && UserInfo.checkLogin(context)) {
                     uiThread {
                         loadData()
                     }
+                }
             }
         }
     }
@@ -119,7 +130,7 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
     override fun loadData()  {
         val view = fragView
 
-        UserInfo.checkLoginThenRun(context, {
+        val loadDataImpl: () -> Unit = {
             view.btn_reload.visibility = View.INVISIBLE
 
             doAsync(ThisApp.ExceptionHandler) {
@@ -136,12 +147,27 @@ class PurchasedFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractW
                 }
                 }
             }
-        }, {
+        }
+        val showReloadIcon: () -> Unit = {
             view.btn_reload.visibility = View.VISIBLE
             view.btn_reload.setOnClickListener {
+                previouslyOpened = false
+                
                 loadData()
             }
-        })
+        }
+
+
+        if (!previouslyOpened)
+            UserInfo.checkLoginThenRun(context, loadDataImpl, showReloadIcon)
+        else
+            UserInfo.checkLoginThenRun4(context, loadDataImpl, showReloadIcon)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.putBoolean(KEY_PREVIOUSLY_OPEN, true)
     }
 
     companion object {

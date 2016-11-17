@@ -397,6 +397,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         if (hasToChangeMainFragmentsChild)    {
+            lastFragmentTag = null
+
             val targetFragment = fragments[item.itemId]
 
             if (targetFragment != null) {
@@ -553,6 +555,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    var lastFragmentTag: String? = null
+
     fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String)  {
         transitToFragment(targetPlaceHolder, targetFragment, targetTag, true)
     }
@@ -563,6 +567,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .replace(targetPlaceHolder, targetFragment, targetTag)
         if (addToBackStack)
             transaction.addToBackStack(targetTag)
+
+        lastFragmentTag = targetTag
 
         transaction.commit()
     }
