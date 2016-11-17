@@ -430,10 +430,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun updateNavigationViewUserInfoArea()  {
         val userInfo = UserInfo(ThisApp.AppContext)
-        println(userInfo)
 
         val navigationView = nav_view
-        // TODO toggle login/logout msg
+
         val menu = navigationView.menu
         val logInOutMenu = menu.findItem(R.id.nav_login_logout)
 
@@ -447,9 +446,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         else    {
             if (account_photo != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    account_photo.setImageDrawable(getDrawable(android.R.drawable.sym_def_app_icon))
+                    account_photo.setImageDrawable(getDrawable(R.mipmap.ic_launcher))
                 else
-                    account_photo.setImageDrawable(ContextCompat.getDrawable(context, android.R.drawable.sym_def_app_icon))
+                    account_photo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_launcher))
 
                 // TODO move into resource
                 account_name.text = "Bainil"
@@ -475,7 +474,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun setToolbarColor(colorId: Int = 0, darkColorId: Int = 0)   {
-        Log.v("MainActivity", "setToolbarColor")
+//        Log.v("MainActivity", "setToolbarColor")
 
         return  // do nothing!
 
