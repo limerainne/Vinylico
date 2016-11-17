@@ -43,6 +43,10 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 
     override val TargetLayout = R.layout.fragment_album_info
 
+    private val KEY_ID = "KEY_ID"
+    private val KEY_ARTIST_NAME = "KEY_ARTIST_NAME"
+    private val KEY_ALBUM_NAME = "KEY_ALBUM_NAME"
+
     // albumEntry from clicked entry; might not exist..
     var albumEntry: AlbumEntry? = null
 
@@ -96,8 +100,6 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
         val rec_view = view.findViewById(R.id.info_recycler_view) as RecyclerView?
         rec_view?.layoutManager = LinearLayoutManager(context)
 
-        loadData()
-
         if (albumEntry?.purchased == 1) {
             fab.setImageResource(R.drawable.ic_download_white)
         }
@@ -140,9 +142,16 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
             }
         }
 
-//        if (savedInstanceState == null) {
-//            // TODO
-//        }
+        if (savedInstanceState != null) {
+            val args = savedInstanceState.getBundle(KEY_ID)
+            albumId = args.getLong(KEY_ID)
+            if (args.containsKey(KEY_ARTIST_NAME))
+                artistName = args.getString(KEY_ARTIST_NAME)
+            if (args.containsKey(KEY_ALBUM_NAME))
+                albumName = args.getString(KEY_ALBUM_NAME)
+        }
+
+        loadData()
 
         return view
     }
@@ -174,6 +183,19 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
             (activity as MainActivity).unsetNavigationViewCheckedItem()
             (activity as MainActivity).setToolbarColor()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val args = Bundle()
+        args.putLong(KEY_ID, albumId)
+        try {
+            args.putString(KEY_ARTIST_NAME, artistName)
+            args.putString(KEY_ALBUM_NAME, albumName)
+        } catch (e: UninitializedPropertyAccessException)   {}
+
+        outState.putBundle(KEY_ID, args)
     }
 
     override fun onPause()  {
