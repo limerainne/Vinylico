@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.content_main.view.*
+import kotlinx.android.synthetic.main.fragment_main_ad.view.*
 import win.limerainne.i_bainil_u.R
 import win.limerainne.i_bainil_u.base.AdReqBuilder
 
@@ -30,6 +31,7 @@ class AboutFragment: Fragment(), HavingToolbar {
 
         val childView = inflater!!.inflate(TargetLayout, container, false)
         fragView.content_main.addView(childView)
+        fragView.fab.visibility = View.GONE
 
         if (this is HavingToolbar)
             initToolbar()
