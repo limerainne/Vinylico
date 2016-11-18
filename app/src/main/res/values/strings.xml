@@ -26,6 +26,8 @@
     <string name="nav_login">Login</string>
     <string name="nav_logout">Logout</string>
 
+    <string name="nav_header_email">please.login@bainil.com</string>
+
     <!-- browse categories -->
     <string name="browse_new">New</string>
     <string name="browse_featured">Featured</string>

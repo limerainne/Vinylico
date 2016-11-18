@@ -452,9 +452,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 else
                     account_photo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_launcher))
 
-                // TODO move into resource
-                account_name.text = "Bainil"
-                account_email.text = "please.login@bainil.com"
+                account_name.text = getString(R.string.app_name)
+                account_email.text = getString(R.string.nav_header_email)
             }
 
             logInOutMenu.setTitle(R.string.nav_login)
