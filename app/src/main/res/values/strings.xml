@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">I.Bainil.U</string>
+    <string name="app_name" translatable="false">Vinylico</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -143,6 +143,6 @@
     <string name="setting_download_filename">Song filename</string>
     <string name="setting_download_filename_desc">(original)</string>
 
-    <string name="test_banner_unit_id" translatable="false">ca-app-pub-5038214535703629/9565300394</string>
+    <string name="test_banner_unit_id" translatable="false">ca-app-pub-5038214535703629/1699649596</string>
 
 </resources>

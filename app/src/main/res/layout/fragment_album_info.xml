@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/background"
-    tools:context="win.limerainne.i_bainil_u.view.detail.AlbumInfoFragment">
+    tools:context="win.limerainne.vinylico.view.detail.AlbumInfoFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -82,7 +82,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutManager="LinearLayoutManager"
-        tools:context="win.limerainne.app.i_bainil_u.view.AlbumInfoFragment" />
+        tools:context="win.limerainne.vinylico.view.AlbumInfoFragment" />
 
     <include
         android:id="@+id/float_header_view"
@@ -90,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="false"
-        app:layout_behavior="space.limerainne.i_bainil_u.view.ViewBehavior"
+        app:layout_behavior="win.limerainne.vinylico.view.ViewBehavior"
         android:visibility="gone"
         />
 

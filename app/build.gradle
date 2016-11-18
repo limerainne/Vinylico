@@ -20,7 +20,7 @@ android {
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
-        applicationId "win.limerainne.i_bainil_u"
+        applicationId "win.limerainne.vinylico"
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode 1
@@ -100,7 +100,7 @@ dependencies {
 //    compile 'org.sufficientlysecure:html-textview:2.0'
     compile 'com.ms-square:expandableTextView:0.1.4'
 
-    compile 'com.mpatric:mp3agic:0.8.4'
+//    compile 'com.mpatric:mp3agic:0.8.4'
     /*
     - Used library (16.10.04)
     Android Support Library

@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="I.Bainil.U는 모바일 음악 플랫폼 Bainil을 위한 비공식 클라이언트입니다.\n\n창작자에게 보다 많은 수익을 돌려주는 Bainil 서비스를 사용하면서, 앨범 구매 및 MP3 파일 다운로드를 한 큐에 손쉽게 할 수 있습니다."/>
+            android:text="Vinylico는 모바일 음악 플랫폼 Bainil을 위한 비공식 클라이언트입니다.\n\n창작자에게 보다 많은 수익을 돌려주는 Bainil 서비스를 사용하면서, 앨범 구매 및 MP3 파일 다운로드를 한 큐에 손쉽게 할 수 있습니다."/>
 
         <TextView
             android:layout_width="match_parent"
