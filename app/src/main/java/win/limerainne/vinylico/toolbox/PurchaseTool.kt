@@ -39,12 +39,12 @@ class PurchaseTool  {
              */
             val connMgr = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = connMgr.activeNetworkInfo
-            if (networkInfo != null && networkInfo!!.isConnected) {
+            if (networkInfo != null && networkInfo.isConnected) {
                 // check login first
                 UserInfo.checkLoginThenRun(mContext, {
                     doAsync(ThisApp.ExceptionHandler) {
                         // 1. check if previously purchased
-                        val purchaseCheckResponse: RequestAlbumPurchased.Response
+                        var purchaseCheckResponse: RequestAlbumPurchased.Response
                         try {
                             val userInfo = UserInfo(mContext)
 

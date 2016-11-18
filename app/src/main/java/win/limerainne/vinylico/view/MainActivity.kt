@@ -232,8 +232,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                val query = query
-                if (query == null || query == "")
+                val qry = query
+                if (qry == null || qry == "")
                     return false
 
                 searchView.isIconified = true
@@ -241,10 +241,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 MenuItemCompat.collapseActionView(searchMenu)
 
-                searchKeyword = query
+                searchKeyword = qry
 
-                val menu = this@MainActivity.nav_view.menu.findItem(R.id.nav_search_result)
-                this@MainActivity.onNavigationItemSelected(menu)
+                val targetMenu = this@MainActivity.nav_view.menu.findItem(R.id.nav_search_result)
+                this@MainActivity.onNavigationItemSelected(targetMenu)
 
                 return true
             }

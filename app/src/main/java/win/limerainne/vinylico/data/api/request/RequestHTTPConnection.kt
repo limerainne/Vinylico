@@ -72,16 +72,14 @@ abstract class RequestHTTPConnection() : Request {
     // Reads an InputStream and converts it to a String.
     @Throws(IOException::class, UnsupportedEncodingException::class)
     fun readIt(stream: InputStream): String {
-        var reader: Reader? = null
-        reader = InputStreamReader(stream, "UTF-8")
+        val reader = InputStreamReader(stream, "UTF-8")
 
         val bufReader = BufferedReader(reader)
 
         var res = ""
         while (true) {
             val buf = bufReader.readLine()
-            if (buf == null)
-                break
+            buf ?: break
 
             //res += URLDecoder.decode(buf, "utf-8");
             res += buf + "\n"

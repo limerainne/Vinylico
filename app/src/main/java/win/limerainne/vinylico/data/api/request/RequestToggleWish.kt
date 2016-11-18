@@ -32,11 +32,11 @@ class RequestToggleWish(val albumId: Long,
             // check network status
             val connMgr = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = connMgr.activeNetworkInfo
-            if (networkInfo != null && networkInfo!!.isConnected) {
+            if (networkInfo != null && networkInfo.isConnected) {
                 // check login
                 UserInfo.checkLoginThenRun(mContext, {
                     doAsync(ThisApp.ExceptionHandler) {
-                        val success: Boolean
+                        var success: Boolean
                         try {
                             success = RequestToggleWish(albumId, UserInfo.Companion.getUserIdOrExcept(mContext), wish).execute()
                         } catch (e: Exception) {

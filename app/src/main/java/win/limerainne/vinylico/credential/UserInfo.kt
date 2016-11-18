@@ -125,9 +125,9 @@ class UserInfo(val context: Context) {
             if (!checkLogin(context))   {
                 context.toast(context.getString(R.string.msg_login_required))
 
-                val context = context
-                if (context is MainActivity)
-                    context.openLoginPage()
+                val ctx = context
+                if (ctx is MainActivity)
+                    ctx.openLoginPage()
 
                 no()
             }   else    {

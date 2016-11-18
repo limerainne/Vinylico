@@ -15,7 +15,7 @@ class WebviewTool {
     // You may uncomment next line if using Android Annotations library, otherwise just be sure to run it in on the UI thread
     // @UiThread
     fun getDefaultUserAgentString(context: Context): String {
-        val userAgent: String
+        var userAgent: String
         if (Build.VERSION.SDK_INT >= 17) {
             userAgent = NewApiWrapper.getDefaultUserAgent(context)
         }   else {

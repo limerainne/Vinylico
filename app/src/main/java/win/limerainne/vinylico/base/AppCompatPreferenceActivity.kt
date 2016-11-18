@@ -18,7 +18,7 @@ import android.view.ViewGroup
 abstract class AppCompatPreferenceActivity : PreferenceActivity() {
 
     private val mDelegate: AppCompatDelegate by lazy {
-        AppCompatDelegate.create(this, null) as AppCompatDelegate
+        AppCompatDelegate.create(this, null)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
