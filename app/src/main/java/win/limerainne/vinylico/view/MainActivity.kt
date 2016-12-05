@@ -370,7 +370,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 val frag = fragments[R.id.nav_setting]
                 if (frag != null && activeFragment !is SettingsFragment)
-                    transitToFragment(R.id.placeholder_top, frag, SettingsFragment.TAG)
+                    transitToFragment(R.id.placeholder_top, frag, SettingsFragment.TAG, true, true)
             }
             R.id.nav_about -> {
                 hasToChangeMainFragmentsChild = false
@@ -381,7 +381,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 val frag = fragments[R.id.nav_about]
                 if (frag != null && activeFragment !is AboutFragment)
-                    transitToFragment(R.id.placeholder_top, frag, AboutFragment.TAG)
+                    transitToFragment(R.id.placeholder_top, frag, AboutFragment.TAG, true, true)
             }
             R.id.nav_login_logout ->    {
                 if (activeFragment !is LoginWebviewFragment && activeFragment !is LogoutWebviewFragment) {
@@ -560,10 +560,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         transitToFragment(targetPlaceHolder, targetFragment, targetTag, true)
     }
 
-    fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String, addToBackStack: Boolean)  {
+    fun transitToFragment(targetPlaceHolder: Int, targetFragment: Fragment, targetTag: String, addToBackStack: Boolean, doReplace: Boolean = false)  {
         val transaction = supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(targetPlaceHolder, targetFragment, targetTag)
+
+        if (doReplace)
+            transaction.replace(targetPlaceHolder, targetFragment, targetTag)
+        else
+            transaction.add(targetPlaceHolder, targetFragment, targetTag)
+
         if (addToBackStack)
             transaction.addToBackStack(targetTag)
 
