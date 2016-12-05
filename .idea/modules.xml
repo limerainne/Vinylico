@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/I.Bainil.U.iml" filepath="$PROJECT_DIR$/I.Bainil.U.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Vinylico.iml" filepath="$PROJECT_DIR$/Vinylico.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sandbox/sandbox.iml" filepath="$PROJECT_DIR$/sandbox/sandbox.iml" />
     </modules>
