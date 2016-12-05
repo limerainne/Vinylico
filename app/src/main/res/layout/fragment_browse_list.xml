@@ -41,7 +41,7 @@
         android:paddingBottom="64dp"
         android:clipToPadding="false"
         android:visibility="invisible"
-        android:background="@android:color/white"
+        android:background="@color/background"
         app:layoutManager="LinearLayoutManager"
         tools:context="win.limerainne.vinylico.view.main.BrowseListFragment"
         tools:listitem="@layout/fragment_browse_list_item" />
