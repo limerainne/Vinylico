@@ -383,6 +383,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (frag != null && activeFragment !is AboutFragment)
                     transitToFragment(R.id.placeholder_top, frag, AboutFragment.TAG, true, true)
             }
+            R.id.nav_bainil_app ->  {
+                BainilLauncher.executeBainilApp(context)
+            }
             R.id.nav_login_logout ->    {
                 if (activeFragment !is LoginWebviewFragment && activeFragment !is LogoutWebviewFragment) {
                     UserInfo.checkLoginThenRun4(this, {

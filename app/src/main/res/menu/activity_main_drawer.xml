@@ -46,6 +46,9 @@
             android:id="@+id/nav_about"
             android:title="@string/nav_about"
             android:icon="@drawable/ic_about"/>
+        <item
+            android:id="@+id/nav_bainil_app"
+            android:title="@string/nav_bainil_app"/>
 
         <!--<item-->
             <!--android:id="@+id/nav_share"-->

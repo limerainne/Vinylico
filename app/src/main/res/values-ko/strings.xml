@@ -87,4 +87,9 @@
     <string name="setting_download_ask_before_download">다운로드 하기 전 묻기</string>
     <string name="msg_warning_download_data_network_title">모바일 네트워크 경고</string>
     <string name="msg_warning_download_data_network_desc">정말 다운로드할까요?</string>
+    <string name="menu_bainil_app">Bainil 앱에서 열기</string>
+    <string name="menu_refresh">새로고침</string>
+    <string name="menu_search">Bainil 검색</string>
+    <string name="nav_bainil_app">Bainil 앱 열기</string>
+    <string name="nav_header_email"></string>
 </resources>

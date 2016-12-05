@@ -4,21 +4,21 @@
     <item
         android:id="@+id/action_search"
         android:orderInCategory="1"
-        android:title="Search Bainil"
+        android:title="@string/menu_search"
         android:icon="@drawable/ic_search_white"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
         android:id="@+id/action_refresh"
         android:orderInCategory="2"
-        android:title="Refresh list"
+        android:title="@string/menu_refresh"
         android:icon="@drawable/ic_refresh"
         android:visible="false"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_bainil_app"
         android:orderInCategory="2"
-        android:title="Open in Bainil App"
+        android:title="@string/menu_bainil_app"
         android:icon="@drawable/ic_bainil"
         app:showAsAction="ifRoom" />
     <item

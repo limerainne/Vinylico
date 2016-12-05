@@ -13,7 +13,7 @@
     <string name="url_bainil" translatable="false">http://www.bainil.com/</string>
     <string name="url_bainil_about" translatable="false">http://www.bainil.com/bainil</string>
 
-    <!-- Menu items -->
+    <!-- Navigation Menu items -->
     <string name="nav_home">Home</string>
     <string name="nav_browse">Browse</string>
     <string name="nav_wishlist">Wishlist</string>
@@ -22,11 +22,17 @@
     <string name="nav_search_result">Search</string>
     <string name="nav_setting">Settings</string>
     <string name="nav_about">App Info</string>
+    <string name="nav_bainil_app">Open Bainil App</string>
 
     <string name="nav_login">Login</string>
     <string name="nav_logout">Logout</string>
 
     <string name="nav_header_email">please.login@bainil.com</string>
+
+    <!-- Menu items -->
+    <string name="menu_search">Search Bainil</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_bainil_app">Open in Bainil App</string>
 
     <!-- browse categories -->
     <string name="browse_new">New</string>
