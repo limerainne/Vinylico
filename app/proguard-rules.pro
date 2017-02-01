@@ -15,6 +15,42 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #    public *;
 # }
+
+-keepattributes Exceptions
 -keepattributes SourceFile,LineNumberTable
 -dontwarn com.squareup.picasso.**
 -dontwarn org.jetbrains.anko.internals.**
+
+## ref: http://126kr.com/article/610x7fk26ii
+# Retrofit
+-keep class com.squareup.okhttp.** { *; }
+-keep class retrofit.** { *; }
+-keepclasseswithmembers class * {
+    @retrofit.** *;
+}
+-keepclassmembers class * {
+    @retrofit.** *;
+}
+
+# gson
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class cn.six.payx.entity.** { *; }
+
+##---------------End: proguard configuration for Gson  ----------
+
+-keep class android.support.** { *; }
+-keep class com.nostra13.universalimageloader.** {*;}
+-keep class kotlin.** {*;}
+-keep class rx.** {*;}
