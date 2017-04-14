@@ -122,11 +122,10 @@ class BrowseListFragment : MyFragment(), BrowseListRecyclerViewAdapter.EndlessSc
     }
 
     override fun loadData() {
-        val view: View
-        try {
-            view = fragView
+        val view: View = try {
+            fragView
         } catch(e: UninitializedPropertyAccessException)    {
-            view = getView() ?: return
+            getView() ?: return
         }
 
         // show loading msg
