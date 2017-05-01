@@ -6,10 +6,13 @@ import win.limerainne.vinylico.data.api.request.data.RequestHTTPConnection
  * Created by CottonCandy on 2016-10-30.
  */
 class RequestWebDownloadId(val albumId: Long): RequestHTTPConnection() {
-    val reAlbumId = Regex("""album/download\?no=(\d+)""")
-    val reTrackId = Regex("""data-song="(\d+)"(?:.|\n)+?href="/track/download\?no=(\d+)""")
+    //val reAlbumId = Regex("""album/download\?no=(\d+)""")
+    //val reTrackId = Regex("""data-song="(\d+)"(?:.|\n)+?href="/track/download\?no=(\d+)""")
+    // reworked @ 2017.05
+    val reAlbumId = Regex("""data-type="album" data-key="(\d+)"""")
+    val reTrackId = Regex("""data-song="(\d+)"(?:.|\n)+?data-key="(\d+)"""")
 
-    override fun composeURL(): String = "http://www.bainil.com/album/${albumId}"
+    override fun composeURL(): String = "https://www.bainil.com/album/${albumId}"
 
     override fun execute(): WebDownloadId {
 //        println("RequestWebDownloadId.execute()")

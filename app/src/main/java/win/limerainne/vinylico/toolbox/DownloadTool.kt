@@ -134,17 +134,18 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 // - avoid quick succession error
                 conn.setRequestProperty("Connection", "close")
 
-                // - refefer TODO
+                // - refefer
+                conn.setRequestProperty("Referer", "https://www.bainil.com/")
 
                 conn.setDoInput(true)
                 // Starts the query
                 conn.connect()
 
                 val headers = conn.headerFields
-//                println(headers)
+                println(headers)
                 val filenameHeader = headers[filename_header]
 
-                val reFilename = Regex("""filename=\"(.+)\"""")
+                val reFilename = Regex("""filename="(.+)"""")
                 if (filenameHeader != null) {
                     val entry = filenameHeader.get(0)
                     filename = reFilename.find(entry)?.groupValues?.get(1) ?: ""
@@ -222,7 +223,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
     }
 
     companion object {
-        private val TrackDownloadURLPrefix = "http://www.bainil.com/track/download?no="
+        private val TrackDownloadURLPrefix = "https://www.bainil.com/track/download?no="
 
         fun newInstance(url: String, path: File, title: String = "", desc: String = ""): DownloadTool {
             return DownloadTool(url, path, title, desc)
