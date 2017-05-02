@@ -200,6 +200,9 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                     )
                     addRequestHeader("Connection", "keep-alive")
 
+                    // - refefer
+                    addRequestHeader("Referer", "https://www.bainil.com/")
+
                     // if 3G/LTE allowed...
                     if (ThisApp.CommonPrefs.allowDataNetwork)
                         setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or
