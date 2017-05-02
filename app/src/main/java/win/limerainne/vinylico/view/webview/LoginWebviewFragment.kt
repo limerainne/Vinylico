@@ -23,10 +23,10 @@ class LoginWebviewFragment: WebviewFragment() {
 
     val url_login = "https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile"
 
-    val url_fan_profile = "https://www.bainil.com/fan/profile"
-    val url_top = "https://www.bainil.com/browse"
+    val url_fan_profile = "www.bainil.com/fan/profile"
+    val url_top = "www.bainil.com/browse"
 
-    val url_signout = "https://www.bainil.com/signout"
+    val url_signout = "www.bainil.com/signout"
 
     val url_signin_wo_redir = "bainil.com/signin"
 
@@ -111,7 +111,7 @@ class LoginWebviewFragment: WebviewFragment() {
             val cookies = CookieManager.getInstance().getCookie(cookie_url)
 //            Log.d(TAG, "onPageFinished: " + cookies)
 
-            if (url.equals(url_fan_profile) && !finished)    {
+            if (url?.endsWith(url_fan_profile) ?: false && !finished)    {
                 mWebView.visibility = View.INVISIBLE
 
                 // get cookie & other informations
@@ -163,7 +163,7 @@ class LoginWebviewFragment: WebviewFragment() {
             mWebView.visibility = View.VISIBLE
 
             when  {
-                url?.contains(url_top) ?: false ->  {
+                url?.endsWith(url_top) ?: false ->  {
                     // if login token is alive...
                     view?.stopLoading()
 
@@ -181,11 +181,11 @@ class LoginWebviewFragment: WebviewFragment() {
                     }
                 }
                 url?.contains("facebook") ?: false -> {}    // TODO
-                url?.equals(url_fan_profile) ?: false -> {}
-                url?.equals(init_url) ?: false ->   {
+                url?.endsWith(url_fan_profile) ?: false -> {}
+                url?.endsWith(init_url) ?: false ->   {
                     touched = true
                 }
-                url?.equals(url_signout) ?: false -> {}
+                url?.endsWith(url_signout) ?: false -> {}
                 else -> {
                     view?.stopLoading()
 
