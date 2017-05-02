@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val loginInfoCleared = clearLoginTokenIf()
         getJSESSIONTokenIf()
 
-        val navigationView = nav_view
+        val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
         val navigationViewInit = navigationView.getHeaderView(0)
         header_account_photo = navigationViewInit.account_photo

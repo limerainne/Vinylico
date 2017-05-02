@@ -8,11 +8,19 @@
     android:background="@color/background"
     tools:context="win.limerainne.vinylico.view.detail.AlbumInfoFragment">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/info_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="win.limerainne.vinylico.view.AlbumInfoFragment" />
+
+    <me.henrytao.smoothappbarlayout.SmoothAppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/album_info_header_height"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:sabl_target_id="@id/info_recycler_view">
         <!-- android:layout_height="@dimen/album_info_header_height" -->
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -34,7 +42,7 @@
                 android:fitsSystemWindows="true"
                 android:transitionName="album_cover"
                 app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                app:layout_collapseParallaxMultiplier="0.75"
                 />
 
             <android.support.v7.widget.Toolbar
@@ -58,7 +66,7 @@
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+    </me.henrytao.smoothappbarlayout.SmoothAppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -75,23 +83,5 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/msg_loading"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/info_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="win.limerainne.vinylico.view.AlbumInfoFragment" />
-
-    <include
-        android:id="@+id/float_header_view"
-        layout="@layout/view_album_info_toolbar_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="false"
-        app:layout_behavior="win.limerainne.vinylico.view.ViewBehavior"
-        android:visibility="gone"
-        />
 
 </android.support.design.widget.CoordinatorLayout>

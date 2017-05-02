@@ -75,8 +75,6 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
     lateinit var albumCover: ImageView
     @BindView(R.id.toolbar_header_view)
     lateinit var toolbarHeaderView: HeaderView
-    @BindView(R.id.float_header_view)
-    lateinit var floatHeaderView: HeaderView
 
     private var isHideToolbarView = false
 
@@ -162,7 +160,6 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 
     private fun setToolbarTitles(title: String, subtitle: String) {
         toolbarHeaderView.bindTo(title, subtitle)
-        floatHeaderView.bindTo(title, subtitle)
     }
 
     override fun onAttach(context: Context?) {

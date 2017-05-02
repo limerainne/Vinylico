@@ -8,6 +8,7 @@ import android.os.Build
 import android.support.v7.content.res.AppCompatResources
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,11 +43,12 @@ import win.limerainne.vinylico.view.MainActivity
  */
 class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mAlbumEntry: AlbumEntry?, private val mAlbum: AlbumDetail, private val mTracks: TrackList, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<AlbumInfoRecyclerViewAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
-        // NOTE add 2 more rows for...
+        // NOTE add more rows for...
+        // very first 1: for smoothAppBarLayout dummy header
         // first 1: album information (released date, genre, artist, ...)
         // last 1: album description
         // last 1: album credits
-        return 1 + mTracks.tracks.size + 1 + 1
+        return 1 + 1 + mTracks.tracks.size + 1 + 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,6 +56,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
         val viewInflater: (Int) -> View = { LayoutInflater.from(parent.context).inflate(it, parent, false) }
         when (viewType) {
+            ITEM_DUMMY_HEADER -> {
+                viewHolder = DummyHolder(viewInflater(R.layout.view_album_info_dummy_header))
+            }
             ITEM_ALBUM_SUMMARY ->  {
                 viewHolder = AlbumSummaryViewHolder(viewInflater(R.layout.view_album_info_album_summary))
             }
@@ -74,10 +79,11 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
 
     override fun getItemViewType(position: Int): Int {
         when (position) {
-            0 -> return ITEM_ALBUM_SUMMARY
-            in 1..mTracks.tracks.size -> return ITEM_TRACK
-            mTracks.tracks.size+1 -> return ITEM_ALBUM_DESC
-            mTracks.tracks.size+2 -> return ITEM_ALBUM_CREDIT
+            0 -> return ITEM_DUMMY_HEADER
+            1 -> return ITEM_ALBUM_SUMMARY
+            in 2..(mTracks.tracks.size+1) -> return ITEM_TRACK
+            mTracks.tracks.size+2 -> return ITEM_ALBUM_DESC
+            mTracks.tracks.size+3 -> return ITEM_ALBUM_CREDIT
             else -> throw RuntimeException()
         }
     }
@@ -85,6 +91,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // check invalidness & bind
         when (getItemViewType(position))    {
+            ITEM_DUMMY_HEADER -> {
+                // do nothing
+            }
             ITEM_ALBUM_SUMMARY ->  {
                 if (holder is AlbumSummaryViewHolder) {
                     holder.bind(mAlbum, mTracks)
@@ -131,9 +140,13 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         }
     }
 
-    fun globalPosToTracksPos(globalPosition: Int) = globalPosition - 1
+    fun globalPosToTracksPos(globalPosition: Int) = globalPosition - 2  // header + summary
 
     inner abstract class ViewHolder(open val mView: View): RecyclerView.ViewHolder(mView)
+
+    inner class DummyHolder(override val mView: View): ViewHolder(mView)   {
+        // do nothing
+    }
 
     inner class AlbumSummaryViewHolder(override val mView: View): ViewHolder(mView) {
 
@@ -549,6 +562,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
     }
 
     companion object    {
+        val ITEM_DUMMY_HEADER = -1
         val ITEM_ALBUM_SUMMARY = 0
         val ITEM_TRACK = 1
         val ITEM_ALBUM_DESC = 2
