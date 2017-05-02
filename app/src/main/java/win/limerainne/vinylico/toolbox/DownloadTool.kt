@@ -37,7 +37,7 @@ import java.net.URLDecoder
  *
  * refer to: http://stackoverflow.com/questions/23069965/get-file-name-from-headers-with-downloadmanager-in-android
  *
- * http://www.bainil.com/track/download?no=12657
+ * https://www.bainil.com/track/download?no=12657
  */
 class DownloadTool(val url: String, val path: File, val title: String, val desc: String) {
 

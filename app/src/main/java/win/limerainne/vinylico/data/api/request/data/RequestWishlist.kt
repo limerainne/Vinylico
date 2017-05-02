@@ -13,7 +13,7 @@ class RequestWishlist(val userId: Long,
                       val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
-        private val URL = "http://www.bainil.com/api/v2/user/wishes"
+        private val URL = "https://www.bainil.com/api/v2/user/wishes"
     }
 
     override fun composeURL() = "${URL}?userId=$userId&wish=$wish"

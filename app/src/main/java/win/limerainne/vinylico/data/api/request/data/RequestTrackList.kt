@@ -14,7 +14,7 @@ class RequestTrackList(val albumId: Long,
                        val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
-        private val URL = "http://www.bainil.com/api/v2/store/album/tracks"
+        private val URL = "https://www.bainil.com/api/v2/store/album/tracks"
     }
 
     override fun composeURL(): String {

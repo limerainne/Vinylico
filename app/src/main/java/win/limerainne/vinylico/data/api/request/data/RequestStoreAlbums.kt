@@ -19,8 +19,8 @@ class RequestStoreAlbums(val userId: Long,  // MANDATORY
     // NOTE page number (=offset) is calculated by server regarding "limit" (item/page)!
 
     companion object    {
-        private val URL = "http://www.bainil.com/api/v2/store/albums"
-        // e.g. http://www.bainil.com/api/v2/store/albums/new?userId=2&offset=0&limit=10&lang=ko
+        private val URL = "https://www.bainil.com/api/v2/store/albums"
+        // e.g. https://www.bainil.com/api/v2/store/albums/new?userId=2&offset=0&limit=10&lang=ko
 
         val CATEGORY_FEATURED = "featured"  // 추천
         val CATEGORY_NEW = "new"            // 신규

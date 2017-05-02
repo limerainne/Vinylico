@@ -33,9 +33,9 @@ class PurchaseTool  {
 
         fun purchaseAlbum(mContext: Context, albumId: Long, albumName: String, free: Boolean, isBought: () -> Unit) {
             /*
-            http://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
+            https://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
 
-            http://www.bainil.com/api/v2/kakaopay/request?albumId=3276&userId=2543
+            https://www.bainil.com/api/v2/kakaopay/request?albumId=3276&userId=2543
              */
             val connMgr = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = connMgr.activeNetworkInfo

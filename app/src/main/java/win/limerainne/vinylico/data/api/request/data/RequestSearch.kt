@@ -13,7 +13,7 @@ import win.limerainne.vinylico.data.api.request.Request
 /*
 @ 16.10.13
 - request example
-http://www.bainil.com/api/v2/search?q=%EB%9F%AC%EB%B8%94%EB%A6%AC%EC%A6%88&userId=2543&store=1&lang=ko
+https://www.bainil.com/api/v2/search?q=%EB%9F%AC%EB%B8%94%EB%A6%AC%EC%A6%88&userId=2543&store=1&lang=ko
 -- NOTE
 as in response, userId has no role in result; just for statistical issue?
 
@@ -700,7 +700,7 @@ class RequestSearch(val keyword: String,
                     val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
-        private val URL = "http://www.bainil.com/api/v2/search"
+        private val URL = "https://www.bainil.com/api/v2/search"
     }
 
     override fun composeURL(): String {

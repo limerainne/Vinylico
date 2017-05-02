@@ -10,8 +10,8 @@
     <string name="url_cookie" translatable="false">www.bainil.com</string>
 
     <!--<string name="URL_Login">https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile</string>-->
-    <string name="url_bainil" translatable="false">http://www.bainil.com/</string>
-    <string name="url_bainil_about" translatable="false">http://www.bainil.com/bainil</string>
+    <string name="url_bainil" translatable="false">https://www.bainil.com/</string>
+    <string name="url_bainil_about" translatable="false">https://www.bainil.com/bainil</string>
 
     <!-- Navigation Menu items -->
     <string name="nav_home">Home</string>

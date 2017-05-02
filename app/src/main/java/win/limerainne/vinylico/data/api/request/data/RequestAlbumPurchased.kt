@@ -8,8 +8,8 @@ class RequestAlbumPurchased(val albumId: Long,
                         val free: Boolean) : RequestHTTPConnection() {
 
     companion object    {
-        private val URL = "http://www.bainil.com/api/v2/purchase/request"
-        // e.g. http://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
+        private val URL = "https://www.bainil.com/api/v2/purchase/request"
+        // e.g. https://www.bainil.com/api/v2/purchase/request?userId=2543&albumId=2423&store=1&type=pay
 
         private val reSeqId = Regex("""\"seq\":(\d+)""")
     }

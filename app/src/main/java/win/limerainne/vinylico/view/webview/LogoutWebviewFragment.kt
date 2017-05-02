@@ -25,9 +25,9 @@ class LogoutWebviewFragment: WebviewFragment() {
     val url_login = "https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile"
     val url_logout = "https://www.bainil.com/signout"
 
-    val url_fan_profile = "http://www.bainil.com/fan/profile"
-    val url_top = "http://www.bainil.com/browse"
-    val url_bainil = "http://www.bainil.com/"
+    val url_fan_profile = "https://www.bainil.com/fan/profile"
+    val url_top = "https://www.bainil.com/browse"
+    val url_bainil = "https://www.bainil.com/"
 
     val url_signout = "https://www.bainil.com/signout"
 

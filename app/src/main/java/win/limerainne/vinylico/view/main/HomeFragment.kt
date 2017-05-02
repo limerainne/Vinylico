@@ -53,9 +53,9 @@ class HomeFragment : MyFragment(), DataLoadable, UpdatingToolbar, InteractWithMa
 
         /*
         - recommended album
-        http://www.bainil.com/api/v2/user/eml?userId=2543&&lang=ko
+        https://www.bainil.com/api/v2/user/eml?userId=2543&&lang=ko
         - event banner
-        http://www.bainil.com/api/v2/connected/events?userId=2&lang=en
+        https://www.bainil.com/api/v2/connected/events?userId=2&lang=en
          */
 
         view.btn_nav_browse.setOnClickListener {

@@ -16,7 +16,7 @@ class RequestAlbumDetail(val albumId: Long,
                          val gson: Gson = Gson()) : RequestHTTPConnection() {
 
     companion object    {
-        private val URL = "http://www.bainil.com/api/v2/store/album"
+        private val URL = "https://www.bainil.com/api/v2/store/album"
     }
 
     override fun composeURL(): String {

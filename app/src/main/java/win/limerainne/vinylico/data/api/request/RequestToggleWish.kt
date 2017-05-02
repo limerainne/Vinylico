@@ -25,8 +25,8 @@ class RequestToggleWish(val albumId: Long,
     }
 
     companion object    {
-        private val URL = "http://www.bainil.com/api/v2/album/wish"
-        // e.g. "http://www.bainil.com/api/v2/album/wish?albumId=3276&userId=2543&wish=true"
+        private val URL = "https://www.bainil.com/api/v2/album/wish"
+        // e.g. "https://www.bainil.com/api/v2/album/wish?albumId=3276&userId=2543&wish=true"
 
         fun doWishTo(mContext: Context, albumId: Long, wish: Boolean) {
             // check network status
