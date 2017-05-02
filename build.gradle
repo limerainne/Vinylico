@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 ext {
-    androidCompileSdkVersion = 24
-    androidBuildToolsVersion = '25'
+    androidCompileSdkVersion = 25
+    androidBuildToolsVersion = '25.0.3'
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 24
+    androidTargetSdkVersion = 25
 
     supportLibraryVersion = '25.0.0'
     retrofitVersion = '2.1.0'
@@ -56,7 +56,7 @@ ext {
 apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
-    ext.kotlin_version = '1.1.1'
+    ext.kotlin_version = '1.1.2'
 
     repositories {
         jcenter()
@@ -72,7 +72,7 @@ buildscript {
 
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
         // run gradle command:
         // gradle dependencyUpdates -Drevision=release -DoutputFormatter=json,xml
         // latter report option doesn't have to be inserted..
