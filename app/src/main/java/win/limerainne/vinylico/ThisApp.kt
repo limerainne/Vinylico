@@ -5,11 +5,13 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
+import android.util.Log
 import com.google.firebase.crash.FirebaseCrash
 import com.tsengvn.typekit.Typekit
 import win.limerainne.vinylico.base.CommonPrefs
 import win.limerainne.vinylico.credential.UserInfo
 import win.limerainne.vinylico.toolbox.DownloadTool
+import java.io.File
 
 /**
  * Created by Limerainne on 2016-06-23.
@@ -32,10 +34,25 @@ class ThisApp : Application() {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         DownloadTool.addReceiverOnClick(AppContext)
+
+        activateHttpResponseCache()
     }
 
     fun updateUserId(id: Long)  {
         CURRENT_USER_ID = id
+    }
+
+    fun activateHttpResponseCache() {
+        try {
+            val httpCacheSize = 10 * 1024 * 1024   // 10 MiB
+            val httpCacheDir: File = File(cacheDir, "http")
+
+            Class.forName("android.net.http.HttpResponseCache")
+                    .getMethod("install", File::class.java, Long::class.java)
+                    .invoke(null, httpCacheDir, httpCacheSize)
+        } catch (httpResponseCacheNotAvailable: Exception)  {
+            Log.d(AppName, "HTTP response cache did not initialized")
+        }
     }
 
     companion object {
