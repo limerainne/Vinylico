@@ -587,7 +587,7 @@ tracks=[
 class SearchResultTest  {
 
     companion object    {
-        val USER_ID: Long = 2543
+        val USER_ID: Long = 2
         val KEYWORD: String = "러블리즈"
     }
 

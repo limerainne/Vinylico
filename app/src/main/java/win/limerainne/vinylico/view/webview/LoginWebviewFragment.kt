@@ -23,7 +23,7 @@ class LoginWebviewFragment: WebviewFragment() {
 
     val url_login = "https://www.bainil.com/signin?returnUrl=%2Ffan%2Fprofile"
 
-    val url_fan_profile = "www.bainil.com/fan/profile"
+    val url_fan_profile = "https://www.bainil.com/fan/profile"
     val url_top = "www.bainil.com/browse"
 
     val url_signout = "www.bainil.com/signout"
@@ -72,6 +72,17 @@ class LoginWebviewFragment: WebviewFragment() {
                                 uiThread {
                                     activity.popBackStack()
                                     activity.updateNavigationViewUserInfoArea()
+                                }
+                            }
+                        }
+                    }   else    {
+//                        Log.v(TAG, "javascript:getHtml: userId " + u.userId)
+
+                        val activity = this_activity    // TODO why we have to save initial activity reference?
+                        if (activity is MainActivity) {
+                            doAsync {
+                                uiThread {
+                                    mWebView.loadUrl(url_fan_profile)
                                 }
                             }
                         }

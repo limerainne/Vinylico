@@ -13,8 +13,8 @@ import win.limerainne.vinylico.domain.model.TrackList as DomainTrackList
 class AlbumDetailTest  {
 
     companion object    {
-        val USER_ID: Long = 2543
-        val ALBUM_ID: Long = 2423
+        val USER_ID: Long = 2
+        val ALBUM_ID: Long = 2
         // AlbumID NOTE
         // 2423: A New Trilogy by Lovelyz
         // 1003: Love, Curse, Suicide by UMC/UW

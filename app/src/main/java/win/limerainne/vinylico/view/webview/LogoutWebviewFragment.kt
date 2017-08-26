@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.webkit.CookieManager
-import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -56,7 +55,7 @@ class LogoutWebviewFragment: WebviewFragment() {
     override fun onInitWebview()    {
         super.onInitWebview()
 
-        mWebView.setWebViewClient(MyLoginWebViewClient(context))
+        mWebView.setWebViewClient(MyLogoutWebViewClient(context))
 
     }
 
@@ -71,7 +70,7 @@ class LogoutWebviewFragment: WebviewFragment() {
 //        Log.v(TAG, "parseLoginCookie: " + cookieParser)
     }
 
-    inner class MyLoginWebViewClient(context: Context): MyWebViewClient(context) {
+    inner class MyLogoutWebViewClient(context: Context): MyWebViewClient(context) {
         var cookieFlushed = false
 
         var finished = false
@@ -115,6 +114,9 @@ class LogoutWebviewFragment: WebviewFragment() {
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            if (finished)
+                return
+
             super.onPageStarted(view, url, favicon)
 //            Log.v(TAG, "onPageStarted: " + url)
 

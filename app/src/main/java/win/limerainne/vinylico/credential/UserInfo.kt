@@ -29,14 +29,14 @@ class UserInfo(val context: Context) {
 
     fun parseInfo(html: String) {
         /* example
-  <input id="userId" name="userId" type="hidden" value="2543"/>
+  <input id="userId" name="userId" type="hidden" value="2"/>
   <div class="control-group">
     <label class="control-label">Picture</label>
     <div class="controls">
       <div class="fan-picture fileuploader imageupload" data-type="user">
         <div class="preview ">
-          <img src="http://cloud.bainil.com/upload/user/2543/7c016020-3bef-4634-9119-a24404db2685_360.png"/>
-          <input id="picture" name="picture" type="hidden" value="/2543/7c016020-3bef-4634-9119-a24404db2685_360.png"/>
+          <img src="http://cloud.bainil.com/upload/user/2/5812_360.png"/>
+          <input id="picture" name="picture" type="hidden" value="/2/5812_360.png"/>
         </div>
         <span class="fileinput-button">
           <span class="btn btn-small">Choose</span>
@@ -50,13 +50,13 @@ class UserInfo(val context: Context) {
   <div class="control-group">
     <label class="control-label" for="name">Name</label>
     <div class="controls">
-      <input id="name" name="name" class="required" placeHolder="Full Name" type="text" value="kjs2967"/>
+      <input id="name" name="name" class="required" placeHolder="Full Name" type="text" value="hello"/>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="email">Email</label>
     <div class="controls">
-      <input id="email" name="email" disabled="disabled" type="text" value="kjs2967@gmail.com"/>
+      <input id="email" name="email" disabled="disabled" type="text" value="hello@bainil.com"/>
          */
         val inputRegex = Regex("""<input id=\"(.+?)\".*value=\"(.+?)\"""")
 

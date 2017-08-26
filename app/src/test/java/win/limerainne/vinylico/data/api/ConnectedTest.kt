@@ -13,7 +13,7 @@ import win.limerainne.vinylico.domain.model.Connected as DomainConnected
 class ConnectedTest  {
 
     companion object    {
-        val USER_ID: Long = 2543
+        val USER_ID: Long = 2
     }
 
     @Test
