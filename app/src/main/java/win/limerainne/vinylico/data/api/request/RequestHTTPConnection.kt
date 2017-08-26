@@ -26,6 +26,11 @@ abstract class RequestHTTPConnection() : Request {
             conn.requestMethod = "GET"
             conn.doInput = true
 
+            conn.useCaches = true
+
+            val maxStale = 60 * 60 * 24 // for one day
+            conn.addRequestProperty("Cache-Control", "max-stale=" + maxStale)
+
             // append cookie
             // - cookie
             val loginCookie = LoginCookie(ThisApp.AppContext)
@@ -49,7 +54,9 @@ abstract class RequestHTTPConnection() : Request {
             }
 
             // Connection: close
-            conn.setRequestProperty("Connection", "close")
+//            conn.setRequestProperty("Connection", "close")
+            // TODO test keep-alive once more
+            conn.setRequestProperty("Connection", "keep-alive")
 
             // Starts the query
             conn.connect()

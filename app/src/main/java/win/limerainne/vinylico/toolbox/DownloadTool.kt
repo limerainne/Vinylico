@@ -116,6 +116,11 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 conn.setConnectTimeout(15000 /* milliseconds */)
                 conn.setRequestMethod("HEAD")
 
+                conn.useCaches = true
+
+                val maxStale = 60 * 60 * 24 // for one day
+                conn.addRequestProperty("Cache-Control", "max-stale=" + maxStale)
+
                 // - cookie
                 val loginCookie = LoginCookie(ThisApp.AppContext)
                 conn.setRequestProperty("Cookie", loginCookie.getCookieStr())
@@ -153,7 +158,7 @@ class DownloadTool(val url: String, val path: File, val title: String, val desc:
                 }
 //                println("Filename to download: ${filename}")
 
-                if (filename.length > 0)
+                if (filename.isNotEmpty())
                     uiThread {
                         callback()
                     }

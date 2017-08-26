@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.net.http.HttpResponseCache
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -117,6 +118,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // clear login info if user did not check auto-login
         clearLoginTokenIf()
+    }
+
+    override fun onStop()   {
+        super.onStop()
+
+        HttpResponseCache.getInstalled()?.flush()
     }
 
     fun clearLoginTokenIf(): Boolean {
