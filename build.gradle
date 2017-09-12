@@ -54,6 +54,10 @@ ext {
             firebase_core: "com.google.firebase:firebase-core:$firebase_version",
             firebase_crash: "com.google.firebase:firebase-crash:$firebase_version",
             firebase_ads: "com.google.firebase:firebase-ads:$firebase_version",
+
+            dagger2: "com.google.dagger:dagger:2.4",
+            dagger2Compiler: "com.google.dagger:dagger-compiler:2.4",
+            glassfishAnnot: "org.glassfish:javax.annotation:10.0-b28",
     ]
 }
 

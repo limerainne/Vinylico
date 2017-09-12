@@ -99,6 +99,10 @@ dependencies {
     compile dependencies.firebase_crash
     compile dependencies.firebase_ads
 
+    compile dependencies.dagger2
+    kapt dependencies.dagger2Compiler
+    provided dependencies.glassfishAnnot
+
 //    compile 'org.sufficientlysecure:html-textview:2.0'
     compile 'com.ms-square:expandableTextView:0.1.4'
     compile dependencies.smooth_app_bar_layout
