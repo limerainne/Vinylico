@@ -170,6 +170,7 @@ data class Event(val bannerImage: String?,
                  val eventUrl: String?,
                  val eventName: String?)
 
+// search API responses
 data class SearchResultResponse(val success: Boolean,
                          val result: SearchResult)
 
@@ -210,4 +211,24 @@ data class SearchTrack(val albumId: Long?,
                        val artistName: String?,
                        val songId: Long?,   // used
                        val songOrder: Int?  // ONLY IN SearchArtist, SearchAlbum
+)
+
+// album booklet
+data class AlbumBooklet(val albumDesc: String?,
+                        val booklets: List<BookletImage>,
+                        val credit: String?,
+                        val photos: List<BookletImage>,
+                        val videos: List<BookletVideo>,
+                        val success: Boolean
+)
+
+data class BookletImage(val photoUrl: String?,
+                        val seq: Long?,
+                        val thumbUrl: String?
+)
+
+data class BookletVideo(val videoImg: String?,
+                        val videoUrl: String?,
+                        val videoId: String?,   // e.g. YouTube video Id
+                        val videoType: String?  // e.g. "Y" for YouTube
 )

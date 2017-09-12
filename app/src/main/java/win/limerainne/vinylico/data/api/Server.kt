@@ -2,6 +2,7 @@ package win.limerainne.vinylico.data.api
 
 import win.limerainne.vinylico.data.api.request.data.*
 import win.limerainne.vinylico.domain.model.*
+import win.limerainne.vinylico.domain.model.AlbumBooklet
 import win.limerainne.vinylico.domain.model.AlbumDetail
 import win.limerainne.vinylico.domain.model.Connected
 import win.limerainne.vinylico.domain.model.RecommendAlbum
@@ -64,5 +65,10 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
     fun requestSearchResult(keyword: String, userId: Long): SearchResult  {
         val resultSearchResult = RequestSearch(keyword, userId).execute()
         return dataMapper.covertSearchResultToDomain(keyword, resultSearchResult)
+    }
+
+    fun requestAlbumBooklet(albumId: Long): AlbumBooklet  {
+        val resultAlbumBooklet = RequestAlbumBooklet(albumId).execute()
+        return dataMapper.convertAlbumBookletToDomain(albumId, resultAlbumBooklet)
     }
 }

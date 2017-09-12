@@ -20,6 +20,9 @@ import win.limerainne.vinylico.domain.model.StoreAlbums as DomainStoreAlbums
 import win.limerainne.vinylico.domain.model.Track as DomainTrack
 import win.limerainne.vinylico.domain.model.TrackList as DomainTrackList
 import win.limerainne.vinylico.domain.model.Wishlist as DomainWishlist
+import win.limerainne.vinylico.domain.model.AlbumBooklet as DomainAlbumBooklet
+import win.limerainne.vinylico.domain.model.BookletImage as DomainBookletImage
+import win.limerainne.vinylico.domain.model.BookletVideo as DomainBookletVideo
 
 /**
  * Created by Limerainne on 2016-07-21.
@@ -381,4 +384,35 @@ class APIDataMapper {
                 songOrder ?: -1
                 )
     }
+
+    fun convertAlbumBookletToDomain(albumId: Long, booklet: AlbumBooklet): DomainAlbumBooklet = with(booklet)  {
+        DomainAlbumBooklet(albumId,
+                albumDesc ?: "",
+                credit ?: "",
+                convertBookletImageListToDomain(booklets),
+                convertBookletImageListToDomain(photos),
+                convertBookletVideoListToDomain(videos)
+        )
+    }
+
+    private fun convertBookletImageListToDomain(list: List<BookletImage>): List<DomainBookletImage>
+        = list.map { convertBookletImageToDomain(it) }
+    private fun convertBookletVideoListToDomain(list: List<BookletVideo>): List<DomainBookletVideo>
+            = list.map { convertBookletVideoToDomain(it) }
+
+    private fun convertBookletImageToDomain(image: BookletImage): DomainBookletImage = with(image)  {
+        DomainBookletImage(seq ?: -1,
+                thumbUrl ?: "",
+                photoUrl ?: ""
+        )
+    }
+
+    private fun convertBookletVideoToDomain(video: BookletVideo): DomainBookletVideo = with(video)  {
+        DomainBookletVideo(videoId ?: "",
+                videoType ?: "",
+                videoImg ?: "",
+                videoUrl ?: ""
+        )
+    }
+
 }

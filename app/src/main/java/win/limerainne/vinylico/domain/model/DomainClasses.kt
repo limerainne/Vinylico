@@ -202,3 +202,23 @@ data class SearchTrack(val albumId: Long,
                        val artistName: String,
                        val songId: Long,
                        val songOrder: Int)
+
+data class AlbumBooklet(val albumId: Long,
+                        val albumDesc: String?,
+                        val credit: String?,
+
+                        val booklets: List<BookletImage>,
+                        val photos: List<BookletImage>,
+                        val videos: List<BookletVideo>
+)
+
+data class BookletImage(val seq: Long?,
+                        val thumbUrl: String?,
+                        val photoUrl: String?
+)
+
+data class BookletVideo(val videoId: String?,   // e.g. YouTube video Id
+                        val videoType: String?,  // e.g. "Y" for YouTube
+                        val videoImg: String?,
+                        val videoUrl: String?
+)
