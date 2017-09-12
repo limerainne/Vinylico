@@ -23,6 +23,7 @@
     <string name="msg_notice_free_album">무료 앨범</string>
     <string name="msg_notice_purchase_subtitle">#%1$s(당신)에게</string>
     <string name="msg_notice_purchase_title">앨범 구매: #%1$s</string>
+    <string name="msg_notice_purchase_track_title">트랙 구매: #%1$s</string>
     <string name="msg_prepare_sharing">공유 준비 중&#8230;</string>
     <string name="msg_search_notice_type_keyword">상단의 검색 버튼을 누르고,\n검색어를 입력해주세요!</string>
     <string name="msg_tobeimplemented_like_song">죄송합니다, \'이 곡 좋아요\' 기능은 구현되지 않았습니다&#8230;</string>

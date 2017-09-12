@@ -48,7 +48,8 @@
     <string name="search_hint">Type artist, album, title or else&#8230;</string>
 
     <!-- Webview msg -->
-    <string name="msg_notice_purchase_title">Buy Album: #%1$s</string>
+    <string name="msg_notice_purchase_title">Buy an Album: #%1$s</string>
+    <string name="msg_notice_purchase_track_title">Buy a Track: #%1$s</string>
     <string name="msg_notice_purchase_subtitle">to #%1$s (You)</string>
 
     <string name="msg_loading">Loading&#8230;</string>

@@ -34,6 +34,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     private var userId: Long = 0
     private var albumId: Long = 0
     private var seqId: Long = 0
+    private var trackId: Long = 0
 
     private var afterBought: () -> Unit = {}
 
@@ -44,17 +45,22 @@ class PurchaseWebviewFragment(): WebviewFragment() {
         backEnabled = false
     }
 
-    fun setURL(userId: Long, albumId: Long, seqId: Long) {
+    fun setURL(userId: Long, albumId: Long, seqId: Long, trackId: Long = 0) {
         if (userId < 1 || albumId < 1)
             return
 
         this.userId = userId
         this.albumId = albumId
         this.seqId = seqId
+        this.trackId = trackId
 
         init_url = "${URL_PAYMENT_PREFIX}?albumId=${albumId}&userId=${userId}"
         if (seqId > 0)
             init_url = "${init_url}&seqId=${seqId}"
+
+        // OPTIONAL for purchasing single track
+        if (trackId > 0)
+            init_url = "${init_url}&trackId=${trackId}"
     }
 
     override fun onInitWebview()    {
@@ -71,14 +77,14 @@ class PurchaseWebviewFragment(): WebviewFragment() {
 //            Log.v(PurchaseWebviewFragment.TAG, "onPageStarted: " + url)
 
             if (url != null)    {
-                // for payment failed -> "Close" button
+                // if payment succeed/failed, then user clicks "Close" button
                 if (url.endsWith(URL_CLOSE) || url.endsWith(URL_DOWNLOAD))   {
                     if (finished)   return
 
                     view?.stopLoading()
 
                     // return to previous screen
-                    // TODO incorrect implementation
+                    // NOTE BAD implementation, but leave as is...
                     val activity = this_activity
                     if (activity is MainActivity) {
                         doAsync {
@@ -115,6 +121,10 @@ class PurchaseWebviewFragment(): WebviewFragment() {
         val TAG = PurchaseWebviewFragment::class.java.simpleName
 
         fun newInstance(userId: Long, albumId: Long, seqId: Long, context: Context, afterBought: () -> Unit): PurchaseWebviewFragment {
+            return newInstance(userId, albumId, seqId, 0, context, afterBought)
+        }
+
+        fun newInstance(userId: Long, albumId: Long, seqId: Long, trackId: Long = 0, context: Context, afterBought: () -> Unit): PurchaseWebviewFragment {
             val fragment = PurchaseWebviewFragment()
 
             fragment.init_url = "about:blank"
@@ -123,9 +133,14 @@ class PurchaseWebviewFragment(): WebviewFragment() {
             fragment.afterBought = afterBought
 
             if (userId > 0 && albumId > 0 && checkLogin(userId, context))  {
-                fragment.setURL(userId, albumId, seqId)
-                fragment.toolbar_title = context.getString(R.string.msg_notice_purchase_title, albumId)
-                fragment.toolbar_subtitle = context.getString(R.string.msg_notice_purchase_subtitle, userId)
+                fragment.setURL(userId, albumId, seqId, trackId)
+                if (trackId <= 0) { // purchase album
+                    fragment.toolbar_title = context.getString(R.string.msg_notice_purchase_title, albumId.toString())
+                    fragment.toolbar_subtitle = context.getString(R.string.msg_notice_purchase_subtitle, userId.toString())
+                }   else    {   // purchase track
+                    fragment.toolbar_title = context.getString(R.string.msg_notice_purchase_track_title, trackId.toString())
+                    fragment.toolbar_subtitle = context.getString(R.string.msg_notice_purchase_subtitle, userId.toString())
+                }
             }
 
             return fragment
