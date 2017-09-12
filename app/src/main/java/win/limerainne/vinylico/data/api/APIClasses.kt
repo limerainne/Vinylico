@@ -214,6 +214,10 @@ data class SearchTrack(val albumId: Long?,
 )
 
 // album booklet
+data class AlbumBookletWrapper(val success: Boolean,
+                               val result: AlbumBooklet?
+)
+
 data class AlbumBooklet(val albumDesc: String?,
                         val booklets: List<BookletImage>,
                         val credit: String?,

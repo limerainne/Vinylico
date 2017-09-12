@@ -385,6 +385,13 @@ class APIDataMapper {
                 )
     }
 
+    fun convertAlbumBookletWrapperToDomain(albumId: Long, bookletWrapper: AlbumBookletWrapper) = with(bookletWrapper)   {
+        if (!success || result == null)
+            throw Exception()
+
+        convertAlbumBookletToDomain(albumId, result)
+    }
+
     fun convertAlbumBookletToDomain(albumId: Long, booklet: AlbumBooklet): DomainAlbumBooklet = with(booklet)  {
         DomainAlbumBooklet(albumId,
                 albumDesc ?: "",

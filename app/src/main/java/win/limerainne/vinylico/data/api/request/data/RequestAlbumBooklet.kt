@@ -4,6 +4,7 @@ import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import win.limerainne.vinylico.ThisApp
 import win.limerainne.vinylico.data.api.AlbumBooklet
+import win.limerainne.vinylico.data.api.AlbumBookletWrapper
 import win.limerainne.vinylico.data.api.AlbumDetail
 import win.limerainne.vinylico.data.api.request.Request
 
@@ -24,8 +25,8 @@ class RequestAlbumBooklet(val albumId: Long,
         return url
     }
 
-    override fun execute(): AlbumBooklet {
+    override fun execute(): AlbumBookletWrapper {
         val albumBookletJsonStr = getHTTPResponseString()
-        return gson.fromJson<AlbumBooklet>(albumBookletJsonStr)
+        return gson.fromJson<AlbumBookletWrapper>(albumBookletJsonStr)
     }
 }

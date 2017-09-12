@@ -69,6 +69,6 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
 
     fun requestAlbumBooklet(albumId: Long): AlbumBooklet  {
         val resultAlbumBooklet = RequestAlbumBooklet(albumId).execute()
-        return dataMapper.convertAlbumBookletToDomain(albumId, resultAlbumBooklet)
+        return dataMapper.convertAlbumBookletWrapperToDomain(albumId, resultAlbumBooklet)
     }
 }
