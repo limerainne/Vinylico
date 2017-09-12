@@ -24,12 +24,12 @@ class PurchaseWebviewFragment(): WebviewFragment() {
     // final val URL_PAYMENT_RESULT = "https://www.bainil.com/api/v2/kakaopay/result"
 
     // new URLs (visited @ 17-09; supports credit cards, micropayment)
-    final val URL_PAYMENT_PREFIX = "https://www.bainil.com/payment/imp/request"
-    final val URL_PAYMENT_RESULT = "https://www.bainil.com/payment/complete?app=A"
-    final val URL_CLOSE = "www.bainil.com/payment/close"
-    final val URL_DOWNLOAD = "www.bainil.com/payment/download"
+    val URL_PAYMENT_PREFIX = "https://www.bainil.com/payment/imp/request"
+    val URL_PAYMENT_RESULT = "https://www.bainil.com/payment/complete?app=A"
+    val URL_CLOSE = "www.bainil.com/payment/close"
+    val URL_DOWNLOAD = "www.bainil.com/payment/download"
 
-    final val URL_ANDROID_INAPP_PAY = "www.bainil.com/payment/inapp"
+    val URL_ANDROID_INAPP_PAY = "www.bainil.com/payment/inapp"
 
     private var userId: Long = 0
     private var albumId: Long = 0
@@ -84,10 +84,10 @@ class PurchaseWebviewFragment(): WebviewFragment() {
                         doAsync {
                             Thread.sleep(500)
                             uiThread {
-                                activity.popBackStack()
+                                activity?.popBackStack()
                             }
                             if (url.endsWith(URL_DOWNLOAD))
-                                activity.runOnUiThread {
+                                activity?.runOnUiThread {
                                     afterBought()
                                 }
                         }

@@ -104,8 +104,8 @@ class LogoutWebviewFragment: WebviewFragment() {
                 doAsync {
                     Thread.sleep(500)
                     uiThread {
-                        activity.popBackStack()
-                        activity.updateNavigationViewUserInfoArea()
+                        activity?.popBackStack()
+                        activity?.updateNavigationViewUserInfoArea()
                     }
                 }
             }

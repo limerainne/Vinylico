@@ -70,8 +70,8 @@ class LoginWebviewFragment: WebviewFragment() {
                             doAsync {
                                 Thread.sleep(1000)
                                 uiThread {
-                                    activity.popBackStack()
-                                    activity.updateNavigationViewUserInfoArea()
+                                    activity?.popBackStack()
+                                    activity?.updateNavigationViewUserInfoArea()
                                 }
                             }
                         }
@@ -83,7 +83,7 @@ class LoginWebviewFragment: WebviewFragment() {
                             doAsync {
                                 Thread.sleep(1000)
                                 uiThread {
-                                    mWebView.loadUrl(url_fan_profile)
+                                    mWebView?.loadUrl(url_fan_profile)
                                 }
                             }
                         }
@@ -152,8 +152,8 @@ class LoginWebviewFragment: WebviewFragment() {
                         doAsync {
                             Thread.sleep(500)
                             uiThread {
-                                activity.popBackStack()
-                                activity.updateNavigationViewUserInfoArea()
+                                activity?.popBackStack()
+                                activity?.updateNavigationViewUserInfoArea()
                             }
                         }
                     }
