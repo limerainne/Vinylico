@@ -19,8 +19,13 @@ import win.limerainne.vinylico.view.MainActivity
  */
 class PurchaseWebviewFragment(): WebviewFragment() {
 
-    final val URL_PAYMENT_PREFIX = "https://www.bainil.com/api/v2/kakaopay/request"
-    final val URL_PAYMENT_RESULT = "https://www.bainil.com/api/v2/kakaopay/result"
+    // NOTE old URLs (supports only KakaoPay and Android In-app purchase)
+    // final val URL_PAYMENT_PREFIX = "https://www.bainil.com/api/v2/kakaopay/request"
+    // final val URL_PAYMENT_RESULT = "https://www.bainil.com/api/v2/kakaopay/result"
+
+    // new URLs (visited @ 17-09; supports credit cards, micropayment)
+    final val URL_PAYMENT_PREFIX = "https://www.bainil.com/payment/imp/request"
+    final val URL_PAYMENT_RESULT = "https://www.bainil.com/payment/complete?app=A"
     final val URL_CLOSE = "www.bainil.com/payment/close"
     final val URL_DOWNLOAD = "www.bainil.com/payment/download"
 
@@ -45,6 +50,7 @@ class PurchaseWebviewFragment(): WebviewFragment() {
 
         this.userId = userId
         this.albumId = albumId
+        this.seqId = seqId
 
         init_url = "${URL_PAYMENT_PREFIX}?albumId=${albumId}&userId=${userId}"
         if (seqId > 0)
