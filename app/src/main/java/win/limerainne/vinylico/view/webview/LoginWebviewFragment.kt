@@ -68,7 +68,7 @@ class LoginWebviewFragment: WebviewFragment() {
                         val activity = this_activity    // TODO why we have to save initial activity reference?
                         if (activity is MainActivity) {
                             doAsync {
-                                Thread.sleep(500)
+                                Thread.sleep(1000)
                                 uiThread {
                                     activity.popBackStack()
                                     activity.updateNavigationViewUserInfoArea()
@@ -81,6 +81,7 @@ class LoginWebviewFragment: WebviewFragment() {
                         val activity = this_activity    // TODO why we have to save initial activity reference?
                         if (activity is MainActivity) {
                             doAsync {
+                                Thread.sleep(1000)
                                 uiThread {
                                     mWebView.loadUrl(url_fan_profile)
                                 }
