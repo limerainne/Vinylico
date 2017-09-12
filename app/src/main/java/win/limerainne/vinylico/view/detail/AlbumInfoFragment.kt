@@ -25,6 +25,7 @@ import win.limerainne.vinylico.ThisApp
 import win.limerainne.vinylico.base.OnListFragmentInteractionListener
 import win.limerainne.vinylico.credential.UserInfo
 import win.limerainne.vinylico.data.api.Server
+import win.limerainne.vinylico.domain.model.AlbumBooklet
 import win.limerainne.vinylico.domain.model.AlbumDetail
 import win.limerainne.vinylico.domain.model.AlbumEntry
 import win.limerainne.vinylico.domain.model.TrackList
@@ -57,6 +58,7 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 
     lateinit var albumDetail: AlbumDetail
     lateinit var albumTracks: TrackList
+    lateinit var albumBooklet: AlbumBooklet
 
     private var mListener: OnListFragmentInteractionListener? = null
 
@@ -139,6 +141,9 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
                 context.toast(context.getString(R.string.msg_err_loading_contents))
             }
         }
+
+        // make loading view consumes touch
+        fragView.loading?.setOnTouchListener { view, motionEvent -> true }
 
         if (savedInstanceState != null) {
             val args = savedInstanceState.getBundle(KEY_ID)
@@ -248,6 +253,15 @@ class AlbumInfoFragment : MyFragment(), AppBarLayout.OnOffsetChangedListener, Ha
 //                        Log.d("Found", albumTracks.albumId.toString())
 //                        Log.v("Found", albumDetail.labelName)
 //                        Log.v("Found", albumTracks.tracks[0].songName)
+                    }
+                }
+
+                doAsync {
+                    if (albumDetail.purchased > 0)  {
+                        albumBooklet = w.requestAlbumBooklet(albumId)
+
+                        val adapter: AlbumInfoRecyclerViewAdapter? = rec_view?.adapter as AlbumInfoRecyclerViewAdapter
+                        adapter?.bindBooklet(albumBooklet)
                     }
                 }
 

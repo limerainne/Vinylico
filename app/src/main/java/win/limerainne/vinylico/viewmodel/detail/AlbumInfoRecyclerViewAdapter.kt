@@ -28,10 +28,7 @@ import win.limerainne.vinylico.ThisApp
 import win.limerainne.vinylico.base.OnListFragmentInteractionListener
 import win.limerainne.vinylico.data.api.request.RequestToggleWish
 import win.limerainne.vinylico.data.api.request.data.RequestTrackLyric
-import win.limerainne.vinylico.domain.model.AlbumDetail
-import win.limerainne.vinylico.domain.model.AlbumEntry
-import win.limerainne.vinylico.domain.model.Track
-import win.limerainne.vinylico.domain.model.TrackList
+import win.limerainne.vinylico.domain.model.*
 import win.limerainne.vinylico.extension.*
 import win.limerainne.vinylico.toolbox.DownloadTool
 import win.limerainne.vinylico.toolbox.PurchaseTool
@@ -42,13 +39,22 @@ import win.limerainne.vinylico.view.MainActivity
  * Created by Limerainne on 2016-08-16.
  */
 class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mAlbumEntry: AlbumEntry?, private val mAlbum: AlbumDetail, private val mTracks: TrackList, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<AlbumInfoRecyclerViewAdapter.ViewHolder>() {
+
+    var mAlbumBooklet: AlbumBooklet? = null
+    fun bindBooklet(albumBooklet: AlbumBooklet) {
+        mAlbumBooklet = albumBooklet
+
+        notifyItemChanged(itemCount - 1)    // NOTE assume last item is album booklet
+    }
+
     override fun getItemCount(): Int {
         // NOTE add more rows for...
         // very first 1: for smoothAppBarLayout dummy header
         // first 1: album information (released date, genre, artist, ...)
         // last 1: album description
         // last 1: album credits
-        return 1 + 1 + mTracks.tracks.size + 1 + 1
+        // last 1: album booklet
+        return 1 + 1 + mTracks.tracks.size + 1 + 1 + 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -71,6 +77,9 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             ITEM_ALBUM_CREDIT -> {
                 viewHolder = AlbumCreditViewHolder(viewInflater(R.layout.view_album_info_album_desc))
             }
+            ITEM_ALBUM_BOOKLET -> {
+                viewHolder = AlbumBookletViewHolder(viewInflater(R.layout.view_album_info_album_booklet))
+            }
             else -> throw RuntimeException()
         }
 
@@ -80,10 +89,14 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
     override fun getItemViewType(position: Int): Int {
         when (position) {
             0 -> return ITEM_DUMMY_HEADER
+
             1 -> return ITEM_ALBUM_SUMMARY
             in 2..(mTracks.tracks.size+1) -> return ITEM_TRACK
+
             mTracks.tracks.size+2 -> return ITEM_ALBUM_DESC
             mTracks.tracks.size+3 -> return ITEM_ALBUM_CREDIT
+            mTracks.tracks.size+4 -> return ITEM_ALBUM_BOOKLET
+
             else -> throw RuntimeException()
         }
     }
@@ -136,7 +149,12 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             }
             else
                 throw RuntimeException()
-        }
+            }
+            ITEM_ALBUM_BOOKLET -> {
+            if (holder is AlbumBookletViewHolder)   {
+                mAlbumBooklet?.let { holder.bind(it) }
+            }
+            }
         }
     }
 
@@ -561,11 +579,26 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         }
     }
 
+    inner class AlbumBookletViewHolder(override val mView: View): ViewHolder(mView) {
+        lateinit var mItem: AlbumBooklet
+
+        init {
+            ButterKnife.bind(this, itemView)
+        }
+
+        fun bind(item: AlbumBooklet)    {
+            mItem = item
+
+            // TODO additional view adapter for images, videos
+        }
+    }
+
     companion object    {
         val ITEM_DUMMY_HEADER = -1
         val ITEM_ALBUM_SUMMARY = 0
         val ITEM_TRACK = 1
         val ITEM_ALBUM_DESC = 2
         val ITEM_ALBUM_CREDIT = 3
+        val ITEM_ALBUM_BOOKLET = 4
     }
 }

@@ -43,6 +43,7 @@
     <!-- Album Info page -->
     <string name="album_info_description">Album Description</string>
     <string name="album_info_credits">Album Credits</string>
+    <string name="album_info_booklet">Booklet</string>
 
     <!-- search widget -->
     <string name="search_hint">Type artist, album, title or else&#8230;</string>

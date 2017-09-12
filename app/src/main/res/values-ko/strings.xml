@@ -2,6 +2,7 @@
 <resources>
     <string name="album_info_credits">앨범 제작진</string>
     <string name="album_info_description">앨범 소개</string>
+    <string name="album_info_booklet">부클릿</string>
     <string name="browse_featured">추천</string>
     <string name="browse_new">신규</string>
     <string name="browse_top">인기</string>
