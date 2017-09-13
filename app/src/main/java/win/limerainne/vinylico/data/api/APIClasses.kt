@@ -236,3 +236,31 @@ data class BookletVideo(val videoImg: String?,
                         val videoId: String?,   // e.g. YouTube video Id
                         val videoType: String?  // e.g. "Y" for YouTube
 )
+
+// artist information
+data class ArtistDetailWrapper(val success: Boolean,
+                               val result: List<ArtistDetail>
+)
+
+data class ArtistDetail(val artistId: Long?,
+                        val artistName: String?,
+
+                        val artistPicture: String?,
+                        val artistDesc: String?,
+
+                        val labelId: Long?,
+                        val labelName: String?,
+
+                        val countryName: String?,
+                        val countryNo: Long?,
+
+                        val fans: Long?,
+
+                        val homepage: String?,
+                        val facebook: String?,
+                        val twitter: String?,
+                        val youtube: String?
+)
+
+data class ArtistAlbumListWrapper(var success: Boolean,
+                                  var albums: List<AlbumEntry>)

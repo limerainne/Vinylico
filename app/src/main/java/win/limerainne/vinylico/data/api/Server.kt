@@ -4,6 +4,7 @@ import win.limerainne.vinylico.data.api.request.data.*
 import win.limerainne.vinylico.domain.model.*
 import win.limerainne.vinylico.domain.model.AlbumBooklet
 import win.limerainne.vinylico.domain.model.AlbumDetail
+import win.limerainne.vinylico.domain.model.ArtistDetail
 import win.limerainne.vinylico.domain.model.Connected
 import win.limerainne.vinylico.domain.model.RecommendAlbum
 import win.limerainne.vinylico.domain.model.SearchResult
@@ -70,5 +71,15 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
     fun requestAlbumBooklet(albumId: Long): AlbumBooklet  {
         val resultAlbumBooklet = RequestAlbumBooklet(albumId).execute()
         return dataMapper.convertAlbumBookletWrapperToDomain(albumId, resultAlbumBooklet)
+    }
+
+    fun requestArtistDetail(artistId: Long): ArtistDetail  {
+        val result = RequestArtistDetail(artistId).execute()
+        return dataMapper.convertArtistDetailToDomain(result)
+    }
+
+    fun requestArtistAlbumList(artistId: Long): ArtistAlbumList  {
+        val result = RequestArtistAlbumList(artistId).execute()
+        return dataMapper.convertArtistAlbumListToDomain(result)
     }
 }

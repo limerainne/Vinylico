@@ -23,7 +23,8 @@ import win.limerainne.vinylico.domain.model.Wishlist as DomainWishlist
 import win.limerainne.vinylico.domain.model.AlbumBooklet as DomainAlbumBooklet
 import win.limerainne.vinylico.domain.model.BookletImage as DomainBookletImage
 import win.limerainne.vinylico.domain.model.BookletVideo as DomainBookletVideo
-
+import win.limerainne.vinylico.domain.model.ArtistDetail as DomainArtistDetail
+import win.limerainne.vinylico.domain.model.ArtistAlbumList as DomainArtistAlbumList
 /**
  * Created by Limerainne on 2016-07-21.
  */
@@ -420,6 +421,65 @@ class APIDataMapper {
                 videoImg ?: "",
                 videoUrl ?: ""
         )
+    }
+
+    fun convertArtistDetailToDomain(artistDetailWrapper: ArtistDetailWrapper): DomainArtistDetail   {
+        if (!artistDetailWrapper.success)
+            throw Exception()
+
+        with (artistDetailWrapper.result[0])    {
+            return DomainArtistDetail(
+                    artistId ?: -1,
+                    artistName ?: "",
+
+                    artistPicture ?: "",
+                    artistDesc ?: "",
+
+                    labelId ?: -1,
+                    labelName ?: "",
+
+                    countryName ?: "",
+                    countryNo ?: -1,
+
+                    fans ?: -1,
+
+                    homepage ?: "",
+                    facebook ?: "",
+                    twitter ?: "",
+                    youtube ?: ""
+            )
+        }
+    }
+
+    fun convertArtistAlbumListToDomain(artistAlbumListWrapper: ArtistAlbumListWrapper): DomainArtistAlbumList    {
+        if (!artistAlbumListWrapper.success)
+            throw Exception()
+
+        return DomainArtistAlbumList(
+                artistAlbumListWrapper.albums.map { convertArtistAlbumToDomain(it) }
+        )
+    }
+
+    private fun convertArtistAlbumToDomain(albumEntry: AlbumEntry): DomainStoreAlbum = with(albumEntry)  {
+        DomainStoreAlbum(
+                albumId ?: -1,
+                albumName ?: "",
+                albumType ?: -1,
+                artistId ?: -1,
+                artistName ?: "",
+                event ?: false,
+                feature_aac ?: false,
+                feature_adult ?: false,
+                feature_booklet ?: false,
+                feature_hd ?: false,
+                feature_lyrics ?: false,
+                feature_rec ?: false,
+                free ?: false,
+                jacketImage ?: "",
+                price ?: "",
+                purchased ?: -1,
+                convertDateStringInto(releaseDate),
+                tracks ?: -1)
     }
 
 }

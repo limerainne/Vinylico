@@ -94,4 +94,5 @@
     <string name="menu_search">Bainil 검색</string>
     <string name="nav_bainil_app">Bainil 앱 열기</string>
     <string name="nav_header_email"></string>
+    <string name="artist_info_subtitle">아티스트 정보</string>
 </resources>

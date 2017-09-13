@@ -204,21 +204,44 @@ data class SearchTrack(val albumId: Long,
                        val songOrder: Int)
 
 data class AlbumBooklet(val albumId: Long,
-                        val albumDesc: String?,
-                        val credit: String?,
+                        val albumDesc: String,
+                        val credit: String,
 
                         val booklets: List<BookletImage>,
                         val photos: List<BookletImage>,
                         val videos: List<BookletVideo>
 )
 
-data class BookletImage(val seq: Long?,
-                        val thumbUrl: String?,
-                        val photoUrl: String?
+data class BookletImage(val seq: Long,
+                        val thumbUrl: String,
+                        val photoUrl: String
 )
 
-data class BookletVideo(val videoId: String?,   // e.g. YouTube video Id
-                        val videoType: String?,  // e.g. "Y" for YouTube
-                        val videoImg: String?,
-                        val videoUrl: String?
+data class BookletVideo(val videoId: String,   // e.g. YouTube video Id
+                        val videoType: String,  // e.g. "Y" for YouTube
+                        val videoImg: String,
+                        val videoUrl: String
+)
+
+data class ArtistDetail(val artistId: Long,
+                        val artistName: String,
+
+                        val artistPicture: String,
+                        val artistDesc: String,
+
+                        val labelId: Long,
+                        val labelName: String,
+
+                        val contryName: String,
+                        val countryNo: Long,
+
+                        val fans: Long,
+
+                        val homepage: String,
+                        val facebook: String,
+                        val twitter: String,
+                        val youtube: String
+)
+
+data class ArtistAlbumList(val albums: List<AlbumEntry>
 )

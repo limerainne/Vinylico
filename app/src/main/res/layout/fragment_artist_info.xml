@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="win.limerainne.vinylico.view.detail.ArtistInfoFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/info_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="win.limerainne.vinylico.view.detail.ArtistInfoFragment" />
+
+    <me.henrytao.smoothappbarlayout.SmoothAppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/album_info_header_height"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:sabl_target_id="@id/info_recycler_view">
+        <!-- android:layout_height="@dimen/album_info_header_height" -->
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:statusBarScrim="#80000000"
+            app:contentScrim="#80000000"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <!-- app:contentScrim="?attr/colorPrimary" -->
+
+            <ImageView
+                android:id="@+id/toolbar_background"
+                android:contentDescription="Artist Image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                android:transitionName="artist_image"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.75"
+                />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#10000000"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="?homeAsUpIndicator"
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+                <include
+                    android:id="@+id/toolbar_header_view"
+                    layout="@layout/view_album_info_toolbar_header"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="@dimen/header_view_end_margin_right"
+                    android:visibility="gone"
+                    />
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </me.henrytao.smoothappbarlayout.SmoothAppBarLayout>
+
+    <TextView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/msg_loading"/>
+
+</android.support.design.widget.CoordinatorLayout>

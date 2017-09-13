@@ -45,6 +45,9 @@
     <string name="album_info_credits">Album Credits</string>
     <string name="album_info_booklet">Booklet</string>
 
+    <!-- Artist Info page -->
+    <string name="artist_info_subtitle">Artist Information</string>
+
     <!-- search widget -->
     <string name="search_hint">Type artist, album, title or else&#8230;</string>
 
