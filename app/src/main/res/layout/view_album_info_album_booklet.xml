@@ -12,6 +12,6 @@
         android:layout_marginTop="@dimen/text_margin"
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_marginRight="@dimen/text_margin"
-        android:text="@string/album_info_description" />
+        android:text="@string/album_info_booklet" />
 
 </LinearLayout>

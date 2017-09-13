@@ -54,7 +54,12 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         // last 1: album description
         // last 1: album credits
         // last 1: album booklet
-        return 1 + 1 + mTracks.tracks.size + 1 + 1 + 1
+        val header = 2
+        val tracks = mTracks.tracks.size
+        val footerCredits = 2
+        val footerBooklet = if (mAlbum.feature_booklet) 1 else 0
+
+        return header + tracks + footerCredits + footerBooklet
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
