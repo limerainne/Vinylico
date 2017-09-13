@@ -30,7 +30,7 @@ class BrowseListRecyclerViewAdapter(private val mContext: Context,
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowserListItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_browse_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_browse_item_album, parent, false)
         return BrowserListItemViewHolder(mContext, view)
     }
 

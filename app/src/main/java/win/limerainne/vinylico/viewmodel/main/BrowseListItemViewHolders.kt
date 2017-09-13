@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_browse_list_item.view.*
+import kotlinx.android.synthetic.main.view_browse_item_album.view.*
 import win.limerainne.vinylico.R
 import win.limerainne.vinylico.data.api.request.RequestToggleWish
 import win.limerainne.vinylico.domain.model.AlbumEntry

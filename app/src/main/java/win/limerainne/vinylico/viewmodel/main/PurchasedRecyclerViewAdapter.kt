@@ -22,7 +22,7 @@ class PurchasedRecyclerViewAdapter(private val mContext: Context,
     private var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PurchasedItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_browse_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_browse_item_album, parent, false)
         return PurchasedItemViewHolder(mContext, view)
     }
 
