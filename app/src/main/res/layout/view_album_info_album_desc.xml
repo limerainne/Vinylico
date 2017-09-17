@@ -41,7 +41,8 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:layout_gravity="right|bottom"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/album_info_extend_text_button"/>
     </com.ms.square.android.expandabletextview.ExpandableTextView>
 
 </LinearLayout>

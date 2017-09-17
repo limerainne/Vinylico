@@ -95,4 +95,6 @@
     <string name="nav_bainil_app">Bainil 앱 열기</string>
     <string name="nav_header_email"></string>
     <string name="artist_info_subtitle">아티스트 정보</string>
+    <string name="artist_info_discography_title">아티스트 앨범</string>
+    <string name="album_info_extend_text_button">내용 더 보기 / 숨기기</string>
 </resources>

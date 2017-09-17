@@ -27,7 +27,7 @@
     <string name="nav_login">Login</string>
     <string name="nav_logout">Logout</string>
 
-    <string name="nav_header_email">please.login@bainil.com</string>
+    <string name="nav_header_email" translatable="false">please.login@bainil.com</string>
 
     <!-- Menu items -->
     <string name="menu_search">Search Bainil</string>
@@ -44,9 +44,11 @@
     <string name="album_info_description">Album Description</string>
     <string name="album_info_credits">Album Credits</string>
     <string name="album_info_booklet">Booklet</string>
+    <string name="album_info_extend_text_button">Extend / Hide content</string>
 
     <!-- Artist Info page -->
     <string name="artist_info_subtitle">Artist Information</string>
+    <string name="artist_info_discography_title">Artist Albums</string>
 
     <!-- search widget -->
     <string name="search_hint">Type artist, album, title or else&#8230;</string>
