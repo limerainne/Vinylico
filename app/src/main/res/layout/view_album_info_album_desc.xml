@@ -22,16 +22,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_marginRight="@dimen/text_margin"
-        android:layout_marginBottom="@dimen/text_margin"
         android:focusableInTouchMode="false"
-        expandableTextView:maxCollapsedLines="4"
+        expandableTextView:maxCollapsedLines="3"
         expandableTextView:animDuration="200"
         expandableTextView:animAlphaStart="1">
         <TextView
             android:id="@id/expandable_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItem"
+            android:textAppearance="?android:attr/textAppearanceListItem"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:ellipsize="end"/>

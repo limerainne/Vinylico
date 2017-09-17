@@ -2,11 +2,13 @@ package win.limerainne.vinylico.viewmodel.detail
 
 import android.content.Context
 import android.graphics.Paint
+import android.opengl.Visibility
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.BindView
@@ -16,11 +18,13 @@ import kotlinx.android.synthetic.main.view_album_info_album_desc.view.*
 import kotlinx.android.synthetic.main.view_artist_info_artist_summary.view.*
 import kotlinx.android.synthetic.main.view_artist_info_discography_header.view.*
 import kotlinx.android.synthetic.main.view_browse_item_album.view.*
+import kotlinx.android.synthetic.main.view_search_artist.view.*
 import win.limerainne.vinylico.R
 import win.limerainne.vinylico.domain.model.ArtistAlbumList
 import win.limerainne.vinylico.domain.model.ArtistDetail
 import win.limerainne.vinylico.base.OnListFragmentInteractionListener
 import win.limerainne.vinylico.domain.model.AlbumEntry
+import win.limerainne.vinylico.extension.openURL
 import win.limerainne.vinylico.viewmodel.main.BrowserListItemViewHolder
 import win.limerainne.vinylico.viewmodel.main.SearchResultRecyclerViewAdapter
 
@@ -122,9 +126,6 @@ class ArtistInfoRecyclerViewAdapter(private val mContext: Context, private val m
                             mListener?.onListFragmentInteraction(it)
                         }
                     }
-
-                    val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) // (width, height)
-                    holder.mView.setLayoutParams(params)
                 }
                 else
                     throw RuntimeException()
@@ -157,6 +158,24 @@ class ArtistInfoRecyclerViewAdapter(private val mContext: Context, private val m
             mView.artist_fan_count.text = item.fans.toString()
             mView.artist_label.text = item.labelName
             mView.artist_album_count.text = albums.albums.size.toString()
+
+            treatLinkButton(mView.btn_link_homepage, item.homepage)
+            treatLinkButton(mView.btn_link_facebook, item.facebook)
+            treatLinkButton(mView.btn_link_twitter, item.twitter)
+            treatLinkButton(mView.btn_link_youtube, item.youtube)
+        }
+
+        fun treatLinkButton(buttonView: Button, url: String)    {
+            with (buttonView)  {
+                if (url.isEmpty())    {
+                    visibility = View.GONE
+                }   else    {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        url.openURL(mContext)
+                    }
+                }
+            }
         }
 
         override fun toString(): String {
@@ -226,9 +245,13 @@ class ArtistInfoRecyclerViewAdapter(private val mContext: Context, private val m
         }
     }
 
-    inner class ArtistAlbumViewHolder(mView: View): BrowserListItemViewHolder(mContext, mView)    {
+    inner class ArtistAlbumViewHolder(mView: View): BrowserListItemViewHolder(mContext, mView, mListener)    {
         override fun bind(item: AlbumEntry)  {
             super.bind(item)
+
+            // unset OnClickListener of artist name
+            mView.album_artist.setOnClickListener(null)
+            mView.album_artist.isClickable = false
         }
     }
 

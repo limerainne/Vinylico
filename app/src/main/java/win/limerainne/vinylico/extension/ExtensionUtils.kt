@@ -16,11 +16,18 @@
 
 package win.limerainne.vinylico.extension
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.View
 import java.text.DateFormat
 import java.util.*
+import android.support.v4.content.ContextCompat.startActivity
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
+
 
 fun Long.toDateString(dateFormat: Int = DateFormat.MEDIUM): String {
     val df = DateFormat.getDateInstance(dateFormat, Locale.getDefault())
@@ -84,6 +91,11 @@ fun Long.toSizeText(): String  {
 
 fun String.ifEmpty(alt: String = "-"): String = if (this.length > 0) this else alt
 fun String.toBitrateText(): String = if (this.length > 0) (this + "k") else "-"
+fun String.openURL(context: Context) {
+    val i = Intent(ACTION_VIEW)
+    i.data = Uri.parse(this)
+    startActivity(context, i, null)
+}
 
 
 fun View.setVisibility4(isVisible: Boolean): Int {
@@ -92,8 +104,8 @@ fun View.setVisibility4(isVisible: Boolean): Int {
 }
 
 fun fromHtml4(source: String): Spanned {
-//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-//        return Html.fromHtml(source, Html.FROM_HTML_MODE_COMPACT)
-//    else
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        return Html.fromHtml(source, Html.FROM_HTML_MODE_COMPACT)
+    else
         return Html.fromHtml(source)
 }

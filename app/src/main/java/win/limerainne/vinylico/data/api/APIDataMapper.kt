@@ -1,5 +1,6 @@
 package win.limerainne.vinylico.data.api
 
+import android.util.Log
 import win.limerainne.vinylico.ThisApp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -427,7 +428,7 @@ class APIDataMapper {
         if (!artistDetailWrapper.success)
             throw Exception()
 
-        with (artistDetailWrapper.result[0])    {
+        with (artistDetailWrapper.result)    {
             return DomainArtistDetail(
                     artistId ?: -1,
                     artistName ?: "",
@@ -455,8 +456,10 @@ class APIDataMapper {
         if (!artistAlbumListWrapper.success)
             throw Exception()
 
+        Log.v("ADM: cnvArAlListDm", "success? true")
+
         return DomainArtistAlbumList(
-                artistAlbumListWrapper.albums.map { convertArtistAlbumToDomain(it) }
+                artistAlbumListWrapper.result.map { convertArtistAlbumToDomain(it) }
         )
     }
 

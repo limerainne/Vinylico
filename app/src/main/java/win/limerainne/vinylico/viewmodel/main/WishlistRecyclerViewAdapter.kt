@@ -19,7 +19,7 @@ class WishlistRecyclerViewAdapter(private val mContext: Context,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_browse_item_album, parent, false)
 //        println(mContext)
-        return WishlistItemViewHolder(mContext, view)
+        return WishlistItemViewHolder(mContext, view, mListener)
     }
 
     override fun onBindViewHolder(holder: WishlistItemViewHolder, position: Int) {

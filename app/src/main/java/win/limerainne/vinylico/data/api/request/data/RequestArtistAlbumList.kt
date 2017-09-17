@@ -1,5 +1,6 @@
 package win.limerainne.vinylico.data.api.request.data
 
+import android.util.Log
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import win.limerainne.vinylico.ThisApp
@@ -13,7 +14,7 @@ import win.limerainne.vinylico.data.api.request.Request
  * Created by Limerainne on 2016-07-21.
  */
 /* @17.09.17
- - http://www.bainil.com/api/v2/artist/albums?artistId=1005&lang=ko
+ - https://www.bainil.com/api/v2/artist/albums?artistId=1005&lang=ko
 
 {
   "result": [
@@ -110,6 +111,7 @@ class RequestArtistAlbumList(val artistId: Long,
 
     override fun execute(): ArtistAlbumListWrapper {
         val artistAlbumListJsonStr = getHTTPResponseString()
+        Log.v("ReqArtistAlbumList", artistAlbumListJsonStr)
         return gson.fromJson<ArtistAlbumListWrapper>(artistAlbumListJsonStr)
     }
 }

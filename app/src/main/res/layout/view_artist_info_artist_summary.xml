@@ -12,7 +12,7 @@
         android:id="@+id/artist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textAppearance="?android:attr/textAppearanceListItem"
         android:textSize="20sp"
         android:text="I am A Dreamer"
         />
@@ -34,29 +34,118 @@
         <ImageView
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_album_gray"/>
         <TextView
             android:id="@+id/artist_album_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="12dp"
             android:textSize="12sp"
             android:text="100"/>
         <ImageView
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_love_filled_gray"/>
         <TextView
             android:id="@+id/artist_fan_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="12dp"
             android:textSize="12sp"
             android:text="100"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical|right"
+        android:gravity="center_vertical">
+        <!-- link buttons -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_link_homepage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_home_accent"
+            style="?android:attr/borderlessButtonStyle"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:minHeight="24dp"
+            android:minWidth="0dp"
+            android:clickable="true"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"
+            android:contentDescription="Open homepage"
+            android:text="" />
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_link_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_facebook_accent"
+            style="?android:attr/borderlessButtonStyle"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:minHeight="24dp"
+            android:minWidth="0dp"
+            android:clickable="true"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"
+            android:contentDescription="Open Facebook"
+            android:text="" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_link_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_twitter_accent"
+            style="?android:attr/borderlessButtonStyle"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:minHeight="24dp"
+            android:minWidth="0dp"
+            android:clickable="true"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"
+            android:contentDescription="Open Twitter"
+            android:text="" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_link_youtube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_youtube_accent"
+            style="?android:attr/borderlessButtonStyle"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:minHeight="24dp"
+            android:minWidth="0dp"
+            android:clickable="true"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"
+            android:contentDescription="Open YouTube"
+            android:text="" />
+
+        <!-- share button -->
+        <android.support.v7.widget.AppCompatButton
+            android:visibility="gone"
+            android:id="@+id/btn_album_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_share_layer"
+            style="?android:attr/borderlessButtonStyle"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:minHeight="24dp"
+            android:minWidth="0dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"
+            android:contentDescription="Share link to this artist"
+            android:text="" />
 
     </LinearLayout>
 

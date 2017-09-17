@@ -115,7 +115,7 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
                     throw RuntimeException()
                 when (viewType) {
                     HEADER_KEYWORD ->
-                        holder.bind(mContext.getString(R.string.search_keyword_header, mResult.keyword), mContext.getString(R.string.search_keyword_desc, mResult.artists.size, mResult.albums.size, mResult.tracks.size))
+                        holder.bind(mContext.getString(R.string.search_keyword_header, mResult.keyword), mContext.getString(R.string.search_keyword_desc, mResult.artists.size.toString(), mResult.albums.size.toString(), mResult.tracks.size.toString()))
                     HEADER_ARTIST ->
                         holder.bind(mContext.getString(R.string.search_artist_header, mResult.artists.size.toString()), mContext.getString(R.string.search_artist_desc))
                     HEADER_ALBUM ->
@@ -209,6 +209,17 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
             mView.album_num_tracks.text = item.tracks.toString()
             mView.album_date.text = item.releaseDate
 
+            mView.album_artist.setOnClickListener {
+                mListener?.onListFragmentInteraction(SearchArtist(
+                        "",
+                        item.albumName,
+                        item.albumId,
+                        item.artistId,
+                        item.artistName,
+                        listOf()
+                ))
+            }
+
             mView.album_title.text = item.albumName
 
             val track_names = mView.album_track_names
@@ -225,6 +236,16 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
             mItem = item
 
             mView.track_artist.text = item.artistName
+            mView.track_artist.setOnClickListener {
+                mListener?.onListFragmentInteraction(SearchArtist(
+                        "",
+                        "",
+                        item.albumId,
+                        item.artistId,
+                        item.artistName,
+                        listOf()
+                ))
+            }
 
             if (item.songOrder < 1)
                 mView.track_id.visibility = View.INVISIBLE

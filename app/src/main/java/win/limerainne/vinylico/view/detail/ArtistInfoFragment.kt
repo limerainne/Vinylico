@@ -13,23 +13,20 @@ import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_album_info.*
-import kotlinx.android.synthetic.main.fragment_album_info.view.*
+import kotlinx.android.synthetic.main.fragment_artist_info.*
+import kotlinx.android.synthetic.main.fragment_artist_info.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import win.limerainne.vinylico.R
 import win.limerainne.vinylico.ThisApp
 import win.limerainne.vinylico.base.OnListFragmentInteractionListener
-import win.limerainne.vinylico.credential.UserInfo
 import win.limerainne.vinylico.data.api.Server
-import win.limerainne.vinylico.domain.model.AlbumEntry
 import win.limerainne.vinylico.domain.model.ArtistAlbumList
 import win.limerainne.vinylico.domain.model.ArtistDetail
 import win.limerainne.vinylico.view.DataLoadable
 import win.limerainne.vinylico.view.HavingToolbar
 import win.limerainne.vinylico.view.MainActivity
 import win.limerainne.vinylico.view.MyFragment
-import win.limerainne.vinylico.viewmodel.detail.AlbumInfoRecyclerViewAdapter
 import win.limerainne.vinylico.viewmodel.detail.ArtistInfoRecyclerViewAdapter
 
 /**

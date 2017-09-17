@@ -1,5 +1,6 @@
 package win.limerainne.vinylico.data.api
 
+import android.util.Log
 import win.limerainne.vinylico.data.api.request.data.*
 import win.limerainne.vinylico.domain.model.*
 import win.limerainne.vinylico.domain.model.AlbumBooklet
@@ -80,6 +81,7 @@ class Server(val dataMapper: APIDataMapper = APIDataMapper()) {
 
     fun requestArtistAlbumList(artistId: Long): ArtistAlbumList  {
         val result = RequestArtistAlbumList(artistId).execute()
+        Log.v("Server:reqArAlList", result.toString())
         return dataMapper.convertArtistAlbumListToDomain(result)
     }
 }

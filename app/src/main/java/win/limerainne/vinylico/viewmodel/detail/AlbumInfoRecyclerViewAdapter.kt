@@ -193,6 +193,17 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
             mItem = item
 
             mView.album_artist.text = item.artistName
+            mView.album_artist.setOnClickListener {
+                mListener?.onListFragmentInteraction(SearchArtist(
+                        "",
+                        mItem.albumName,
+                        mItem.albumId,
+                        mItem.artistId,
+                        mItem.artistName,
+                        listOf()
+                ))
+            }
+
             mView.album_title.text = item.albumName
 
             mView.album_label_publisher.text = "${item.genre} · ${item.labelName} · ${item.publishName}"

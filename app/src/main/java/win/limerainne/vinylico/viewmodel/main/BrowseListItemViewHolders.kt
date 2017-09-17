@@ -13,8 +13,10 @@ import android.widget.Button
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_browse_item_album.view.*
 import win.limerainne.vinylico.R
+import win.limerainne.vinylico.base.OnListFragmentInteractionListener
 import win.limerainne.vinylico.data.api.request.RequestToggleWish
 import win.limerainne.vinylico.domain.model.AlbumEntry
+import win.limerainne.vinylico.domain.model.SearchArtist
 import win.limerainne.vinylico.toolbox.DownloadTool
 import win.limerainne.vinylico.toolbox.PurchaseTool
 import win.limerainne.vinylico.toolbox.ShareTool
@@ -23,7 +25,7 @@ import win.limerainne.vinylico.toolbox.ShareTool
  * Created by CottonCandy on 2016-10-03.
  */
 
-open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : RecyclerView.ViewHolder(mView) {
+open class BrowserListItemViewHolder(val mContext: Context, val mView: View, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.ViewHolder(mView) {
 //        @BindView(R.id.album_id)
 //        lateinit var mIdView: TextView
 //        @BindView(R.id.content)
@@ -71,6 +73,17 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
         itemView.album_artist.text = item.artistName
         itemView.album_num_tracks.text = item.tracks.toString()
         itemView.album_date.text = item.releaseDate
+
+        itemView.album_artist.setOnClickListener {
+            mListener?.onListFragmentInteraction(SearchArtist(
+                    "",
+                    item.albumName,
+                    item.albumId,
+                    item.artistId,
+                    item.artistName,
+                    listOf()
+            ))
+        }
 
         // 2nd line
         itemView.album_title.text = item.albumName
@@ -155,7 +168,7 @@ open class BrowserListItemViewHolder(val mContext: Context, val mView: View) : R
 
 // NOTE http://stackoverflow.com/questions/34697222/how-are-overridden-properties-handled-in-init-blocks
 // arguments class constructor does not have to be declared as val/var!
-class WishlistItemViewHolder(mContext: Context, mView: View): BrowserListItemViewHolder(mContext, mView)    {
+class WishlistItemViewHolder(mContext: Context, mView: View, private val mListener: OnListFragmentInteractionListener?): BrowserListItemViewHolder(mContext, mView, mListener)    {
     override fun bind(item: AlbumEntry) {
         super.bind(item)
 
@@ -189,7 +202,7 @@ class WishlistItemViewHolder(mContext: Context, mView: View): BrowserListItemVie
     }
 }
 
-class PurchasedItemViewHolder(mContext: Context, mView: View): BrowserListItemViewHolder(mContext, mView)    {
+class PurchasedItemViewHolder(mContext: Context, mView: View, private val mListener: OnListFragmentInteractionListener?): BrowserListItemViewHolder(mContext, mView, mListener)    {
     override fun bind(item: AlbumEntry)  {
         super.bind(item)
 

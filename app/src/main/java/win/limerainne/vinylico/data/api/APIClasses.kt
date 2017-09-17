@@ -19,7 +19,7 @@ data class Wishlist(val success: Boolean,
 // entry for each list (featured, new, ..., wishlist)
 // - song** are not in wishlist
 // - below items are only for connected album info
-data class AlbumEntry(val albumEnglish: String,
+data class AlbumEntry(val albumEnglish: String?,
                       val albumId: Long?,
                       val albumName: String?,
                       val albumType: Int?,
@@ -63,7 +63,14 @@ data class AlbumEntry(val albumEnglish: String,
                       val userId: Long?,
                       val userName: String?,
                       val userPic: String?,
-                      val userRole: String?)
+                      val userRole: String?,
+
+                      val genreName: String?,
+                      val genreId: Long?,
+                      val backImage: String?,
+                      val cdImage: String?,
+                      val owner: Int?
+                      )
 
 // connected
 // ref: /api/v2/user/connected/albums?userId=()&lang=ko
@@ -239,7 +246,7 @@ data class BookletVideo(val videoImg: String?,
 
 // artist information
 data class ArtistDetailWrapper(val success: Boolean,
-                               val result: List<ArtistDetail>
+                               val result: ArtistDetail
 )
 
 data class ArtistDetail(val artistId: Long?,
@@ -263,4 +270,4 @@ data class ArtistDetail(val artistId: Long?,
 )
 
 data class ArtistAlbumListWrapper(var success: Boolean,
-                                  var albums: List<AlbumEntry>)
+                                  var result: List<AlbumEntry>)
