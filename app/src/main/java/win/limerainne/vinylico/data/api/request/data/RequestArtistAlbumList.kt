@@ -111,7 +111,6 @@ class RequestArtistAlbumList(val artistId: Long,
 
     override fun execute(): ArtistAlbumListWrapper {
         val artistAlbumListJsonStr = getHTTPResponseString()
-        Log.v("ReqArtistAlbumList", artistAlbumListJsonStr)
         return gson.fromJson<ArtistAlbumListWrapper>(artistAlbumListJsonStr)
     }
 }

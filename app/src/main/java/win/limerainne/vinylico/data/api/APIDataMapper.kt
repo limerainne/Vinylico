@@ -456,8 +456,6 @@ class APIDataMapper {
         if (!artistAlbumListWrapper.success)
             throw Exception()
 
-        Log.v("ADM: cnvArAlListDm", "success? true")
-
         return DomainArtistAlbumList(
                 artistAlbumListWrapper.result.map { convertArtistAlbumToDomain(it) }
         )
