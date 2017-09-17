@@ -48,6 +48,7 @@
 
     <!-- Artist Info page -->
     <string name="artist_info_subtitle">Artist Information</string>
+    <string name="artist_info_description">Artist Description</string>
     <string name="artist_info_discography_title">Artist Albums</string>
 
     <!-- search widget -->

@@ -47,6 +47,10 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         notifyItemChanged(itemCount - 1)    // NOTE assume last item is album booklet
     }
 
+    val CountItemHeader = 2
+    val CountItemFooter
+    get() = 2 + if (mAlbum.feature_booklet) 1 else 0
+
     override fun getItemCount(): Int {
         // NOTE add more rows for...
         // very first 1: for smoothAppBarLayout dummy header
@@ -54,12 +58,11 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         // last 1: album description
         // last 1: album credits
         // last 1: album booklet
-        val header = 2
+        val header = CountItemHeader
         val tracks = mTracks.tracks.size
-        val footerCredits = 2
-        val footerBooklet = if (mAlbum.feature_booklet) 1 else 0
+        val footer = CountItemFooter
 
-        return header + tracks + footerCredits + footerBooklet
+        return header + tracks + footer
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -163,7 +166,7 @@ class AlbumInfoRecyclerViewAdapter(private val mContext: Context, private val mA
         }
     }
 
-    fun globalPosToTracksPos(globalPosition: Int) = globalPosition - 2  // header + summary
+    fun globalPosToTracksPos(globalPosition: Int) = globalPosition - CountItemHeader  // header + summary
 
     inner abstract class ViewHolder(open val mView: View): RecyclerView.ViewHolder(mView)
 

@@ -24,7 +24,7 @@
             android:layout_marginLeft="12dp"
             app:srcCompat="@drawable/ic_album_gray"/>
         <TextView
-            android:id="@+id/artist_album_count"
+            android:id="@+id/artist_discography_album_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

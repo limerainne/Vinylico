@@ -30,6 +30,7 @@ import win.limerainne.vinylico.view.HavingToolbar
 import win.limerainne.vinylico.view.MainActivity
 import win.limerainne.vinylico.view.MyFragment
 import win.limerainne.vinylico.viewmodel.detail.AlbumInfoRecyclerViewAdapter
+import win.limerainne.vinylico.viewmodel.detail.ArtistInfoRecyclerViewAdapter
 
 /**
  * Created by Limerainne on 2017-09-13.
