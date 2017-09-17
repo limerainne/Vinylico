@@ -66,7 +66,8 @@
     <string name="msg_event_title">Album Event</string>
 
     <!-- share -->
-    <string name="share_msg">Listen \"%1$s\" by %2$s with Bainil!\nhttp://bainil.com/a/%3$s</string>
+    <string name="share_msg">Listen \"%1$s\" by %2$s with Bainil!\nhttps://bainil.com/a/%3$s</string>
+    <string name="share_artist_msg">See \"%1$s\" in Bainil!\nhttps://bainil.com/CloudSearch?q=%1$s</string>
 
     <!-- messages -->
     <string name="btn_reload">Reload</string>
@@ -97,7 +98,7 @@
     <string name="msg_notice_free_album">Free album</string>
 
     <string name="msg_prepare_sharing">Preparing to share with&#8230;</string>
-    <string name="title_share_album">Invite to Bainil by</string>
+    <string name="title_share_album">Invite to Bainil...</string>
 
     <string name="msg_err_share_requires_permission">Please grant permission first, then retry sharing&#8230;</string>
     <string name="msg_err_download_requires_permission">Please grant permission first, then retry download&#8230;</string>

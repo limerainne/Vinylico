@@ -132,8 +132,7 @@
 
         <!-- share button -->
         <android.support.v7.widget.AppCompatButton
-            android:visibility="gone"
-            android:id="@+id/btn_album_share"
+            android:id="@+id/btn_artist_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_share_layer"

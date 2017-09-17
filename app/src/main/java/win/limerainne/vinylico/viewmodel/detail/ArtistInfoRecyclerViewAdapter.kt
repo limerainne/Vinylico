@@ -25,6 +25,7 @@ import win.limerainne.vinylico.domain.model.ArtistDetail
 import win.limerainne.vinylico.base.OnListFragmentInteractionListener
 import win.limerainne.vinylico.domain.model.AlbumEntry
 import win.limerainne.vinylico.extension.openURL
+import win.limerainne.vinylico.toolbox.ShareTool
 import win.limerainne.vinylico.viewmodel.main.BrowserListItemViewHolder
 import win.limerainne.vinylico.viewmodel.main.SearchResultRecyclerViewAdapter
 
@@ -163,6 +164,10 @@ class ArtistInfoRecyclerViewAdapter(private val mContext: Context, private val m
             treatLinkButton(mView.btn_link_facebook, item.facebook)
             treatLinkButton(mView.btn_link_twitter, item.twitter)
             treatLinkButton(mView.btn_link_youtube, item.youtube)
+
+            mView.btn_artist_share.setOnClickListener {
+                ShareTool.shareArtistWithImageURL(mContext, item.artistPicture, item.artistName, item.artistId)
+            }
         }
 
         fun treatLinkButton(buttonView: Button, url: String)    {

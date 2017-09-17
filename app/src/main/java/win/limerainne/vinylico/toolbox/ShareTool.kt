@@ -46,7 +46,7 @@ class ShareTool {
             val shareIntent = Intent()
             shareIntent.setAction(Intent.ACTION_SEND)
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            shareIntent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_msg, albumName, artistName, albumId))
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_msg, albumName, artistName, albumId.toString()))
             shareIntent.setType("image/*")
 
             // Launch sharing dialog for image
@@ -73,7 +73,7 @@ class ShareTool {
                     val shareIntent = Intent()
                     shareIntent.setAction(Intent.ACTION_SEND)
                     shareIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap))
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_msg, albumName, artistName, albumId))
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_msg, albumName, artistName, albumId.toString()))
                     shareIntent.setType("image/*")
 
                     // Launch sharing dialog for image
@@ -104,6 +104,44 @@ class ShareTool {
                         shareAlbumWithImageURL(mContext, url, albumName, artistName, albumId)
                 }
             }
+        }
+
+
+        fun shareArtistWithImageURL(mContext: Context, url: String, artistName: String, artistId: Long) {
+            if (!checkIfPermission(mContext))   return
+            mContext.toast(mContext.getString(R.string.msg_prepare_sharing))
+
+            fun getLocalBitmapUri(bitmap: Bitmap): Uri {
+                // TODO request permission to WRITE_EXTERNAL_STORAGE, grantUriPermission()
+                val path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(),
+                        bitmap, "Bainil Artist", null)
+                val uri: Uri = Uri.parse(path)
+                return uri
+            }
+
+            // http://stackoverflow.com/questions/16300959/android-share-image-from-url
+            Picasso.with(mContext).load(url).into(object: Target {
+
+                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                    // Construct a ShareIntent with link to image
+                    val shareIntent = Intent()
+                    shareIntent.setAction(Intent.ACTION_SEND)
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap))
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_artist_msg, artistName))
+                    shareIntent.setType("image/*")
+
+                    // Launch sharing dialog for image
+                    mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.title_share_album)))
+                }
+
+                override fun onBitmapFailed(errorDrawable: Drawable?) {
+
+                }
+
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+
+                }
+            });
         }
 
         fun checkIfPermission(mContext: Context): Boolean {
