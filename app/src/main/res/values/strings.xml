@@ -27,7 +27,7 @@
     <string name="nav_login">Login</string>
     <string name="nav_logout">Logout</string>
 
-    <string name="nav_header_email" translatable="false">please.login@bainil.com</string>
+    <string name="nav_header_email">please.login@bainil.com</string>
 
     <!-- Menu items -->
     <string name="menu_search">Search Bainil</string>
