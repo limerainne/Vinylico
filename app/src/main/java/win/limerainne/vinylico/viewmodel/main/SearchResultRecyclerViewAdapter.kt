@@ -33,9 +33,9 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
     init {
         // get ...
-        hasArtist = mResult.artists.size > 0
-        hasAlbum = mResult.albums.size > 0
-        hasTrack = mResult.tracks.size > 0
+        hasArtist = mResult.artists.isNotEmpty()
+        hasAlbum = mResult.albums.isNotEmpty()
+        hasTrack = mResult.tracks.isNotEmpty()
 
         rangesList = mutableListOf()
 
@@ -56,7 +56,7 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
 
         count += 1
 
-        fun countMore(targetList: List<Any>): Int = targetList.size + if (targetList.size > 0) 1 else 0
+        fun countMore(targetList: List<Any>): Int = targetList.size + if (targetList.isNotEmpty()) 1 else 0
 
         count += countMore(mResult.artists)
         count += countMore(mResult.albums)
@@ -117,11 +117,11 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
                     HEADER_KEYWORD ->
                         holder.bind(mContext.getString(R.string.search_keyword_header, mResult.keyword), mContext.getString(R.string.search_keyword_desc, mResult.artists.size, mResult.albums.size, mResult.tracks.size))
                     HEADER_ARTIST ->
-                        holder.bind(mContext.getString(R.string.search_artist_header, mResult.artists.size), mContext.getString(R.string.search_artist_desc))
+                        holder.bind(mContext.getString(R.string.search_artist_header, mResult.artists.size.toString()), mContext.getString(R.string.search_artist_desc))
                     HEADER_ALBUM ->
-                        holder.bind(mContext.getString(R.string.search_album_header, mResult.albums.size), mContext.getString(R.string.search_album_desc))
+                        holder.bind(mContext.getString(R.string.search_album_header, mResult.albums.size.toString()), mContext.getString(R.string.search_album_desc))
                     HEADER_TRACK ->
-                        holder.bind(mContext.getString(R.string.search_track_header, mResult.tracks.size), mContext.getString(R.string.search_track_desc))
+                        holder.bind(mContext.getString(R.string.search_track_header, mResult.tracks.size.toString()), mContext.getString(R.string.search_track_desc))
                 }
             }
             ITEM_ARTIST ->  {
@@ -190,6 +190,9 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
             mView.artist_name.text = item.artistName
             mView.album_name.text = item.albumName
 
+            val track_names = mView.artist_track_names
+            track_names.text = item.trackList.joinToString (separator = ", ") { it.songName }
+
             // TODO buttons/functions
         }
     }
@@ -207,6 +210,9 @@ class SearchResultRecyclerViewAdapter(private val mContext: Context,
             mView.album_date.text = item.releaseDate
 
             mView.album_title.text = item.albumName
+
+            val track_names = mView.album_track_names
+            track_names.text = item.trackList.joinToString (separator = ", ") { it.songName }
 
             // TODO buttons/functions
         }
