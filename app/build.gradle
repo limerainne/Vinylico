@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 buildscript {
     repositories    {
         jcenter()
+        google()
     }
     dependencies    {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -67,7 +68,7 @@ dependencies {
     compile dependencies.design
     compile dependencies.vectordrawable
     compile dependencies.vectordrawable_animated
-    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex:1.0.2'
 
 //    compile dependencies.retrofit
 //    compile dependencies.retrofitConverterGson
@@ -105,7 +106,7 @@ dependencies {
 
 //    compile 'org.sufficientlysecure:html-textview:2.0'
     compile 'com.ms-square:expandableTextView:0.1.4'
-    compile dependencies.smooth_app_bar_layout
+//    compile dependencies.smooth_app_bar_layout    // disable it because recent SupportLibrary fixes AppBar scroll behavior
 //    compile 'com.mpatric:mp3agic:0.8.4'
     /*
     - Used library (16.10.04)
